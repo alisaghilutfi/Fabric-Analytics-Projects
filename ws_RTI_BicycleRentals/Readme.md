@@ -18,3 +18,4 @@ The sample data used in this project is a set of bicycle data that includes info
  - Set up anomaly detection on Eventhouse tables
  - Create a map using geospatial data
  - Set an alert on the eventstream
+   
