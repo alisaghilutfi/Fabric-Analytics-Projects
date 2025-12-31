@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "nb_DS_BankChurn_Predictions"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "995c5bc1-7297-b896-4392-927ea8b163d6"
+  }
+}
