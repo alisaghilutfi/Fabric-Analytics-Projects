@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "nb_DS_BankChurn_TrainRegisterML"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "f911d02b-c2a6-83bc-4b97-1601be72d850"
+  }
+}

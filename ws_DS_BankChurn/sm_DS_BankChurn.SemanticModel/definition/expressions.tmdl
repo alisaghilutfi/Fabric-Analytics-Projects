@@ -1,0 +1,11 @@
+expression 'DirectLake - lh_DS_BankChurn' =
+		let
+		    Source = AzureStorage.DataLake("https://onelake.dfs.fabric.microsoft.com/e82dfb36-dba0-483b-8860-67b2a08d0487/3d14c19d-21db-49af-873f-1621ee27460c", [HierarchicalNavigation=true])
+		in
+		    Source
+	lineageTag: 263d1457-9b70-498e-b995-02bb6debb127
+
+	annotation PBI_IncludeFutureArtifacts = False
+
+	annotation PBI_RemovedChildren = [{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[dbo].[churn_clean]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[dbo].[churn_test]"}},"objectType":"Table"}]
+

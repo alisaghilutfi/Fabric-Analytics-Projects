@@ -1,0 +1,94 @@
+{
+  "config": "{\"version\":\"5.69\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY25SU12\",\"type\":2,\"version\":{\"visual\":\"2.5.0\",\"report\":\"3.1.0\",\"page\":\"2.3.0\"}}},\"activeSectionIndex\":0,\"defaultDrillFilterOtherVisuals\":true,\"linguisticSchemaSyncVersion\":0,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"useEnhancedTooltips\":true,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}],\"outspacePane\":[{\"properties\":{\"expanded\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}]}}",
+  "layoutOptimization": 0,
+  "pods": [
+    {
+      "boundSection": "4ca2a97a3b612d6c8f01",
+      "config": "{}",
+      "name": "531c5ce3b670f718825b"
+    }
+  ],
+  "resourcePackages": [
+    {
+      "resourcePackage": {
+        "disabled": false,
+        "items": [
+          {
+            "name": "CY25SU12",
+            "path": "BaseThemes/CY25SU12.json",
+            "type": 202
+          }
+        ],
+        "name": "SharedResources",
+        "type": 2
+      }
+    }
+  ],
+  "sections": [
+    {
+      "config": "{}",
+      "displayName": "Page 1",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "4ca2a97a3b612d6c8f01",
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"257f47c90c3b3696e543\",\"layouts\":[{\"id\":0,\"position\":{\"x\":17,\"y\":431,\"width\":669,\"height\":272,\"z\":3000,\"tabOrder\":3000}}],\"singleVisual\":{\"visualType\":\"lineClusteredColumnComboChart\",\"projections\":{\"Y\":[{\"queryRef\":\"customer_churn_test_predictions.ChurnRate\"}],\"Y2\":[{\"queryRef\":\"customer_churn_test_predictions.Customers\"}],\"Category\":[{\"queryRef\":\"customer_churn_test_predictions.NumOfProducts\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"customer_churn_test_predictions\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"ChurnRate\"},\"Name\":\"customer_churn_test_predictions.ChurnRate\",\"NativeReferenceName\":\"ChurnRate\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Customers\"},\"Name\":\"customer_churn_test_predictions.Customers\",\"NativeReferenceName\":\"Customers\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"NumOfProducts\"},\"Name\":\"customer_churn_test_predictions.NumOfProducts\",\"NativeReferenceName\":\"NumOfProducts\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"ChurnRate\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true,\"objects\":{\"categoryAxis\":[{\"properties\":{\"showAxisTitle\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]},\"vcObjects\":{\"title\":[{\"properties\":{\"text\":{\"expr\":{\"Literal\":{\"Value\":\"'Churn Rate of Customers by NumOfProducts'\"}}}}}]}}}",
+          "filters": "[]",
+          "height": 272.00,
+          "width": 669.00,
+          "x": 17.00,
+          "y": 431.00,
+          "z": 3000.00
+        },
+        {
+          "config": "{\"name\":\"33803e2d92824a9ca251\",\"layouts\":[{\"id\":0,\"position\":{\"x\":714,\"y\":149,\"width\":532,\"height\":272,\"z\":4000,\"tabOrder\":4000}}],\"singleVisual\":{\"visualType\":\"columnChart\",\"projections\":{\"Y\":[{\"queryRef\":\"customer_churn_test_predictions.ChurnRate\"}],\"Category\":[{\"queryRef\":\"customer_churn_test_predictions.NewCreditsScore\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"customer_churn_test_predictions\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"ChurnRate\"},\"Name\":\"customer_churn_test_predictions.ChurnRate\",\"NativeReferenceName\":\"ChurnRate\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"NewCreditsScore\"},\"Name\":\"customer_churn_test_predictions.NewCreditsScore\",\"NativeReferenceName\":\"Sum of NewCreditsScore\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"ChurnRate\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true,\"objects\":{\"categoryAxis\":[{\"properties\":{\"showAxisTitle\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]},\"vcObjects\":{\"title\":[{\"properties\":{\"text\":{\"expr\":{\"Literal\":{\"Value\":\"'Churn Rate by NewCreditsScore'\"}}}}}]}}}",
+          "filters": "[]",
+          "height": 272.00,
+          "width": 532.00,
+          "x": 714.00,
+          "y": 149.00,
+          "z": 4000.00
+        },
+        {
+          "config": "{\"name\":\"71b8747d6d7df51dff92\",\"layouts\":[{\"id\":0,\"position\":{\"x\":16.881303335919316,\"y\":148.95267649340573,\"z\":2000,\"width\":669.2940263770364,\"height\":272.0868890612878,\"tabOrder\":2000}}],\"singleVisual\":{\"visualType\":\"lineClusteredColumnComboChart\",\"projections\":{\"Y\":[{\"queryRef\":\"customer_churn_test_predictions.ChurnRate\"}],\"Category\":[{\"queryRef\":\"customer_churn_test_predictions.Age\",\"active\":true}],\"Y2\":[{\"queryRef\":\"customer_churn_test_predictions.Customers\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"customer_churn_test_predictions\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"ChurnRate\"},\"Name\":\"customer_churn_test_predictions.ChurnRate\",\"NativeReferenceName\":\"ChurnRate\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Age\"},\"Name\":\"customer_churn_test_predictions.Age\",\"NativeReferenceName\":\"Age\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Customers\"},\"Name\":\"customer_churn_test_predictions.Customers\",\"NativeReferenceName\":\"Customers\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"ChurnRate\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true,\"objects\":{\"categoryAxis\":[{\"properties\":{\"showAxisTitle\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]},\"vcObjects\":{\"title\":[{\"properties\":{\"text\":{\"expr\":{\"Literal\":{\"Value\":\"'Churn Rate of Customers by Age'\"}}}}}]}}}",
+          "filters": "[]",
+          "height": 272.09,
+          "width": 669.29,
+          "x": 16.88,
+          "y": 148.95,
+          "z": 2000.00
+        },
+        {
+          "config": "{\"name\":\"85ba5a923ec0dc3a9059\",\"layouts\":[{\"id\":0,\"position\":{\"x\":16.745707277187243,\"y\":11.512673753066231,\"z\":0,\"width\":895.8953393295176,\"height\":94.19460343417825,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"textbox\",\"drillFilterOtherVisuals\":true,\"objects\":{\"general\":[{\"properties\":{\"paragraphs\":[{\"textRuns\":[{\"value\":\"Bank Customer Churn\",\"textStyle\":{\"fontSize\":\"44pt\",\"color\":\"#161616\"}}],\"horizontalTextAlignment\":\"center\"}]}}]},\"vcObjects\":{\"background\":[{\"properties\":{\"color\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":2,\"Percent\":0.2}}}}}}}]}}}",
+          "filters": "[]",
+          "height": 94.19,
+          "width": 895.90,
+          "x": 16.75,
+          "y": 11.51,
+          "z": 0.00
+        },
+        {
+          "config": "{\"name\":\"9264dbcffd9a4c2f59f7\",\"layouts\":[{\"id\":0,\"position\":{\"x\":714,\"y\":431,\"width\":532,\"height\":272,\"z\":5000,\"tabOrder\":5000}}],\"singleVisual\":{\"visualType\":\"clusteredColumnChart\",\"projections\":{\"Y\":[{\"queryRef\":\"customer_churn_test_predictions.GermanyChurn\"},{\"queryRef\":\"customer_churn_test_predictions.SpainChurn\"},{\"queryRef\":\"customer_churn_test_predictions.FranceChurn\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"customer_churn_test_predictions\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"FranceChurn\"},\"Name\":\"customer_churn_test_predictions.FranceChurn\",\"NativeReferenceName\":\"FranceChurn\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"GermanyChurn\"},\"Name\":\"customer_churn_test_predictions.GermanyChurn\",\"NativeReferenceName\":\"GermanyChurn\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"SpainChurn\"},\"Name\":\"customer_churn_test_predictions.SpainChurn\",\"NativeReferenceName\":\"SpainChurn\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"GermanyChurn\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true,\"objects\":{\"valueAxis\":[{\"properties\":{\"showAxisTitle\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]},\"vcObjects\":{\"title\":[{\"properties\":{\"text\":{\"expr\":{\"Literal\":{\"Value\":\"'Churn Rate of Spain, France, and Germany'\"}}}}}]}}}",
+          "filters": "[]",
+          "height": 272.00,
+          "width": 532.00,
+          "x": 714.00,
+          "y": 431.00,
+          "z": 5000.00
+        },
+        {
+          "config": "{\"name\":\"e4ffd4389a0571158ac8\",\"layouts\":[{\"id\":0,\"position\":{\"x\":919.9672935404743,\"y\":11.512673753066231,\"z\":1000,\"width\":326.5412919051513,\"height\":94,\"tabOrder\":1000}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"customer_churn_test_predictions.ChurnRate\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"customer_churn_test_predictions\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"ChurnRate\"},\"Name\":\"customer_churn_test_predictions.ChurnRate\",\"NativeReferenceName\":\"Churn Rate\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"ChurnRate\"}}}]},\"columnProperties\":{\"customer_churn_test_predictions.ChurnRate\":{\"displayName\":\"Churn Rate\"}},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true,\"objects\":{\"wordWrap\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}]},\"vcObjects\":{\"visualHeader\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}],\"general\":[{\"properties\":{\"keepLayerOrder\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}],\"title\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}},\"titleWrap\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}},\"fontSize\":{\"expr\":{\"Literal\":{\"Value\":\"14D\"}}},\"heading\":{\"expr\":{\"Literal\":{\"Value\":\"'Heading3'\"}}}}}],\"subTitle\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}},\"bold\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]}}}",
+          "filters": "[]",
+          "height": 94.00,
+          "width": 326.54,
+          "x": 919.97,
+          "y": 11.51,
+          "z": 1000.00
+        }
+      ],
+      "width": 1280.00
+    }
+  ]
+}
