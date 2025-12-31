@@ -1,0 +1,63 @@
+{
+  "$id": "https://developer.microsoft.com/json-schemas/fabric/item/anomalyDetector/definition/1.0.0/schema.json",
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "univariateConfigurations": [
+    {
+      "configurationId": "ae4eb7ec-b7eb-425c-84ba-d2a932661c1e",
+      "configurationName": "AnomaliesConfiguration_BicycleRentals",
+      "fabricDataSource": {
+        "dataSourceType": "KqlDb",
+        "tableName": "TransformedData",
+        "timestampColumnName": "Timestamp",
+        "instanceIDColumnName": "Street",
+        "attributeColumnName": "No_Empty_Docks",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "artifactId": "d78bcdf8-4c6c-9d87-4b33-6fa504574108"
+      },
+      "modelOption": {
+        "modelSelection": {
+          "modelAlgorithm": "KNN",
+          "modelVersion": "1.0",
+          "modelName": "Local Pattern Detector",
+          "modelDescription": "Compares each data point to its neighbors to find anomalies \u2014 great for spotting local shifts in behavior, like sudden changes in user activity."
+        },
+        "parameters": [
+          {
+            "$type": "String",
+            "value": "daily",
+            "name": "Granularity"
+          },
+          {
+            "$type": "String",
+            "value": "auto",
+            "name": "ImputeMode"
+          },
+          {
+            "$type": "Float",
+            "value": 0.9,
+            "name": "MaxAnomalyRatio"
+          },
+          {
+            "$type": "Integer",
+            "value": 360,
+            "name": "Periodicity"
+          },
+          {
+            "$type": "Integer",
+            "value": 0,
+            "name": "Regularization"
+          },
+          {
+            "$type": "Integer",
+            "value": 45,
+            "name": "Sensitivity"
+          }
+        ]
+      },
+      "detectionSettings": {
+        "confidence": 75,
+        "autoPublish": false
+      }
+    }
+  ]
+}

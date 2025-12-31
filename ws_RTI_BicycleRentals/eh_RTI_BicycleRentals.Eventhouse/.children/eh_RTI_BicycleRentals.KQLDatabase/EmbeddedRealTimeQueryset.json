@@ -1,0 +1,46 @@
+{
+  "queryset": {
+    "version": "1.0.0",
+    "dataSources": [
+      {
+        "id": "7effa431-979c-4541-a5be-bb3cfedab16b",
+        "clusterUri": "https://trd-mpt42n4h5vmke6909h.z2.kusto.fabric.microsoft.com",
+        "type": "Fabric",
+        "databaseItemId": "04574108-6fa5-4b33-9d87-4c6cd78bcdf8",
+        "databaseItemName": "eh_RTI_BicycleRentals"
+      }
+    ],
+    "tabs": [
+      {
+        "id": "838de6ac-6849-4735-a818-81ce07d5c7ce",
+        "content": "//***********************************************************************************************************\n// Here are two articles to help you get started with KQL:\n// KQL reference guide - https://aka.ms/KQLguide\n// SQL - KQL conversions - https://aka.ms/sqlcheatsheet\n//***********************************************************************************************************\n\n// Use \"take\" to view a sample number of records in the table and check the data.\nRawData\n| take 10\n\nTransformedData\n| take 10\n\nAggregatedData\n| take 10\n\n// See how many records are in the table.\nRawData\n| count\n\nTransformedData\n| count\n\nAggregatedData\n| count\n\n// This query returns the number of ingestions per hour in the given table.\nRawData\n| summarize IngestionCount = count() by bin(ingestion_time(), 1h)\n\n",
+        "title": "query_Basics",
+        "dataSourceId": "7effa431-979c-4541-a5be-bb3cfedab16b"
+      },
+      {
+        "id": "b24752ee-d98f-47b0-8edb-0de4ad5475cf",
+        "content": "// Move RawData table to a bronze folder\n.alter table RawData (\n    BikepointID:string, Street:string, Neighbourhood:string, Latitude:real,Longitude:real, \n    No_Bikes:long, No_Empty_Docks:long, Timestamp:datetime) \nwith (folder=\"Bronze\")\n\n\n// Create the TransformedData table and move it to a silver folder\n.create table TransformedData (\n    BikepointID:int, Street:string, Neighbourhood:string, Latitude:real, Longitude:real, \n    No_Bikes:long, No_Empty_Docks:long, Timestamp:datetime, BikesToBeFilled:long, Action:string) \nwith (folder=\"Silver\")\n\n\n// Create function with transformation logic\n.create-or-alter function TransformRawData()\n{\n    RawData\n    | parse BikepointID with * \"BikePoints_\" BikepointID:int \n    | extend BikesToBeFilled = No_Empty_Docks - No_Bikes\n    | extend  Action = iff(BikesToBeFilled > 0, tostring(BikesToBeFilled), \"NA\")\n}\n\n\n// IsEnabled (bool) - States if update policy is true - enabled, or false - disabled\n// source (string) - Name of the table that triggers invocation of the update policy\n// Query (string) - A query used to produce data for the update\n// IsTransactional (bool) - States if the update policy is transactional or not, default is false). If transactional and the update policy fails, the source table is not updated.\n// PropagateIngestionProperties (bool) - States if properties specified during ingestion to the source table, such as extent tags and creation time, apply to the target table\n// read more - https://aka.ms/updatepolicy\n\n.alter table TransformedData policy update\n```[{\n    \"IsEnabled\": true,\n    \"Source\": \"RawData\",\n    \"Query\": \"TransformRawData()\",\n    \"IsTransactional\": false,\n    \"PropagateIngestionProperties\": false\n}]```\n\n\n",
+        "title": "query_Transformations",
+        "dataSourceId": "7effa431-979c-4541-a5be-bb3cfedab16b"
+      },
+      {
+        "id": "539f5c40-e702-43dc-a299-f36a15fcd1a2",
+        "content": "// Showing the number of bikes in the Chelsea neighborhood as a time chart\nTransformedData\n| where BikepointID > 100 and Neighbourhood == \"Chelsea\"\n| project Timestamp, No_Bikes\n| render timechart \n\n\n// Create a materialized view, which returns an up-to-date result of the aggregation query, and move it to a gold folder\n.create-or-alter materialized-view with (folder=\"Gold\") AggregatedData on table TransformedData\n{\n   TransformedData\n   | summarize arg_max(Timestamp,No_Bikes) by BikepointID\n}\n\nAggregatedData\n| sort by BikepointID\n| render columnchart with (ycolumns=No_Bikes,xcolumn=BikepointID)\n\n\n// Query using T-SQL\nSELECT TOP(10) *\nFROM AggregatedData\nORDER BY No_Bikes DESC;\n\n\n// Convert a SQL query to KQL\nexplain\nSELECT top(10) *\nFROM AggregatedData\nORDER BY No_Bikes DESC;\n\nAggregatedData\n| project BikepointID, Timestamp, No_Bikes\n| sort by No_Bikes desc nulls last\n| take int(10)\n\n\n// Use Copilot to generate a KQL query\n// Your action is not supported by your SKU. Please contact your tenant admin to upgrade your SKU.\"",
+        "title": "query_StreamingData",
+        "dataSourceId": "7effa431-979c-4541-a5be-bb3cfedab16b"
+      },
+      {
+        "id": "2aedcb02-389d-436a-954b-9d5953125487",
+        "content": "// Create a Real-Time Dashboard\nAggregatedData\n| sort by BikepointID\n| render columnchart with (ycolumns=No_Bikes,xcolumn=BikepointID)",
+        "title": "query_RealTimeDashboard",
+        "dataSourceId": "7effa431-979c-4541-a5be-bb3cfedab16b"
+      },
+      {
+        "id": "e0098f5d-ee0c-4af7-9957-633306543a99",
+        "content": "// Create a KQL Queryset tab to be used by the map\nTransformedData\n| where ingestion_time() > ago(30d)\n| project Street, Neighbourhood, toreal(Latitude), toreal(Longitude), No_Bikes, No_Empty_Docks\n| summarize total_No_Bikes=sum(No_Bikes), total_No_Empty_Docks=sum(No_Empty_Docks) by Street, Neighbourhood, Latitude, Longitude",
+        "title": "query_GeospaceMap",
+        "dataSourceId": "7effa431-979c-4541-a5be-bb3cfedab16b"
+      }
+    ]
+  }
+}

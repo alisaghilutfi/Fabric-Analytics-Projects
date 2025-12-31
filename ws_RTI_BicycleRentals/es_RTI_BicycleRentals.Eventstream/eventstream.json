@@ -1,0 +1,286 @@
+{
+  "sources": [
+    {
+      "id": "bc749b15-dc49-47ae-b2fd-2527a6774a24",
+      "name": "source-BicycleRentals",
+      "type": "SampleData",
+      "properties": {
+        "type": "Bicycles"
+      }
+    }
+  ],
+  "destinations": [
+    {
+      "id": "ccb912bd-c77a-41cb-b8e7-5ea9a40001a0",
+      "name": "destination-BicycleRentals",
+      "type": "Eventhouse",
+      "properties": {
+        "dataIngestionMode": "ProcessedIngestion",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "itemId": "d78bcdf8-4c6c-9d87-4b33-6fa504574108",
+        "databaseName": "eh_RTI_BicycleRentals",
+        "tableName": "RawData",
+        "inputSerialization": {
+          "type": "Json",
+          "properties": {
+            "encoding": "UTF8"
+          }
+        }
+      },
+      "inputNodes": [
+        {
+          "name": "transform_ManageFields"
+        }
+      ],
+      "inputSchemas": [
+        {
+          "name": "transform_ManageFields",
+          "schema": {
+            "columns": [
+              {
+                "name": "BikepointID",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "Street",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "Neighbourhood",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "Latitude",
+                "type": "Float",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "Longitude",
+                "type": "Float",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "No_Bikes",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "No_Empty_Docks",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "Timestamp",
+                "type": "DateTime",
+                "fields": null,
+                "items": null
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "e27f9644-912d-4dcf-a211-4283a35d30b8",
+      "name": "m-84Av3rFYtkXACYBNrEBq-1b2d1d98-331e-44a7-8f76-280895ce8849",
+      "type": "Activator",
+      "properties": {
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "itemId": "95ce8849-2808-8f76-44a7-331e1b2d1d98",
+        "inputSerialization": {
+          "type": "Json",
+          "properties": {
+            "encoding": "UTF8"
+          }
+        }
+      },
+      "inputNodes": [
+        {
+          "name": "es_RTI_BicycleRentals-stream"
+        }
+      ]
+    }
+  ],
+  "streams": [
+    {
+      "id": "0aab2870-f84d-40df-b74e-9ef28f80e17d",
+      "name": "es_RTI_BicycleRentals-stream",
+      "type": "DefaultStream",
+      "properties": {},
+      "inputNodes": [
+        {
+          "name": "source-BicycleRentals"
+        }
+      ]
+    }
+  ],
+  "operators": [
+    {
+      "name": "transform_ManageFields",
+      "type": "ManageFields",
+      "inputNodes": [
+        {
+          "name": "es_RTI_BicycleRentals-stream"
+        }
+      ],
+      "properties": {
+        "columns": [
+          {
+            "type": "Rename",
+            "properties": {
+              "column": {
+                "expressionType": "ColumnReference",
+                "node": null,
+                "columnName": "BikepointID",
+                "columnPathSegments": []
+              }
+            },
+            "alias": "BikepointID"
+          },
+          {
+            "type": "Rename",
+            "properties": {
+              "column": {
+                "expressionType": "ColumnReference",
+                "node": null,
+                "columnName": "Street",
+                "columnPathSegments": []
+              }
+            },
+            "alias": "Street"
+          },
+          {
+            "type": "Rename",
+            "properties": {
+              "column": {
+                "expressionType": "ColumnReference",
+                "node": null,
+                "columnName": "Neighbourhood",
+                "columnPathSegments": []
+              }
+            },
+            "alias": "Neighbourhood"
+          },
+          {
+            "type": "Rename",
+            "properties": {
+              "column": {
+                "expressionType": "ColumnReference",
+                "node": null,
+                "columnName": "Latitude",
+                "columnPathSegments": []
+              }
+            },
+            "alias": "Latitude"
+          },
+          {
+            "type": "Rename",
+            "properties": {
+              "column": {
+                "expressionType": "ColumnReference",
+                "node": null,
+                "columnName": "Longitude",
+                "columnPathSegments": []
+              }
+            },
+            "alias": "Longitude"
+          },
+          {
+            "type": "Rename",
+            "properties": {
+              "column": {
+                "expressionType": "ColumnReference",
+                "node": null,
+                "columnName": "No_Bikes",
+                "columnPathSegments": []
+              }
+            },
+            "alias": "No_Bikes"
+          },
+          {
+            "type": "Rename",
+            "properties": {
+              "column": {
+                "expressionType": "ColumnReference",
+                "node": null,
+                "columnName": "No_Empty_Docks",
+                "columnPathSegments": []
+              }
+            },
+            "alias": "No_Empty_Docks"
+          },
+          {
+            "type": "FunctionCall",
+            "properties": {
+              "functionName": "SystemTimestamp",
+              "arguments": []
+            },
+            "alias": "Timestamp"
+          }
+        ]
+      },
+      "inputSchemas": [
+        {
+          "name": "es_RTI_BicycleRentals-stream",
+          "schema": {
+            "columns": [
+              {
+                "name": "BikepointID",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "Street",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "Neighbourhood",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "Latitude",
+                "type": "Float",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "Longitude",
+                "type": "Float",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "No_Bikes",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "No_Empty_Docks",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "compatibilityLevel": "1.0"
+}

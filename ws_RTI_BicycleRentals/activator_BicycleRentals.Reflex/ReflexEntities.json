@@ -1,0 +1,61 @@
+[
+  {
+    "uniqueIdentifier": "502549e3-3ee6-42d9-af5b-7b031bf6eca4",
+    "payload": {
+      "name": "es_RTI_BicycleRentals",
+      "description": "Container Description",
+      "type": "eventstreams"
+    },
+    "type": "container-v1"
+  },
+  {
+    "uniqueIdentifier": "e27f9644-912d-4dcf-a211-4283a35d30b8",
+    "payload": {
+      "name": "es_RTI_BicycleRentals-stream event",
+      "metadata": {
+        "eventstreamArtifactId": "0aab2870-f84d-40df-b74e-9ef28f80e17d",
+        "eventTypes": [
+          {
+            "name": "es_RTI_BicycleRentals"
+          }
+        ]
+      },
+      "parentContainer": {
+        "targetUniqueIdentifier": "502549e3-3ee6-42d9-af5b-7b031bf6eca4"
+      }
+    },
+    "type": "eventstreamSource-v1"
+  },
+  {
+    "uniqueIdentifier": "8d866418-2963-45fe-9aac-10e6a226e0a7",
+    "payload": {
+      "name": "es_RTI_BicycleRentals-stream event",
+      "parentContainer": {
+        "targetUniqueIdentifier": "502549e3-3ee6-42d9-af5b-7b031bf6eca4"
+      },
+      "definition": {
+        "type": "Event",
+        "instance": "{\"steps\":[{\"id\":\"75611546-34b9-4b85-895b-bb524314dd51\",\"name\":\"SourceEventStep\",\"rows\":[{\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"e27f9644-912d-4dcf-a211-4283a35d30b8\"}],\"kind\":\"SourceReference\",\"name\":\"SourceSelector\"}]}],\"templateId\":\"SourceEvent\",\"templateVersion\":\"1.2.3\"}"
+      }
+    },
+    "type": "timeSeriesView-v1"
+  },
+  {
+    "uniqueIdentifier": "2c296695-1ed8-4d4a-819a-71c93b7615ed",
+    "payload": {
+      "name": "ProjectRule",
+      "parentContainer": {
+        "targetUniqueIdentifier": "502549e3-3ee6-42d9-af5b-7b031bf6eca4"
+      },
+      "definition": {
+        "type": "Rule",
+        "instance": "{\"steps\":[{\"id\":\"0eb55570-c1e1-4dac-8353-2769c33d342d\",\"name\":\"FieldsDefaultsStep\",\"rows\":[{\"arguments\":[{\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"8d866418-2963-45fe-9aac-10e6a226e0a7\"}],\"kind\":\"EventReference\",\"name\":\"event\",\"type\":\"complex\"}],\"kind\":\"Event\",\"name\":\"EventSelector\"}]},{\"id\":\"3f7f3312-a4e1-4645-afdc-7eb06c50489c\",\"name\":\"EventDetectStep\",\"rows\":[{\"arguments\":[{\"name\":\"fieldName\",\"type\":\"string\",\"value\":\"No_Bikes\"}],\"kind\":\"EventField\",\"name\":\"EventFieldSelector\"},{\"arguments\":[{\"name\":\"op\",\"type\":\"string\",\"value\":\"IsLessThan\"},{\"name\":\"threshold\",\"type\":\"number\",\"value\":5}],\"kind\":\"NumberValueCondition\",\"name\":\"NumberValueCondition\"}]},{\"id\":\"dd671693-eabf-4dec-b5ea-f144442f7334\",\"name\":\"ActStep\",\"rows\":[{\"kind\":\"TeamsMessage\",\"name\":\"TeamsBinding\",\"arguments\":[{\"name\":\"messageLocale\",\"type\":\"string\",\"value\":\"en-us\"},{\"name\":\"recipients\",\"type\":\"array\",\"values\":[{\"name\":\"string\",\"type\":\"string\",\"value\":\"alisaghi_fabric@alisaghi2015gmail.onmicrosoft.com\"},{\"name\":\"string\",\"type\":\"string\",\"value\":\"ali.saghi.2015_gmail.com#EXT#@alisaghi2015gmail.onmicrosoft.com\"}]},{\"name\":\"headline\",\"type\":\"array\",\"values\":[{\"name\":\"string\",\"type\":\"string\",\"value\":\"Activator alert\"}]},{\"name\":\"optionalMessage\",\"type\":\"array\",\"values\":[{\"name\":\"string\",\"type\":\"string\",\"value\":\"The condition has been met\"}]},{\"name\":\"additionalInformation\",\"type\":\"array\",\"values\":[{\"arguments\":[{\"name\":\"name\",\"type\":\"string\",\"value\":\"No_Bikes\"},{\"arguments\":[{\"name\":\"fieldName\",\"type\":\"string\",\"value\":\"No_Bikes\"}],\"kind\":\"EventFieldReference\",\"name\":\"reference\",\"type\":\"complexReference\"}],\"kind\":\"NameReferencePair\",\"type\":\"complex\"}]}]}]}],\"templateId\":\"EventTrigger\",\"templateVersion\":\"1.2.3\"}",
+        "settings": {
+          "shouldRun": true,
+          "shouldApplyRuleOnUpdate": false
+        }
+      }
+    },
+    "type": "timeSeriesView-v1"
+  }
+]
