@@ -5,7 +5,7 @@ It covers both set up and use the main features of real-time intelligence with a
 # Scenario
 The sample data used in this project is a set of bicycle data that includes information about bike ID, location, timestamp, and more. We will learn how to set up resources, ingest data, set alerts on the data, and visualize the data to extract insights as follows:
 
- - Set up your environment
+ - Set up the environment
  - Get data in the Real-Time hub
  - Transform events
  - Publish an eventstream
