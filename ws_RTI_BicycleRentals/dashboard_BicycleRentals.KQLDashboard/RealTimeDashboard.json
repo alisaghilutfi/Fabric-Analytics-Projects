@@ -1,0 +1,132 @@
+{
+  "schema_version": 67,
+  "tiles": [
+    {
+      "id": "fde4fdbd-9e6a-448e-9803-4bcb291d623f",
+      "title": "Number of Bikes per PointID",
+      "visualType": "area",
+      "pageId": "f5b03eaf-fdd2-4cd3-b197-a20bc8e42e8a",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 9,
+        "height": 14
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "58c94113-3c9a-4de0-b287-cd1593bc493f"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "additional": [],
+          "showMultiplePanels": false,
+          "base": {
+            "horizontalLines": [],
+            "yAxisScale": "linear",
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "columns": [],
+            "label": "",
+            "id": "-1"
+          }
+        },
+        "hideLegend": true,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": "BikepointID",
+        "yColumns": [
+          "No_Bikes"
+        ],
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilter": [],
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "forceAxisTicks": false,
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "4374b788-7eab-4afa-9c36-ba27debcc334",
+      "title": "Bike locations Map",
+      "visualType": "map",
+      "pageId": "f5b03eaf-fdd2-4cd3-b197-a20bc8e42e8a",
+      "layout": {
+        "x": 9,
+        "y": 0,
+        "width": 15,
+        "height": 14
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "92d7821b-00f7-4233-b9ff-d3107792968c"
+      },
+      "visualOptions": {
+        "map__latitudeColumn": "Latitude",
+        "map__longitudeColumn": "Longitude",
+        "map__labelColumn": "BikepointID",
+        "map__sizeColumn": null,
+        "map__sizeDisabled": true,
+        "map__geoType": "numeric",
+        "map__geoPointColumn": null
+      }
+    }
+  ],
+  "baseQueries": [],
+  "parameters": [
+    {
+      "kind": "duration",
+      "id": "85851d1f-5b38-477e-baaa-708eb90eb588",
+      "displayName": "Time range",
+      "description": "",
+      "beginVariableName": "_startTime",
+      "endVariableName": "_endTime",
+      "defaultValue": {
+        "kind": "dynamic",
+        "count": 1,
+        "unit": "hours"
+      },
+      "showOnPages": {
+        "kind": "all"
+      }
+    }
+  ],
+  "dataSources": [
+    {
+      "id": "df01667c-bc6b-4dea-a53d-67c9451bd9f5",
+      "kind": "kusto-trident",
+      "scopeId": "kusto-trident",
+      "clusterUri": "",
+      "database": "d78bcdf8-4c6c-9d87-4b33-6fa504574108",
+      "name": "eh_RTI_BicycleRentals",
+      "workspace": "00000000-0000-0000-0000-000000000000"
+    }
+  ],
+  "pages": [
+    {
+      "name": "Page 1",
+      "id": "f5b03eaf-fdd2-4cd3-b197-a20bc8e42e8a"
+    }
+  ],
+  "queries": [
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "df01667c-bc6b-4dea-a53d-67c9451bd9f5"
+      },
+      "text": "// Create a Real-Time Dashboard\nAggregatedData\n| sort by BikepointID\n| render columnchart with (ycolumns=No_Bikes,xcolumn=BikepointID)",
+      "id": "58c94113-3c9a-4de0-b287-cd1593bc493f",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "df01667c-bc6b-4dea-a53d-67c9451bd9f5"
+      },
+      "text": "// Please enter your KQL query (Example):\n// <table name>\n// | where <datetime column> between (['_startTime'] .. ['_endTime']) // Time range filtering\n// | take 100\n\nRawData\n| where Timestamp > ago(1h)",
+      "id": "92d7821b-00f7-4233-b9ff-d3107792968c",
+      "usedVariables": []
+    }
+  ]
+}

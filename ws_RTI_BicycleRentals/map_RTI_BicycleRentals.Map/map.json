@@ -1,0 +1,87 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/map/definition/1.0.0/schema.json",
+  "basemap": {
+    "options": null,
+    "controls": null,
+    "backgroundColor": null,
+    "theme": null
+  },
+  "dataSources": {
+    "lakehouses": [
+      {
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "artifactId": "04f86353-5d8e-bf40-40e1-363713b7f4e5"
+      }
+    ],
+    "kqlDataBases": [
+      {
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "artifactId": "d78bcdf8-4c6c-9d87-4b33-6fa504574108"
+      }
+    ]
+  },
+  "layerSources": [
+    {
+      "id": "eac3294e-f622-4ef1-97b5-78c3faa2ae71",
+      "name": "LatLong_BicycleRentals",
+      "type": "kusto",
+      "options": null,
+      "parentArtifactId": "d78bcdf8-4c6c-9d87-4b33-6fa504574108",
+      "relativePath": null,
+      "querysetTabId": "00000000-0000-0000-0000-000000000000_e0098f5d-ee0c-4af7-9957-633306543a99",
+      "latitudeColumnName": "Latitude",
+      "longitudeColumnName": "Longitude",
+      "geometryColumnName": null,
+      "refreshIntervalMs": 300000
+    },
+    {
+      "id": "2743a960-b247-4e89-a09c-1a38c6cebe02",
+      "name": "london-boroughs",
+      "type": "geojson",
+      "options": null,
+      "parentArtifactId": "04f86353-5d8e-bf40-40e1-363713b7f4e5",
+      "relativePath": "Files/GeoJSON_files/london-boroughs.geojson",
+      "querysetTabId": null,
+      "latitudeColumnName": null,
+      "longitudeColumnName": null,
+      "geometryColumnName": null,
+      "refreshIntervalMs": 0
+    },
+    {
+      "id": "fbb2d689-158b-463c-b9ac-dddf620f06e9",
+      "name": "buckingham-palace-road",
+      "type": "geojson",
+      "options": null,
+      "parentArtifactId": "04f86353-5d8e-bf40-40e1-363713b7f4e5",
+      "relativePath": "Files/GeoJSON_files/buckingham-palace-road.geojson",
+      "querysetTabId": null,
+      "latitudeColumnName": null,
+      "longitudeColumnName": null,
+      "geometryColumnName": null,
+      "refreshIntervalMs": 0
+    }
+  ],
+  "layerSettings": [
+    {
+      "id": "fda5640a-6807-4302-ae4b-bfb6f32f98d3",
+      "name": "LatLong_BicycleRentals",
+      "sourceId": "eac3294e-f622-4ef1-97b5-78c3faa2ae71",
+      "sourceLayerId": null,
+      "options": "{\"color\":\"#457CD6\",\"type\":\"vector\",\"visible\":true,\"dataLabelOptions\":{\"enabled\":false},\"minZoom\":1,\"maxZoom\":23,\"tooltipKeys\":[\"Street\",\"Neighbourhood\"],\"bubbleOptions\":{\"enableSeriesGroup\":true,\"seriesGroup\":\"Neighbourhood\",\"color\":[\"match\",[\"to-string\",[\"get\",\"Neighbourhood\"]],\"St.John's Wood\",\"#744EC2\",\"Old Ford\",\"#101FFF\",\"Stratford\",\"#0C00D9\",\"Bankside\",\"#12239E\",\"London Bridge\",\"#118DFF\",\"Knightsbridge\",\"#11639E\",\"Chelsea\",\"#457CD6\",\"Belgravia\",\"#10FF25\",\"Fitzrovia\",\"#42E058\",\"Wandsworth Road\",\"#4EC251\",\"Mile End\",\"#6DE637\",\"Victoria\",\"#76E043\",\"Sands End\",\"#B6C24E\",\"West End\",\"#E6BD37\",\"Strand\",\"#D9B300\",\"St. John's Wood\",\"#7B5800\",\"Battersea\",\"#7B1F00\",\"Olympia\",\"#6B007B\",\"West Chelsea\",\"#82119E\",\"#457CD6\"],\"sizeType\":\"data-driven\",\"sizeProperty\":\"total_No_Empty_Docks\"},\"pointLayerType\":\"bubble\"}"
+    },
+    {
+      "id": "b642a4ce-3f3d-436d-84f2-0719bf339fac",
+      "name": "london-boroughs",
+      "sourceId": "2743a960-b247-4e89-a09c-1a38c6cebe02",
+      "sourceLayerId": null,
+      "options": "{\"color\":\"#76E043\",\"type\":\"vector\",\"visible\":true}"
+    },
+    {
+      "id": "5782e30c-3cf4-43a7-9e33-873e9001dfe9",
+      "name": "buckingham-palace-road",
+      "sourceId": "fbb2d689-158b-463c-b9ac-dddf620f06e9",
+      "sourceLayerId": null,
+      "options": "{\"color\":\"#457CD6\",\"type\":\"vector\",\"visible\":true}"
+    }
+  ]
+}

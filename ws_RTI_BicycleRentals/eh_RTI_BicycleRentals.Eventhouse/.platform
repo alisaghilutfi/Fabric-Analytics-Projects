@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Eventhouse",
+    "displayName": "eh_RTI_BicycleRentals",
+    "description": "eh_RTI_BicycleRentals"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "20b87cbb-7ecf-8a8f-42f7-8189e82bf090"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Map",
+    "displayName": "map_RTI_BicycleRentals"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "0e3bea8c-19e7-b5e9-4f60-653c646ae4bc"
+  }
+}

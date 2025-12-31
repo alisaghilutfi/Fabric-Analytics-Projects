@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "KQLDatabase",
+    "displayName": "eh_RTI_BicycleRentals",
+    "description": "eh_RTI_BicycleRentals"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "d78bcdf8-4c6c-9d87-4b33-6fa504574108"
+  }
+}
