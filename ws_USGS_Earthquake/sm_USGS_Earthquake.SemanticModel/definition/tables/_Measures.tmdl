@@ -1,0 +1,76 @@
+table _Measures
+	lineageTag: aff96b1e-2463-4d5e-bb39-64e99e1650b3
+
+	/// Calculates the average magnitude across all earthquake events in the current filter context. DAX logic: AVERAGE sums up all Magnitude values and divides by the number of events, giving a sense of the typical earthquake strength in a selected period or region.
+	measure 'Avg Magnitude' = AVERAGE('Earthquake Events'[Magnitude])
+		formatString: 0.00
+		displayFolder: Magnitude
+		lineageTag: b6a78c40-0aca-41a4-99fe-0ff06d933de2
+
+	/// Returns the highest magnitude recorded among all earthquake events in the current filter context. DAX logic: MAX scans all Magnitude values and returns the single largest one, highlighting the most powerful earthquake in the selection.
+	measure 'Max Magnitude' = MAX('Earthquake Events'[Magnitude])
+		formatString: 0.00
+		displayFolder: Magnitude
+		lineageTag: 97264098-f7f9-4f61-a25f-c6be1b14cb41
+
+	/// Returns the lowest magnitude recorded among all earthquake events in the current filter context. DAX logic: MIN scans all Magnitude values and returns the single smallest one, useful for understanding the lower bound of seismic activity.
+	measure 'Min Magnitude' = MIN('Earthquake Events'[Magnitude])
+		formatString: 0.00
+		displayFolder: Magnitude
+		lineageTag: 3a731344-c83b-4974-a64d-b5a7dca11a47
+
+	/// Calculates the proportion of earthquake events classified as High significance out of all events. DAX logic: FILTER first narrows the table down to only rows where Significance Class equals 'High'. COUNTROWS then counts those filtered rows. DIVIDE divides that count by the total number of all rows, returning the result as a percentage. If there are no rows, DIVIDE safely returns 0 instead of an error.
+	measure '% High Significance' =
+			DIVIDE(
+			    COUNTROWS(FILTER('Earthquake Events', 'Earthquake Events'[Significance Class] = "High")),
+			    COUNTROWS('Earthquake Events')
+			)
+		formatString: 0.0%
+		displayFolder: Significance
+		lineageTag: b63f05de-c9a2-4426-8f00-cd667de93a2f
+
+	/// Calculates the average USGS significance score across all earthquake events in the current filter context. DAX logic: AVERAGE sums all Significance scores and divides by the number of events, giving a sense of the overall impact level of earthquakes in the selection.
+	measure 'Avg Significance' = AVERAGE('Earthquake Events'[Significance])
+		formatString: #,0
+		displayFolder: Significance
+		lineageTag: b4850cff-3472-4caa-8468-8fa327e71ce5
+
+	/// Returns the highest USGS significance score among all earthquake events in the current filter context. DAX logic: MAX scans all Significance scores and returns the single largest one, identifying the most impactful event in the selection.
+	measure 'Max Significance' = MAX('Earthquake Events'[Significance])
+		formatString: #,0
+		displayFolder: Significance
+		lineageTag: a0af2f2e-8b6a-44c9-8f1a-75950286bd72
+
+	/// Returns the date and time of the earliest earthquake event in the current filter context. DAX logic: MIN scans all Event Time values and returns the oldest one, telling you when the first earthquake in the selection was recorded.
+	measure 'Earliest Event Date' = MIN('Earthquake Events'[Event Time])
+		formatString: dd MMM yyyy
+		displayFolder: Time
+		lineageTag: e7a42632-7910-4737-8bad-227422dacb96
+
+	/// Returns the date and time of the most recent earthquake event in the current filter context. DAX logic: MAX scans all Event Time values and returns the latest one, telling you when the most recent earthquake in the selection occurred.
+	measure 'Latest Event Date' = MAX('Earthquake Events'[Event Time])
+		formatString: dd MMM yyyy
+		displayFolder: Time
+		lineageTag: 7cd94f5e-64dd-4708-b18c-e29f1f5b20bf
+
+	/// Counts the total number of earthquake event rows in the table. DAX logic: COUNTROWS counts every row in the Earthquake Events table, giving the total number of recorded seismic events in the current filter context.
+	measure 'Total Earthquakes' = COUNTROWS('Earthquake Events')
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: 8856ebdc-14a8-4337-b674-af2034adb90e
+
+	column Column
+		formatString: 0
+		lineageTag: a7551b40-d0e5-4f8c-b693-4bf28dfcaa93
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = 963b6bcd294541ab80f8a28cf5237509
+

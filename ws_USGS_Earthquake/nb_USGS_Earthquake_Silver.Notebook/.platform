@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "nb_USGS_Earthquake_Silver"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "031e09b7-54bb-a12a-41fc-3987de29c7b4"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Lakehouse",
+    "displayName": "lh_USGS_Earthquake"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "4d845083-1833-b5a8-4230-3b18fda3c40e"
+  }
+}

@@ -1,0 +1,11 @@
+expression 'DirectLake - lh_USGS_Earthquake' =
+		let
+		    Source = AzureStorage.DataLake("https://onelake.dfs.fabric.microsoft.com/39caa3ab-a964-45c2-bd5b-7d46ad66c985/fda3c40e-3b18-4230-b5a8-18334d845083", [HierarchicalNavigation=true])
+		in
+		    Source
+	lineageTag: 91f7c3fd-e8e5-4561-8c23-3563ba911312
+
+	annotation PBI_IncludeFutureArtifacts = False
+
+	annotation PBI_RemovedChildren = [{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[dbo].[earthquake_events_silver]"}},"objectType":"Table"}]
+
