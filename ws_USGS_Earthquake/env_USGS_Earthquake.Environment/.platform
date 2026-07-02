@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Environment",
+    "displayName": "env_USGS_Earthquake",
+    "description": "Environment"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "b08e8bb0-93e8-b11c-43af-feb0445540a6"
+  }
+}
