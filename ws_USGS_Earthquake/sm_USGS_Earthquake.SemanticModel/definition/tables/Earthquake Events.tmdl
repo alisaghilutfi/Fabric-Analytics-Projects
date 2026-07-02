@@ -1,0 +1,157 @@
+/// Contains one row per earthquake event as recorded by the USGS (United States Geological Survey). Each record represents a seismic event with its location, magnitude, significance, and timestamps. Data is sourced from the Gold layer of the USGS Earthquake Lakehouse (lh_USGS_Earthquake), meaning it has been cleaned, enriched, and is ready for reporting and analysis.
+table 'Earthquake Events'
+	lineageTag: c770edfd-5fab-40c6-875f-1d26e36e8f17
+	sourceLineageTag: [dbo].[earthquake_events_gold]
+
+	/// The unique identifier assigned to each earthquake event by the USGS. Use this column to uniquely identify or cross-reference a specific event.
+	column ID
+		dataType: string
+		lineageTag: bd3db908-d910-4453-94ce-83a2e8f682c0
+		sourceLineageTag: id
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The east-west geographic coordinate (in decimal degrees) of the earthquake epicenter. Negative values indicate west of the Prime Meridian. Used together with Latitude to plot events on a map.
+	column Longitude
+		dataType: double
+		lineageTag: c9e2cbeb-d2c0-4dfd-bdae-15d365db66ad
+		sourceLineageTag: longitude
+		dataCategory: Longitude
+		summarizeBy: sum
+		sourceColumn: longitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// The north-south geographic coordinate (in decimal degrees) of the earthquake epicenter. Positive values indicate north of the Equator. Used together with Longitude to plot events on a map.
+	column Latitude
+		dataType: double
+		lineageTag: 0268ff86-e660-4a4f-acdf-5433617864a8
+		sourceLineageTag: latitude
+		dataCategory: Latitude
+		summarizeBy: sum
+		sourceColumn: latitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// The depth or elevation (in meters) of the earthquake hypocenter — the point underground where the earthquake originated. Negative values indicate depth below the surface.
+	column Elevation
+		dataType: double
+		lineageTag: 4b1935bd-5fb8-4bee-9ea9-2a6334156423
+		sourceLineageTag: elevation
+		summarizeBy: sum
+		sourceColumn: elevation
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// A short human-readable label for the earthquake event, typically combining the magnitude and location (e.g. 'M 4.5 - 10km NE of City'). Useful for labelling visuals and tooltips.
+	column Title
+		dataType: string
+		lineageTag: e6305c25-8331-4251-9977-5333e3460605
+		sourceLineageTag: title
+		summarizeBy: none
+		sourceColumn: title
+
+		annotation SummarizationSetBy = Automatic
+
+	/// A descriptive text of the geographic area nearest to the earthquake epicenter, as reported by the USGS (e.g. '10km NE of Tokyo, Japan'). Provides more detail than the Title alone.
+	column 'Place Description'
+		dataType: string
+		lineageTag: bcd2bc0d-fad8-4f28-b8ae-ae1b213e3f38
+		sourceLineageTag: place_description
+		summarizeBy: none
+		sourceColumn: place_description
+
+		annotation SummarizationSetBy = Automatic
+
+	/// A numeric score calculated by the USGS that reflects the overall importance of the earthquake event. It combines factors such as magnitude, maximum MMI (Modified Mercalli Intensity), felt reports, and estimated impact. Higher values indicate more significant events.
+	column Significance
+		dataType: int64
+		formatString: 0
+		lineageTag: ec7837ea-8d8d-4820-8673-5131fa8978b9
+		sourceLineageTag: sig
+		summarizeBy: sum
+		sourceColumn: sig
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The measured size or strength of the earthquake on a logarithmic scale. Each whole number increase represents approximately 31.6 times more energy released. For example, a magnitude 6.0 is significantly stronger than a magnitude 5.0.
+	column Magnitude
+		dataType: double
+		lineageTag: 1f79612a-91d1-4e1c-a0e1-43f2afc2c185
+		sourceLineageTag: mag
+		summarizeBy: sum
+		sourceColumn: mag
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// The method or scale used to calculate the Magnitude (e.g. 'ml' for local magnitude, 'mb' for body wave, 'mw' for moment magnitude). Different methods are used depending on the region and the size of the event.
+	column 'Magnitude Type'
+		dataType: string
+		lineageTag: 69912c50-73f5-416a-af87-10c44aabbe2a
+		sourceLineageTag: magType
+		summarizeBy: none
+		sourceColumn: magType
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The date and time (UTC) when the earthquake occurred. Use this column for time-based analysis such as trends over days, months, or years.
+	column 'Event Time'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 5df55080-f552-4a84-b20e-d80782ae4d83
+		sourceLineageTag: time
+		summarizeBy: none
+		sourceColumn: time
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The date and time (UTC) when the USGS last updated this event record. Useful for understanding data freshness — events are often revised as more seismic stations report in.
+	column 'Last Updated'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d9c06bdd-3c2c-48f5-9476-372b4d525954
+		sourceLineageTag: updated
+		summarizeBy: none
+		sourceColumn: updated
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The two-letter ISO country code of the country where the earthquake occurred (e.g. 'US', 'JP', 'TR'). Used for geographic filtering and country-level aggregations.
+	column 'Country Code'
+		dataType: string
+		lineageTag: cd9427a5-7c4d-4d21-8ee0-e9b7c6e8b30d
+		sourceLineageTag: country_code
+		summarizeBy: none
+		sourceColumn: country_code
+
+		annotation SummarizationSetBy = Automatic
+
+	/// A categorical classification of the earthquake's significance into three bands: Low, Moderate, or High. Derived from the numeric Significance score to make filtering and visual segmentation easier for report users.
+	column 'Significance Class'
+		dataType: string
+		lineageTag: c16cdbe6-a44c-43a7-9330-97ffab7ab35d
+		sourceLineageTag: sig_calss
+		summarizeBy: none
+		sourceColumn: sig_calss
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Earthquake Events' = entity
+		mode: directLake
+		source
+			entityName: earthquake_events_gold
+			schemaName: dbo
+			expressionSource: 'DirectLake - lh_USGS_Earthquake'
+
+	changedProperty = Name
+

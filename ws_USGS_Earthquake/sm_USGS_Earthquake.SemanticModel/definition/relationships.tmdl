@@ -1,0 +1,4 @@
+relationship cae96ff5-4ff0-7fd5-3b20-601320a261f2
+	fromColumn: 'Earthquake Events'.'Event Time'
+	toColumn: Date.Date
+
