@@ -136,13 +136,12 @@ table 'Earthquake Events'
 
 		annotation SummarizationSetBy = Automatic
 
-	/// A categorical classification of the earthquake's significance into three bands: Low, Moderate, or High. Derived from the numeric Significance score to make filtering and visual segmentation easier for report users.
-	column 'Significance Class'
+	column sig_class
 		dataType: string
-		lineageTag: c16cdbe6-a44c-43a7-9330-97ffab7ab35d
-		sourceLineageTag: sig_calss
+		lineageTag: a918a6f2-8818-430c-a7e1-c3aad54d1065
+		sourceLineageTag: sig_class
 		summarizeBy: none
-		sourceColumn: sig_calss
+		sourceColumn: sig_class
 
 		annotation SummarizationSetBy = Automatic
 
