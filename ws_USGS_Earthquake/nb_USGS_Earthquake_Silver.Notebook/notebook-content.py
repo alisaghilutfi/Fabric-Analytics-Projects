@@ -68,6 +68,7 @@
 
 # CELL ********************
 
+# Pull Request did not happen!
 # Fabric notebook source — nb_USGS_Earthquake_Silver (FIXED)
 # Fix: replaced mode("append") with Delta MERGE on id to prevent duplicate rows
 #      on pipeline re-runs within the same date window.
