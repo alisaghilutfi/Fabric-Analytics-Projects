@@ -1,4 +1,5 @@
-relationship cae96ff5-4ff0-7fd5-3b20-601320a261f2
+relationship 'Earthquake Events_Event Time_Date_Date'
+	joinOnDateBehavior: datePartOnly
 	fromColumn: 'Earthquake Events'.'Event Time'
 	toColumn: Date.Date
 
