@@ -191,6 +191,7 @@
 
 # CELL ********************
 
+# Pull Request did not happen!
 # Fabric notebook source — nb_USGS_Earthquake_Gold (FIXED)
 #
 # Fixes applied:
