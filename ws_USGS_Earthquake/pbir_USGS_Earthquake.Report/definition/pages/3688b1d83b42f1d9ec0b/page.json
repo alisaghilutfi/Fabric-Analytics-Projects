@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "3688b1d83b42f1d9ec0b",
+  "displayName": "Geographic Distribution",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280
+}
