@@ -6,6 +6,7 @@ table 'Earthquake Events'
 	/// The unique identifier assigned to each earthquake event by the USGS. Use this column to uniquely identify or cross-reference a specific event.
 	column ID
 		dataType: string
+		isHidden
 		lineageTag: bd3db908-d910-4453-94ce-83a2e8f682c0
 		sourceLineageTag: id
 		summarizeBy: none
@@ -42,6 +43,7 @@ table 'Earthquake Events'
 	/// The depth or elevation (in meters) of the earthquake hypocenter — the point underground where the earthquake originated. Negative values indicate depth below the surface.
 	column Elevation
 		dataType: double
+		isHidden
 		lineageTag: 4b1935bd-5fb8-4bee-9ea9-2a6334156423
 		sourceLineageTag: elevation
 		summarizeBy: sum
@@ -118,6 +120,7 @@ table 'Earthquake Events'
 	/// The date and time (UTC) when the USGS last updated this event record. Useful for understanding data freshness — events are often revised as more seismic stations report in.
 	column 'Last Updated'
 		dataType: dateTime
+		isHidden
 		formatString: General Date
 		lineageTag: d9c06bdd-3c2c-48f5-9476-372b4d525954
 		sourceLineageTag: updated

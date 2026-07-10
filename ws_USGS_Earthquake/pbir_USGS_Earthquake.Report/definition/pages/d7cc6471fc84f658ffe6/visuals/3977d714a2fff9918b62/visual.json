@@ -1,0 +1,188 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "3977d714a2fff9918b62",
+  "position": {
+    "x": 19.393939393939394,
+    "y": 81.454545454545453,
+    "z": 1,
+    "height": 96.969696969696969,
+    "width": 1240.2424242424242,
+    "tabOrder": 1
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Total Earthquakes"
+                }
+              },
+              "queryRef": "_Measures.Total Earthquakes",
+              "nativeQueryRef": "Total Earthquakes"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Total Earthquakes MTD"
+                }
+              },
+              "queryRef": "_Measures.Total Earthquakes MTD",
+              "nativeQueryRef": "Total Earthquakes MTD"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Total Earthquakes MOM %"
+                }
+              },
+              "queryRef": "_Measures.Total Earthquakes MOM %",
+              "nativeQueryRef": "Total Earthquakes MOM %"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Avg Magnitude"
+                }
+              },
+              "queryRef": "_Measures.Avg Magnitude",
+              "nativeQueryRef": "Avg Magnitude"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Avg Magnitude MTD"
+                }
+              },
+              "queryRef": "_Measures.Avg Magnitude MTD",
+              "nativeQueryRef": "Avg Magnitude MTD"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Measures"
+                  }
+                },
+                "Property": "Total Earthquakes"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {
+      "label": [
+        {
+          "properties": {
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'aboveValue'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        },
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Total Events'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Total Earthquakes"
+          }
+        },
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'MTD Events'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Total Earthquakes MTD"
+          }
+        },
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'MOM % Change'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Total Earthquakes MOM %"
+          }
+        }
+      ],
+      "value": [
+        {
+          "properties": {
+            "horizontalAlignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
