@@ -34,6 +34,7 @@ table Date
 
 	column MonthNumber
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: f8432fa6-e232-420c-899b-ec5e9caa0da8
 		sourceLineageTag: MonthNumber
@@ -48,6 +49,7 @@ table Date
 		sourceLineageTag: MonthName
 		summarizeBy: none
 		sourceColumn: MonthName
+		sortByColumn: MonthNumber
 
 		annotation SummarizationSetBy = Automatic
 
@@ -62,6 +64,7 @@ table Date
 
 	column Day
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: e24734a9-5085-4bec-9d4e-cbefdf155160
 		sourceLineageTag: Day
@@ -76,11 +79,13 @@ table Date
 		sourceLineageTag: DayOfWeek
 		summarizeBy: none
 		sourceColumn: DayOfWeek
+		sortByColumn: Weekday
 
 		annotation SummarizationSetBy = Automatic
 
 	column Weekday
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 88622ebc-a3ef-435d-8c4a-dfadebc8f961
 		sourceLineageTag: Weekday
