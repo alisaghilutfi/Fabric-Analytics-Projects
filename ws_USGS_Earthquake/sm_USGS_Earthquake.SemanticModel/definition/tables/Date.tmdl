@@ -1,3 +1,4 @@
+/// Calendar dimension spanning 2024–2027. One row per day with Year, Quarter, Month, Week, and Weekend attributes. Joined to Earthquake Events via Event Time (DatePartOnly) to enable time-based filtering and time intelligence measures.
 table Date
 	lineageTag: 05e5aa11-be8a-4a8e-81a6-99546fa7066d
 	sourceLineageTag: [dbo].[DateDimension]

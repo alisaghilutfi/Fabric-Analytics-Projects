@@ -1,3 +1,4 @@
+/// Central measure library. Contains all 17 DAX measures across 5 display folders: Magnitude, Significance, Time, Time Intelligence, and Volume. No raw data — calculated partition only.
 table _Measures
 	lineageTag: aff96b1e-2463-4d5e-bb39-64e99e1650b3
 
@@ -59,8 +60,10 @@ table _Measures
 		displayFolder: Volume
 		lineageTag: 8856ebdc-14a8-4337-b674-af2034adb90e
 
+	/// Month-to-date earthquake count. TOTALMTD accumulates Total Earthquakes from the first day of the current month to the last visible date in filter context.
 	measure 'Total Earthquakes MTD' = TOTALMTD([Total Earthquakes], 'Date'[Date])
-		formatString: 0
+		formatString: #,0
+		displayFolder: Time Intelligence
 		lineageTag: 097d7f69-535f-46fa-9518-6ff2196fe632
 
 	/// Previous month-to-date total earthquakes. Hidden helper measure used by Total Earthquakes MOM %. CALCULATE wraps Total Earthquakes in a PREVIOUSMONTH filter on the Date table.
@@ -72,19 +75,21 @@ table _Measures
 		formatString: #,0
 		isHidden
 		displayFolder: Time Intelligence
+		lineageTag: c9443d14-7fdb-4460-a1c0-4d87c2538ea3
 
 	/// Month-over-month % change in earthquake count. Compares current MTD total to prior month. Positive = more activity this month. Safe DIVIDE handles zero prior-month denominator.
 	measure 'Total Earthquakes MOM %' =
 			VAR CurrentMonth = [Total Earthquakes]
-			VAR PreviousMonth = [Total Earthquakes PMTD]
+			VAR PreviousMonth_ = [Total Earthquakes PMTD]
 			RETURN
 			    DIVIDE(
-			        CurrentMonth - PreviousMonth,
-			        PreviousMonth,
+			        CurrentMonth - PreviousMonth_,
+			        PreviousMonth_,
 			        0
 			    )
 		formatString: +0.0%;-0.0%;0.0%
 		displayFolder: Time Intelligence
+		lineageTag: 497b182a-a035-4627-848e-a7330bdf5723
 
 	/// Month-to-date average magnitude. TOTALMTD accumulates Avg Magnitude from the first day of the current month to the last visible date in filter context.
 	measure 'Avg Magnitude MTD' =
@@ -94,6 +99,7 @@ table _Measures
 			)
 		formatString: 0.00
 		displayFolder: Time Intelligence
+		lineageTag: eaeaee12-f32f-4d3b-859e-2959e801f9db
 
 	/// Rolling 7-day earthquake count ending on the last date in filter context. DATESINPERIOD builds a trailing 7-day window. Smooths daily volatility for trend visualisation.
 	measure '7-Day Rolling Earthquakes' =
@@ -108,6 +114,7 @@ table _Measures
 			)
 		formatString: #,0
 		displayFolder: Time Intelligence
+		lineageTag: e2856a1d-5f26-45a3-a63d-75a8385d111f
 
 	/// Proportion of Moderate significance events (sig 100-499) out of all events. Complements % High and % Low Significance - the three sum to 100%.
 	measure '% Moderate Significance' =
@@ -123,6 +130,7 @@ table _Measures
 			)
 		formatString: 0.0%
 		displayFolder: Significance
+		lineageTag: c615cdab-722c-4f41-b428-599f23566f24
 
 	/// Proportion of Low significance events (sig below 100) out of all events. Complements % High and % Moderate Significance - the three sum to 100%.
 	measure '% Low Significance' =
@@ -138,6 +146,7 @@ table _Measures
 			)
 		formatString: 0.0%
 		displayFolder: Significance
+		lineageTag: 288ff69c-bfa3-4d10-abb7-fea87ca93ae5
 
 	/// Classifies Avg Magnitude into a human-readable band: Micro (<2.0), Minor (2.0-3.9), Moderate (4.0-5.9), Strong (6.0+). Useful for conditional formatting and KPI icons.
 	measure 'Magnitude Band' =
@@ -151,6 +160,7 @@ table _Measures
 			        "Strong"
 			    )
 		displayFolder: Magnitude
+		lineageTag: 38ab3320-dd4b-43f8-9dd0-f8ff67e9d365
 
 	column Column
 		formatString: 0
