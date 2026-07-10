@@ -1,0 +1,103 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "1a85234052c582159077",
+  "position": {
+    "x": 20,
+    "y": 390,
+    "z": 3,
+    "height": 320,
+    "width": 1240,
+    "tabOrder": 3
+  },
+  "visual": {
+    "visualType": "hundredPercentStackedBarChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Earthquake Events"
+                    }
+                  },
+                  "Property": "Country Code"
+                }
+              },
+              "queryRef": "Earthquake Events.Country Code",
+              "nativeQueryRef": "Country Code",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "% High Significance"
+                }
+              },
+              "queryRef": "_Measures.% High Significance",
+              "nativeQueryRef": "% High Significance"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "% Moderate Significance"
+                }
+              },
+              "queryRef": "_Measures.% Moderate Significance",
+              "nativeQueryRef": "% Moderate Significance"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "% Low Significance"
+                }
+              },
+              "queryRef": "_Measures.% Low Significance",
+              "nativeQueryRef": "% Low Significance"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Measures"
+                  }
+                },
+                "Property": "% High Significance"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

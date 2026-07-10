@@ -1,12 +1,12 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
-  "name": "aa35d765c298697d9546",
+  "name": "72d40a0603bee34ad953",
   "position": {
-    "x": 19.874529485570889,
-    "y": 11.744040150564617,
+    "x": 20,
+    "y": 12,
     "z": 0,
-    "height": 52.396486825595979,
-    "width": 1240.3513174404015,
+    "height": 150,
+    "width": 300,
     "tabOrder": 0
   },
   "visual": {
@@ -20,36 +20,18 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Date"
+                      "Entity": "Earthquake Events"
                     }
                   },
-                  "Property": "Date"
+                  "Property": "Significance Class"
                 }
               },
-              "queryRef": "Date.Date",
-              "nativeQueryRef": "Date",
+              "queryRef": "Earthquake Events.Significance Class",
+              "nativeQueryRef": "Significance Class",
               "active": true
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "Date"
-                  }
-                },
-                "Property": "Date"
-              }
-            },
-            "direction": "Ascending"
-          }
-        ],
-        "isDefaultSort": true
       }
     },
     "objects": {
@@ -59,20 +41,20 @@
             "mode": {
               "expr": {
                 "Literal": {
-                  "Value": "'Between'"
+                  "Value": "'Basic'"
                 }
               }
             }
           }
         }
       ],
-      "header": [
+      "general": [
         {
           "properties": {
-            "show": {
+            "orientation": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "0D"
                 }
               }
             }

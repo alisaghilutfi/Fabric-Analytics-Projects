@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
-  "name": "b96dba3a88eb89742e06",
+  "name": "d38829e26846d5b45b61",
   "position": {
-    "x": 20,
-    "y": 485,
-    "z": 3,
-    "height": 220,
-    "width": 810,
-    "tabOrder": 3
+    "x": 840,
+    "y": 82,
+    "z": 2,
+    "height": 300,
+    "width": 420.2437275985663,
+    "tabOrder": 2
   },
   "visual": {
     "visualType": "clusteredBarChart",
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Date"
+                      "Entity": "Earthquake Events"
                     }
                   },
-                  "Property": "MonthYear"
+                  "Property": "Country Code"
                 }
               },
-              "queryRef": "Date.MonthYear",
-              "nativeQueryRef": "MonthYear",
+              "queryRef": "Earthquake Events.Country Code",
+              "nativeQueryRef": "Country Code",
               "active": true
             }
           ]

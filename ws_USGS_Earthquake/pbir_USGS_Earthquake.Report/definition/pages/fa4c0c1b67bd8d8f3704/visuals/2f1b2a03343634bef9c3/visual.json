@@ -1,0 +1,139 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "2f1b2a03343634bef9c3",
+  "position": {
+    "x": 20,
+    "y": 175,
+    "z": 2,
+    "height": 530,
+    "width": 1240,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Earthquake Events"
+                    }
+                  },
+                  "Property": "Title"
+                }
+              },
+              "queryRef": "Earthquake Events.Title",
+              "nativeQueryRef": "Title"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Earthquake Events"
+                    }
+                  },
+                  "Property": "Event Time"
+                }
+              },
+              "queryRef": "Earthquake Events.Event Time",
+              "nativeQueryRef": "Event Time"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Earthquake Events"
+                    }
+                  },
+                  "Property": "Magnitude"
+                }
+              },
+              "queryRef": "Sum(Earthquake Events.Magnitude)",
+              "nativeQueryRef": "Magnitude"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Earthquake Events"
+                    }
+                  },
+                  "Property": "Significance"
+                }
+              },
+              "queryRef": "Sum(Earthquake Events.Significance)",
+              "nativeQueryRef": "Significance"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Earthquake Events"
+                    }
+                  },
+                  "Property": "Significance Class"
+                }
+              },
+              "queryRef": "Earthquake Events.Significance Class",
+              "nativeQueryRef": "Significance Class"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Earthquake Events"
+                    }
+                  },
+                  "Property": "Country Code"
+                }
+              },
+              "queryRef": "Earthquake Events.Country Code",
+              "nativeQueryRef": "Country Code"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Earthquake Events"
+                    }
+                  },
+                  "Property": "Place Description"
+                }
+              },
+              "queryRef": "Earthquake Events.Place Description",
+              "nativeQueryRef": "Place Description"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Earthquake Events"
+                  }
+                },
+                "Property": "Event Time"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
