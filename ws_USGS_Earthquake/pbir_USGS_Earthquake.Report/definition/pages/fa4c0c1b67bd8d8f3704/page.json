@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "fa4c0c1b67bd8d8f3704",
+  "displayName": "Event Detail",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280
+}

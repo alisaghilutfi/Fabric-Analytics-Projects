@@ -1,4 +1,4 @@
-/// Contains one row per earthquake event as recorded by the USGS (United States Geological Survey). Each record represents a seismic event with its location, magnitude, significance, and timestamps. Data is sourced from the Gold layer of the USGS Earthquake Lakehouse (lh_USGS_Earthquake), meaning it has been cleaned, enriched, and is ready for reporting and analysis.
+/// One row per seismic event recorded by the USGS. Sourced from the Gold Delta table (earthquake_events_gold) via Direct Lake. Contains location, magnitude, significance, timestamps, country code, and significance classification for each event.
 table 'Earthquake Events'
 	lineageTag: c770edfd-5fab-40c6-875f-1d26e36e8f17
 	sourceLineageTag: [dbo].[earthquake_events_gold]
