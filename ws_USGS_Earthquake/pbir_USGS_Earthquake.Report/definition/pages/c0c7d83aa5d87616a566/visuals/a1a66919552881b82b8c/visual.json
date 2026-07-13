@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "a1a66919552881b82b8c",
   "position": {
-    "x": 702,
+    "x": 667,
     "y": 259,
     "z": 5,
     "height": 436,
-    "width": 554,
+    "width": 589,
     "tabOrder": 5
   },
   "visual": {
@@ -95,7 +95,7 @@
             "showAxisTitle": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             }
@@ -111,6 +111,20 @@
                   "Value": "false"
                 }
               }
+            },
+            "titleText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Date (UTC)'"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -124,6 +138,19 @@
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Daily Seismic Activity — Magnitude vs. Volume'"
                 }
               }
             }
