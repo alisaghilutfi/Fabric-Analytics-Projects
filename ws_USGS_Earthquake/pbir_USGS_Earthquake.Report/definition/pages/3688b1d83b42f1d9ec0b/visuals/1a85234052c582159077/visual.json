@@ -98,6 +98,81 @@
         "isDefaultSort": true
       }
     },
+    "visualContainerObjects": {
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "9f87f3518ae9ff5656ee",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Earthquake Events"
+              }
+            },
+            "Property": "Country Code"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "1503fffb3b2549330dd4",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "% Low Significance"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "68fa1004bf855b7bf743",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "% Moderate Significance"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "a834faa6aec3ab25cdd1",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "% High Significance"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

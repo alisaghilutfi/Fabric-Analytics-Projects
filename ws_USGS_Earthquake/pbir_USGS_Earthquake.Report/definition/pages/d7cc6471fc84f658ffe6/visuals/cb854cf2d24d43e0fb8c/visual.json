@@ -70,6 +70,53 @@
         "isDefaultSort": true
       }
     },
+    "visualContainerObjects": {
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "c3d73ebd52bc700f5462",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Earthquake Events"
+              }
+            },
+            "Property": "Significance Class"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "93a9143a36fc27771154",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Total Earthquakes"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }
