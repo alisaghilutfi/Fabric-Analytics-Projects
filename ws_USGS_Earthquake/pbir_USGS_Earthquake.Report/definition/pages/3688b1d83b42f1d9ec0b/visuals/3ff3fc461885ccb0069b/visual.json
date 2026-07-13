@@ -129,7 +129,7 @@
             "centerLatitude": {
               "expr": {
                 "Literal": {
-                  "Value": "13.450769565194875D"
+                  "Value": "13.45076956519489D"
                 }
               }
             },
@@ -207,6 +207,19 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Global Earthquake Distribution'"
                 }
               }
             }

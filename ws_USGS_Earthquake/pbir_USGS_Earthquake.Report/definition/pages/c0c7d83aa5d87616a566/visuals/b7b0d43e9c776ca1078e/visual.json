@@ -6,7 +6,7 @@
     "y": 259,
     "z": 4,
     "height": 436,
-    "width": 644,
+    "width": 613,
     "tabOrder": 4
   },
   "visual": {
@@ -80,6 +80,20 @@
                   "Value": "false"
                 }
               }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "titleText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Date (UTC)'"
+                }
+              }
             }
           }
         }
@@ -88,6 +102,13 @@
         {
           "properties": {
             "showAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "bold": {
               "expr": {
                 "Literal": {
                   "Value": "false"
