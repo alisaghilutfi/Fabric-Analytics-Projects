@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "3977d714a2fff9918b62",
   "position": {
-    "x": 19.874529485570889,
-    "y": 84.01505646173149,
+    "x": 19.860356865787431,
+    "y": 98.30876648564778,
     "z": 1,
-    "height": 110.21329987452948,
-    "width": 1240.3513174404015,
+    "height": 97.315748642358415,
+    "width": 1240.279286268425,
     "tabOrder": 1
   },
   "visual": {
@@ -183,6 +183,95 @@
         }
       ]
     },
+    "visualContainerObjects": {
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "4988db95e817c71b665a",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Total Earthquakes"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "37e4fd95f790ba1d8f33",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Total Earthquakes MTD"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "5e37a161c8a6f7e1441d",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Total Earthquakes MOM %"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "c1ff627bf2d2c875ad9d",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Avg Magnitude"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "0745c58809f4a13476f6",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Avg Magnitude MTD"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

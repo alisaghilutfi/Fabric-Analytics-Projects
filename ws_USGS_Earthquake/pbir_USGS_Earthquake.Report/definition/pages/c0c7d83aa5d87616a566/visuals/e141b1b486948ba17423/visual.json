@@ -3,7 +3,7 @@
   "name": "e141b1b486948ba17423",
   "position": {
     "x": 30,
-    "y": 108,
+    "y": 98,
     "z": 3,
     "height": 135,
     "width": 1220,
@@ -211,6 +211,95 @@
         }
       ]
     },
+    "visualContainerObjects": {
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "ab22ce4ae9b13dc0a011",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Total Earthquakes"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "e4c42e03b9ad6774b8da",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Avg Magnitude"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "c20ade6da6307443491b",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Max Magnitude"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "75e8764b354aa8a85128",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Max Significance"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "f7f01c29f74a6e7b5fce",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "% High Significance"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }
