@@ -126,7 +126,7 @@
                     "Entity": "Earthquake Events"
                   }
                 },
-                "Property": "Event Time"
+                "Property": "Magnitude"
               }
             },
             "direction": "Descending"
@@ -135,5 +135,107 @@
       }
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "fbc8829b5f429421af4b",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Earthquake Events"
+              }
+            },
+            "Property": "Title"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "10850eb7ab65e972b8ef",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Earthquake Events"
+              }
+            },
+            "Property": "Event Time"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "a9d16e5c993d9db3633c",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Earthquake Events"
+              }
+            },
+            "Property": "Magnitude"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "ac736b6552f61d4f52f8",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Earthquake Events"
+              }
+            },
+            "Property": "Significance"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "514d6ba9c698b68064df",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Earthquake Events"
+              }
+            },
+            "Property": "Significance Class"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "17be3679168cedcf8af2",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Earthquake Events"
+              }
+            },
+            "Property": "Country Code"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "3c339296cbb6f177332f",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Earthquake Events"
+              }
+            },
+            "Property": "Place Description"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
   }
 }

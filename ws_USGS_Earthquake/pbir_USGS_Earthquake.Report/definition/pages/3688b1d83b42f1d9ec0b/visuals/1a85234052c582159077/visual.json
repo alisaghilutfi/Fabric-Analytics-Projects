@@ -42,11 +42,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "% High Significance"
+                  "Property": "% Low Significance"
                 }
               },
-              "queryRef": "_Measures.% High Significance",
-              "nativeQueryRef": "% High Significance"
+              "queryRef": "_Measures.% Low Significance",
+              "nativeQueryRef": "% Low Significance"
             },
             {
               "field": {
@@ -70,11 +70,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "% Low Significance"
+                  "Property": "% High Significance"
                 }
               },
-              "queryRef": "_Measures.% Low Significance",
-              "nativeQueryRef": "% Low Significance"
+              "queryRef": "_Measures.% High Significance",
+              "nativeQueryRef": "% High Significance"
             }
           ]
         }
@@ -89,7 +89,7 @@
                     "Entity": "_Measures"
                   }
                 },
-                "Property": "% High Significance"
+                "Property": "% Low Significance"
               }
             },
             "direction": "Descending"

@@ -25,6 +25,7 @@ table Date
 
 	column Quarter
 		dataType: string
+		isHidden
 		lineageTag: 54f6b826-7a6d-4df4-bb7d-d2ed60a30a77
 		sourceLineageTag: Quarter
 		summarizeBy: none
@@ -96,6 +97,7 @@ table Date
 
 	column IsWeekend
 		dataType: boolean
+		isHidden
 		formatString: """TRUE"";""TRUE"";""FALSE"""
 		lineageTag: 8c303220-97fa-469a-b1ea-5424edc7c292
 		sourceLineageTag: IsWeekend

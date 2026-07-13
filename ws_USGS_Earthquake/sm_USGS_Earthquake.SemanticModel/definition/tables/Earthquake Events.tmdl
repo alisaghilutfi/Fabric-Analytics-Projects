@@ -17,6 +17,7 @@ table 'Earthquake Events'
 	/// The east-west geographic coordinate (in decimal degrees) of the earthquake epicenter. Negative values indicate west of the Prime Meridian. Used together with Latitude to plot events on a map.
 	column Longitude
 		dataType: double
+		isHidden
 		lineageTag: c9e2cbeb-d2c0-4dfd-bdae-15d365db66ad
 		sourceLineageTag: longitude
 		dataCategory: Longitude
@@ -30,6 +31,7 @@ table 'Earthquake Events'
 	/// The north-south geographic coordinate (in decimal degrees) of the earthquake epicenter. Positive values indicate north of the Equator. Used together with Longitude to plot events on a map.
 	column Latitude
 		dataType: double
+		isHidden
 		lineageTag: 0268ff86-e660-4a4f-acdf-5433617864a8
 		sourceLineageTag: latitude
 		dataCategory: Latitude
@@ -76,6 +78,7 @@ table 'Earthquake Events'
 	/// A numeric score calculated by the USGS that reflects the overall importance of the earthquake event. It combines factors such as magnitude, maximum MMI (Modified Mercalli Intensity), felt reports, and estimated impact. Higher values indicate more significant events.
 	column Significance
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: ec7837ea-8d8d-4820-8673-5131fa8978b9
 		sourceLineageTag: sig
@@ -87,6 +90,7 @@ table 'Earthquake Events'
 	/// The measured size or strength of the earthquake on a logarithmic scale. Each whole number increase represents approximately 31.6 times more energy released. For example, a magnitude 6.0 is significantly stronger than a magnitude 5.0.
 	column Magnitude
 		dataType: double
+		isHidden
 		lineageTag: 1f79612a-91d1-4e1c-a0e1-43f2afc2c185
 		sourceLineageTag: mag
 		summarizeBy: sum
