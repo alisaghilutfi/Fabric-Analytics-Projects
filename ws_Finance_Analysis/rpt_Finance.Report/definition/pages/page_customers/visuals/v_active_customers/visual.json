@@ -1,0 +1,37 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "v_active_customers",
+  "position": { "x": 200, "y": 80, "z": 0, "height": 110, "width": 1060, "tabOrder": 0 },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": { "Measure": { "Expression": { "SourceRef": { "Entity": "_Measures" } }, "Property": "Active Customers" } },
+              "queryRef": "_Measures.Active Customers",
+              "nativeQueryRef": "Active Customers"
+            },
+            {
+              "field": { "Measure": { "Expression": { "SourceRef": { "Entity": "_Measures" } }, "Property": "Avg Transaction Value" } },
+              "queryRef": "_Measures.Avg Transaction Value",
+              "nativeQueryRef": "Avg Transaction Value"
+            },
+            {
+              "field": { "Measure": { "Expression": { "SourceRef": { "Entity": "_Measures" } }, "Property": "% Fraud Rate" } },
+              "queryRef": "_Measures.% Fraud Rate",
+              "nativeQueryRef": "% Fraud Rate"
+            },
+            {
+              "field": { "Measure": { "Expression": { "SourceRef": { "Entity": "_Measures" } }, "Property": "Avg Risk Score" } },
+              "queryRef": "_Measures.Avg Risk Score",
+              "nativeQueryRef": "Avg Risk Score"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

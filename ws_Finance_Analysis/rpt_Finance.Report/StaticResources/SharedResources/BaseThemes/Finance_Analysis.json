@@ -1,0 +1,172 @@
+{
+  "name": "Finance_Analysis",
+  "dataColors": [
+    "#00B4D8",
+    "#0A2342",
+    "#F4A261",
+    "#2DC653",
+    "#E63946",
+    "#48CAE4",
+    "#023E8A",
+    "#F77F00",
+    "#6A994E",
+    "#C1121F",
+    "#90E0EF",
+    "#264653",
+    "#E9C46A",
+    "#A7C957",
+    "#BC4749"
+  ],
+  "background": "#F8F9FA",
+  "foreground": "#0A2342",
+  "foregroundNeutralSecondary": "#4A5568",
+  "foregroundNeutralTertiary": "#A0AEC0",
+  "backgroundLight": "#EDF2F7",
+  "backgroundNeutral": "#CBD5E0",
+  "tableAccent": "#00B4D8",
+  "good": "#2DC653",
+  "neutral": "#F4A261",
+  "bad": "#E63946",
+  "maximum": "#00B4D8",
+  "center": "#F4A261",
+  "minimum": "#E8F4FD",
+  "null": "#F4A261",
+  "hyperlink": "#00B4D8",
+  "visitedHyperlink": "#0A2342",
+  "accent": "#00B4D8",
+  "secondaryBackground": "#EDF2F7",
+  "shapeStroke": "#CBD5E0",
+  "disabledText": "#A0AEC0",
+  "firstLevelElements": "#0A2342",
+  "secondLevelElements": "#2D3748",
+  "thirdLevelElements": "#4A5568",
+  "fourthLevelElements": "#718096",
+  "minimum2": "#E8F4FD",
+  "maximum2": "#00B4D8",
+  "textClasses": {
+    "callout": {
+      "fontSize": 28,
+      "fontFace": "Segoe UI",
+      "color": "#0A2342"
+    },
+    "title": {
+      "fontSize": 13,
+      "fontFace": "Segoe UI",
+      "fontWeight": "bold",
+      "color": "#0A2342"
+    },
+    "header": {
+      "fontSize": 11,
+      "fontFace": "Segoe UI",
+      "fontWeight": "bold",
+      "color": "#0A2342"
+    },
+    "label": {
+      "fontSize": 10,
+      "fontFace": "Segoe UI",
+      "fontWeight": "normal",
+      "color": "#4A5568"
+    },
+    "smallLabel": {
+      "fontSize": 9,
+      "fontFace": "Segoe UI",
+      "fontWeight": "normal",
+      "color": "#718096"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [{ "show": true, "transparency": 0 }],
+        "border": [{ "width": 1 }],
+        "wordWrap": [{ "wordWrap": true }],
+        "title": [{ "titleWrap": true }],
+        "categoryAxis": [{
+          "showAxisTitle": false,
+          "gridlineStyle": "dotted",
+          "gridlineColor": { "solid": { "color": "#EDF2F7" } }
+        }],
+        "valueAxis": [{
+          "showAxisTitle": false,
+          "gridlineStyle": "dotted",
+          "gridlineColor": { "solid": { "color": "#EDF2F7" } }
+        }]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [{ "transparency": 100 }],
+        "outspace": [{
+          "color": { "solid": { "color": "#F8F9FA" } }
+        }]
+      }
+    },
+    "cardVisual": {
+      "*": {
+        "layout": [{
+          "$id": "default",
+          "cellPadding": 12,
+          "paddingIndividual": false,
+          "paddingUniform": 12,
+          "backgroundShow": true
+        }],
+        "value": [{
+          "$id": "default",
+          "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
+          "fontSize": 24
+        }],
+        "label": [{
+          "$id": "default",
+          "position": "belowValue",
+          "fontColor": { "solid": { "color": "#4A5568" } },
+          "fontSize": 10
+        }]
+      }
+    },
+    "slicer": {
+      "*": {
+        "general": [{ "responsive": true }],
+        "items": [{ "padding": 4 }]
+      }
+    },
+    "lineChart": {
+      "*": {
+        "general": [{ "responsive": true }],
+        "lineStyles": [{ "strokeWidth": 2 }]
+      }
+    },
+    "barChart": {
+      "*": {
+        "general": [{ "responsive": true }]
+      }
+    },
+    "clusteredBarChart": {
+      "*": {
+        "general": [{ "responsive": true }]
+      }
+    },
+    "donutChart": {
+      "*": {
+        "legend": [{ "show": true, "position": "RightCenter" }],
+        "labels": [{ "labelStyle": "Data value, percent of total" }]
+      }
+    },
+    "basicShape": {
+      "*": {
+        "background": [{ "show": false }],
+        "visualHeader": [{ "show": false }]
+      }
+    },
+    "textbox": {
+      "*": {
+        "visualHeader": [{ "show": false }]
+      }
+    },
+    "image": {
+      "*": {
+        "background": [{ "show": false }],
+        "visualHeader": [{ "show": false }]
+      }
+    }
+  }
+}
