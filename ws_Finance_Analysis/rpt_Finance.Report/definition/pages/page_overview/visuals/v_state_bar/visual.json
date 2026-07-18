@@ -34,26 +34,7 @@
           }
         ],
         "isDefaultSort": true
-      },
-      "filters": [
-        {
-          "name": "TopN_States",
-          "type": "TopN",
-          "filter": {
-            "Version": 2,
-            "From": [{ "Name": "d", "Entity": "dim_customer", "Type": 0 }],
-            "Where": [{
-              "Condition": {
-                "TopN": {
-                  "Direction": 2,
-                  "Count": 10,
-                  "OrderBy": [{ "Direction": 2, "Expression": { "Measure": { "Expression": { "SourceRef": { "Source": "m" } }, "Property": "Total Amount" } } }]
-                }
-              }
-            }]
-          }
-        }
-      ]
+      }
     },
     "drillFilterOtherVisuals": true
   }
