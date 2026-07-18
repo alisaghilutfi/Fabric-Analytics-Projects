@@ -1,0 +1,34 @@
+/// Merchant category dimension. 14 categories representing where/how money was spent or received: Bank Charges, Education, Entertainment, Food Delivery, Fuel, Groceries, Healthcare, Insurance, Mutual Fund, Rent, Salary, Shopping, Travel, Utilities.
+table dim_merchant
+	lineageTag: b3c4d5e6-f7a8-9012-bcde-fa3456789012
+	sourceLineageTag: [dbo].[dim_merchant]
+
+	/// Surrogate key for the merchant category. Foreign key target from fact_transactions.merchant_key.
+	column merchant_key
+		dataType: int64
+		lineageTag: b3c4d5e6-f7a8-9012-bcde-fa3456789013
+		sourceLineageTag: merchant_key
+		summarizeBy: none
+		sourceColumn: merchant_key
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Merchant category label: Bank Charges, Education, Entertainment, Food Delivery, Fuel, Groceries, Healthcare, Insurance, Mutual Fund, Rent, Salary, Shopping, Travel, Utilities.
+	column merchant_category
+		dataType: string
+		lineageTag: b3c4d5e6-f7a8-9012-bcde-fa3456789014
+		sourceLineageTag: merchant_category
+		summarizeBy: none
+		sourceColumn: merchant_category
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_merchant = entity
+		mode: directLake
+		source
+			entityName: dim_merchant
+			schemaName: dbo
+			expressionSource: 'DirectLake - lh_Finance_Silver'
+
+	changedProperty = Name

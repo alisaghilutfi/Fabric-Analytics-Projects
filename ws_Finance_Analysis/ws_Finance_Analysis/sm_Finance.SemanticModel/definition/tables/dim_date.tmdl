@@ -1,0 +1,134 @@
+/// Date dimension table spanning 2023-01-01 to 2026-12-31. Generated in the Silver notebook. Primary key is the Date column used as the time intelligence axis.
+table dim_date
+	lineageTag: f1a2b3c4-d5e6-7890-fabc-de1234567801
+	sourceLineageTag: [dbo].[dim_date]
+
+	/// Full date value. Primary key and the join target from fact_transactions.transaction_date.
+	column Date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: f1a2b3c4-d5e6-7890-fabc-de1234567802
+		sourceLineageTag: Date
+		summarizeBy: none
+		sourceColumn: Date
+		isKey
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Calendar year (2023, 2024, 2025, 2026).
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: f1a2b3c4-d5e6-7890-fabc-de1234567803
+		sourceLineageTag: Year
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Calendar quarter label (Q1, Q2, Q3, Q4).
+	column Quarter
+		dataType: string
+		lineageTag: f1a2b3c4-d5e6-7890-fabc-de1234567804
+		sourceLineageTag: Quarter
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Month number (1–12). Use for sort order. Sort MonthName by this column.
+	column MonthNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: f1a2b3c4-d5e6-7890-fabc-de1234567805
+		sourceLineageTag: MonthNumber
+		summarizeBy: none
+		sourceColumn: MonthNumber
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Full month name (January, February, …). Sort by MonthNumber.
+	column MonthName
+		dataType: string
+		lineageTag: f1a2b3c4-d5e6-7890-fabc-de1234567806
+		sourceLineageTag: MonthName
+		summarizeBy: none
+		sourceColumn: MonthName
+		sortByColumn: MonthNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Month and year label (Jan 2023, Feb 2023, …). Sort by MonthYearSort.
+	column MonthYear
+		dataType: string
+		lineageTag: f1a2b3c4-d5e6-7890-fabc-de1234567807
+		sourceLineageTag: MonthYear
+		summarizeBy: none
+		sourceColumn: MonthYear
+		sortByColumn: MonthYearSort
+
+		annotation SummarizationSetBy = Automatic
+
+	/// ISO month-year sort key (yyyy-MM). Used to sort MonthYear correctly.
+	column MonthYearSort
+		dataType: string
+		lineageTag: f1a2b3c4-d5e6-7890-fabc-de1234567808
+		sourceLineageTag: MonthYearSort
+		summarizeBy: none
+		sourceColumn: MonthYearSort
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Day of month (1–31).
+	column Day
+		dataType: int64
+		formatString: 0
+		lineageTag: f1a2b3c4-d5e6-7890-fabc-de1234567809
+		sourceLineageTag: Day
+		summarizeBy: none
+		sourceColumn: Day
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Full day name (Monday, Tuesday, …).
+	column DayName
+		dataType: string
+		lineageTag: f1a2b3c4-d5e6-7890-fabc-de1234567810
+		sourceLineageTag: DayName
+		summarizeBy: none
+		sourceColumn: DayName
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// True if the date falls on Saturday or Sunday.
+	column IsWeekend
+		dataType: boolean
+		lineageTag: f1a2b3c4-d5e6-7890-fabc-de1234567811
+		sourceLineageTag: IsWeekend
+		summarizeBy: none
+		sourceColumn: IsWeekend
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Half of the year: H1 (Jan–Jun) or H2 (Jul–Dec).
+	column YearHalf
+		dataType: string
+		lineageTag: f1a2b3c4-d5e6-7890-fabc-de1234567812
+		sourceLineageTag: YearHalf
+		summarizeBy: none
+		sourceColumn: YearHalf
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_date = entity
+		mode: directLake
+		source
+			entityName: dim_date
+			schemaName: dbo
+			expressionSource: 'DirectLake - lh_Finance_Silver'
+
+	changedProperty = Name

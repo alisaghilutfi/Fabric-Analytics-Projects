@@ -1,0 +1,260 @@
+table _Measures
+	lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567801
+
+	// ════════════════════════════════════════════════════════
+	// KPIs
+	// ════════════════════════════════════════════════════════
+
+	/// Total transaction amount across all transactions in the current filter context. Excludes failed and pending transactions when combined with status filters. Includes both credits and debits (positive and negative amounts).
+	measure 'Total Amount' =
+			VAR Result = SUM(fact_transactions[amount])
+			RETURN Result
+		formatString: ₹#,0.00
+		displayFolder: KPIs
+		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567802
+
+	/// Total number of transaction rows in the current filter context. Use this to measure transaction volume, not monetary value.
+	measure 'Total Transactions' =
+			VAR Result = COUNTROWS(fact_transactions)
+			RETURN Result
+		formatString: #,0
+		displayFolder: KPIs
+		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567803
+
+	/// Average transaction amount calculated as Total Amount divided by Total Transactions. Returns 0 if there are no transactions to avoid division errors.
+	measure 'Avg Transaction Value' =
+			VAR TotalAmt = [Total Amount]
+			VAR TotalTx  = [Total Transactions]
+			VAR Result   = DIVIDE(TotalAmt, TotalTx, 0)
+			RETURN Result
+		formatString: ₹#,0.00
+		displayFolder: KPIs
+		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567804
+
+	/// Total fee amount collected across all transactions in the current filter context. Null fee values have been replaced with 0 in the Silver layer.
+	measure 'Total Fees' =
+			VAR Result = SUM(fact_transactions[fee_amount])
+			RETURN Result
+		formatString: ₹#,0.00
+		displayFolder: KPIs
+		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567805
+
+	/// Total tax amount generated across all transactions in the current filter context.
+	measure 'Total Tax' =
+			VAR Result = SUM(fact_transactions[tax_amount])
+			RETURN Result
+		formatString: ₹#,0.00
+		displayFolder: KPIs
+		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567806
+
+	// ════════════════════════════════════════════════════════
+	// Amount
+	// ════════════════════════════════════════════════════════
+
+	/// Total amount for transactions with a status of Success only. Used to measure confirmed financial throughput, excluding failed and pending transactions.
+	measure 'Successful Amount' =
+			VAR Result =
+			    CALCULATE(
+			        [Total Amount],
+			        fact_transactions[transaction_status] = "Success"
+			    )
+			RETURN Result
+		formatString: ₹#,0.00
+		displayFolder: Amount
+		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567807
+
+	/// Total amount for transactions with a status of Failed. Used to measure operational loss or inefficiency.
+	measure 'Failed Amount' =
+			VAR Result =
+			    CALCULATE(
+			        [Total Amount],
+			        fact_transactions[transaction_status] = "Failed"
+			    )
+			RETURN Result
+		formatString: ₹#,0.00
+		displayFolder: Amount
+		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567808
+
+	/// Proportion of total transaction amount that was successfully processed. Returns 0 if no transactions exist in the filter context.
+	measure '% Successful Amount' =
+			VAR SuccessAmt = [Successful Amount]
+			VAR TotalAmt   = [Total Amount]
+			VAR Result     = DIVIDE(SuccessAmt, TotalAmt, 0)
+			RETURN Result
+		formatString: 0.0%
+		displayFolder: Amount
+		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567809
+
+	/// Maximum single transaction amount in the current filter context.
+	measure 'Max Transaction Amount' =
+			VAR Result = MAX(fact_transactions[amount])
+			RETURN Result
+		formatString: ₹#,0.00
+		displayFolder: Amount
+		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567810
+
+	// ════════════════════════════════════════════════════════
+	// Transaction Volume
+	// ════════════════════════════════════════════════════════
+
+	/// Number of transactions with a status of Success in the current filter context.
+	measure 'Successful Transactions' =
+			VAR Result =
+			    CALCULATE(
+			        COUNTROWS(fact_transactions),
+			        fact_transactions[transaction_status] = "Success"
+			    )
+			RETURN Result
+		formatString: #,0
+		displayFolder: Transaction Volume
+		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567811
+
+	/// Number of transactions with a status of Failed in the current filter context.
+	measure 'Failed Transactions' =
+			VAR Result =
+			    CALCULATE(
+			        COUNTROWS(fact_transactions),
+			        fact_transactions[transaction_status] = "Failed"
+			    )
+			RETURN Result
+		formatString: #,0
+		displayFolder: Transaction Volume
+		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567812
+
+	/// Proportion of transactions that resulted in failure. A rising value indicates operational issues. Returns 0 if no transactions exist.
+	measure '% Failed Transactions' =
+			VAR FailedTx = [Failed Transactions]
+			VAR TotalTx  = [Total Transactions]
+			VAR Result   = DIVIDE(FailedTx, TotalTx, 0)
+			RETURN Result
+		formatString: 0.0%
+		displayFolder: Transaction Volume
+		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567813
+
+	/// Number of distinct customers who appear in at least one transaction in the current filter context.
+	measure 'Active Customers' =
+			VAR Result = DISTINCTCOUNT(fact_transactions[customer_id])
+			RETURN Result
+		formatString: #,0
+		displayFolder: Transaction Volume
+		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567814
+
+	// ════════════════════════════════════════════════════════
+	// Time Intelligence
+	// ════════════════════════════════════════════════════════
+
+	/// Total transaction amount for the same period in the prior year. Uses SAMEPERIODLASTYEAR on the dim_date table for accurate year-over-year comparison.
+	measure 'Total Amount PY' =
+			VAR Result =
+			    CALCULATE(
+			        [Total Amount],
+			        SAMEPERIODLASTYEAR(dim_date[Date])
+			    )
+			RETURN Result
+		formatString: ₹#,0.00
+		displayFolder: Time Intelligence
+		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567815
+
+	/// Year-over-year change in total transaction amount, expressed as a percentage. Positive values indicate growth. Returns BLANK if the prior year value is zero or unavailable.
+	measure 'Total Amount YoY %' =
+			VAR CurrentAmt = [Total Amount]
+			VAR PriorAmt   = [Total Amount PY]
+			VAR Result     = DIVIDE(CurrentAmt - PriorAmt, ABS(PriorAmt), BLANK())
+			RETURN Result
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time Intelligence
+		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567816
+
+	/// Total number of transactions for the same period in the prior year.
+	measure 'Total Transactions PY' =
+			VAR Result =
+			    CALCULATE(
+			        [Total Transactions],
+			        SAMEPERIODLASTYEAR(dim_date[Date])
+			    )
+			RETURN Result
+		formatString: #,0
+		displayFolder: Time Intelligence
+		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567817
+
+	/// Year-over-year change in transaction count, expressed as a percentage. Returns BLANK if the prior year count is zero or unavailable.
+	measure 'Total Transactions YoY %' =
+			VAR CurrentTx = [Total Transactions]
+			VAR PriorTx   = [Total Transactions PY]
+			VAR Result    = DIVIDE(CurrentTx - PriorTx, ABS(PriorTx), BLANK())
+			RETURN Result
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time Intelligence
+		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567818
+
+	// ════════════════════════════════════════════════════════
+	// Fees & Tax
+	// ════════════════════════════════════════════════════════
+
+	/// Total combined revenue from fees and taxes across all transactions in the current filter context.
+	measure 'Total Fee & Tax Revenue' =
+			VAR Result = [Total Fees] + [Total Tax]
+			RETURN Result
+		formatString: ₹#,0.00
+		displayFolder: Fees & Tax
+		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567819
+
+	/// Average fee charged per transaction. Returns 0 if there are no transactions.
+	measure 'Avg Fee per Transaction' =
+			VAR TotalFee = [Total Fees]
+			VAR TotalTx  = [Total Transactions]
+			VAR Result   = DIVIDE(TotalFee, TotalTx, 0)
+			RETURN Result
+		formatString: ₹#,0.00
+		displayFolder: Fees & Tax
+		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567820
+
+	// ════════════════════════════════════════════════════════
+	// Fraud & Risk
+	// ════════════════════════════════════════════════════════
+
+	/// Total number of transactions flagged as fraudulent (is_fraud = True) in the current filter context.
+	measure 'Fraud Transactions' =
+			VAR Result =
+			    CALCULATE(
+			        COUNTROWS(fact_transactions),
+			        fact_transactions[is_fraud_bool] = TRUE()
+			    )
+			RETURN Result
+		formatString: #,0
+		displayFolder: Fraud & Risk
+		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567821
+
+	/// Proportion of transactions that are flagged as fraudulent. A value above 2% warrants investigation. Returns 0 if no transactions exist.
+	measure '% Fraud Rate' =
+			VAR FraudTx = [Fraud Transactions]
+			VAR TotalTx = [Total Transactions]
+			VAR Result  = DIVIDE(FraudTx, TotalTx, 0)
+			RETURN Result
+		formatString: 0.00%
+		displayFolder: Fraud & Risk
+		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567822
+
+	/// Average risk score across all transactions in the current filter context. Scores range from 1 (low risk) to 100 (high risk).
+	measure 'Avg Risk Score' =
+			VAR Result = AVERAGE(fact_transactions[risk_score])
+			RETURN Result
+		formatString: 0.0
+		displayFolder: Fraud & Risk
+		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567823
+
+	column Column
+		formatString: 0
+		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567899
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = a1b2c3d4e5f67890abcdef1234567890
+

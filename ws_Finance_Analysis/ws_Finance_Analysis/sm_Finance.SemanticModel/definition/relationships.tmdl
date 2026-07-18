@@ -1,0 +1,16 @@
+relationship fact_to_dim_customer
+	fromColumn: fact_transactions.customer_id
+	toColumn: dim_customer.customer_id
+
+relationship fact_to_dim_date
+	fromColumn: fact_transactions.transaction_date
+	toColumn: dim_date.Date
+	joinOnDateBehavior: DatePartOnly
+
+relationship fact_to_dim_channel
+	fromColumn: fact_transactions.channel_key
+	toColumn: dim_channel.channel_key
+
+relationship fact_to_dim_merchant
+	fromColumn: fact_transactions.merchant_key
+	toColumn: dim_merchant.merchant_key

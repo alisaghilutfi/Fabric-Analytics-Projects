@@ -1,0 +1,201 @@
+/// Contains one row per financial transaction as processed through the Silver layer. Data covers 2023–2026 from the Finance Lakehouse. Includes amount, fees, taxes, channel, merchant category, fraud flags, and risk scores. Raw duplicates and dirty values have been remediated in the Silver pipeline.
+table fact_transactions
+	lineageTag: d1e2f3a4-b5c6-7890-defa-bc1234567801
+	sourceLineageTag: [dbo].[fact_transactions]
+
+	/// Unique identifier for each transaction. Duplicate transaction_ids in the source were resolved by dropping exact duplicate rows in the Silver layer.
+	column transaction_id
+		dataType: string
+		lineageTag: d1e2f3a4-b5c6-7890-defa-bc1234567802
+		sourceLineageTag: transaction_id
+		summarizeBy: none
+		sourceColumn: transaction_id
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Date the transaction occurred. Parsed from dd-MM-yyyy string format in the Silver layer. Used as the foreign key to dim_date.
+	column transaction_date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: d1e2f3a4-b5c6-7890-defa-bc1234567803
+		sourceLineageTag: transaction_date
+		summarizeBy: none
+		sourceColumn: transaction_date
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Account identifier. A single customer may have approximately 2 accounts on average.
+	column account_id
+		dataType: string
+		lineageTag: d1e2f3a4-b5c6-7890-defa-bc1234567804
+		sourceLineageTag: account_id
+		summarizeBy: none
+		sourceColumn: account_id
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Foreign key to dim_customer.customer_id. 3,983 distinct customers appear in transactions; 1,017 customers in dim_customer have no transactions.
+	column customer_id
+		dataType: string
+		lineageTag: d1e2f3a4-b5c6-7890-defa-bc1234567805
+		sourceLineageTag: customer_id
+		summarizeBy: none
+		sourceColumn: customer_id
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Surrogate key linking to dim_channel. Used instead of channel string for optimal DirectLake performance.
+	column channel_key
+		dataType: int64
+		lineageTag: d1e2f3a4-b5c6-7890-defa-bc1234567806
+		sourceLineageTag: channel_key
+		summarizeBy: none
+		sourceColumn: channel_key
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Surrogate key linking to dim_merchant. Used instead of merchant_category string for optimal DirectLake performance.
+	column merchant_key
+		dataType: int64
+		lineageTag: d1e2f3a4-b5c6-7890-defa-bc1234567807
+		sourceLineageTag: merchant_key
+		summarizeBy: none
+		sourceColumn: merchant_key
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Category of the transaction: Loan EMI, Transfer, Card Payment, Deposit, Bill Payment, Withdrawal, Interest Credit, Fee Charge, Investment, Refund.
+	column transaction_type
+		dataType: string
+		lineageTag: d1e2f3a4-b5c6-7890-defa-bc1234567808
+		sourceLineageTag: transaction_type
+		summarizeBy: none
+		sourceColumn: transaction_type
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Processing outcome of the transaction: Success (85.7%), Failed (10.2%), Pending (4.1%).
+	column transaction_status
+		dataType: string
+		lineageTag: d1e2f3a4-b5c6-7890-defa-bc1234567809
+		sourceLineageTag: transaction_status
+		summarizeBy: none
+		sourceColumn: transaction_status
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Transaction amount in INR. Negative values indicate reversals (flagged by is_reversal). Range: -₹21,449 to ₹312,586.
+	column amount
+		dataType: double
+		lineageTag: d1e2f3a4-b5c6-7890-defa-bc1234567810
+		sourceLineageTag: amount
+		summarizeBy: sum
+		sourceColumn: amount
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Fee charged on this transaction in INR. Null values from the source have been replaced with 0.0.
+	column fee_amount
+		dataType: double
+		lineageTag: d1e2f3a4-b5c6-7890-defa-bc1234567811
+		sourceLineageTag: fee_amount
+		summarizeBy: sum
+		sourceColumn: fee_amount
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Tax charged on this transaction in INR.
+	column tax_amount
+		dataType: double
+		lineageTag: d1e2f3a4-b5c6-7890-defa-bc1234567812
+		sourceLineageTag: tax_amount
+		summarizeBy: sum
+		sourceColumn: tax_amount
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Sum of amount + fee_amount + tax_amount. Derived in the Silver layer for convenience.
+	column total_amount
+		dataType: double
+		lineageTag: d1e2f3a4-b5c6-7890-defa-bc1234567813
+		sourceLineageTag: total_amount
+		summarizeBy: sum
+		sourceColumn: total_amount
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Transaction currency. Normalized to uppercase INR in the Silver layer (source had 'inr', 'inR' variants).
+	column currency
+		dataType: string
+		lineageTag: d1e2f3a4-b5c6-7890-defa-bc1234567814
+		sourceLineageTag: currency
+		summarizeBy: none
+		sourceColumn: currency
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// True if this transaction was flagged as fraudulent by the source system. Fraud rate is approximately 1.26%.
+	column is_fraud_bool
+		dataType: boolean
+		lineageTag: d1e2f3a4-b5c6-7890-defa-bc1234567815
+		sourceLineageTag: is_fraud_bool
+		summarizeBy: none
+		sourceColumn: is_fraud_bool
+
+		annotation SummarizationSetBy = Automatic
+
+	/// True if the transaction amount is negative, indicating a reversal or correction.
+	column is_reversal
+		dataType: boolean
+		lineageTag: d1e2f3a4-b5c6-7890-defa-bc1234567816
+		sourceLineageTag: is_reversal
+		summarizeBy: none
+		sourceColumn: is_reversal
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Risk score assigned to this transaction, ranging from 1 (low risk) to 100 (high risk). Average is 36.
+	column risk_score
+		dataType: int64
+		lineageTag: d1e2f3a4-b5c6-7890-defa-bc1234567817
+		sourceLineageTag: risk_score
+		summarizeBy: average
+		sourceColumn: risk_score
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Internal reference number for this transaction.
+	column reference_no
+		dataType: string
+		lineageTag: d1e2f3a4-b5c6-7890-defa-bc1234567818
+		sourceLineageTag: reference_no
+		summarizeBy: none
+		sourceColumn: reference_no
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_transactions = entity
+		mode: directLake
+		source
+			entityName: fact_transactions
+			schemaName: dbo
+			expressionSource: 'DirectLake - lh_Finance_Silver'
+
+	changedProperty = Name

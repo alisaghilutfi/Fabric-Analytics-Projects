@@ -1,0 +1,130 @@
+/// Customer dimension table. Contains 5,000 customers including 1,017 with no transactions. Data covers Indian market with 13 states and 5 customer segments. Source typo 'fisrt_name' corrected to 'first_name' in the Silver layer.
+table dim_customer
+	lineageTag: e1f2a3b4-c5d6-7890-efab-cd1234567801
+	sourceLineageTag: [dbo].[dim_customer]
+
+	/// Primary key. Format: C00001 to C05000.
+	column customer_id
+		dataType: string
+		lineageTag: e1f2a3b4-c5d6-7890-efab-cd1234567802
+		sourceLineageTag: customer_id
+		summarizeBy: none
+		sourceColumn: customer_id
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Customer's first name. Column name typo corrected from 'fisrt_name' in the source CSV.
+	column first_name
+		dataType: string
+		lineageTag: e1f2a3b4-c5d6-7890-efab-cd1234567803
+		sourceLineageTag: first_name
+		summarizeBy: none
+		sourceColumn: first_name
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Customer's second (family) name.
+	column second_name
+		dataType: string
+		lineageTag: e1f2a3b4-c5d6-7890-efab-cd1234567804
+		sourceLineageTag: second_name
+		summarizeBy: none
+		sourceColumn: second_name
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Customer gender: Male or Female (2,456 Male, 2,544 Female).
+	column gender
+		dataType: string
+		lineageTag: e1f2a3b4-c5d6-7890-efab-cd1234567805
+		sourceLineageTag: gender
+		summarizeBy: none
+		sourceColumn: gender
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Customer date of birth. Useful for age-band analysis.
+	column date_of_birth
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: e1f2a3b4-c5d6-7890-efab-cd1234567806
+		sourceLineageTag: date_of_birth
+		summarizeBy: none
+		sourceColumn: date_of_birth
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// City where the customer is registered.
+	column city
+		dataType: string
+		lineageTag: e1f2a3b4-c5d6-7890-efab-cd1234567807
+		sourceLineageTag: city
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Indian state where the customer is registered. 13 states: Maharashtra, Gujarat, Karnataka, Uttar Pradesh, Tamil Nadu, Madhya Pradesh, Haryana, Delhi, and others.
+	column state
+		dataType: string
+		lineageTag: e1f2a3b4-c5d6-7890-efab-cd1234567808
+		sourceLineageTag: state
+		summarizeBy: none
+		sourceColumn: state
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Customer occupation: Retired, Student, Salaried, Self Employed, Freelancer, Business Owner (approximately equal distribution).
+	column occupation
+		dataType: string
+		lineageTag: e1f2a3b4-c5d6-7890-efab-cd1234567809
+		sourceLineageTag: occupation
+		summarizeBy: none
+		sourceColumn: occupation
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Business classification of the customer: Retail (54%), Premium (18%), SME (16%), Corporate (7%), Wealth (5%).
+	column customer_segment
+		dataType: string
+		lineageTag: e1f2a3b4-c5d6-7890-efab-cd1234567810
+		sourceLineageTag: customer_segment
+		summarizeBy: none
+		sourceColumn: customer_segment
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Annual income in INR. Range: ₹180,000 to ₹5,026,136. Mean: ₹724,095.
+	column annual_income
+		dataType: double
+		lineageTag: e1f2a3b4-c5d6-7890-efab-cd1234567811
+		sourceLineageTag: annual_income
+		summarizeBy: sum
+		sourceColumn: annual_income
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Date the customer joined the financial institution.
+	column join_date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: e1f2a3b4-c5d6-7890-efab-cd1234567812
+		sourceLineageTag: join_date
+		summarizeBy: none
+		sourceColumn: join_date
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_customer = entity
+		mode: directLake
+		source
+			entityName: dim_customer
+			schemaName: dbo
+			expressionSource: 'DirectLake - lh_Finance_Silver'
+
+	changedProperty = Name

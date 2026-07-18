@@ -1,0 +1,34 @@
+/// Transaction channel dimension. 7 channels after normalization: ATM, Auto Debit, Branch, Mobile App, Net Banking, POS, UPI. Source had dirty values including "M@bile App" and whitespace variants — all resolved in Silver.
+table dim_channel
+	lineageTag: a2b3c4d5-e6f7-8901-abcd-ef2345678901
+	sourceLineageTag: [dbo].[dim_channel]
+
+	/// Surrogate key for the channel. Foreign key target from fact_transactions.channel_key.
+	column channel_key
+		dataType: int64
+		lineageTag: a2b3c4d5-e6f7-8901-abcd-ef2345678902
+		sourceLineageTag: channel_key
+		summarizeBy: none
+		sourceColumn: channel_key
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Normalized transaction channel name: ATM, Auto Debit, Branch, Mobile App, Net Banking, POS, UPI.
+	column channel
+		dataType: string
+		lineageTag: a2b3c4d5-e6f7-8901-abcd-ef2345678903
+		sourceLineageTag: channel
+		summarizeBy: none
+		sourceColumn: channel
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_channel = entity
+		mode: directLake
+		source
+			entityName: dim_channel
+			schemaName: dbo
+			expressionSource: 'DirectLake - lh_Finance_Silver'
+
+	changedProperty = Name
