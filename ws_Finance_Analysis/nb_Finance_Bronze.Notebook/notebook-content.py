@@ -8,10 +8,14 @@
 # META   },
 # META   "dependencies": {
 # META     "lakehouse": {
-# META       "default_lakehouse": "",
+# META       "default_lakehouse": "0e4ac3b2-b113-465b-8587-844ffa45271e",
 # META       "default_lakehouse_name": "lh_Finance_Bronze",
-# META       "default_lakehouse_workspace_id": "",
-# META       "known_lakehouses": []
+# META       "default_lakehouse_workspace_id": "61549e76-c4d4-4b27-9018-ab9b04eab5dc",
+# META       "known_lakehouses": [
+# META         {
+# META           "id": "0e4ac3b2-b113-465b-8587-844ffa45271e"
+# META         }
+# META       ]
 # META     }
 # META   }
 # META }
@@ -21,7 +25,6 @@
 # # nb_Finance_Bronze
 # Reads raw CSVs from GitHub and writes them as Delta tables to lh_Finance_Bronze.
 # No transformations — Bronze is raw as-landed.
-#
 # Source repo: https://github.com/alisaghilutfi/Fabric-Analytics-Projects
 # CSV path:    ws_Finance_Analysis/data/
 
@@ -58,17 +61,21 @@ spark = SparkSession.builder.getOrCreate()
 
 # CELL ********************
 
-# ── Load and land each CSV as a raw Bronze Delta table ──────────────────────
+import pandas as pd
+
 for table_name, url in SOURCES.items():
     print(f"Loading {table_name} from {url}...")
-    df = spark.read.option("header", "true").option("inferSchema", "true").csv(url)
+    
+    # Read via pandas (handles HTTPS URLs reliably)
+    pdf = pd.read_csv(url)
+    df = spark.createDataFrame(pdf)
     df = df.withColumn("_bronze_loaded_at", current_timestamp())
+    
     (
         df.write
         .format("delta")
         .mode("overwrite")
         .option("overwriteSchema", "true")
-        .option("delta.columnMapping.mode", "name")
         .saveAsTable(table_name)
     )
     count = spark.table(table_name).count()
