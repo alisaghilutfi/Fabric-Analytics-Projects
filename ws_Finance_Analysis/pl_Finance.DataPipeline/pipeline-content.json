@@ -1,0 +1,43 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "name": "Bronze_Notebook",
+        "type": "TridentNotebook",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "typeProperties": {
+          "notebookId": "ad2cc00c-23a6-4918-9643-48f3415834f1",
+          "workspaceId": "61549e76-c4d4-4b27-9018-ab9b04eab5dc"
+        }
+      },
+      {
+        "name": "Silver_Notebook",
+        "type": "TridentNotebook",
+        "dependsOn": [
+          {
+            "activity": "Bronze_Notebook",
+            "dependencyConditions": ["Succeeded"]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "typeProperties": {
+          "notebookId": "3452ca8b-d080-41ee-a4d6-92677950242d",
+          "workspaceId": "61549e76-c4d4-4b27-9018-ab9b04eab5dc"
+        }
+      }
+    ]
+  }
+}
