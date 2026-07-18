@@ -1,8 +1,0 @@
-expression 'DirectLake - lh_Finance_Silver' =
-		let
-		    Source = AzureStorage.DataLake("https://onelake.dfs.fabric.microsoft.com/61549e76-c4d4-4b27-9018-ab9b04eab5dc/00000000-0000-0000-0000-000000000000", [HierarchicalNavigation=true])
-		in
-		    Source
-	lineageTag: b1c2d3e4-f5a6-7890-bcde-fa1234567801
-
-	annotation PBI_IncludeFutureArtifacts = False
