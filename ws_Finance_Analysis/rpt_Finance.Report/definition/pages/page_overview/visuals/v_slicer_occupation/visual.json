@@ -1,0 +1,32 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "v_slicer_occupation",
+  "position": { "x": 10, "y": 170, "z": 7, "height": 80, "width": 180, "tabOrder": 7 },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Field": {
+          "projections": [
+            {
+              "field": { "Column": { "Expression": { "SourceRef": { "Entity": "dim_customer" } }, "Property": "occupation" } },
+              "queryRef": "dim_customer.occupation",
+              "nativeQueryRef": "occupation",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "data": [
+        {
+          "properties": {
+            "mode": { "expr": { "Literal": { "Value": "'Dropdown'" } } }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
