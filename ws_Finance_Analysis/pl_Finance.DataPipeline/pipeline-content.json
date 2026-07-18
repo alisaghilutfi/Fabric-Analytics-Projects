@@ -2,9 +2,11 @@
   "properties": {
     "activities": [
       {
-        "name": "Bronze_Notebook",
         "type": "TridentNotebook",
-        "dependsOn": [],
+        "typeProperties": {
+          "notebookId": "a1b2c3d4-e5f6-7890-abcd-ef1234567801",
+          "workspaceId": "00000000-0000-0000-0000-000000000000"
+        },
         "policy": {
           "timeout": "0.12:00:00",
           "retry": 0,
@@ -12,31 +14,31 @@
           "secureInput": false,
           "secureOutput": false
         },
-        "typeProperties": {
-          "notebookId": "ad2cc00c-23a6-4918-9643-48f3415834f1",
-          "workspaceId": "61549e76-c4d4-4b27-9018-ab9b04eab5dc"
-        }
+        "name": "Bronze_Notebook",
+        "dependsOn": []
       },
       {
-        "name": "Silver_Notebook",
         "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "a1b2c3d4-e5f6-7890-abcd-ef1234567802",
+          "workspaceId": "00000000-0000-0000-0000-000000000000"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Silver_Notebook",
         "dependsOn": [
           {
             "activity": "Bronze_Notebook",
-            "dependencyConditions": ["Succeeded"]
+            "dependencyConditions": [
+              "Succeeded"
+            ]
           }
-        ],
-        "policy": {
-          "timeout": "0.12:00:00",
-          "retry": 0,
-          "retryIntervalInSeconds": 30,
-          "secureInput": false,
-          "secureOutput": false
-        },
-        "typeProperties": {
-          "notebookId": "3452ca8b-d080-41ee-a4d6-92677950242d",
-          "workspaceId": "61549e76-c4d4-4b27-9018-ab9b04eab5dc"
-        }
+        ]
       }
     ]
   }

@@ -8,10 +8,17 @@
 # META   },
 # META   "dependencies": {
 # META     "lakehouse": {
-# META       "default_lakehouse": "",
+# META       "default_lakehouse": "d726b863-4ac2-4206-85ac-409c87da9f22",
 # META       "default_lakehouse_name": "lh_Finance_Silver",
-# META       "default_lakehouse_workspace_id": "",
-# META       "known_lakehouses": []
+# META       "default_lakehouse_workspace_id": "61549e76-c4d4-4b27-9018-ab9b04eab5dc",
+# META       "known_lakehouses": [
+# META         {
+# META           "id": "d726b863-4ac2-4206-85ac-409c87da9f22"
+# META         },
+# META         {
+# META           "id": "0e4ac3b2-b113-465b-8587-844ffa45271e"
+# META         }
+# META       ]
 # META     }
 # META   }
 # META }
@@ -21,13 +28,11 @@
 # # nb_Finance_Silver
 # Reads from lh_Finance_Bronze, applies all data quality remediations,
 # and writes the star schema tables to lh_Finance_Silver.
-#
 # Star schema:
 #   fact_transactions  ←→  dim_customer   (customer_id)
 #   fact_transactions  ←→  dim_date       (transaction_date)
 #   fact_transactions  ←→  dim_channel    (channel_key)
 #   fact_transactions  ←→  dim_merchant   (merchant_key)
-#
 # Data quality remediations applied:
 #   1. Exact duplicate rows dropped (dropDuplicates on transaction_id + all columns)
 #   2. channel: trim whitespace + normalize "M@bile App" → "Mobile App"
@@ -66,8 +71,8 @@ BRONZE_LAKEHOUSE = "lh_Finance_Bronze"
 
 # CELL ********************
 
-raw_tx   = spark.table(f"{BRONZE_LAKEHOUSE}.raw_transactions")
-raw_cust = spark.table(f"{BRONZE_LAKEHOUSE}.raw_customers")
+raw_tx   = spark.table(f"{BRONZE_LAKEHOUSE}.dbo.raw_transactions")
+raw_cust = spark.table(f"{BRONZE_LAKEHOUSE}.dbo.raw_customers")
 
 print(f"raw_transactions: {raw_tx.count():,} rows")
 print(f"raw_customers:    {raw_cust.count():,} rows")
