@@ -1,0 +1,35 @@
+table gold_dim_customer
+
+	column CustomerID
+		dataType: int64
+		isKey
+		summarizeBy: none
+		sourceColumn: CustomerID
+
+	column FirstName
+		dataType: string
+		sourceColumn: FirstName
+
+	column LastName
+		dataType: string
+		sourceColumn: LastName
+
+	column CompanyName
+		dataType: string
+		sourceColumn: CompanyName
+
+	column EmailAddress
+		dataType: string
+		sourceColumn: EmailAddress
+
+	column Phone
+		dataType: string
+		sourceColumn: Phone
+
+	partition gold_dim_customer = entity
+		mode: directLake
+		source
+			entityName: gold_dim_customer
+			schemaName: dbo
+			expressionSource: 'DirectLake - lh_AdventureWorks'
+

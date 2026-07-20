@@ -1,8 +1,18 @@
 model Model
+	defaultMode: directLake
 	culture: en-US
 	defaultPowerBIDataSourceVersion: powerBI_V3
 	sourceQueryCulture: en-US
 	dataAccessOptions
 		legacyRedirects
 		returnErrorValuesAsNull
+
+annotation PBI_ProTooling = ["MCP-PBIModeling"]
+
+ref table gold_sales_fact
+ref table gold_dim_customer
+ref table gold_dim_product
+ref table gold_dim_productcategory
+ref table gold_dim_address
+ref table Date
 

@@ -1,0 +1,17 @@
+relationship gold_sales_fact_CustomerID_gold_dim_customer_CustomerID
+	fromColumn: gold_sales_fact.CustomerID
+	toColumn: gold_dim_customer.CustomerID
+
+relationship gold_sales_fact_ProductID_gold_dim_product_ProductID
+	fromColumn: gold_sales_fact.ProductID
+	toColumn: gold_dim_product.ProductID
+
+relationship gold_dim_product_ProductCategoryID_gold_dim_productcategory_ProductCategoryID
+	fromColumn: gold_dim_product.ProductCategoryID
+	toColumn: gold_dim_productcategory.ProductCategoryID
+
+relationship gold_sales_fact_OrderDate_Date_Date
+	joinOnDateBehavior: datePartOnly
+	fromColumn: gold_sales_fact.OrderDate
+	toColumn: Date.Date
+
