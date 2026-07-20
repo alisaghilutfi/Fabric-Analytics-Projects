@@ -8,12 +8,15 @@
 # META   },
 # META   "dependencies": {
 # META     "lakehouse": {
-# META       "default_lakehouse": "a68f2b2d-bf20-4553-ac41-4210294771dd",
+# META       "default_lakehouse": "05e9ba33-cc56-405e-b963-edce852987d8",
 # META       "default_lakehouse_name": "lh_AdventureWorks",
 # META       "default_lakehouse_workspace_id": "772cb78b-6a90-493c-b6ff-ae836fa78ec1",
 # META       "known_lakehouses": [
 # META         {
 # META           "id": "a68f2b2d-bf20-4553-ac41-4210294771dd"
+# META         },
+# META         {
+# META           "id": "05e9ba33-cc56-405e-b963-edce852987d8"
 # META         }
 # META       ]
 # META     }
