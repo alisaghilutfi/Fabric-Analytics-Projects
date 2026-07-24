@@ -1,0 +1,240 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "9a4e8d51c841097a863b",
+  "position": {
+    "x": 20,
+    "y": 52,
+    "z": 1001,
+    "height": 560,
+    "width": 1240,
+    "tabOrder": 1001
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Station Snapshot"
+                    }
+                  },
+                  "Property": "BikepointID"
+                }
+              },
+              "queryRef": "Station Snapshot.BikepointID",
+              "nativeQueryRef": "BikepointID"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Station Snapshot"
+                    }
+                  },
+                  "Property": "Street"
+                }
+              },
+              "queryRef": "Station Snapshot.Street",
+              "nativeQueryRef": "Street"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Station Snapshot"
+                    }
+                  },
+                  "Property": "Neighbourhood"
+                }
+              },
+              "queryRef": "Station Snapshot.Neighbourhood",
+              "nativeQueryRef": "Neighbourhood"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Station Snapshot"
+                    }
+                  },
+                  "Property": "No_Bikes"
+                }
+              },
+              "queryRef": "Station Snapshot.No_Bikes",
+              "nativeQueryRef": "No_Bikes"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Station Snapshot"
+                    }
+                  },
+                  "Property": "No_Empty_Docks"
+                }
+              },
+              "queryRef": "Station Snapshot.No_Empty_Docks",
+              "nativeQueryRef": "No_Empty_Docks"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Station Snapshot"
+                    }
+                  },
+                  "Property": "BikesToBeFilled"
+                }
+              },
+              "queryRef": "Station Snapshot.BikesToBeFilled",
+              "nativeQueryRef": "BikesToBeFilled"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Station Snapshot"
+                    }
+                  },
+                  "Property": "Action"
+                }
+              },
+              "queryRef": "Station Snapshot.Action",
+              "nativeQueryRef": "Action"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "columnHeaders": [
+        {
+          "properties": {
+            "columnAdjustment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'growToFit'"
+                }
+              }
+            },
+            "autoSizeColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Conditional": {
+                      "Cases": [
+                        {
+                          "Condition": {
+                            "Comparison": {
+                              "ComparisonKind": 0,
+                              "Left": {
+                                "Aggregation": {
+                                  "Expression": {
+                                    "Column": {
+                                      "Expression": {
+                                        "SourceRef": {
+                                          "Entity": "Station Snapshot"
+                                        }
+                                      },
+                                      "Property": "Action"
+                                    }
+                                  },
+                                  "Function": 3
+                                }
+                              },
+                              "Right": {
+                                "Literal": {
+                                  "Value": "'Fill'"
+                                }
+                              }
+                            }
+                          },
+                          "Value": {
+                            "Literal": {
+                              "Value": "'#FCE5E5'"
+                            }
+                          }
+                        },
+                        {
+                          "Condition": {
+                            "Comparison": {
+                              "ComparisonKind": 0,
+                              "Left": {
+                                "Aggregation": {
+                                  "Expression": {
+                                    "Column": {
+                                      "Expression": {
+                                        "SourceRef": {
+                                          "Entity": "Station Snapshot"
+                                        }
+                                      },
+                                      "Property": "Action"
+                                    }
+                                  },
+                                  "Function": 3
+                                }
+                              },
+                              "Right": {
+                                "Literal": {
+                                  "Value": "'Empty'"
+                                }
+                              }
+                            }
+                          },
+                          "Value": {
+                            "Literal": {
+                              "Value": "'#DCE6F1'"
+                            }
+                          }
+                        }
+                      ],
+                      "DefaultValue": {
+                        "Literal": {
+                          "Value": "'#FFFFFF'"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ],
+            "metadata": "Station Snapshot.Action"
+          }
+        }
+      ]
+    }
+  }
+}

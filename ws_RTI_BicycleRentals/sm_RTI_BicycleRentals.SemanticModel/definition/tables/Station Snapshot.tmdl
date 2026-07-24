@@ -1,0 +1,82 @@
+/// Latest live snapshot of every bicycle rental station (one row per BikepointID), sourced from the KQL Gold-layer function LatestStationSnapshot().
+table 'Station Snapshot'
+
+	/// Unique identifier for a bicycle rental station.
+	column BikepointID
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: BikepointID
+
+	/// Timestamp of the latest event recorded for this station.
+	column Timestamp
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		summarizeBy: none
+		sourceColumn: Timestamp
+
+	/// Street address of the station.
+	column Street
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Street
+
+	/// Neighbourhood the station is located in.
+	column Neighbourhood
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Neighbourhood
+
+	column Latitude
+		dataType: double
+		formatString: 0.000000
+		dataCategory: Latitude
+		summarizeBy: none
+		sourceColumn: Latitude
+
+	column Longitude
+		dataType: double
+		formatString: 0.000000
+		dataCategory: Longitude
+		summarizeBy: none
+		sourceColumn: Longitude
+
+	/// Number of bikes currently available at the station.
+	column No_Bikes
+		dataType: int64
+		isHidden
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: No_Bikes
+
+	/// Number of empty docks currently available at the station.
+	column No_Empty_Docks
+		dataType: int64
+		isHidden
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: No_Empty_Docks
+
+	/// No_Empty_Docks minus No_Bikes; positive values indicate the station needs bikes added, negative values indicate excess bikes to remove.
+	column BikesToBeFilled
+		dataType: int64
+		isHidden
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: BikesToBeFilled
+
+	/// Rebalancing action recommendation computed in KQL: "NA" when balanced, "Fill" or "Empty" otherwise.
+	column Action
+		dataType: string
+		isHidden
+		summarizeBy: none
+		sourceColumn: Action
+
+	partition 'Station Snapshot' = m
+		mode: directQuery
+		source =
+				let
+				    Source = AzureDataExplorer.Contents("https://trd-mpt42n4h5vmke6909h.z2.kusto.fabric.microsoft.com", "eh_RTI_BicycleRentals", "LatestStationSnapshot()", [MaxRows=null, NoTruncate=null, AdditionalSetStatements=null])
+				in
+				    Source
+

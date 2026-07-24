@@ -1,0 +1,13 @@
+model sm_RTI_BicycleRentals
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_ProTooling = ["MCP-PBIModeling"]
+
+ref table 'Station Snapshot'
+ref table _Measures
+
