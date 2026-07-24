@@ -1,0 +1,65 @@
+/// Container table for all DAX measures. Not a data table.
+table _Measures
+	isHidden
+
+	/// Count of distinct bicycle rental stations currently reporting. Use as the denominator for network-wide percentages.
+	measure 'Total Stations' = COUNTROWS('Station Snapshot')
+		formatString: #,##0
+		displayFolder: Availability
+
+	/// Average number of bikes available per station across the current snapshot. Indicates overall network bike supply.
+	measure 'Avg Bikes Available' = AVERAGE('Station Snapshot'[No_Bikes])
+		formatString: #,##0.0
+		displayFolder: Availability
+
+	/// Average number of empty docks per station across the current snapshot. Indicates overall network docking capacity.
+	measure 'Avg Empty Docks' = AVERAGE('Station Snapshot'[No_Empty_Docks])
+		formatString: #,##0.0
+		displayFolder: Availability
+
+	/// Share of stations with 3 or fewer bikes available (low-stock threshold). Rising values signal an under-supplied network needing rebalancing.
+	measure '% Stations Low Stock' =
+			VAR _threshold = 3
+			VAR _lowStations = COUNTROWS(FILTER('Station Snapshot', 'Station Snapshot'[No_Bikes] <= _threshold))
+			RETURN DIVIDE(_lowStations, [Total Stations])
+		formatString: 0.0%
+		displayFolder: Availability
+
+	/// Total docking capacity across all stations (bikes plus empty docks). Represents the physical size of the rental network in scope.
+	measure 'Total Capacity' = SUMX('Station Snapshot', 'Station Snapshot'[No_Bikes] + 'Station Snapshot'[No_Empty_Docks])
+		formatString: #,##0
+		displayFolder: Capacity
+
+	/// Share of total docking capacity currently occupied by bikes. High values mean docks are scarce; low values mean bikes are scarce.
+	measure 'Network Utilization %' = DIVIDE(SUM('Station Snapshot'[No_Bikes]), [Total Capacity])
+		formatString: 0.0%
+		displayFolder: Capacity
+
+	/// Count of stations flagged by the KQL Gold layer as needing bikes added (Action = "Fill"). Primary operational trigger for rebalancing dispatch.
+	measure 'Stations Needing Restock' = COUNTROWS(FILTER('Station Snapshot', 'Station Snapshot'[Action] = "Fill"))
+		formatString: #,##0
+		displayFolder: Rebalancing
+
+	/// Count of stations flagged by the KQL Gold layer as needing bikes removed (Action = "Empty"). Indicates stations at risk of overflow.
+	measure 'Stations Needing Emptying' = COUNTROWS(FILTER('Station Snapshot', 'Station Snapshot'[Action] = "Empty"))
+		formatString: #,##0
+		displayFolder: Rebalancing
+
+	/// Net sum of bikes needed across all stations (positive = shortage, negative = surplus). A rough sizing measure for rebalancing truck capacity; positive and negative station values partially offset.
+	measure 'Total Bikes To Move' = SUM('Station Snapshot'[BikesToBeFilled])
+		formatString: #,##0;-#,##0
+		displayFolder: Rebalancing
+
+	/// Most recent event timestamp across all stations in the current DirectQuery snapshot. Use to show data freshness / lag to end users.
+	measure 'Latest Snapshot Time' = MAX('Station Snapshot'[Timestamp])
+		formatString: General Date
+		displayFolder: Recency
+
+	column Value
+		isNameInferred
+		sourceColumn: [Value]
+
+	partition _Measures = calculated
+		mode: import
+		source = {1}
+

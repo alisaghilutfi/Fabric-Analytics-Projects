@@ -1,0 +1,24 @@
+table gold_dim_productcategory
+
+	column ProductCategoryID
+		dataType: int64
+		isKey
+		summarizeBy: none
+		sourceColumn: ProductCategoryID
+
+	column ParentProductCategoryID
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: ParentProductCategoryID
+
+	column CategoryName
+		dataType: string
+		sourceColumn: CategoryName
+
+	partition gold_dim_productcategory = entity
+		mode: directLake
+		source
+			entityName: gold_dim_productcategory
+			schemaName: dbo
+			expressionSource: 'DirectLake - lh_AdventureWorks'
+

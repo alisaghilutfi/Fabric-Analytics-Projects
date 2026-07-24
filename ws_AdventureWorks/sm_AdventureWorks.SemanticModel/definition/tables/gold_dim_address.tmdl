@@ -1,0 +1,31 @@
+table gold_dim_address
+
+	column AddressID
+		dataType: int64
+		isKey
+		summarizeBy: none
+		sourceColumn: AddressID
+
+	column City
+		dataType: string
+		sourceColumn: City
+
+	column StateProvince
+		dataType: string
+		sourceColumn: StateProvince
+
+	column CountryRegion
+		dataType: string
+		sourceColumn: CountryRegion
+
+	column PostalCode
+		dataType: string
+		sourceColumn: PostalCode
+
+	partition gold_dim_address = entity
+		mode: directLake
+		source
+			entityName: gold_dim_address
+			schemaName: dbo
+			expressionSource: 'DirectLake - lh_AdventureWorks'
+

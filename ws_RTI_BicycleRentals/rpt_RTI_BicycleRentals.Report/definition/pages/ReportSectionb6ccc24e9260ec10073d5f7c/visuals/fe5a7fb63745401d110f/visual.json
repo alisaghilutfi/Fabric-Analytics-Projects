@@ -1,0 +1,120 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "fe5a7fb63745401d110f",
+  "position": {
+    "x": 20,
+    "y": 184,
+    "z": 1002,
+    "height": 420,
+    "width": 760,
+    "tabOrder": 1002
+  },
+  "visual": {
+    "visualType": "azureMap",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Station Snapshot"
+                    }
+                  },
+                  "Property": "BikepointID"
+                }
+              },
+              "queryRef": "Station Snapshot.BikepointID",
+              "nativeQueryRef": "BikepointID",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Station Snapshot"
+                    }
+                  },
+                  "Property": "Latitude"
+                }
+              },
+              "queryRef": "Station Snapshot.Latitude",
+              "nativeQueryRef": "Latitude",
+              "active": true
+            }
+          ]
+        },
+        "X": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Station Snapshot"
+                    }
+                  },
+                  "Property": "Longitude"
+                }
+              },
+              "queryRef": "Station Snapshot.Longitude",
+              "nativeQueryRef": "Longitude",
+              "active": true
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Station Snapshot"
+                    }
+                  },
+                  "Property": "Action"
+                }
+              },
+              "queryRef": "Station Snapshot.Action",
+              "nativeQueryRef": "Action",
+              "active": true
+            }
+          ]
+        },
+        "Size": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Station Snapshot"
+                        }
+                      },
+                      "Property": "No_Bikes"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(Station Snapshot.No_Bikes)",
+              "nativeQueryRef": "No_Bikes",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "objects": {}
+  }
+}

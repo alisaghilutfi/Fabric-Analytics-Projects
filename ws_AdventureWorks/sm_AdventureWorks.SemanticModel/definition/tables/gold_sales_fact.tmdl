@@ -1,0 +1,94 @@
+table gold_sales_fact
+
+	column SalesOrderID
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: SalesOrderID
+
+	column SalesOrderDetailID
+		dataType: int64
+		isKey
+		summarizeBy: none
+		sourceColumn: SalesOrderDetailID
+
+	column CustomerID
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: CustomerID
+
+	column ProductID
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: ProductID
+
+	column OrderDate
+		dataType: dateTime
+		formatString: Short Date
+		summarizeBy: none
+		sourceColumn: OrderDate
+
+	column ShipDate
+		dataType: dateTime
+		formatString: Short Date
+		summarizeBy: none
+		sourceColumn: ShipDate
+
+	column OrderQty
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: OrderQty
+
+	column UnitPrice
+		dataType: decimal
+		formatString: $#,##0.00
+		summarizeBy: none
+		sourceColumn: UnitPrice
+
+	column UnitPriceDiscount
+		dataType: double
+		formatString: 0.00%
+		summarizeBy: none
+		sourceColumn: UnitPriceDiscount
+
+	column LineTotal
+		dataType: decimal
+		formatString: $#,##0.00
+		summarizeBy: sum
+		sourceColumn: LineTotal
+
+	column SubTotal
+		dataType: decimal
+		formatString: $#,##0.00
+		summarizeBy: sum
+		sourceColumn: SubTotal
+
+	column TaxAmt
+		dataType: decimal
+		formatString: $#,##0.00
+		summarizeBy: sum
+		sourceColumn: TaxAmt
+
+	column Freight
+		dataType: decimal
+		formatString: $#,##0.00
+		summarizeBy: sum
+		sourceColumn: Freight
+
+	column TotalDue
+		dataType: decimal
+		formatString: $#,##0.00
+		summarizeBy: sum
+		sourceColumn: TotalDue
+
+	column DaysToShip
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: DaysToShip
+
+	partition gold_sales_fact = entity
+		mode: directLake
+		source
+			entityName: gold_sales_fact
+			schemaName: dbo
+			expressionSource: 'DirectLake - lh_AdventureWorks'
+

@@ -1,0 +1,4 @@
+/// DirectQuery semantic model over eh_RTI_BicycleRentals KQL database — live bicycle rental station snapshot
+database
+	compatibilityLevel: 1604
+

@@ -1,5 +1,4 @@
-model Model
-	defaultMode: directLake
+model sm_RTI_BicycleRentals
 	culture: en-US
 	defaultPowerBIDataSourceVersion: powerBI_V3
 	sourceQueryCulture: en-US
@@ -9,10 +8,6 @@ model Model
 
 annotation PBI_ProTooling = ["MCP-PBIModeling"]
 
-ref table gold_sales_fact
-ref table gold_dim_customer
-ref table gold_dim_product
-ref table gold_dim_productcategory
-ref table gold_dim_address
-ref table Date
+ref table 'Station Snapshot'
+ref table _Measures
 

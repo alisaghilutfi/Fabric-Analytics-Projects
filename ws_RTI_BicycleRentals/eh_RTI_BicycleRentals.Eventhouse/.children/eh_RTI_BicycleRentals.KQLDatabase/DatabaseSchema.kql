@@ -10,6 +10,10 @@
     | extend BikesToBeFilled = No_Empty_Docks - No_Bikes
     | extend  Action = iff(BikesToBeFilled > 0, tostring(BikesToBeFilled), "NA")
 }
+.create-or-alter function with (folder = "Gold", docstring = "Latest full snapshot per station, all columns", skipvalidation = "true") LatestStationSnapshot() {
+    TransformedData
+    | summarize arg_max(Timestamp, *) by BikepointID
+}
 .create-or-alter materialized-view with (Folder = "Gold")  AggregatedData on table TransformedData { TransformedData
    | summarize arg_max(Timestamp,No_Bikes) by BikepointID }
 .alter table TransformedData policy update "[{\"IsEnabled\":true,\"Source\":\"RawData\",\"Query\":\"TransformRawData()\",\"IsTransactional\":false,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"

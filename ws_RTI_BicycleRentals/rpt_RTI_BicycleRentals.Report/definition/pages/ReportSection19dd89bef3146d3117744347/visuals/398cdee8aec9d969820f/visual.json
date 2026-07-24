@@ -1,0 +1,95 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "398cdee8aec9d969820f",
+  "position": {
+    "x": 860,
+    "y": 188,
+    "z": 1003,
+    "height": 284,
+    "width": 400,
+    "tabOrder": 1003
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Station Snapshot"
+                    }
+                  },
+                  "Property": "Neighbourhood"
+                }
+              },
+              "queryRef": "Station Snapshot.Neighbourhood",
+              "nativeQueryRef": "Neighbourhood"
+            }
+          ]
+        },
+        "Columns": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Station Snapshot"
+                    }
+                  },
+                  "Property": "Action"
+                }
+              },
+              "queryRef": "Station Snapshot.Action",
+              "nativeQueryRef": "Action"
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Total Stations"
+                }
+              },
+              "queryRef": "_Measures.Total Stations",
+              "nativeQueryRef": "Total Stations"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "columnHeaders": [
+        {
+          "properties": {
+            "columnAdjustment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'growToFit'"
+                }
+              }
+            },
+            "autoSizeColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

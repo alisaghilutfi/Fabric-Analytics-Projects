@@ -1,0 +1,70 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "1adc27291322957b1cee",
+  "position": {
+    "x": 20,
+    "y": 52,
+    "z": 1001,
+    "height": 420,
+    "width": 820,
+    "tabOrder": 1001
+  },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Station Snapshot"
+                    }
+                  },
+                  "Property": "Neighbourhood"
+                }
+              },
+              "queryRef": "Station Snapshot.Neighbourhood",
+              "nativeQueryRef": "Neighbourhood"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Stations Needing Restock"
+                }
+              },
+              "queryRef": "_Measures.Stations Needing Restock",
+              "nativeQueryRef": "Stations Needing Restock"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Stations Needing Emptying"
+                }
+              },
+              "queryRef": "_Measures.Stations Needing Emptying",
+              "nativeQueryRef": "Stations Needing Emptying"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {}
+  }
+}

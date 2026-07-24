@@ -1,0 +1,57 @@
+table Date
+
+	column Date
+		dataType: dateTime
+		isKey
+		formatString: Short Date
+		summarizeBy: none
+		sourceColumn: Date
+
+	column Year
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: Year
+
+	column Quarter
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: Quarter
+
+	column MonthNumber
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: MonthNumber
+
+	column MonthName
+		dataType: string
+		sourceColumn: MonthName
+
+	column Day
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: Day
+
+	column DayOfWeekNumber
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: DayOfWeekNumber
+
+	column DayName
+		dataType: string
+		sourceColumn: DayName
+
+	column IsWeekend
+		dataType: boolean
+		sourceColumn: IsWeekend
+
+	column YearMonth
+		dataType: string
+		sourceColumn: YearMonth
+
+	partition Date = entity
+		mode: directLake
+		source
+			entityName: gold_dim_date
+			schemaName: dbo
+			expressionSource: 'DirectLake - lh_AdventureWorks'
+
