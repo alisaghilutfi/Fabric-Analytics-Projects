@@ -52,23 +52,85 @@ When starting a session on this project:
    - Spark/Lakehouse: skills/spark-authoring-cli/SKILL.md
    - Power BI report: skills/powerbi-report-authoring/SKILL.md
 
+## Actual State (audited 2026-07-24)
+
+The workspace was found to be far more built-out than this file previously
+reflected — the real-time ingestion and KQL medallion pipeline were already
+live and running.
+
+### Eventstream (es_RTI_BicycleRentals)
+- Source: Fabric SampleData "Bicycles"
+- ManageFields: BikepointID, Street, Neighbourhood, Latitude, Longitude,
+  No_Bikes, No_Empty_Docks, Timestamp (SystemTimestamp)
+- Destination 1: eh_RTI_BicycleRentals → RawData table
+- Destination 2: activator_BicycleRentals (direct stream)
+
+### KQL Medallion (live, 187M rows)
+| Layer  | Object                   | Detail                                                          |
+|--------|--------------------------|------------------------------------------------------------------|
+| Bronze | RawData                  | 187M rows, live ingestion                                       |
+| Silver | TransformedData          | 186.7M rows, update policy on RawData via TransformRawData()     |
+| Gold   | AggregatedData           | Materialized view, arg_max(Timestamp, No_Bikes) by BikepointID   |
+| Gold   | LatestStationSnapshot()  | New function (added this session): arg_max(Timestamp, *) by BikepointID — full-column station snapshot used by the semantic model, since AggregatedData only carries No_Bikes |
+
+### Other Artifacts
+- activator_BicycleRentals.Reflex — wired to Eventstream, rule contents not yet inspected
+- dashboard_BicycleRentals.KQLDashboard — exists, tile contents not yet inspected
+- map_RTI_BicycleRentals.Map — geospatial station view
+- anomalies_BicycleRentals.AnomalyDetector — ML anomaly detection on stream
+
+### Orphaned
+- lh_RTI_BicycleRentals.Lakehouse — exists, no Eventstream destination, no notebooks, no tables
+
+### Reporting Layer (built this session)
+- **sm_RTI_BicycleRentals** (SemanticModel) — DirectQuery on
+  `LatestStationSnapshot()` via `AzureDataExplorer.Contents`. Table
+  `Station Snapshot` (BikepointID, Street, Neighbourhood, Latitude/Longitude
+  visible; Timestamp, No_Bikes, No_Empty_Docks, BikesToBeFilled, Action
+  hidden). `_Measures` table with 10 measures across Availability / Capacity /
+  Rebalancing / Recency display folders, all with Copilot-ready descriptions.
+- **rpt_RTI_BicycleRentals** (Report) — 4 pages: Live Network Overview (KPI
+  row, azureMap, Top-10 restock bar chart, Neighbourhood slicer), Station
+  Detail (table with Fill/Empty conditional formatting, Action + Neighbourhood
+  slicers), Rebalancing Ops (Restock vs Emptying bar chart, Total Bikes To
+  Move card, Neighbourhood × Action matrix), About (data lineage + freshness
+  card). PBIR validated with `powerbi-report-author validate` (0 errors).
+
 ## Session Recap Template
 When finishing a session, replace the section below with actual results:
 
 ### Last Session Recap
-**Date:** 2026-07-22
+**Date:** 2026-07-24
 **Completed:**
-- Git integration confirmed
-- CONTEXT.md created — ready for active development
+- Audited actual workspace state — found Eventstream, KQL medallion,
+  Activator, Dashboard, Map, and Anomaly Detector already live (CONTEXT.md was
+  stale)
+- Added `LatestStationSnapshot()` KQL function (Gold layer, all columns,
+  arg_max by BikepointID) since AggregatedData only exposed No_Bikes
+- Built and deployed `sm_RTI_BicycleRentals` — DirectQuery semantic model on
+  the KQL database, 1 fact table + 10 measures
+- Built and deployed `rpt_RTI_BicycleRentals` — 4-page report, PBIR-validated
+- Synced both new items + the KQL function change to git via Fabric's
+  `updateFromGit` / `commitToGit` (branch `dev-fabric-sync`, commit `a716dab`)
 
 **Left unfinished:**
-- Eventstream not yet configured
-- Eventhouse and KQL Database not yet created
-- Power BI dashboard not yet built
+- DAX measure validation against the live deployed model was not completed
+  (user declined the confirmation prompt mid-session) — recommend running
+  `EVALUATE {...}` over the 10 measures before treating them as verified
+- Report was not visually reviewed in Power BI Desktop / Service (no Desktop
+  instance available this session) — screenshot/rendering review still
+  pending
+- Azure Map visual (Category=BikepointID, Y/X=Lat/Long override, Size=No_Bikes,
+  Series=Action) has not been confirmed to render/geocode correctly in
+  practice
 
 **New blockers discovered:**
 - None
 
 **Pick up next session at:**
-- Set up Eventstream for bicycle rental event ingestion
-- Create Eventhouse and KQL Database
+- Validate the 10 measures live (DAX EVALUATE) and the report visually
+  (Desktop reload + screenshot review)
+- Inspect activator_BicycleRentals rule logic and document
+- Inspect dashboard_BicycleRentals tile definitions and document
+- Decide: wire lh_RTI_BicycleRentals for historical Delta layer or remove
+- Investigate anomalies_BicycleRentals output destination
