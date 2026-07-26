@@ -242,13 +242,14 @@ rfc1_sm = RandomForestClassifier(max_depth=4, max_features=4, min_samples_split=
 with mlflow.start_run(run_name="rfc1_sm") as run:
     rfc1_sm_run_id = run.info.run_id # Capture run_id for model prediction later
     print("run_id: {}; status: {}".format(rfc1_sm_run_id, run.info.status))
-    # rfc1.fit(X_train,y_train) # Imbalanaced training data
     rfc1_sm.fit(X_res, y_res.ravel()) # Balanced training data
     rfc1_sm.score(X_val, y_val)
     y_pred = rfc1_sm.predict(X_val)
     cr_rfc1_sm = classification_report(y_val, y_pred)
     cm_rfc1_sm = confusion_matrix(y_val, y_pred)
-    roc_auc_rfc1_sm = roc_auc_score(y_res, rfc1_sm.predict_proba(X_res)[:, 1])
+    val_proba = rfc1_sm.predict_proba(X_val)[:, 1]
+    val_roc_auc = roc_auc_score(y_val, val_proba)
+    mlflow.log_metric("val_roc_auc", val_roc_auc)
 
 # METADATA ********************
 
@@ -266,13 +267,14 @@ rfc2_sm = RandomForestClassifier(max_depth=8, max_features=6, min_samples_split=
 with mlflow.start_run(run_name="rfc2_sm") as run:
     rfc2_sm_run_id = run.info.run_id # Capture run_id for model prediction later
     print("run_id: {}; status: {}".format(rfc2_sm_run_id, run.info.status))
-    # rfc2.fit(X_train,y_train) # Imbalanced training data
     rfc2_sm.fit(X_res, y_res.ravel()) # Balanced training data
     rfc2_sm.score(X_val, y_val)
     y_pred = rfc2_sm.predict(X_val)
     cr_rfc2_sm = classification_report(y_val, y_pred)
     cm_rfc2_sm = confusion_matrix(y_val, y_pred)
-    roc_auc_rfc2_sm = roc_auc_score(y_res, rfc2_sm.predict_proba(X_res)[:, 1])
+    val_proba = rfc2_sm.predict_proba(X_val)[:, 1]
+    val_roc_auc = roc_auc_score(y_val, val_proba)
+    mlflow.log_metric("val_roc_auc", val_roc_auc)
 
 # METADATA ********************
 
@@ -298,13 +300,14 @@ lgbm_sm_model = LGBMClassifier(learning_rate = 0.07,
 
 with mlflow.start_run(run_name="lgbm_sm") as run:
     lgbm1_sm_run_id = run.info.run_id # Capture run_id for model prediction later
-    # lgbm_sm_model.fit(X_train,y_train) # Imbalanced training data
     lgbm_sm_model.fit(X_res, y_res.ravel()) # Balanced training data
     y_pred = lgbm_sm_model.predict(X_val)
     accuracy = accuracy_score(y_val, y_pred)
     cr_lgbm_sm = classification_report(y_val, y_pred)
     cm_lgbm_sm = confusion_matrix(y_val, y_pred)
-    roc_auc_lgbm_sm = roc_auc_score(y_res, lgbm_sm_model.predict_proba(X_res)[:, 1])
+    val_proba = lgbm_sm_model.predict_proba(X_val)[:, 1]
+    val_roc_auc = roc_auc_score(y_val, val_proba)
+    mlflow.log_metric("val_roc_auc", val_roc_auc)
 
 # METADATA ********************
 
@@ -313,51 +316,21 @@ with mlflow.start_run(run_name="lgbm_sm") as run:
 # META   "language_group": "synapse_pyspark"
 # META }
 
+# MARKDOWN ********************
+
+# **Champion model selection**
+
 # CELL ********************
 
-# # Use autolog for metrics/params, but we will handle model registration manually for Version 2
-# mlflow.autolog(exclusive=False)
-
-# # 2. Model Initialization
-# lgbm_sm_model_v2 = LGBMClassifier(
-#     learning_rate=0.07, 
-#     max_delta_step=2, 
-#     n_estimators=100,
-#     max_depth=10, 
-#     eval_metric="logloss", 
-#     objective='binary', 
-#     random_state=SEED
-# )
-
-# with mlflow.start_run(run_name="lgbm_sm_v2") as run:
-#     # 3. Train the model on the SMOTE-resampled data
-#     lgbm_sm_model_v2.fit(X_res, y_res.ravel())
-    
-#     # 4. Create the "Contract" (The Fix for Spark)
-#     # Use a 5-row sample of your features
-#     input_example = X_test.head(5) 
-    
-#     # Force the prediction to be a specific Numpy type (int32)
-#     # This ensures the MLFlowTransformer knows the Spark column type is Integer
-#     output_example = lgbm_sm_model_v2.predict(input_example).astype(np.int32)
-    
-#     # Infer the signature using these explicit types
-#     signature = infer_signature(input_example, output_example)
-    
-#     # 5. Log the model manually to register Version 2
-#     # This overwrites the 'loose' autologged version with a 'strict' signature version
-#     mlflow.lightgbm.log_model(
-#         lgbm_sm_model_v2, 
-#         "model", 
-#         signature=signature,
-#         registered_model_name="lgbm_sm"
-#     )
-    
-#     # 6. Optional: Log standard metrics for comparison
-#     y_pred = lgbm_sm_model_v2.predict(X_val)
-#     mlflow.log_metric("val_accuracy", accuracy_score(y_val, y_pred))
-
-# print("✅ Version 2 registered successfully with a strict Integer signature.")
+best_run = mlflow.search_runs(
+    experiment_names=["bank-churn-experiment"],
+    order_by=["metrics.val_roc_auc DESC"],
+    max_results=1
+)
+best_run_id = best_run.iloc[0]["run_id"]
+champion_uri = f"runs:/{best_run_id}/model"
+mlflow.register_model(champion_uri, "champion_BankChurn")
+print(f"Champion registered: run {best_run_id}")
 
 # METADATA ********************
 
@@ -375,7 +348,6 @@ with mlflow.start_run(run_name="lgbm_sm") as run:
 ypred_rfc1_sm_v = rfc1_sm.predict(X_val) # Random Forest with max depth of 4 and 4 features
 ypred_rfc2_sm_v = rfc2_sm.predict(X_val) # Random Forest with max depth of 8 and 6 features
 ypred_lgbm1_sm_v = lgbm_sm_model.predict(X_val) # LightGBM version 1
-# ypred_lgbm2_sm_v = lgbm_sm_model_v2.predict(X_val) # LightGBM version 2
 
 # METADATA ********************
 
@@ -462,22 +434,6 @@ cfm = confusion_matrix(y_val, y_pred=ypred_lgbm1_sm_v)
 plot_confusion_matrix(cfm, classes=['Non Churn','Churn'],
                       title='LightGBM')
 tn, fp, fn, tp = cfm.ravel()
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
-# # Confusion Matrix for LightGBM version 2
-
-# cfm = confusion_matrix(y_val, y_pred=ypred_lgbm2_sm_v)
-# plot_confusion_matrix(cfm, classes=['Non Churn','Churn'],
-#                       title='LightGBM')
-# tn, fp, fn, tp = cfm.ravel()
 
 # METADATA ********************
 

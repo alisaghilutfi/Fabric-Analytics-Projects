@@ -4,7 +4,7 @@
 > executing agent updates the relevant project's Last Session and
 > Status fields. Do not edit manually unless correcting an error.
 
-Last updated: 2026-07-24
+Last updated: 2026-07-26
 
 ---
 
@@ -31,10 +31,11 @@ Semantic model scaffolded. Report file created.
 
 ## ws_DS_BankChurn
 **Purpose:** Data science / ML — customer churn prediction  
-**Status:** Active  
-**Current focus:** Not yet started in this session cycle  
-**Last session:** Not recorded  
-**Next session:** Profile data, build feature engineering notebook  
+**Status:** Active — semantic model and report complete, pipeline pending  
+**Last updated:** 2026-07-26  
+**Current focus:** Pipeline orchestration and report polish  
+**Last session:** Reorganized semantic model measures into standalone `_Measures` table (10 DAX measures, 4 display folders), hid 11 raw columns on customer_churn_test_predictions, built rpt_DS_BankChurn PBIR report (3 pages, 15 visuals).  
+**Next session:** Fix empty Geography bar chart on Churn Overview page; consider DataPipeline orchestration for the notebook sequence  
 **Blockers:** None known  
 
 ---

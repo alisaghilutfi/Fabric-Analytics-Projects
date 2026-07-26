@@ -1,0 +1,54 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "9788b5fb-836d-4447-856e-16d7f2554bc7",
+  "position": {
+    "x": 20,
+    "y": 200,
+    "z": 2,
+    "height": 480,
+    "width": 580,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                  "Property": "Churn Rate Germany"
+                }
+              },
+              "queryRef": "_Measures.Churn Rate Germany",
+              "nativeQueryRef": "Churn Rate Germany"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                  "Property": "Churn Rate Spain"
+                }
+              },
+              "queryRef": "_Measures.Churn Rate Spain",
+              "nativeQueryRef": "Churn Rate Spain"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                  "Property": "Churn Rate France"
+                }
+              },
+              "queryRef": "_Measures.Churn Rate France",
+              "nativeQueryRef": "Churn Rate France"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

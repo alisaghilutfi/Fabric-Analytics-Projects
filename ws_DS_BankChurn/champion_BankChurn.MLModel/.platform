@@ -1,11 +1,11 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
   "metadata": {
-    "type": "Report",
-    "displayName": "rpt_DS_BankChurn"
+    "type": "MLModel",
+    "displayName": "champion_BankChurn"
   },
   "config": {
     "version": "2.0",
-    "logicalId": "284304f3-4525-4684-93b0-ff6c2fd65e31"
+    "logicalId": "c4286d0a-25bf-89bd-42b6-61e693f73cff"
   }
 }

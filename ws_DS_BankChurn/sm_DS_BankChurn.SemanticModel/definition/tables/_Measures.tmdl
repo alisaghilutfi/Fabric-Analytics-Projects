@@ -1,0 +1,153 @@
+/// Contains all DAX measures for the BankChurn Data Science project. Measures are organized into display folders covering prediction volume, churn rates, geographic breakdown, and customer risk signals. Data source is the customer_churn_test_predictions Gold table produced by the LightGBM champion model.
+table _Measures
+	lineageTag: 9507a9ba-63a2-443e-9cc1-8cf026fe84b6
+
+	/// Total number of customers scored in the churn prediction test set. Counts every row in the predictions table regardless of filter context.
+	measure 'Total Customers' = COUNTROWS('customer_churn_test_predictions')
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: cedcc4c4-a3ff-4266-913b-2eec7db8fedb
+
+	/// Number of customers predicted to churn (predictions = 1). Uses CALCULATE with a filter on the predictions column to isolate churned records.
+	measure 'Churned Customers' =
+			VAR _churned =
+				CALCULATE(
+					COUNTROWS('customer_churn_test_predictions'),
+					'customer_churn_test_predictions'[predictions] = 1
+				)
+			RETURN
+				_churned
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: b07f43d0-0a75-4612-8791-3502f53a3b36
+
+	/// Number of customers predicted to be retained (predictions = 0). Complements Churned Customers — the two always sum to Total Customers.
+	measure 'Retained Customers' =
+			VAR _retained =
+				CALCULATE(
+					COUNTROWS('customer_churn_test_predictions'),
+					'customer_churn_test_predictions'[predictions] = 0
+				)
+			RETURN
+				_retained
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: 6a747c7a-d23a-4ad8-a4cd-ec42f88ee990
+
+	/// Proportion of customers predicted to churn out of all scored customers. Divides Churned Customers by Total Customers; returns 0 if denominator is empty.
+	measure 'Churn Rate' =
+			VAR _churned = [Churned Customers]
+			VAR _total = [Total Customers]
+			RETURN
+				DIVIDE(_churned, _total, 0)
+		formatString: 0.0%
+		displayFolder: Churn Rate
+		lineageTag: 6caec84f-98b2-4573-984b-fcd6b367e573
+
+	/// Proportion of customers predicted to be retained. Complement of Churn Rate — always equals 1 minus Churn Rate.
+	measure 'Retained Rate' =
+			VAR _result = 1 - [Churn Rate]
+			RETURN
+				_result
+		formatString: 0.0%
+		displayFolder: Churn Rate
+		lineageTag: d1ed6006-7222-4f9e-9fbf-6fad1da981b7
+
+	/// Churn rate among customers from Germany (Geography_Germany = True). Filters the predictions table to German customers before computing the churn ratio.
+	measure 'Churn Rate Germany' =
+			VAR _total =
+				CALCULATE(
+					COUNTROWS('customer_churn_test_predictions'),
+					'customer_churn_test_predictions'[Geography_Germany] = True()
+				)
+			VAR _churned =
+				CALCULATE(
+					COUNTROWS('customer_churn_test_predictions'),
+					'customer_churn_test_predictions'[Geography_Germany] = True(),
+					'customer_churn_test_predictions'[predictions] = 1
+				)
+			RETURN
+				DIVIDE(_churned, _total, 0)
+		formatString: 0.0%
+		displayFolder: Geography
+		lineageTag: 3c476866-be3c-4263-8635-5796f7ddf92e
+
+	/// Churn rate among customers from Spain (Geography_Spain = True). Filters the predictions table to Spanish customers before computing the churn ratio.
+	measure 'Churn Rate Spain' =
+			VAR _total =
+				CALCULATE(
+					COUNTROWS('customer_churn_test_predictions'),
+					'customer_churn_test_predictions'[Geography_Spain] = True()
+				)
+			VAR _churned =
+				CALCULATE(
+					COUNTROWS('customer_churn_test_predictions'),
+					'customer_churn_test_predictions'[Geography_Spain] = True(),
+					'customer_churn_test_predictions'[predictions] = 1
+				)
+			RETURN
+				DIVIDE(_churned, _total, 0)
+		formatString: 0.0%
+		displayFolder: Geography
+		lineageTag: a518c171-93a0-4a83-a2e1-3510373b6540
+
+	/// Churn rate among customers from France (Geography_France = True). Filters the predictions table to French customers before computing the churn ratio.
+	measure 'Churn Rate France' =
+			VAR _total =
+				CALCULATE(
+					COUNTROWS('customer_churn_test_predictions'),
+					'customer_churn_test_predictions'[Geography_France] = True()
+				)
+			VAR _churned =
+				CALCULATE(
+					COUNTROWS('customer_churn_test_predictions'),
+					'customer_churn_test_predictions'[Geography_France] = True(),
+					'customer_churn_test_predictions'[predictions] = 1
+				)
+			RETURN
+				DIVIDE(_churned, _total, 0)
+		formatString: 0.0%
+		displayFolder: Geography
+		lineageTag: be7f8308-a16c-42db-bc6b-f40b681c33f6
+
+	/// Average credit score across all scored customers in the current filter context. Higher values indicate lower credit risk in the customer segment.
+	measure 'Avg Credit Score' =
+			VAR _result = AVERAGE('customer_churn_test_predictions'[CreditScore])
+			RETURN
+				_result
+		formatString: #,0
+		displayFolder: Risk Signals
+		lineageTag: 4ffa4178-9e14-42e8-b2dd-bcfb3597c36d
+
+	/// Average account balance across all scored customers in the current filter context. Useful for comparing financial exposure between churned and retained segments.
+	measure 'Avg Balance' =
+			VAR _result = AVERAGE('customer_churn_test_predictions'[Balance])
+			RETURN
+				_result
+		formatString: #,##0.00
+		displayFolder: Risk Signals
+		lineageTag: 4af44c83-13bd-4ccd-91dc-0b3d416c17be
+
+	/// Average tenure in years across all scored customers in the current filter context. Lower tenure in the churned segment signals early-life churn risk.
+	measure 'Avg Tenure' =
+			VAR _result = AVERAGE('customer_churn_test_predictions'[Tenure])
+			RETURN
+				_result
+		formatString: 0.0
+		displayFolder: Risk Signals
+		lineageTag: 33dbbfd7-e04a-4b74-903e-c6280ea7c263
+
+	column Column
+		formatString: 0
+		lineageTag: f5bba121-cf52-49a4-ba08-581ff926646f
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = fe5e876b812546d18fd306578e65d5e2
