@@ -90,6 +90,7 @@ table customer_churn_test_predictions
 		lineageTag: 435299dd-2ff1-41c3-8222-3a819cab4c12
 		sourceLineageTag: NewTenure
 		summarizeBy: sum
+		isHidden
 		sourceColumn: NewTenure
 
 		annotation SummarizationSetBy = Automatic
@@ -102,6 +103,7 @@ table customer_churn_test_predictions
 		lineageTag: 5186f12c-5bbd-4f79-9cac-adde79bb4ee8
 		sourceLineageTag: NewCreditsScore
 		summarizeBy: sum
+		isHidden
 		sourceColumn: NewCreditsScore
 
 		annotation SummarizationSetBy = Automatic
@@ -112,6 +114,7 @@ table customer_churn_test_predictions
 		lineageTag: ac9c4f82-bd7d-4941-90f3-4748c7651034
 		sourceLineageTag: NewAgeScore
 		summarizeBy: sum
+		isHidden
 		sourceColumn: NewAgeScore
 
 		annotation SummarizationSetBy = Automatic
@@ -122,6 +125,7 @@ table customer_churn_test_predictions
 		lineageTag: 017f1004-319b-44a4-934c-fed25657df93
 		sourceLineageTag: NewBalanceScore
 		summarizeBy: sum
+		isHidden
 		sourceColumn: NewBalanceScore
 
 		annotation SummarizationSetBy = Automatic
@@ -132,6 +136,7 @@ table customer_churn_test_predictions
 		lineageTag: 718140ed-40cb-4e05-ab29-1177fc47a00b
 		sourceLineageTag: NewEstSalaryScore
 		summarizeBy: sum
+		isHidden
 		sourceColumn: NewEstSalaryScore
 
 		annotation SummarizationSetBy = Automatic
@@ -142,6 +147,7 @@ table customer_churn_test_predictions
 		lineageTag: 78155c09-9df5-4dda-bc12-b5a8b23d879c
 		sourceLineageTag: Geography_France
 		summarizeBy: none
+		isHidden
 		sourceColumn: Geography_France
 
 		annotation SummarizationSetBy = Automatic
@@ -152,6 +158,7 @@ table customer_churn_test_predictions
 		lineageTag: f7720caa-6e7f-4ea1-8eeb-314dafc2ce05
 		sourceLineageTag: Geography_Germany
 		summarizeBy: none
+		isHidden
 		sourceColumn: Geography_Germany
 
 		annotation SummarizationSetBy = Automatic
@@ -162,6 +169,7 @@ table customer_churn_test_predictions
 		lineageTag: cd1138ed-0016-41d5-bd6d-ff13357f2837
 		sourceLineageTag: Geography_Spain
 		summarizeBy: none
+		isHidden
 		sourceColumn: Geography_Spain
 
 		annotation SummarizationSetBy = Automatic
@@ -172,6 +180,7 @@ table customer_churn_test_predictions
 		lineageTag: 4b7ba32f-128e-493f-8763-47432590244e
 		sourceLineageTag: Gender_Female
 		summarizeBy: none
+		isHidden
 		sourceColumn: Gender_Female
 
 		annotation SummarizationSetBy = Automatic
@@ -182,6 +191,7 @@ table customer_churn_test_predictions
 		lineageTag: e8106c6f-1f1a-414d-9e54-4584ac6f4e48
 		sourceLineageTag: Gender_Male
 		summarizeBy: none
+		isHidden
 		sourceColumn: Gender_Male
 
 		annotation SummarizationSetBy = Automatic
@@ -192,6 +202,7 @@ table customer_churn_test_predictions
 		lineageTag: 66b16389-b232-4070-a763-1facb82ddbf1
 		sourceLineageTag: predictions
 		summarizeBy: sum
+		isHidden
 		sourceColumn: predictions
 
 		annotation SummarizationSetBy = Automatic
