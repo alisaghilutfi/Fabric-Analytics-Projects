@@ -2,52 +2,140 @@ table customer_churn_test_predictions
 	lineageTag: d26ef429-d0bb-4da7-89be-05c057616667
 	sourceLineageTag: [dbo].[customer_churn_test_predictions]
 
-	measure ChurnRate = AVERAGE(customer_churn_test_predictions[predictions])
-		formatString: 0.0%;-0.0%;0.0%
-		lineageTag: b6b175e4-18c9-4758-b838-34a89963eee6
+	/// Total number of customers scored in the churn prediction test set. Counts every row in the predictions table regardless of filter context.
+	measure 'Total Customers' = COUNTROWS('customer_churn_test_predictions')
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: 66fc3105-41e8-4fdb-9249-f7ac7d10391e
 
-		changedProperty = Name
+	/// Number of customers predicted to churn (predictions = 1). Uses CALCULATE with a filter on the predictions column to isolate churned records.
+	measure 'Churned Customers' =
+			VAR _churned =
+			    CALCULATE(
+			        COUNTROWS('customer_churn_test_predictions'),
+			        'customer_churn_test_predictions'[predictions] = 1
+			    )
+			RETURN
+			    _churned
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: f99a656b-17f7-43f4-8596-ac724cfcd13a
 
-		changedProperty = FormatString
+	/// Number of customers predicted to be retained (predictions = 0). Complements Churned Customers — the two always sum to Total Customers.
+	measure 'Retained Customers' =
+			VAR _retained =
+			    CALCULATE(
+			        COUNTROWS('customer_churn_test_predictions'),
+			        'customer_churn_test_predictions'[predictions] = 0
+			    )
+			RETURN
+			    _retained
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: ed11ec71-66d0-4949-8533-b70406b8d6a7
 
-	measure Customers = COUNT(customer_churn_test_predictions[predictions])
-		formatString: 0
-		lineageTag: 923a2250-fd87-483a-8c0d-d2de4387ac3b
+	/// Proportion of customers predicted to churn out of all scored customers. Divides Churned Customers by Total Customers; returns 0 if denominator is empty.
+	measure 'Churn Rate' =
+			VAR _churned = [Churned Customers]
+			VAR _total = [Total Customers]
+			RETURN
+			    DIVIDE(_churned, _total, 0)
+		formatString: 0.0%
+		displayFolder: Churn Rate
+		lineageTag: 3f42e125-9721-4d2e-bef6-ea5c9d792edd
 
-		changedProperty = Name
+	/// Proportion of customers predicted to be retained. Complement of Churn Rate — always equals 1 minus Churn Rate.
+	measure 'Retained Rate' =
+			VAR _result = 1 - [Churn Rate]
+			RETURN
+			    _result
+		formatString: 0.0%
+		displayFolder: Churn Rate
+		lineageTag: 7c7cfd5c-707f-4daf-8155-8f5e7ba21e9a
 
-	measure GermanyChurn =
-			CALCULATE(
-			    AVERAGE(customer_churn_test_predictions[predictions]),
-			    FILTER(customer_churn_test_predictions, customer_churn_test_predictions[Geography_Germany]==True)
-			)
-		lineageTag: e8e5e43b-1ee0-4ec1-b9cd-8ef58ebdec1f
+	/// Churn rate among customers from Germany (Geography_Germany = True). Filters the predictions table to German customers before computing the churn ratio.
+	measure 'Churn Rate Germany' =
+			VAR _total =
+			    CALCULATE(
+			        COUNTROWS('customer_churn_test_predictions'),
+			        'customer_churn_test_predictions'[Geography_Germany] = True()
+			    )
+			VAR _churned =
+			    CALCULATE(
+			        COUNTROWS('customer_churn_test_predictions'),
+			        'customer_churn_test_predictions'[Geography_Germany] = True(),
+			        'customer_churn_test_predictions'[predictions] = 1
+			    )
+			RETURN
+			    DIVIDE(_churned, _total, 0)
+		formatString: 0.0%
+		displayFolder: Geography
+		lineageTag: 2d3b7e74-a3ce-46b1-a79f-3642507a94e6
 
-		changedProperty = Name
+	/// Churn rate among customers from Spain (Geography_Spain = True). Filters the predictions table to Spanish customers before computing the churn ratio.
+	measure 'Churn Rate Spain' =
+			VAR _total =
+			    CALCULATE(
+			        COUNTROWS('customer_churn_test_predictions'),
+			        'customer_churn_test_predictions'[Geography_Spain] = True()
+			    )
+			VAR _churned =
+			    CALCULATE(
+			        COUNTROWS('customer_churn_test_predictions'),
+			        'customer_churn_test_predictions'[Geography_Spain] = True(),
+			        'customer_churn_test_predictions'[predictions] = 1
+			    )
+			RETURN
+			    DIVIDE(_churned, _total, 0)
+		formatString: 0.0%
+		displayFolder: Geography
+		lineageTag: 04892c63-5c36-44bd-a753-c6a23e6416e2
 
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
+	/// Churn rate among customers from France (Geography_France = True). Filters the predictions table to French customers before computing the churn ratio.
+	measure 'Churn Rate France' =
+			VAR _total =
+			    CALCULATE(
+			        COUNTROWS('customer_churn_test_predictions'),
+			        'customer_churn_test_predictions'[Geography_France] = True()
+			    )
+			VAR _churned =
+			    CALCULATE(
+			        COUNTROWS('customer_churn_test_predictions'),
+			        'customer_churn_test_predictions'[Geography_France] = True(),
+			        'customer_churn_test_predictions'[predictions] = 1
+			    )
+			RETURN
+			    DIVIDE(_churned, _total, 0)
+		formatString: 0.0%
+		displayFolder: Geography
+		lineageTag: 76ec50e8-ee2b-4630-8894-ffa6065080a8
 
-	measure SpainChurn =
-			CALCULATE(
-			    AVERAGE(customer_churn_test_predictions[predictions]),
-			    FILTER(customer_churn_test_predictions, customer_churn_test_predictions[Geography_Spain]==True)
-			)
-		lineageTag: d30b8199-9a97-4f5c-b16e-ee3c0d3862bf
+	/// Average credit score across all scored customers in the current filter context. Higher values indicate lower credit risk in the customer segment.
+	measure 'Avg Credit Score' =
+			VAR _result = AVERAGE('customer_churn_test_predictions'[CreditScore])
+			RETURN
+			    _result
+		formatString: #,0
+		displayFolder: Risk Signals
+		lineageTag: 93607dd8-882f-4295-be23-6ba7f63bb60a
 
-		changedProperty = Name
+	/// Average account balance across all scored customers in the current filter context. Useful for comparing financial exposure between churned and retained segments.
+	measure 'Avg Balance' =
+			VAR _result = AVERAGE('customer_churn_test_predictions'[Balance])
+			RETURN
+			    _result
+		formatString: #,##0.00
+		displayFolder: Risk Signals
+		lineageTag: 89905f53-5a67-4244-a6ae-60214036a1c0
 
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	measure FranceChurn =
-			CALCULATE(
-			    AVERAGE(customer_churn_test_predictions[predictions]),
-			    FILTER(customer_churn_test_predictions, customer_churn_test_predictions[Geography_France]==True)
-			)
-		lineageTag: 15e0daab-ab83-4068-974a-0a5f2754bd89
-
-		changedProperty = Name
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
+	/// Average tenure in years across all scored customers in the current filter context. Lower tenure in the churned segment signals early-life churn risk.
+	measure 'Avg Tenure' =
+			VAR _result = AVERAGE('customer_churn_test_predictions'[Tenure])
+			RETURN
+			    _result
+		formatString: 0.0
+		displayFolder: Risk Signals
+		lineageTag: 66d1a5f0-2b1a-4b93-9c04-5d3a4f6e8b12
 
 	column CreditScore
 		dataType: int64
