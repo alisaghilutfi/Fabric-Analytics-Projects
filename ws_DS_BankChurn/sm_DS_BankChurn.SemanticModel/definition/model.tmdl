@@ -14,3 +14,5 @@ annotation PBI_ProTooling = ["DirectLakeOnOneLakeInWeb","WebModelingEdit"]
 
 ref table customer_churn_test_predictions
 
+ref table _Measures
+
