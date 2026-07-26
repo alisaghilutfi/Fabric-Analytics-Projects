@@ -1,0 +1,54 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "5f67a6a7-abc0-4f1f-b5d1-ac53cc5301c6",
+  "position": {
+    "x": 20,
+    "y": 70,
+    "z": 1,
+    "height": 120,
+    "width": 1240,
+    "tabOrder": 1
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                  "Property": "Avg Credit Score"
+                }
+              },
+              "queryRef": "_Measures.Avg Credit Score",
+              "nativeQueryRef": "Avg Credit Score"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                  "Property": "Avg Balance"
+                }
+              },
+              "queryRef": "_Measures.Avg Balance",
+              "nativeQueryRef": "Avg Balance"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                  "Property": "Avg Tenure"
+                }
+              },
+              "queryRef": "_Measures.Avg Tenure",
+              "nativeQueryRef": "Avg Tenure"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

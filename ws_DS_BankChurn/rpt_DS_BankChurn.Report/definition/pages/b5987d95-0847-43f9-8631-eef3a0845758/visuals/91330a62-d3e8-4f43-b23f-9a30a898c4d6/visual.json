@@ -1,0 +1,53 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "91330a62-d3e8-4f43-b23f-9a30a898c4d6",
+  "position": {
+    "x": 20,
+    "y": 200,
+    "z": 2,
+    "height": 230,
+    "width": 580,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "customer_churn_test_predictions"
+                    }
+                  },
+                  "Property": "Age"
+                }
+              },
+              "queryRef": "customer_churn_test_predictions.Age",
+              "nativeQueryRef": "Age",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                  "Property": "Churn Rate"
+                }
+              },
+              "queryRef": "_Measures.Churn Rate",
+              "nativeQueryRef": "Churn Rate"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

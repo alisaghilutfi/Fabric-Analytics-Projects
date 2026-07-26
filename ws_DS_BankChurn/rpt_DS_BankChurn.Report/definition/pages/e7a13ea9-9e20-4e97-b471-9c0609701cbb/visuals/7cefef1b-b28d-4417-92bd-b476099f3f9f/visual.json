@@ -1,0 +1,63 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "7cefef1b-b28d-4417-92bd-b476099f3f9f",
+  "position": {
+    "x": 620,
+    "y": 70,
+    "z": 2,
+    "height": 280,
+    "width": 640,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "customer_churn_test_predictions"
+                    }
+                  },
+                  "Property": "NumOfProducts"
+                }
+              },
+              "queryRef": "customer_churn_test_predictions.NumOfProducts",
+              "nativeQueryRef": "NumOfProducts",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                  "Property": "Churned Customers"
+                }
+              },
+              "queryRef": "_Measures.Churned Customers",
+              "nativeQueryRef": "Churned Customers"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                  "Property": "Retained Customers"
+                }
+              },
+              "queryRef": "_Measures.Retained Customers",
+              "nativeQueryRef": "Retained Customers"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

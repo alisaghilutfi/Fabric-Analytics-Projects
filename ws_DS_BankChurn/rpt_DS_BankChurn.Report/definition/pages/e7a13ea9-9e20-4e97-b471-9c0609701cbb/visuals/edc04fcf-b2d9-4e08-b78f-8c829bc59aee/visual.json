@@ -1,0 +1,96 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "edc04fcf-b2d9-4e08-b78f-8c829bc59aee",
+  "position": {
+    "x": 20,
+    "y": 70,
+    "z": 1,
+    "height": 280,
+    "width": 580,
+    "tabOrder": 1
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Champion Model: LightGBM",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "14pt",
+                      "color": "#094780"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Three candidate models were trained and evaluated on a held-out validation set: Random Forest (max_depth=4), Random Forest (max_depth=8), and LightGBM (learning_rate=0.07, max_depth=10, n_estimators=100). All models were trained on SMOTE-oversampled data to address class imbalance. The champion was selected programmatically by comparing validation set ROC-AUC scores across all MLflow runs.",
+                    "textStyle": {
+                      "fontSize": "11pt",
+                      "color": "#252423"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Hyperparameters: learning_rate=0.07 | max_depth=10 | n_estimators=100",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#605E5C"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Training strategy: SMOTE oversampling on training split only",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#605E5C"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Registered as: champion_BankChurn v1",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#605E5C"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
