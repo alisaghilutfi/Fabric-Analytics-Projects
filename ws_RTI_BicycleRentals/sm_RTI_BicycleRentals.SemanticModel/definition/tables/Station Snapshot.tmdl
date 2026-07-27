@@ -1,9 +1,11 @@
 /// Latest live snapshot of every bicycle rental station (one row per BikepointID), sourced from the KQL Gold-layer function LatestStationSnapshot().
 table 'Station Snapshot'
+	lineageTag: df3f775a-a098-495e-92d8-71331b9bead7
 
 	/// Unique identifier for a bicycle rental station.
 	column BikepointID
 		dataType: int64
+		lineageTag: 0bd5f07c-e526-4a31-9010-9664278e9566
 		summarizeBy: none
 		sourceColumn: BikepointID
 
@@ -12,24 +14,28 @@ table 'Station Snapshot'
 		dataType: dateTime
 		isHidden
 		formatString: General Date
+		lineageTag: 84915676-aa3f-46e2-8720-b9bceabd2f8e
 		summarizeBy: none
 		sourceColumn: Timestamp
 
 	/// Street address of the station.
 	column Street
 		dataType: string
+		lineageTag: d62eba34-0c45-426b-8d16-4d74de25b4d1
 		summarizeBy: none
 		sourceColumn: Street
 
 	/// Neighbourhood the station is located in.
 	column Neighbourhood
 		dataType: string
+		lineageTag: fe39225f-4ce0-4f40-8eb9-9d4c9267764b
 		summarizeBy: none
 		sourceColumn: Neighbourhood
 
 	column Latitude
 		dataType: double
 		formatString: 0.000000
+		lineageTag: f8d66f3f-0927-4aff-af89-68771db59d4e
 		dataCategory: Latitude
 		summarizeBy: none
 		sourceColumn: Latitude
@@ -37,6 +43,7 @@ table 'Station Snapshot'
 	column Longitude
 		dataType: double
 		formatString: 0.000000
+		lineageTag: bc8a40c3-51a4-4ced-ae0d-f5de4ad18e7e
 		dataCategory: Longitude
 		summarizeBy: none
 		sourceColumn: Longitude
@@ -46,6 +53,7 @@ table 'Station Snapshot'
 		dataType: int64
 		isHidden
 		formatString: 0
+		lineageTag: 44a05501-6a5a-439f-99a6-dbda774497a9
 		summarizeBy: none
 		sourceColumn: No_Bikes
 
@@ -54,6 +62,7 @@ table 'Station Snapshot'
 		dataType: int64
 		isHidden
 		formatString: 0
+		lineageTag: d983e4cd-4e5e-4676-98ad-2c7ba0e71bcf
 		summarizeBy: none
 		sourceColumn: No_Empty_Docks
 
@@ -62,13 +71,14 @@ table 'Station Snapshot'
 		dataType: int64
 		isHidden
 		formatString: 0
+		lineageTag: f1937a30-a343-49c7-a268-cdcc366aa76f
 		summarizeBy: none
 		sourceColumn: BikesToBeFilled
 
 	/// Rebalancing action recommendation computed in KQL: "NA" when balanced, "Fill" or "Empty" otherwise.
 	column Action
 		dataType: string
-		isHidden
+		lineageTag: 85404e01-e4f3-4f5e-991b-e3e37fc1f709
 		summarizeBy: none
 		sourceColumn: Action
 

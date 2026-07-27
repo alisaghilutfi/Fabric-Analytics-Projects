@@ -6,7 +6,7 @@ model sm_RTI_BicycleRentals
 		legacyRedirects
 		returnErrorValuesAsNull
 
-annotation PBI_ProTooling = ["MCP-PBIModeling"]
+annotation PBI_ProTooling = ["MCP-PBIModeling","WebModelingEdit"]
 
 ref table 'Station Snapshot'
 ref table _Measures
