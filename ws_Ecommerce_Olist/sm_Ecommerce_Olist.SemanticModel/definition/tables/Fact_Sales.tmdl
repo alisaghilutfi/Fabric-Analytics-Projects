@@ -1,0 +1,193 @@
+table Fact_Sales
+	lineageTag: ffa991bd-2ed6-4aa3-84a2-30a4c915bdad
+	sourceLineageTag: [Gold].[Fact_Sales]
+
+	measure Total_Revenue = SUM(Fact_Sales[total_order_value])
+		displayFolder: _Measures_Basic
+		lineageTag: 19d397f8-bb0d-4aa4-9f08-5f9c21940065
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Total_Orders = DISTINCTCOUNT(Fact_Sales[order_id])
+		formatString: 0
+		displayFolder: _Measures_Basic
+		lineageTag: b8c873f7-4474-4f8a-b16d-7af744aeb4b6
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+	measure Average_Order_Value = DIVIDE([Total_Revenue], [Total_Orders], 0)
+		displayFolder: _Measures_Basic
+		lineageTag: 501ce72f-4fbf-40ec-ab94-1f147775314b
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Revenue_LM = CALCULATE([Total_Revenue], DATEADD(Dim_Date[full_date],-1,MONTH))
+		displayFolder: _Measures_TimeIntelligence
+		lineageTag: 6dad5ff6-8108-4cce-890f-bd21714bc331
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Revenue_MOM% =
+			
+			VAR _LM = [Revenue_LM]
+			RETURN
+			DIVIDE([Total_Revenue]-_LM, _LM, 0)
+		displayFolder: _Measures_TimeIntelligence
+		lineageTag: 3e0a6f88-58fe-4550-aff5-fc2b892de592
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Active_Customers = DISTINCTCOUNT(Agg_Customer_Intelligence[customer_unique_id])
+		formatString: 0
+		displayFolder: _Measures_CustomerPerformance
+		lineageTag: af1e76bd-4e1f-4a3c-94d5-16f1ff3af198
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+	measure Revenue_Per_Customer = DIVIDE([Total_Revenue], [Active_Customers], 0)
+		displayFolder: _Measures_CustomerPerformance
+		lineageTag: 48985c60-4eb5-4763-bb56-86b81bdc1092
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column order_id
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: f7f7cca5-230d-4aaa-9459-54b8f057bdcf
+		sourceLineageTag: order_id
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_id
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: db5cb5ec-2869-4e39-bc74-515960adb8ef
+		sourceLineageTag: product_id
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_category_name
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 05edb27a-514e-4e94-abd7-9d5ec36ddf5b
+		sourceLineageTag: product_category_name
+		summarizeBy: none
+		sourceColumn: product_category_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_id
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 524e2f21-5ad5-4e3b-8f9a-09d8c87dd6cd
+		sourceLineageTag: customer_id
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_id
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: b9369b0a-044c-4994-84bf-2da617ac205f
+		sourceLineageTag: seller_id
+		summarizeBy: none
+		sourceColumn: seller_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_purchase_timestamp
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 1bcbfc41-fb56-453d-9162-33ba107bbfe2
+		sourceLineageTag: order_purchase_timestamp
+		summarizeBy: none
+		sourceColumn: order_purchase_timestamp
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_date
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: date
+		lineageTag: dcf6278a-a8db-4a98-a07d-9250ac1ea5ac
+		sourceLineageTag: order_date
+		summarizeBy: none
+		sourceColumn: order_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column price
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 37750a1f-2004-4d0a-a89b-953f6c9d68cd
+		sourceLineageTag: price
+		summarizeBy: sum
+		sourceColumn: price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column freight_value
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 128c6bad-d120-4f85-b75a-9e4188bc6c2e
+		sourceLineageTag: freight_value
+		summarizeBy: sum
+		sourceColumn: freight_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column total_order_value
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 6954b876-c779-415c-bbad-e86b21a8db34
+		sourceLineageTag: total_order_value
+		summarizeBy: sum
+		sourceColumn: total_order_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Fact_Sales = entity
+		mode: directLake
+		source
+			entityName: Fact_Sales
+			schemaName: Gold
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

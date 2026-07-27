@@ -1,0 +1,91 @@
+table Agg_Customer_Intelligence
+	lineageTag: 743d8d71-b6ff-47ce-ad62-5cb159afa89f
+	sourceLineageTag: [Gold].[Agg_Customer_Intelligence]
+
+	column customer_unique_id
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: fdbca680-0d62-44d0-bbb5-a8c0013e25c4
+		sourceLineageTag: customer_unique_id
+		summarizeBy: none
+		sourceColumn: customer_unique_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column lifetime_value
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 172eb882-ab63-4dc5-9f94-d23c42ac793e
+		sourceLineageTag: lifetime_value
+		summarizeBy: none
+		sourceColumn: lifetime_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column total_orders
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 45da00ad-0a4c-4470-b530-87acd81cc47b
+		sourceLineageTag: total_orders
+		summarizeBy: none
+		sourceColumn: total_orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column avg_order_value
+		dataType: double
+		sourceProviderType: float
+		lineageTag: a243e71b-1986-4bc8-b070-93ef806f220a
+		sourceLineageTag: avg_order_value
+		summarizeBy: none
+		sourceColumn: avg_order_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column last_purchase_date
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 7c822c9e-2fba-4661-91b5-8a3310afa821
+		sourceLineageTag: last_purchase_date
+		summarizeBy: none
+		sourceColumn: last_purchase_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column first_purchase_date
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 2f1d9b70-d278-44a1-9f77-7431f09bbf48
+		sourceLineageTag: first_purchase_date
+		summarizeBy: none
+		sourceColumn: first_purchase_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_tenure_days
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 2b623238-30c6-41aa-be6d-6d6fa5a263c3
+		sourceLineageTag: customer_tenure_days
+		summarizeBy: none
+		sourceColumn: customer_tenure_days
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Agg_Customer_Intelligence = entity
+		mode: directLake
+		source
+			entityName: Agg_Customer_Intelligence
+			schemaName: Gold
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

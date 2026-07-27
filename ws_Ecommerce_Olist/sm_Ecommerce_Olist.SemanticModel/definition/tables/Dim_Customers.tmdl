@@ -1,0 +1,63 @@
+table Dim_Customers
+	lineageTag: dede32a1-204b-4e80-92e0-e6fdaf3d883a
+	sourceLineageTag: [Gold].[Dim_Customers]
+
+	column customer_id
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 05fcde2d-3486-4886-886d-45f8c4ba2aaf
+		sourceLineageTag: customer_id
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_unique_id
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: d7c4930c-bbcf-4c1e-8f97-600d2e03eafa
+		sourceLineageTag: customer_unique_id
+		summarizeBy: none
+		sourceColumn: customer_unique_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_zip_code_prefix
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 2f47c00f-f421-4611-b231-631cb21c4dcb
+		sourceLineageTag: customer_zip_code_prefix
+		summarizeBy: none
+		sourceColumn: customer_zip_code_prefix
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_city
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 1224e5b7-f570-4350-aa8f-d3da8309578f
+		sourceLineageTag: customer_city
+		summarizeBy: none
+		sourceColumn: customer_city
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_state
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: aa30da1b-c1dd-4001-a8d2-11b1d9e72c22
+		sourceLineageTag: customer_state
+		summarizeBy: none
+		sourceColumn: customer_state
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Customers = entity
+		mode: directLake
+		source
+			entityName: Dim_Customers
+			schemaName: Gold
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

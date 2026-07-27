@@ -1,0 +1,81 @@
+table Dim_Products
+	lineageTag: 9ebbf163-d9b1-4d23-b2a7-b256cce556f9
+	sourceLineageTag: [Gold].[Dim_Products]
+
+	column product_id
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 72a00f49-726a-4b1c-b2c6-f4a7c0cf24f0
+		sourceLineageTag: product_id
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_category
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 1291204a-70e6-41b4-8676-de9f888eb7bb
+		sourceLineageTag: product_category
+		summarizeBy: none
+		sourceColumn: product_category
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_weight_g
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 3b61573c-dc40-49da-983a-b309be1db14d
+		sourceLineageTag: product_weight_g
+		summarizeBy: none
+		sourceColumn: product_weight_g
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column product_length_cm
+		dataType: double
+		sourceProviderType: float
+		lineageTag: ddc76688-7e5c-41a3-bc9c-4dfc43c6f3a1
+		sourceLineageTag: product_length_cm
+		summarizeBy: none
+		sourceColumn: product_length_cm
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column product_height_cm
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 77816704-a83e-4c69-bd21-f43cff075f4a
+		sourceLineageTag: product_height_cm
+		summarizeBy: none
+		sourceColumn: product_height_cm
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column product_width_cm
+		dataType: double
+		sourceProviderType: float
+		lineageTag: f608622a-f4f7-4f8a-b422-8c5c8a2dbf8f
+		sourceLineageTag: product_width_cm
+		summarizeBy: none
+		sourceColumn: product_width_cm
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Dim_Products = entity
+		mode: directLake
+		source
+			entityName: Dim_Products
+			schemaName: Gold
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

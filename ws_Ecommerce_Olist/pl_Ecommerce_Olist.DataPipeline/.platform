@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "pl_Ecommerce_Olist"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "2d406917-89a4-bf96-408b-c043b8f59436"
+  }
+}
