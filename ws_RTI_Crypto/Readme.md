@@ -1,1 +1,0 @@
-This is an auto-created file for ws_RTI_Crypto
