@@ -1,0 +1,53 @@
+table Dim_Sellers
+	lineageTag: 7f4ddbe9-41df-4181-9acb-934cea02e8c3
+	sourceLineageTag: [Gold].[Dim_Sellers]
+
+	column seller_id
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 44095199-d148-4e05-a2f3-ca37317f2d1a
+		sourceLineageTag: seller_id
+		summarizeBy: none
+		sourceColumn: seller_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_zip_code_prefix
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: b92a03bf-c52f-472a-a8d8-9ddb339e65e3
+		sourceLineageTag: seller_zip_code_prefix
+		summarizeBy: none
+		sourceColumn: seller_zip_code_prefix
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_city
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: e2fa0019-891b-462f-963f-e9967fabc81c
+		sourceLineageTag: seller_city
+		summarizeBy: none
+		sourceColumn: seller_city
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_state
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 17df52de-8c8b-4f24-8cbe-14daeebe84e3
+		sourceLineageTag: seller_state
+		summarizeBy: none
+		sourceColumn: seller_state
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Sellers = entity
+		mode: directLake
+		source
+			entityName: Dim_Sellers
+			schemaName: Gold
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

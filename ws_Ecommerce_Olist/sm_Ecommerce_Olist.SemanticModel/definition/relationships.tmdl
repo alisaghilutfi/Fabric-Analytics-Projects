@@ -1,0 +1,20 @@
+relationship 33122679-27b3-3998-dc46-a4dd334dc316
+	fromColumn: Fact_Sales.order_date
+	toColumn: Dim_Date.full_date
+
+relationship 6e76a682-137b-802c-b168-2f3a1e956440
+	fromColumn: Fact_Sales.product_id
+	toColumn: Dim_Products.product_id
+
+relationship 32951a68-312d-eea9-aac6-c2f1b9ffeea1
+	fromColumn: Fact_Sales.customer_id
+	toColumn: Agg_Customer_Intelligence.customer_unique_id
+
+relationship 53da4120-a10f-0f71-27ec-55feccdaf678
+	fromColumn: Fact_Sales.customer_id
+	toColumn: Dim_Customers.customer_id
+
+relationship a840569c-25e9-0fe9-12f7-380c32f10f1e
+	fromColumn: Fact_Sales.seller_id
+	toColumn: Dim_Sellers.seller_id
+
