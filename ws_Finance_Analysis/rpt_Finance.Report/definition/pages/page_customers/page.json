@@ -11,10 +11,22 @@
         "properties": {
           "color": {
             "solid": {
-              "color": { "expr": { "Literal": { "Value": "'#F8F9FA'" } } }
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#F8F9FA'"
+                  }
+                }
+              }
             }
           },
-          "transparency": { "expr": { "Literal": { "Value": "0D" } } }
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
         }
       }
     ]

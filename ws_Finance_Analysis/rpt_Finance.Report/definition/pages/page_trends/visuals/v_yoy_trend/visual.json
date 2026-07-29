@@ -1,7 +1,14 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "v_yoy_trend",
-  "position": { "x": 200, "y": 80, "z": 0, "height": 280, "width": 1060, "tabOrder": 0 },
+  "position": {
+    "x": 46,
+    "y": 250,
+    "z": 0,
+    "height": 412,
+    "width": 1195,
+    "tabOrder": 0
+  },
   "visual": {
     "visualType": "lineChart",
     "query": {
@@ -9,7 +16,16 @@
         "Category": {
           "projections": [
             {
-              "field": { "Column": { "Expression": { "SourceRef": { "Entity": "dim_date" } }, "Property": "MonthYear" } },
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_date"
+                    }
+                  },
+                  "Property": "MonthYear"
+                }
+              },
               "queryRef": "dim_date.MonthYear",
               "nativeQueryRef": "MonthYear",
               "active": true
@@ -19,12 +35,30 @@
         "Y": {
           "projections": [
             {
-              "field": { "Measure": { "Expression": { "SourceRef": { "Entity": "_Measures" } }, "Property": "Total Amount" } },
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Total Amount"
+                }
+              },
               "queryRef": "_Measures.Total Amount",
               "nativeQueryRef": "Total Amount"
             },
             {
-              "field": { "Measure": { "Expression": { "SourceRef": { "Entity": "_Measures" } }, "Property": "Total Amount PY" } },
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Total Amount PY"
+                }
+              },
               "queryRef": "_Measures.Total Amount PY",
               "nativeQueryRef": "Total Amount PY"
             }
@@ -34,7 +68,16 @@
       "sortDefinition": {
         "sort": [
           {
-            "field": { "Column": { "Expression": { "SourceRef": { "Entity": "dim_date" } }, "Property": "MonthYearSort" } },
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "dim_date"
+                  }
+                },
+                "Property": "MonthYearSort"
+              }
+            },
             "direction": "Ascending"
           }
         ],
