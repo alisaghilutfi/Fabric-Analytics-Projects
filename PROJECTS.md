@@ -20,12 +20,12 @@ Semantic model scaffolded. Report file created.
 ---
 
 ## ws_Finance_Analysis
-**Purpose:** End-to-end Power BI vibe-coding project with Claude Code  
-**Status:** Active — build complete in git AND verified live in Fabric  
-**Current focus:** Visual/functional QA of the existing report and measures, then Rayfin deployment  
-**Last session:** Found CONTEXT.md/PROJECTS.md stale (described project as not-started) despite a full build committed on 2026-07-18: Bronze/Silver notebooks, star schema, sm_Finance semantic model (22 DAX measures, DirectLake), rpt_Finance report (4 pages, 12 visuals), pl_Finance pipeline. Rewrote both docs to reflect actual state, then verified live Fabric workspace via fabric-mcp + powerbi-modeling-mcp: all 5 artifacts exist live, lakehouse GUIDs/table list/measure list match git exactly.  
-**Next session:** Visually confirm the 4 report pages render correctly and spot-check a few measures for sane values (not MCP-inspectable, needs Desktop/Service). Then start Rayfin app deployment for stakeholder access — not yet begun.  
-**Blockers:** None known — git/live parity confirmed  
+**Purpose:** End-to-end Power BI vibe-coding project with Claude Code; also the practice project for a three-environment Fabric/GitHub CI/CD setup  
+**Status:** Active — CI/CD pipeline in progress (Step 4 pending)  
+**Current focus:** Finish CI/CD environment wiring (commit `.github/` workflows, validate promotion flow), then resume build QA and Rayfin deployment  
+**Last session:** Split the single Fabric workspace into three environments: renamed `ws_Finance_Analysis` → `ws_Finance_Analysis_Dev`; created `ws_Finance_Analysis_Test` (GitHub branch `test`, synced at commit `f1807664`, 7/7 artifacts) and `ws_Finance_Analysis_Prod` (GitHub branch `main`, synced at commit `f1807664`, 7/7 artifacts); created `test` branch on GitHub from `main`. Branch map: `dev-fabric-sync`→Dev, `test`→Test, `main`→Prod. Updated CONTEXT.md with full topology.  
+**Next session:** Commit the generated `.github/` workflow files (CI/CD Step 4 — not yet committed), document/validate the dev→test→prod promotion flow. After that, resume carried-over build-QA items: visually confirm the 4 report pages, spot-check measures, start Rayfin deployment.  
+**Blockers:** None known — CI/CD Step 4 (workflow file commit) is the immediate gating task  
 
 ---
 
