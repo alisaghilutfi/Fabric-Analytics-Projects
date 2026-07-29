@@ -6,12 +6,12 @@ table dim_date
 	/// Full date value. Primary key and the join target from fact_transactions.transaction_date.
 	column Date
 		dataType: dateTime
+		isKey
 		formatString: Short Date
 		lineageTag: f1a2b3c4-d5e6-7890-fabc-de1234567802
 		sourceLineageTag: Date
 		summarizeBy: none
 		sourceColumn: Date
-		isKey
 
 		annotation SummarizationSetBy = Automatic
 
@@ -39,12 +39,12 @@ table dim_date
 	/// Month number (1–12). Use for sort order. Sort MonthName by this column.
 	column MonthNumber
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: f1a2b3c4-d5e6-7890-fabc-de1234567805
 		sourceLineageTag: MonthNumber
 		summarizeBy: none
 		sourceColumn: MonthNumber
-		isHidden
 
 		annotation SummarizationSetBy = Automatic
 
@@ -73,34 +73,34 @@ table dim_date
 	/// ISO month-year sort key (yyyy-MM). Used to sort MonthYear correctly.
 	column MonthYearSort
 		dataType: string
+		isHidden
 		lineageTag: f1a2b3c4-d5e6-7890-fabc-de1234567808
 		sourceLineageTag: MonthYearSort
 		summarizeBy: none
 		sourceColumn: MonthYearSort
-		isHidden
 
 		annotation SummarizationSetBy = Automatic
 
 	/// Day of month (1–31).
 	column Day
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: f1a2b3c4-d5e6-7890-fabc-de1234567809
 		sourceLineageTag: Day
 		summarizeBy: none
 		sourceColumn: Day
-		isHidden
 
 		annotation SummarizationSetBy = Automatic
 
 	/// Full day name (Monday, Tuesday, …).
 	column DayName
 		dataType: string
+		isHidden
 		lineageTag: f1a2b3c4-d5e6-7890-fabc-de1234567810
 		sourceLineageTag: DayName
 		summarizeBy: none
 		sourceColumn: DayName
-		isHidden
 
 		annotation SummarizationSetBy = Automatic
 
@@ -132,3 +132,4 @@ table dim_date
 			expressionSource: 'DirectLake - lh_Finance_Silver'
 
 	changedProperty = Name
+

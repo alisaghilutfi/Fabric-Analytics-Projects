@@ -6,3 +6,4 @@ expression 'DirectLake - lh_Finance_Silver' =
 	lineageTag: b1c2d3e4-f5a6-7890-bcde-fa1234567801
 
 	annotation PBI_IncludeFutureArtifacts = False
+

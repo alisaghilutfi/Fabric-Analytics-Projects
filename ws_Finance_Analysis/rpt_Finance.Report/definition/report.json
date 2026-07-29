@@ -16,7 +16,11 @@
       {
         "properties": {
           "verticalAlignment": {
-            "expr": { "Literal": { "Value": "'Top'" } }
+            "expr": {
+              "Literal": {
+                "Value": "'Top'"
+              }
+            }
           }
         }
       }
@@ -25,7 +29,11 @@
       {
         "properties": {
           "expanded": {
-            "expr": { "Literal": { "Value": "false" } }
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
           }
         }
       }

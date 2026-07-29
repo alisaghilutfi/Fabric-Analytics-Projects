@@ -6,11 +6,11 @@ table dim_merchant
 	/// Surrogate key for the merchant category. Foreign key target from fact_transactions.merchant_key.
 	column merchant_key
 		dataType: int64
+		isHidden
 		lineageTag: b3c4d5e6-f7a8-9012-bcde-fa3456789013
 		sourceLineageTag: merchant_key
 		summarizeBy: none
 		sourceColumn: merchant_key
-		isHidden
 
 		annotation SummarizationSetBy = Automatic
 
@@ -32,3 +32,4 @@ table dim_merchant
 			expressionSource: 'DirectLake - lh_Finance_Silver'
 
 	changedProperty = Name
+
