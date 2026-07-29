@@ -116,6 +116,6 @@ Ali Saghi in Vantaa, Finland. Specializing in Microsoft
 Fabric, Power BI, and agentic BI systems.
 
 - Blog: [lotusoftware.hashnode.dev](https://lotusoftware.hashnode.dev)
-- LinkedIn: [ali-saghi-](https://www.linkedin.com/in/ali-saghi-/)
+- LinkedIn: [ali-saghi-](https://www.linkedin.com/in/ali-saghi-fabric/)
 - GitHub: [alisaghilutfi](https://github.com/alisaghilutfi)
 - X: [@alis05111](https://x.com/alis05111)
