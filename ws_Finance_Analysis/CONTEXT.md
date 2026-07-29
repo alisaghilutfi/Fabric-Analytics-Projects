@@ -13,9 +13,27 @@ An end-to-end Power BI dashboard built entirely inside VS Code using
 Claude Code, Fabric, and GitHub. Practice project combining vibe-coding
 methodology, Power Designer data modeling, and Rayfin for Fabric app
 deployment. Demonstrates the full Lotusoftware consulting delivery stack.
+Now also serving as the practice project for a three-environment CI/CD
+setup (Dev/Test/Prod) across Fabric + GitHub.
 
 ## Workspace
-- **Fabric workspace:** ws_Finance_Analysis
+
+### CI/CD environment map (as of 2026-07-29)
+The single `ws_Finance_Analysis` workspace was split into three environments,
+each a distinct Fabric workspace connected to its own GitHub branch:
+
+| Fabric workspace | GitHub branch | Sync status |
+|---|---|---|
+| ws_Finance_Analysis_Dev (renamed from ws_Finance_Analysis) | `dev-fabric-sync` | Existing, active dev environment |
+| ws_Finance_Analysis_Test | `test` | Created 2026-07-29, connected to folder `/ws_Finance_Analysis`, synced at commit `f1807664` (7/7 artifacts) |
+| ws_Finance_Analysis_Prod | `main` | Created 2026-07-29, connected to folder `/ws_Finance_Analysis`, synced at commit `f1807664` (7/7 artifacts) |
+
+- `test` branch created on GitHub from `main`, pushed `fb5039c..f180766`
+- All references elsewhere in this file to "ws_Finance_Analysis" as a Fabric
+  workspace now mean **ws_Finance_Analysis_Dev** unless stated otherwise —
+  that is where the day-to-day build work in this file's history happened
+  and continues to happen.
+
 - **GitHub repo:** alisaghilutfi/Fabric-Analytics-Projects
 - **Local path:** C:\Users\alisa\DS-ML-DL\Fabric-Analytics-Projects\ws_Finance_Analysis
 - **Power BI project:** C:\Lotusoftware\Power BI_Projects\Power BI_Finance_Analysis
@@ -66,13 +84,20 @@ first task).
 - **Note:** `account_id` intentionally kept as a fact attribute, not a separate dimension (no attributes beyond ID)
 
 ## Current Focus
-Documentation was out of sync with actual repo state as of 2026-07-29 — this file and
-PROJECTS.md previously described the project as not-yet-started despite the full build
-existing in git since 2026-07-18. That gap has been corrected, and live Fabric state has
-been verified against git (see recap below) — all 5 artifacts (2 lakehouses, semantic
-model, report, pipeline) exist live and match git for everything MCP tooling can inspect.
+CI/CD environment setup (Dev/Test/Prod) is in progress. Three Fabric workspaces now
+exist mapped to three GitHub branches (see table above); Test and Prod are freshly
+synced at commit `f1807664` with all 7 artifacts. **CI/CD Step 4 is not yet done:**
+`.github/` workflow files have been generated but **not committed to the repo** —
+do not assume any GitHub Actions automation is live until that commit lands.
 
-**Remaining before genuinely new build work:**
+**Remaining CI/CD work:**
+- Commit the generated `.github/` workflow files (Step 4)
+- Decide and document the promotion flow (dev-fabric-sync → test → main) and whether
+  it's manual PR-based or automated
+- Validate that a change pushed to `test` actually lands correctly in
+  ws_Finance_Analysis_Test, and same for `main` → ws_Finance_Analysis_Prod
+
+**Still open from the build-QA track (unchanged since last session):**
 - Visually confirm the 4 report pages render correctly (needs Desktop/Service, not MCP-inspectable)
 - Spot-check a few DAX measures execute correctly against live data (values look sane, no errors)
 - Inspect pl_Finance's actual pipeline steps (not exposed by current Fabric MCP artifact-details call)
@@ -101,7 +126,37 @@ When starting a session on this project:
 When finishing a session, replace the section below with actual results:
 
 ### Last Session Recap
-**Date:** 2026-07-29
+**Date:** 2026-07-29 (session 2 — CI/CD environment setup)
+**Completed:**
+- Renamed the Fabric workspace `ws_Finance_Analysis` → `ws_Finance_Analysis_Dev`
+- Created `ws_Finance_Analysis_Test` in Fabric, connected to GitHub branch `test`,
+  folder `/ws_Finance_Analysis`, synced at commit `f1807664` — all 7 artifacts
+- Created `ws_Finance_Analysis_Prod` in Fabric, connected to GitHub branch `main`,
+  folder `/ws_Finance_Analysis`, synced at commit `f1807664` — all 7 artifacts
+- Created `test` branch on GitHub from `main`, pushed `fb5039c..f180766`
+- Branch/workspace map established: `dev-fabric-sync` → Dev, `test` → Test, `main` → Prod
+- Updated this file and PROJECTS.md to document the new environment topology
+
+**Left unfinished:**
+- **CI/CD Step 4 not done:** `.github/` workflow files generated but not committed
+- No promotion-flow documentation yet (how changes move dev → test → prod)
+- No end-to-end validation that a push to `test`/`main` actually deploys correctly
+  to the corresponding Fabric workspace
+- Everything carried over from session 1 (report page visual QA, measure spot-checks,
+  pipeline step inspection, Rayfin deployment) — untouched this session
+
+**New blockers discovered:**
+- None
+
+**Pick up next session at:**
+- Commit the generated `.github/` workflow files (CI/CD Step 4)
+- Test the promotion flow with a trivial change pushed through dev → test → main
+- Resume the build-QA track (report visual check, measure spot-check) once CI/CD
+  scaffolding is confirmed stable
+
+---
+
+### Previous Session Recap (2026-07-29, session 1 — doc audit + live verification)
 **Completed:**
 - Audited repo filesystem and git history against CONTEXT.md / PROJECTS.md; found both
   stale — described project as not-started despite a complete build (Bronze/Silver
@@ -125,14 +180,3 @@ When finishing a session, replace the section below with actual results:
 - pl_Finance's internal pipeline steps not inspected (current Fabric MCP artifact-details
   call doesn't expose pipeline activity JSON — would need a different tool or the Fabric portal)
 - Rayfin app deployment not started
-
-**New blockers discovered:**
-- None. Git/live parity for everything MCP-inspectable is confirmed — the earlier
-  concern about a "fragile sync process" (many `fix:` commits) did not manifest as
-  drift; those commits already resolved the issues before the final sync.
-
-**Pick up next session at:**
-- Open rpt_Finance in Power BI Service or Desktop, visually confirm all 4 pages render
-  and the 12 visuals show sane data
-- Spot-check 2-3 measures (e.g. Total Amount, % Fraud Rate) for correct values
-- Then decide: polish/fix existing build vs. start Rayfin deployment
