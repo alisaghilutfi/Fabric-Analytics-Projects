@@ -4,7 +4,7 @@
 > executing agent updates the relevant project's Last Session and
 > Status fields. Do not edit manually unless correcting an error.
 
-Last updated: 2026-07-27
+Last updated: 2026-07-29
 
 ---
 
@@ -21,11 +21,11 @@ Semantic model scaffolded. Report file created.
 
 ## ws_Finance_Analysis
 **Purpose:** End-to-end Power BI vibe-coding project with Claude Code  
-**Status:** Active  
-**Current focus:** Power BI dashboard on finance_transactions.csv and customers.csv  
-**Last session:** Project initiated with datasets and business requirements loaded  
-**Next session:** Build semantic model, create report pages  
-**Blockers:** None known  
+**Status:** Active — build complete in git AND verified live in Fabric  
+**Current focus:** Visual/functional QA of the existing report and measures, then Rayfin deployment  
+**Last session:** Found CONTEXT.md/PROJECTS.md stale (described project as not-started) despite a full build committed on 2026-07-18: Bronze/Silver notebooks, star schema, sm_Finance semantic model (22 DAX measures, DirectLake), rpt_Finance report (4 pages, 12 visuals), pl_Finance pipeline. Rewrote both docs to reflect actual state, then verified live Fabric workspace via fabric-mcp + powerbi-modeling-mcp: all 5 artifacts exist live, lakehouse GUIDs/table list/measure list match git exactly.  
+**Next session:** Visually confirm the 4 report pages render correctly and spot-check a few measures for sane values (not MCP-inspectable, needs Desktop/Service). Then start Rayfin app deployment for stakeholder access — not yet begun.  
+**Blockers:** None known — git/live parity confirmed  
 
 ---
 
