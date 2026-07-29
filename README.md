@@ -25,13 +25,23 @@ built entirely from VS Code using Claude Code and Fabric Skills.
 ---
 
 ### ws_Finance_Analysis
-**Type:** Business Intelligence  
-**Stack:** Medallion architecture, DirectLake semantic model, 
-Power BI report, vibe-coding methodology  
-**Status:** Active development  
+**Type:** Business Intelligence + CI/CD  
+**Stack:** Medallion architecture, DirectLake semantic model (22 DAX measures, 6 display folders),
+Power BI report (4 pages), three-environment CI/CD pipeline (Dev/Test/Prod), GitHub Actions TMDL linter  
+**Status:** CI/CD pipeline in progress (Steps 4–5 pending)  
 **Focus:** Finance analytics dashboard built via Claude Code 
 without touching the Fabric UI — demonstrated in 
 [this blog post](https://lotusoftware.hashnode.dev/vibe-coding-an-end-to-end-finance-analytics-platform-in-microsoft-fabric-with-claude-code).
+Features a full Dev → Test → Prod promotion flow with automated pre-merge validation.
+
+---
+
+### ws_Ecommerce_Olist
+**Type:** Data Engineering + Business Intelligence  
+**Stack:** Lakehouse, Warehouse (Gold schema), Spark notebooks, DataPipeline, DirectLake semantic model, Power BI report  
+**Status:** Active development  
+**Focus:** Brazilian e-commerce order analytics over the public Olist dataset,
+with a Warehouse-based Gold layer (star schema: Fact_Sales, Dim_Customers, Dim_Products, Dim_Sellers, Dim_Date, Agg_Customer_Intelligence).
 
 ---
 
