@@ -1,7 +1,6 @@
 table _Measures
 	lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567801
 
-
 	/// Total transaction amount across all transactions in the current filter context. Excludes failed and pending transactions when combined with status filters. Includes both credits and debits (positive and negative amounts).
 	measure 'Total Amount' =
 			VAR Result = SUM(fact_transactions[amount])
@@ -43,7 +42,6 @@ table _Measures
 		formatString: ₹#,0.00
 		displayFolder: KPIs
 		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567806
-
 
 	/// Total amount for transactions with a status of Success only. Used to measure confirmed financial throughput, excluding failed and pending transactions.
 	measure 'Successful Amount' =
@@ -87,7 +85,6 @@ table _Measures
 		displayFolder: Amount
 		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567810
 
-
 	/// Number of transactions with a status of Success in the current filter context.
 	measure 'Successful Transactions' =
 			VAR Result =
@@ -129,7 +126,6 @@ table _Measures
 		formatString: #,0
 		displayFolder: Transaction Volume
 		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567814
-
 
 	/// Total transaction amount for the same period in the prior year. Uses SAMEPERIODLASTYEAR on the dim_date table for accurate year-over-year comparison.
 	measure 'Total Amount PY' =
@@ -175,7 +171,6 @@ table _Measures
 		displayFolder: Time Intelligence
 		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567818
 
-
 	/// Total combined revenue from fees and taxes across all transactions in the current filter context.
 	measure 'Total Fee & Tax Revenue' =
 			VAR Result = [Total Fees] + [Total Tax]
@@ -193,7 +188,6 @@ table _Measures
 		formatString: ₹#,0.00
 		displayFolder: Fees & Tax
 		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567820
-
 
 	/// Total number of transactions flagged as fraudulent (is_fraud = True) in the current filter context.
 	measure 'Fraud Transactions' =

@@ -1,7 +1,14 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "v_slicer_txtype",
-  "position": { "x": 10, "y": 260, "z": 8, "height": 80, "width": 180, "tabOrder": 8 },
+  "position": {
+    "x": 10,
+    "y": 260,
+    "z": 8,
+    "height": 80,
+    "width": 180,
+    "tabOrder": 8
+  },
   "visual": {
     "visualType": "slicer",
     "query": {
@@ -9,10 +16,40 @@
         "Field": {
           "projections": [
             {
-              "field": { "Column": { "Expression": { "SourceRef": { "Entity": "fact_transactions" } }, "Property": "transaction_type" } },
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_transactions"
+                    }
+                  },
+                  "Property": "transaction_type"
+                }
+              },
               "queryRef": "fact_transactions.transaction_type",
-              "nativeQueryRef": "transaction_type",
-              "active": true
+              "nativeQueryRef": "Transaction Type",
+              "active": true,
+              "displayName": "Transaction Type"
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_transactions"
+                    }
+                  },
+                  "Property": "transaction_type"
+                }
+              },
+              "queryRef": "fact_transactions.transaction_type",
+              "nativeQueryRef": "Transaction Type",
+              "active": true,
+              "displayName": "Transaction Type"
             }
           ]
         }
@@ -22,7 +59,13 @@
       "data": [
         {
           "properties": {
-            "mode": { "expr": { "Literal": { "Value": "'Dropdown'" } } }
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Dropdown'"
+                }
+              }
+            }
           }
         }
       ]

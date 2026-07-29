@@ -6,11 +6,11 @@ table dim_customer
 	/// Primary key. Format: C00001 to C05000.
 	column customer_id
 		dataType: string
+		isHidden
 		lineageTag: e1f2a3b4-c5d6-7890-efab-cd1234567802
 		sourceLineageTag: customer_id
 		summarizeBy: none
 		sourceColumn: customer_id
-		isHidden
 
 		annotation SummarizationSetBy = Automatic
 
@@ -47,12 +47,12 @@ table dim_customer
 	/// Customer date of birth. Useful for age-band analysis.
 	column date_of_birth
 		dataType: dateTime
+		isHidden
 		formatString: Short Date
 		lineageTag: e1f2a3b4-c5d6-7890-efab-cd1234567806
 		sourceLineageTag: date_of_birth
 		summarizeBy: none
 		sourceColumn: date_of_birth
-		isHidden
 
 		annotation SummarizationSetBy = Automatic
 
@@ -99,24 +99,25 @@ table dim_customer
 	/// Annual income in INR. Range: ₹180,000 to ₹5,026,136. Mean: ₹724,095.
 	column annual_income
 		dataType: double
+		isHidden
 		lineageTag: e1f2a3b4-c5d6-7890-efab-cd1234567811
 		sourceLineageTag: annual_income
 		summarizeBy: sum
 		sourceColumn: annual_income
-		isHidden
 
 		annotation SummarizationSetBy = Automatic
+
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	/// Date the customer joined the financial institution.
 	column join_date
 		dataType: dateTime
+		isHidden
 		formatString: Short Date
 		lineageTag: e1f2a3b4-c5d6-7890-efab-cd1234567812
 		sourceLineageTag: join_date
 		summarizeBy: none
 		sourceColumn: join_date
-		isHidden
 
 		annotation SummarizationSetBy = Automatic
 
@@ -128,3 +129,4 @@ table dim_customer
 			expressionSource: 'DirectLake - lh_Finance_Silver'
 
 	changedProperty = Name
+

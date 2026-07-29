@@ -6,11 +6,11 @@ table dim_channel
 	/// Surrogate key for the channel. Foreign key target from fact_transactions.channel_key.
 	column channel_key
 		dataType: int64
+		isHidden
 		lineageTag: a2b3c4d5-e6f7-8901-abcd-ef2345678902
 		sourceLineageTag: channel_key
 		summarizeBy: none
 		sourceColumn: channel_key
-		isHidden
 
 		annotation SummarizationSetBy = Automatic
 
@@ -32,3 +32,4 @@ table dim_channel
 			expressionSource: 'DirectLake - lh_Finance_Silver'
 
 	changedProperty = Name
+

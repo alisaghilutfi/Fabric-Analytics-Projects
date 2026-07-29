@@ -1,7 +1,14 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "v_gender_donut",
-  "position": { "x": 910, "y": 80, "z": 1, "height": 280, "width": 350, "tabOrder": 1 },
+  "position": {
+    "x": 910,
+    "y": 80,
+    "z": 1,
+    "height": 280,
+    "width": 350,
+    "tabOrder": 1
+  },
   "visual": {
     "visualType": "donutChart",
     "query": {
@@ -9,7 +16,16 @@
         "Category": {
           "projections": [
             {
-              "field": { "Column": { "Expression": { "SourceRef": { "Entity": "dim_customer" } }, "Property": "gender" } },
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_customer"
+                    }
+                  },
+                  "Property": "gender"
+                }
+              },
               "queryRef": "dim_customer.gender",
               "nativeQueryRef": "gender",
               "active": true
@@ -19,7 +35,16 @@
         "Y": {
           "projections": [
             {
-              "field": { "Measure": { "Expression": { "SourceRef": { "Entity": "_Measures" } }, "Property": "Total Amount" } },
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Total Amount"
+                }
+              },
               "queryRef": "_Measures.Total Amount",
               "nativeQueryRef": "Total Amount"
             }
