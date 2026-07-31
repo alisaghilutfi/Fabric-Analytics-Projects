@@ -1,5 +1,5 @@
-/// Date dimension table spanning 2023-01-01 to 2026-12-31. Generated in the Silver notebook. Primary key is the Date column used as the time intelligence axis.
-table dim_date
+/// Standard date dimension covering 2020–2027. Used for all time intelligence calculations.
+table Date
 	lineageTag: f1a2b3c4-d5e6-7890-fabc-de1234567801
 	sourceLineageTag: [dbo].[dim_date]
 

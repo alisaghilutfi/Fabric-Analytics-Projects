@@ -126,7 +126,56 @@ When starting a session on this project:
 When finishing a session, replace the section below with actual results:
 
 ### Last Session Recap
-**Date:** 2026-07-29 (session 2 — CI/CD environment setup)
+**Date:** 2026-07-31 (session 3 — sm_Finance model cleanup + PBIR fix)
+**Completed:**
+- Connected live to `ws_Finance_Analysis_Dev` / `sm_Finance` via powerbi-modeling-mcp (XMLA)
+- **Group 1 — column cleanup** (`batch_column_operations`, 1 transaction, 6/6 succeeded):
+  hid `_Measures[Column]`, `fact_transactions[is_fraud_bool]`, `fact_transactions[is_reversal]`,
+  `fact_transactions[risk_score]` (also set `summarizeBy: none`); set
+  `dim_customer[annual_income]` to `summarizeBy: none`; hid `dim_customer[second_name]`
+- **Group 2 — table display renames** (`batch_table_operations` BatchRename, 1 transaction,
+  5/5 succeeded): `fact_transactions`→`Transactions`, `dim_customer`→`Customers`,
+  `dim_date`→`Date`, `dim_channel`→`Channel`, `dim_merchant`→`Merchant`. Confirmed TOM
+  auto-cascades renames into dependent DAX — verified all 22 measures in `_Measures`
+  already referenced the new table names with zero manual edits needed
+- **Group 3 — table descriptions** (`table_operations` Update ×5, all succeeded): added
+  `///` descriptions to Transactions, Customers, Date, Channel, Merchant; partition names
+  and `sourceLineageTag` confirmed unchanged (DirectLake framing intact)
+- **PBIR report fix:** scanned `rpt_Finance.Report/definition/pages/**/visual.json` for
+  stale `Entity`/`queryRef` references to the old table names — found 17 `Entity` +
+  matching `queryRef` occurrences across 11 visual.json files (`dim_channel`/`dim_merchant`
+  had zero references). Applied find-and-replace (31 total string replacements), then
+  validated JSON syntax on all 11 files — all passed
+- **Local git sync gap caught before commit:** discovered the MCP writes went straight to
+  the live XMLA endpoint and never touched local TMDL — `git status` showed zero changes
+  under `sm_Finance.SemanticModel/` despite the live model being fully updated. Ran
+  `database_operations` `ExportToTmdlFolder` to pull the live model back down; this
+  correctly renamed the table `.tmdl` files (`dim_date.tmdl` deleted, `Date.tmdl` created,
+  etc.) and captured all Group 1–3 changes as real diffs
+- Committed and pushed to `dev-fabric-sync`; opened PR into `test`
+
+**Left unfinished:**
+- Live re-verification of the exported TMDL against the git-tracked semantic model
+  definition not yet done in a fresh session (only spot-checked `Transactions.tmdl` and
+  `Customers.tmdl` for `isHidden`/`summarizeBy`/description content)
+- Everything carried over from sessions 1–2: report page visual QA (now doubly relevant
+  since visuals were touched), measure spot-checks, pipeline step inspection, CI/CD Step 4
+  (`.github/` workflow commit), promotion-flow documentation, Rayfin deployment
+
+**New blockers discovered:**
+- None — but note for future sessions: any `powerbi-modeling-mcp` write against a Fabric
+  workspace is live-only; it does **not** appear in `git status` until an explicit
+  `ExportToTmdlFolder` pulls the model back into the repo. Always export before committing
+  when a session includes semantic-model MCP writes.
+
+**Pick up next session at:**
+- Confirm the PR from `dev-fabric-sync` → `test` merged cleanly and Test workspace
+  reflects the renamed tables/hidden columns/descriptions
+- Resume CI/CD Step 4 and the carried-over build-QA track
+
+---
+
+### Previous Session Recap (2026-07-29, session 2 — CI/CD environment setup)
 **Completed:**
 - Renamed the Fabric workspace `ws_Finance_Analysis` → `ws_Finance_Analysis_Dev`
 - Created `ws_Finance_Analysis_Test` in Fabric, connected to GitHub branch `test`,
