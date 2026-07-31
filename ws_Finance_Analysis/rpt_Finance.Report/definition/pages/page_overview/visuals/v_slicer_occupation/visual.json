@@ -20,13 +20,13 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "dim_customer"
+                      "Entity": "Customers"
                     }
                   },
                   "Property": "occupation"
                 }
               },
-              "queryRef": "dim_customer.occupation",
+              "queryRef": "Customers.occupation",
               "nativeQueryRef": "Occupation",
               "active": true,
               "displayName": "Occupation"
@@ -40,13 +40,13 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "dim_customer"
+                      "Entity": "Customers"
                     }
                   },
                   "Property": "occupation"
                 }
               },
-              "queryRef": "dim_customer.occupation",
+              "queryRef": "Customers.occupation",
               "nativeQueryRef": "Occupation",
               "active": true,
               "displayName": "Occupation"

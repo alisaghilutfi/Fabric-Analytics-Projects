@@ -1,5 +1,5 @@
-/// Merchant category dimension. 14 categories representing where/how money was spent or received: Bank Charges, Education, Entertainment, Food Delivery, Fuel, Groceries, Healthcare, Insurance, Mutual Fund, Rent, Salary, Shopping, Travel, Utilities.
-table dim_merchant
+/// Merchant category dimension. Used to analyse spend and fraud patterns by merchant type.
+table Merchant
 	lineageTag: b3c4d5e6-f7a8-9012-bcde-fa3456789012
 	sourceLineageTag: [dbo].[dim_merchant]
 

@@ -1,17 +1,17 @@
 relationship fact_to_dim_customer
-	fromColumn: fact_transactions.customer_id
-	toColumn: dim_customer.customer_id
+	fromColumn: Transactions.customer_id
+	toColumn: Customers.customer_id
 
 relationship fact_to_dim_date
 	joinOnDateBehavior: datePartOnly
-	fromColumn: fact_transactions.transaction_date
-	toColumn: dim_date.Date
+	fromColumn: Transactions.transaction_date
+	toColumn: Date.Date
 
 relationship fact_to_dim_channel
-	fromColumn: fact_transactions.channel_key
-	toColumn: dim_channel.channel_key
+	fromColumn: Transactions.channel_key
+	toColumn: Channel.channel_key
 
 relationship fact_to_dim_merchant
-	fromColumn: fact_transactions.merchant_key
-	toColumn: dim_merchant.merchant_key
+	fromColumn: Transactions.merchant_key
+	toColumn: Merchant.merchant_key
 

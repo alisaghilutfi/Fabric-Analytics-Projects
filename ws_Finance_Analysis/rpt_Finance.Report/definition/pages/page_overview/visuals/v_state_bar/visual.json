@@ -20,13 +20,13 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "dim_customer"
+                      "Entity": "Customers"
                     }
                   },
                   "Property": "state"
                 }
               },
-              "queryRef": "dim_customer.state",
+              "queryRef": "Customers.state",
               "nativeQueryRef": "state",
               "active": true
             }

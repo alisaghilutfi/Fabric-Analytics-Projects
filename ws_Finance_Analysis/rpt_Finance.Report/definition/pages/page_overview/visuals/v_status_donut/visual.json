@@ -20,13 +20,13 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "fact_transactions"
+                      "Entity": "Transactions"
                     }
                   },
                   "Property": "transaction_status"
                 }
               },
-              "queryRef": "fact_transactions.transaction_status",
+              "queryRef": "Transactions.transaction_status",
               "nativeQueryRef": "transaction_status",
               "active": true
             }

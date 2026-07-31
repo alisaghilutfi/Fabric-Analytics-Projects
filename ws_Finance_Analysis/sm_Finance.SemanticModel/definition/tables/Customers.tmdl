@@ -1,5 +1,5 @@
-/// Customer dimension table. Contains 5,000 customers including 1,017 with no transactions. Data covers Indian market with 13 states and 5 customer segments. Source typo 'fisrt_name' corrected to 'first_name' in the Silver layer.
-table dim_customer
+/// Customer dimension containing demographic and segmentation attributes. One row per customer.
+table Customers
 	lineageTag: e1f2a3b4-c5d6-7890-efab-cd1234567801
 	sourceLineageTag: [dbo].[dim_customer]
 
@@ -27,6 +27,7 @@ table dim_customer
 	/// Customer's second (family) name.
 	column second_name
 		dataType: string
+		isHidden
 		lineageTag: e1f2a3b4-c5d6-7890-efab-cd1234567804
 		sourceLineageTag: second_name
 		summarizeBy: none
@@ -102,7 +103,7 @@ table dim_customer
 		isHidden
 		lineageTag: e1f2a3b4-c5d6-7890-efab-cd1234567811
 		sourceLineageTag: annual_income
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: annual_income
 
 		annotation SummarizationSetBy = Automatic
