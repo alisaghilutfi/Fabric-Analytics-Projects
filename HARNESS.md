@@ -69,8 +69,6 @@ az account get-access-token --resource https://api.fabric.microsoft.com
 | ws_RTI_Crypto | Real-time intelligence, Eventhouse, KQL | Active |
 | ws_USGS_Earthquake | Portfolio documentation project | Active |
 | ws_RTI_BicycleRentals | Real-time intelligence project | Active |
-| ws_dp600 | DP-600 exam preparation workspace | Reference |
-| ws_AgenticLab | Agentic AI experimentation | Active |
 
 ## Agent Roles
 Three agents operate in this system, each with a narrow job:
