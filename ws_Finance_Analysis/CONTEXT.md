@@ -4,7 +4,7 @@
 > The executing agent reads this at session start and writes a recap
 > at session end. Do not edit manually unless correcting an error.
 
-Last updated: 2026-07-29
+Last updated: 2026-07-31
 
 ---
 
@@ -126,7 +126,46 @@ When starting a session on this project:
 When finishing a session, replace the section below with actual results:
 
 ### Last Session Recap
-**Date:** 2026-07-31 (session 3 — sm_Finance model cleanup + PBIR fix)
+**Date:** 2026-07-31 (session 4 — Deployment Pipeline, PR merge, environment sync)
+**Completed:**
+- Created `dp_Finance_Analysis` Fabric Deployment Pipeline (Dev → Test → Prod stages,
+  mapped to `ws_Finance_Analysis_Dev` / `_Test` / `_Prod`)
+- Merged the `dev-fabric-sync` → `test` PR opened at the end of session 3 (GitHub PR #37,
+  confirmed via `git log`: `cf681bb Merge pull request #37 from alisaghilutfi/test`);
+  also PR #36 merged `dev-fabric-sync` forward beforehand
+- Hit and resolved a Git conflict during the sync — resolved by accepting Git (repo state)
+  over the live Fabric workspace state
+- Fixed an MCP tool permission issue by adding `--dangerously-skip-permissions`
+- Verified all three Fabric workspaces (Dev, Test, Prod) hold an identical 9-item artifact
+  set (rpt_Finance, sm_Finance, lh_Finance_Bronze/Silver + their SQL endpoints,
+  nb_Finance_Bronze/Silver, pl_Finance) — confirmed synced clean via `fabric-mcp`
+  `list_workspace_artifacts` against all three workspace IDs
+- Cleaned up `PROJECTS.md`: removed `ws_dp600` and `ws_AgenticLab` entries — both
+  referenced workspaces with no corresponding folder in this repo
+
+**Left unfinished:**
+- Live confirmation that `sm_Finance` in Test/Prod actually shows the renamed tables,
+  hidden columns, and descriptions from session 3 (artifact *names* were verified present;
+  internal model properties were not re-checked post-merge)
+- `dp_Finance_Analysis` pipeline has not yet been run end-to-end (Dev→Test→Prod content
+  deployment not exercised, only the pipeline object created)
+- Everything carried over from session 3: CI/CD Step 4 (`.github/` workflow commit),
+  promotion-flow documentation, report page visual QA, measure spot-checks, pipeline step
+  inspection, Rayfin deployment
+
+**New blockers discovered:**
+- None
+
+**Pick up next session at:**
+- Run `dp_Finance_Analysis` to deploy Dev → Test (or Test → Prod) and confirm content
+  lands correctly, not just that the artifact shells exist
+- Spot-check `sm_Finance` model properties (table names, hidden columns, descriptions) in
+  Test/Prod via powerbi-modeling-mcp to confirm session 3's changes survived the sync
+- Resume CI/CD Step 4 and the remaining build-QA track
+
+---
+
+### Previous Session Recap (2026-07-31, session 3 — sm_Finance model cleanup + PBIR fix)
 **Completed:**
 - Connected live to `ws_Finance_Analysis_Dev` / `sm_Finance` via powerbi-modeling-mcp (XMLA)
 - **Group 1 — column cleanup** (`batch_column_operations`, 1 transaction, 6/6 succeeded):
