@@ -1,5 +1,5 @@
-/// Contains one row per financial transaction as processed through the Silver layer. Data covers 2023–2026 from the Finance Lakehouse. Includes amount, fees, taxes, channel, merchant category, fraud flags, and risk scores. Raw duplicates and dirty values have been remediated in the Silver pipeline.
-table fact_transactions
+/// Records every financial transaction including amount, fees, tax, fraud flags, and status. Central fact table of the Finance star schema.
+table Transactions
 	lineageTag: d1e2f3a4-b5c6-7890-defa-bc1234567801
 	sourceLineageTag: [dbo].[fact_transactions]
 
@@ -156,6 +156,7 @@ table fact_transactions
 	/// True if this transaction was flagged as fraudulent by the source system. Fraud rate is approximately 1.26%.
 	column is_fraud_bool
 		dataType: boolean
+		isHidden
 		lineageTag: d1e2f3a4-b5c6-7890-defa-bc1234567815
 		sourceLineageTag: is_fraud_bool
 		summarizeBy: none
@@ -166,6 +167,7 @@ table fact_transactions
 	/// True if the transaction amount is negative, indicating a reversal or correction.
 	column is_reversal
 		dataType: boolean
+		isHidden
 		lineageTag: d1e2f3a4-b5c6-7890-defa-bc1234567816
 		sourceLineageTag: is_reversal
 		summarizeBy: none
@@ -179,7 +181,7 @@ table fact_transactions
 		isHidden
 		lineageTag: d1e2f3a4-b5c6-7890-defa-bc1234567817
 		sourceLineageTag: risk_score
-		summarizeBy: average
+		summarizeBy: none
 		sourceColumn: risk_score
 
 		annotation SummarizationSetBy = Automatic

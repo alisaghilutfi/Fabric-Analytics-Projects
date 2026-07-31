@@ -3,7 +3,7 @@ table _Measures
 
 	/// Total transaction amount across all transactions in the current filter context. Excludes failed and pending transactions when combined with status filters. Includes both credits and debits (positive and negative amounts).
 	measure 'Total Amount' =
-			VAR Result = SUM(fact_transactions[amount])
+			VAR Result = SUM(Transactions[amount])
 			RETURN Result
 		formatString: ₹#,0.00
 		displayFolder: KPIs
@@ -11,7 +11,7 @@ table _Measures
 
 	/// Total number of transaction rows in the current filter context. Use this to measure transaction volume, not monetary value.
 	measure 'Total Transactions' =
-			VAR Result = COUNTROWS(fact_transactions)
+			VAR Result = COUNTROWS(Transactions)
 			RETURN Result
 		formatString: #,0
 		displayFolder: KPIs
@@ -29,7 +29,7 @@ table _Measures
 
 	/// Total fee amount collected across all transactions in the current filter context. Null fee values have been replaced with 0 in the Silver layer.
 	measure 'Total Fees' =
-			VAR Result = SUM(fact_transactions[fee_amount])
+			VAR Result = SUM(Transactions[fee_amount])
 			RETURN Result
 		formatString: ₹#,0.00
 		displayFolder: KPIs
@@ -37,7 +37,7 @@ table _Measures
 
 	/// Total tax amount generated across all transactions in the current filter context.
 	measure 'Total Tax' =
-			VAR Result = SUM(fact_transactions[tax_amount])
+			VAR Result = SUM(Transactions[tax_amount])
 			RETURN Result
 		formatString: ₹#,0.00
 		displayFolder: KPIs
@@ -48,7 +48,7 @@ table _Measures
 			VAR Result =
 			    CALCULATE(
 			        [Total Amount],
-			        fact_transactions[transaction_status] = "Success"
+			        Transactions[transaction_status] = "Success"
 			    )
 			RETURN Result
 		formatString: ₹#,0.00
@@ -60,7 +60,7 @@ table _Measures
 			VAR Result =
 			    CALCULATE(
 			        [Total Amount],
-			        fact_transactions[transaction_status] = "Failed"
+			        Transactions[transaction_status] = "Failed"
 			    )
 			RETURN Result
 		formatString: ₹#,0.00
@@ -79,7 +79,7 @@ table _Measures
 
 	/// Maximum single transaction amount in the current filter context.
 	measure 'Max Transaction Amount' =
-			VAR Result = MAX(fact_transactions[amount])
+			VAR Result = MAX(Transactions[amount])
 			RETURN Result
 		formatString: ₹#,0.00
 		displayFolder: Amount
@@ -89,8 +89,8 @@ table _Measures
 	measure 'Successful Transactions' =
 			VAR Result =
 			    CALCULATE(
-			        COUNTROWS(fact_transactions),
-			        fact_transactions[transaction_status] = "Success"
+			        COUNTROWS(Transactions),
+			        Transactions[transaction_status] = "Success"
 			    )
 			RETURN Result
 		formatString: #,0
@@ -101,8 +101,8 @@ table _Measures
 	measure 'Failed Transactions' =
 			VAR Result =
 			    CALCULATE(
-			        COUNTROWS(fact_transactions),
-			        fact_transactions[transaction_status] = "Failed"
+			        COUNTROWS(Transactions),
+			        Transactions[transaction_status] = "Failed"
 			    )
 			RETURN Result
 		formatString: #,0
@@ -121,7 +121,7 @@ table _Measures
 
 	/// Number of distinct customers who appear in at least one transaction in the current filter context.
 	measure 'Active Customers' =
-			VAR Result = DISTINCTCOUNT(fact_transactions[customer_id])
+			VAR Result = DISTINCTCOUNT(Transactions[customer_id])
 			RETURN Result
 		formatString: #,0
 		displayFolder: Transaction Volume
@@ -132,7 +132,7 @@ table _Measures
 			VAR Result =
 			    CALCULATE(
 			        [Total Amount],
-			        SAMEPERIODLASTYEAR(dim_date[Date])
+			        SAMEPERIODLASTYEAR('Date'[Date])
 			    )
 			RETURN Result
 		formatString: ₹#,0.00
@@ -154,7 +154,7 @@ table _Measures
 			VAR Result =
 			    CALCULATE(
 			        [Total Transactions],
-			        SAMEPERIODLASTYEAR(dim_date[Date])
+			        SAMEPERIODLASTYEAR('Date'[Date])
 			    )
 			RETURN Result
 		formatString: #,0
@@ -193,8 +193,8 @@ table _Measures
 	measure 'Fraud Transactions' =
 			VAR Result =
 			    CALCULATE(
-			        COUNTROWS(fact_transactions),
-			        fact_transactions[is_fraud_bool] = TRUE()
+			        COUNTROWS(Transactions),
+			        Transactions[is_fraud_bool] = TRUE()
 			    )
 			RETURN Result
 		formatString: #,0
@@ -213,13 +213,14 @@ table _Measures
 
 	/// Average risk score across all transactions in the current filter context. Scores range from 1 (low risk) to 100 (high risk).
 	measure 'Avg Risk Score' =
-			VAR Result = AVERAGE(fact_transactions[risk_score])
+			VAR Result = AVERAGE(Transactions[risk_score])
 			RETURN Result
 		formatString: 0.0
 		displayFolder: Fraud & Risk
 		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567823
 
 	column Column
+		isHidden
 		formatString: 0
 		lineageTag: c1d2e3f4-a5b6-7890-cdef-ab1234567899
 		summarizeBy: sum

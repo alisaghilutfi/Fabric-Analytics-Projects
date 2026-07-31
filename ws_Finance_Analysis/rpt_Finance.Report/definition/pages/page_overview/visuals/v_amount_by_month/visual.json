@@ -20,13 +20,13 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "dim_date"
+                      "Entity": "Date"
                     }
                   },
                   "Property": "MonthYear"
                 }
               },
-              "queryRef": "dim_date.MonthYear",
+              "queryRef": "Date.MonthYear",
               "nativeQueryRef": "MonthYear",
               "active": true
             }
@@ -58,7 +58,7 @@
               "Column": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "dim_date"
+                    "Entity": "Date"
                   }
                 },
                 "Property": "MonthYearSort"
