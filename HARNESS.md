@@ -31,6 +31,9 @@ Tools:
 - pylance mcp server — Python/PySpark assistance
 - skills-for-fabric (cloned at C:\Users\alisa\skills-for-fabric) —
   CLAUDE.md loaded automatically, grounding all Fabric operations
+- GitHub Copilot Chat — lightweight consultation (DAX review, report
+  design, model checks); Claude Code handles heavy tasks (building,
+  committing, multi-file operations)
 
 ### The Handoff Rule
 Every agent session MUST follow this loop:
@@ -69,6 +72,7 @@ az account get-access-token --resource https://api.fabric.microsoft.com
 | ws_RTI_Crypto | Real-time intelligence, Eventhouse, KQL | Active |
 | ws_USGS_Earthquake | Portfolio documentation project | Active |
 | ws_RTI_BicycleRentals | Real-time intelligence project | Active |
+| ws_Ecommerce_Olist | Brazilian e-commerce analytics project | Active |
 
 ## Agent Roles
 Three agents operate in this system, each with a narrow job:
@@ -94,6 +98,15 @@ All Fabric operations follow the skills in `C:\Users\alisa\skills-for-fabric`:
 - SQL Warehouse → `skills/sqldw-authoring-cli/SKILL.md`
 - Spark/Lakehouse → `skills/spark-authoring-cli/SKILL.md`
 - KQL/Eventhouse → `skills/eventhouse-authoring-cli/SKILL.md`
+
+## GitHub Copilot Skills
+6 awesome-copilot skills installed for GitHub Copilot Chat consultation:
+- `powerbi-modeling`
+- `power-bi-dax-optimization`
+- `power-bi-report-design-consultation`
+- `power-bi-performance-troubleshooting`
+- `fabric-lakehouse`
+- `commit-message-storyteller`
 
 ## GitHub Repos
 - `alisaghilutfi/Fabric-Analytics-Projects` — this repo, all Fabric work
