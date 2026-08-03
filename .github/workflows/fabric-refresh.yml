@@ -1,0 +1,88 @@
+name: Fabric Semantic Model Refresh
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:  # allows manual trigger from GitHub Actions UI
+
+jobs:
+  refresh-semantic-model:
+    name: Trigger sm_Finance Refresh (ws_Finance_Analysis_Prod)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Power BI Dataset Refresh
+        env:
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          FABRIC_WORKSPACE_ID: ${{ secrets.FABRIC_WORKSPACE_ID }}
+          FABRIC_DATASET_ID: ${{ secrets.FABRIC_DATASET_ID }}
+        run: |
+          python3 - <<'EOF'
+          import os
+          import sys
+          import json
+          import urllib.request
+          import urllib.parse
+          import urllib.error
+
+          tenant_id     = os.environ["AZURE_TENANT_ID"]
+          client_id     = os.environ["AZURE_CLIENT_ID"]
+          client_secret = os.environ["AZURE_CLIENT_SECRET"]
+          workspace_id  = os.environ["FABRIC_WORKSPACE_ID"]
+          dataset_id    = os.environ["FABRIC_DATASET_ID"]
+
+          # ── 1. Acquire token via client credentials flow ──────────────────
+          token_url = f"https://login.microsoftonline.com/{tenant_id}/oauth2/v2.0/token"
+          token_data = urllib.parse.urlencode({
+              "grant_type":    "client_credentials",
+              "client_id":     client_id,
+              "client_secret": client_secret,
+              "scope":         "https://analysis.windows.net/powerbi/api/.default",
+          }).encode()
+
+          req = urllib.request.Request(token_url, data=token_data, method="POST")
+          req.add_header("Content-Type", "application/x-www-form-urlencoded")
+
+          try:
+              with urllib.request.urlopen(req) as resp:
+                  token_resp = json.loads(resp.read())
+          except urllib.error.HTTPError as e:
+              print(f"[ERROR] Token acquisition failed: {e.code} {e.reason}")
+              print(e.read().decode())
+              sys.exit(1)
+
+          access_token = token_resp.get("access_token")
+          if not access_token:
+              print(f"[ERROR] No access_token in response: {token_resp}")
+              sys.exit(1)
+
+          print("[OK] Token acquired successfully")
+
+          # ── 2. Trigger semantic model refresh ─────────────────────────────
+          refresh_url = (
+              f"https://api.powerbi.com/v1.0/myorg/groups/{workspace_id}"
+              f"/datasets/{dataset_id}/refreshes"
+          )
+          refresh_body = json.dumps({"notifyOption": "NoNotification"}).encode()
+
+          req2 = urllib.request.Request(refresh_url, data=refresh_body, method="POST")
+          req2.add_header("Authorization", f"Bearer {access_token}")
+          req2.add_header("Content-Type", "application/json")
+
+          try:
+              with urllib.request.urlopen(req2) as resp2:
+                  status_code = resp2.status
+                  request_id  = resp2.headers.get("RequestId", "N/A")
+          except urllib.error.HTTPError as e:
+              print(f"[ERROR] Refresh trigger failed: {e.code} {e.reason}")
+              print(e.read().decode())
+              sys.exit(1)
+
+          print(f"[OK] Refresh triggered — HTTP {status_code}")
+          print(f"[OK] Request ID: {request_id}")
+          print(f"[OK] Workspace:  {workspace_id}")
+          print(f"[OK] Dataset:    {dataset_id}")
+          EOF
