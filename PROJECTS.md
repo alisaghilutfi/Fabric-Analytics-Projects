@@ -26,6 +26,14 @@ Semantic model scaffolded. Report file created.
 **Last session:** Created the `dp_Finance_Analysis` Fabric Deployment Pipeline (Dev → Test → Prod). Merged the `dev-fabric-sync` → `test` PR (#37) carrying the `sm_Finance` cleanup (5 table renames, 6 hidden columns, 5 table descriptions, 31 PBIR entity-ref fixes across 11 files). Resolved a Git conflict during sync by accepting Git over the live Fabric state. Fixed an MCP tool permission issue (`--dangerously-skip-permissions`). Verified all three workspaces (Dev/Test/Prod) hold an identical 9-item artifact set — synced clean.  
 **Next session:** Run `dp_Finance_Analysis` to deploy content and confirm it lands correctly (not just artifact shells); spot-check `sm_Finance` model properties in Test/Prod via powerbi-modeling-mcp; commit the generated `.github/` workflow files (CI/CD Step 4 — still not committed); document/validate the dev→test→prod promotion flow; visually confirm the 4 report pages; spot-check measures; start Rayfin deployment.  
 **Blockers:** None known — CI/CD Step 4 (workflow file commit) is the immediate gating task  
+- GitHub Actions workflow live: `.github/workflows/fabric-refresh.yml`
+  - Triggers `sm_Finance` semantic model refresh on every push to `main`
+  - Target: `ws_Finance_Analysis_Prod` (workspace ID: c0f9d7bf-7649-43d5-9fff-065f454db778)
+  - Dataset ID: 69576dc1-8364-4e37-bc7c-77650ef8264c
+  - Auth: Service Principal `sp-fabric-cicd` (client ID: f0128254-14f0-44d8-9e17-09c567e742d2), client credentials flow, no MSAL dependency
+  - SP role: Contributor on Prod workspace
+  - Secret rotation due: January 2027
+  - All three branches (main, test, dev-fabric-sync) in sync as of 2026-08-03
 
 ---
 

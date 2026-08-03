@@ -103,6 +103,17 @@ do not assume any GitHub Actions automation is live until that commit lands.
 - Inspect pl_Finance's actual pipeline steps (not exposed by current Fabric MCP artifact-details call)
 - Rayfin app deployment for stakeholder access — not started at all
 
+## CI/CD
+
+- Workflow file: `.github/workflows/fabric-refresh.yml`
+- Trigger: push to `main`
+- Auth pattern: client credentials flow (no device code, no MSAL, pure stdlib urllib)
+- Token scope: `https://analysis.windows.net/powerbi/api/.default`
+- SP: `sp-fabric-cicd` in Entra ID tenant `alisaghi2015gmail.onmicrosoft.com`
+- Fabric tenant setting "Service principals can call Fabric public APIs": Enabled for entire org
+- Secret stored in GitHub Secrets as `AZURE_CLIENT_SECRET`, expires January 2027
+- Anti-pattern avoided: do NOT reuse `Fabric-VSCode-MCP` app registration for CI/CD
+
 ## Instructions for Executing Agent
 When starting a session on this project:
 1. Read this file in full
