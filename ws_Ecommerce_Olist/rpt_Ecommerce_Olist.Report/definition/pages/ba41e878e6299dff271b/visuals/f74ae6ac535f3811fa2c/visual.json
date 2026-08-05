@@ -1,0 +1,106 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "f74ae6ac535f3811fa2c",
+  "position": {
+    "x": 640.54283290924513,
+    "y": 127.02290076335878,
+    "z": 4000,
+    "height": 279.01611535199322,
+    "width": 561.28922815945714,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "treemap",
+    "query": {
+      "queryState": {
+        "Group": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Products"
+                    }
+                  },
+                  "Property": "product_category"
+                }
+              },
+              "queryRef": "Dim_Products.product_category",
+              "nativeQueryRef": "Product Category",
+              "active": true,
+              "displayName": "Product Category"
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_Sales"
+                    }
+                  },
+                  "Property": "Average_Order_Value"
+                }
+              },
+              "queryRef": "Fact_Sales.Average_Order_Value",
+              "nativeQueryRef": "Average Order Value",
+              "displayName": "Average Order Value"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Which products are driving the most value?'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "1a833adcb68eadb37d1e",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Dim_Products"
+              }
+            },
+            "Property": "product_category"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "655b05dca92ab019e280",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_Sales"
+              }
+            },
+            "Property": "Average_Order_Value"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

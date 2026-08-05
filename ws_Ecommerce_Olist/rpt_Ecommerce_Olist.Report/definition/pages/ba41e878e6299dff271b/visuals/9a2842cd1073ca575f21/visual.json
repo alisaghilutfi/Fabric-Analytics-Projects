@@ -1,0 +1,149 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "9a2842cd1073ca575f21",
+  "position": {
+    "x": 27.453083109919568,
+    "y": 126.97050938337802,
+    "z": 3000,
+    "height": 279.10634495084895,
+    "width": 594.816800714924,
+    "tabOrder": 3000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Products"
+                    }
+                  },
+                  "Property": "product_category"
+                }
+              },
+              "queryRef": "Dim_Products.product_category",
+              "nativeQueryRef": "Product Category",
+              "displayName": "Product Category"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Customers"
+                    }
+                  },
+                  "Property": "customer_city"
+                }
+              },
+              "queryRef": "Dim_Customers.customer_city",
+              "nativeQueryRef": "City",
+              "displayName": "City"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Customers"
+                    }
+                  },
+                  "Property": "customer_state"
+                }
+              },
+              "queryRef": "Dim_Customers.customer_state",
+              "nativeQueryRef": "State",
+              "displayName": "State"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Date"
+                    }
+                  },
+                  "Property": "year"
+                }
+              },
+              "queryRef": "Dim_Date.year",
+              "nativeQueryRef": "Year",
+              "displayName": "Year"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Fact_Sales"
+                        }
+                      },
+                      "Property": "total_order_value"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(Fact_Sales.total_order_value)",
+              "nativeQueryRef": "Total Order Value",
+              "displayName": "Total Order Value"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Aggregation": {
+                "Expression": {
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "Fact_Sales"
+                      }
+                    },
+                    "Property": "total_order_value"
+                  }
+                },
+                "Function": 0
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "209.40946254997235D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Dim_Products.product_category"
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {}
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
