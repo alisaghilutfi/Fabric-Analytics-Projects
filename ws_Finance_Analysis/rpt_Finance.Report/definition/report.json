@@ -9,6 +9,15 @@
         "page": "2.3.0"
       },
       "type": "SharedResources"
+    },
+    "customTheme": {
+      "name": "Lotusoftware_Base3107213856518539.json",
+      "reportVersionAtImport": {
+        "visual": "2.11.0",
+        "report": "3.4.0",
+        "page": "2.3.1"
+      },
+      "type": "RegisteredResources"
     }
   },
   "objects": {
@@ -48,6 +57,17 @@
           "name": "Lotusoftware_Base_Theme",
           "path": "BaseThemes/Lotusoftware_Base_Theme.json",
           "type": "BaseTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "Lotusoftware_Base3107213856518539.json",
+          "path": "Lotusoftware_Base3107213856518539.json",
+          "type": "CustomTheme"
         }
       ]
     }
