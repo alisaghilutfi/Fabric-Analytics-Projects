@@ -1,14 +1,14 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.3.0/schema.json",
   "themeCollection": {
-    "baseTheme": {
-      "name": "Lotusoftware_Base_Theme",
+    "customTheme": {
+      "name": "Lotusoftware_Base3107213856518539",
       "reportVersionAtImport": {
         "visual": "2.5.0",
         "report": "3.1.0",
         "page": "2.3.0"
       },
-      "type": "SharedResources"
+      "type": "RegisteredResources"
     }
   },
   "objects": {
@@ -41,13 +41,13 @@
   },
   "resourcePackages": [
     {
-      "name": "SharedResources",
-      "type": "SharedResources",
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
       "items": [
         {
-          "name": "Lotusoftware_Base_Theme",
-          "path": "BaseThemes/Lotusoftware_Base_Theme.json",
-          "type": "BaseTheme"
+          "name": "Lotusoftware_Base3107213856518539",
+          "path": "Lotusoftware_Base3107213856518539.json",
+          "type": "CustomTheme"
         }
       ]
     }
