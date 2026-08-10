@@ -3,7 +3,6 @@
   "pageOrder": [
     "page_overview",
     "page_transactions",
-    "page_customers",
     "page_trends"
   ],
   "activePageName": "page_trends"
