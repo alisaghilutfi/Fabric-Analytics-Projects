@@ -1,12 +1,12 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "b078e09a29f88fabeb5b",
+  "name": "517e972c7f514951d1fb",
   "position": {
     "x": 16,
     "y": 8,
     "z": 100,
     "height": 40,
-    "width": 800,
+    "width": 900,
     "tabOrder": 1
   },
   "visual": {
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Where the Money Moved This Period",
+                    "value": "Transaction Risk & Status Breakdown",
                     "textStyle": {
                       "fontFamily": "Segoe UI Semibold",
                       "fontSize": "20px",

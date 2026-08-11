@@ -1,12 +1,12 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "c01ff76c85c1614a5205",
+  "name": "589d7b50031caf9db861",
   "position": {
     "x": 220,
-    "y": 68,
+    "y": 188,
     "z": 100,
-    "height": 320,
-    "width": 1048,
+    "height": 260,
+    "width": 616,
     "tabOrder": 100
   },
   "visual": {
@@ -47,48 +47,16 @@
               },
               "queryRef": "_Measures.Total Amount",
               "nativeQueryRef": "Total Amount"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Total Amount PY"
-                }
-              },
-              "queryRef": "_Measures.Total Amount PY",
-              "nativeQueryRef": "Total Amount PY"
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "Date"
-                  }
-                },
-                "Property": "MonthYearSort"
-              }
-            },
-            "direction": "Ascending"
-          }
-        ],
-        "isDefaultSort": true
       }
     },
     "objects": {
       "dataPoint": [
         {
           "properties": {
-            "fill": {
+            "defaultColor": {
               "solid": {
                 "color": {
                   "expr": {
@@ -99,27 +67,6 @@
                 }
               }
             }
-          },
-          "selector": {
-            "metadata": "_Measures.Total Amount"
-          }
-        },
-        {
-          "properties": {
-            "fill": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#5B6770'"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.Total Amount PY"
           }
         }
       ],
@@ -140,37 +87,6 @@
                 }
               }
             }
-          },
-          "selector": {
-            "metadata": "_Measures.Total Amount"
-          }
-        },
-        {
-          "properties": {
-            "strokeWidth": {
-              "expr": {
-                "Literal": {
-                  "Value": "2D"
-                }
-              }
-            },
-            "lineStyle": {
-              "expr": {
-                "Literal": {
-                  "Value": "'dashed'"
-                }
-              }
-            },
-            "showMarker": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.Total Amount PY"
           }
         }
       ],
@@ -213,14 +129,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "position": {
-              "expr": {
-                "Literal": {
-                  "Value": "'TopRight'"
+                  "Value": "false"
                 }
               }
             }
@@ -242,7 +151,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Total Amount: This Period vs Prior Year'"
+                  "Value": "'Total Amount by Month'"
                 }
               }
             },
@@ -376,7 +285,6 @@
           }
         }
       ]
-    },
-    "drillFilterOtherVisuals": true
+    }
   }
 }
