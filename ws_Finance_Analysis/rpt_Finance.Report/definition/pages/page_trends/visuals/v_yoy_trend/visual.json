@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "c01ff76c85c1614a5205",
   "position": {
     "x": 220,
@@ -23,11 +23,11 @@
                       "Entity": "Date"
                     }
                   },
-                  "Property": "MonthYear"
+                  "Property": "MonthName"
                 }
               },
-              "queryRef": "Date.MonthYear",
-              "nativeQueryRef": "MonthYear",
+              "queryRef": "Date.MonthName",
+              "nativeQueryRef": "MonthName",
               "active": true
             }
           ]
@@ -64,24 +64,6 @@
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "Date"
-                  }
-                },
-                "Property": "MonthYearSort"
-              }
-            },
-            "direction": "Ascending"
-          }
-        ],
-        "isDefaultSort": true
       }
     },
     "objects": {

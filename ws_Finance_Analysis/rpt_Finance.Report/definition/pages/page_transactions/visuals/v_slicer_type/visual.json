@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "956d08aac65f1f3dc516",
   "position": {
     "x": 16,
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "Transactions.transaction_type",
-              "nativeQueryRef": "transaction_type"
+              "nativeQueryRef": "transaction_type",
+              "active": true
             }
           ]
         }

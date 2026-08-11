@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "589d7b50031caf9db861",
   "position": {
     "x": 220,
@@ -23,11 +23,11 @@
                       "Entity": "Date"
                     }
                   },
-                  "Property": "MonthYear"
+                  "Property": "MonthName"
                 }
               },
-              "queryRef": "Date.MonthYear",
-              "nativeQueryRef": "MonthYear",
+              "queryRef": "Date.MonthName",
+              "nativeQueryRef": "MonthName",
               "active": true
             }
           ]
@@ -99,6 +99,13 @@
                   "Value": "true"
                 }
               }
+            },
+            "showAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
             }
           }
         }
@@ -117,6 +124,13 @@
               "expr": {
                 "Literal": {
                   "Value": "0D"
+                }
+              }
+            },
+            "showAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }

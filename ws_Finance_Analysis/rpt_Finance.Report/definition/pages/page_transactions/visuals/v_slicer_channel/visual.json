@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "bbd6479e6a20ccd9f96a",
   "position": {
     "x": 16,
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "Channel.channel",
-              "nativeQueryRef": "channel"
+              "nativeQueryRef": "channel",
+              "active": true
             }
           ]
         }
