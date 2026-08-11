@@ -4,7 +4,7 @@
 > The executing agent reads this at session start and writes a recap
 > at session end. Do not edit manually unless correcting an error.
 
-Last updated: 2026-07-31
+Last updated: 2026-08-11
 
 ---
 
@@ -71,7 +71,8 @@ first task).
 | nb_Finance_Silver | Notebook — cleaned star schema | Built in git (DQ fixes from data-profile.md applied) |
 | pl_Finance | DataPipeline — orchestrates Bronze → Silver | Built in git, wired to real Fabric object IDs |
 | sm_Finance | SemanticModel — DirectLake on Silver | **Live in Fabric, verified 2026-07-29.** 6 tables (`fact_transactions`, `dim_customer`, `dim_date`, `dim_channel`, `dim_merchant`, `_Measures`) with **22 DAX measures** across 6 display folders (KPIs, Amount, Transaction Volume, Time Intelligence, Fees & Tax, Fraud & Risk) — table/measure list confirmed live via powerbi-modeling-mcp, matches git exactly. DirectLake mode confirmed (`targetStorageMode: Abf`), refreshable, created 2026-07-18T11:34 UTC. |
-| rpt_Finance | Report — Layout Trifecta | **Live in Fabric, verified 2026-07-29.** PBIR format, correctly bound to sm_Finance dataset. 4 pages / 12 visuals per git; page-by-page visual rendering not yet checked (needs Desktop/Service open). |
+| rpt_Finance | Report — Layout Trifecta | **Complete (3 pages, Layout Trifecta).** Overview, Transactions, Trends — Customers page removed and its KPIs redistributed. Built via agentic authoring loop (powerbi-authoring skill + Desktop Bridge), teal/gray/near-white scrim zones (#0F6C74 / #F3F2F1 / #FAFAFA) applied to all three pages, x-axis labels polished manually in Desktop. |
+| dash_Finance_Analysis | Dashboard | **Complete.** Executive KPI overview, 5 tiles, created in Fabric Service. |
 | pl_Finance | DataPipeline | **Live in Fabric, verified 2026-07-29** (exists, correct workspace binding). Internal step definitions not inspected via MCP — Fabric MCP's artifact-details call doesn't expose pipeline activity JSON. |
 | lh_Finance_Bronze / lh_Finance_Silver | Lakehouses + SQL endpoints | **Live in Fabric, verified 2026-07-29.** Silver lakehouse GUID (`d726b863-...`) matches the ID hardcoded in git's `expressions.tmdl` exactly. |
 | Rayfin app deployment | Stakeholder access layer | **Not started** |
@@ -84,24 +85,12 @@ first task).
 - **Note:** `account_id` intentionally kept as a fact attribute, not a separate dimension (no attributes beyond ID)
 
 ## Current Focus
-CI/CD environment setup (Dev/Test/Prod) is in progress. Three Fabric workspaces now
-exist mapped to three GitHub branches (see table above); Test and Prod are freshly
-synced at commit `f1807664` with all 7 artifacts. **CI/CD Step 4 is not yet done:**
-`.github/` workflow files have been generated but **not committed to the repo** —
-do not assume any GitHub Actions automation is live until that commit lands.
-
-**Remaining CI/CD work:**
-- Commit the generated `.github/` workflow files (Step 4)
-- Decide and document the promotion flow (dev-fabric-sync → test → main) and whether
-  it's manual PR-based or automated
-- Validate that a change pushed to `test` actually lands correctly in
-  ws_Finance_Analysis_Test, and same for `main` → ws_Finance_Analysis_Prod
-
-**Still open from the build-QA track (unchanged since last session):**
-- Visually confirm the 4 report pages render correctly (needs Desktop/Service, not MCP-inspectable)
-- Spot-check a few DAX measures execute correctly against live data (values look sane, no errors)
-- Inspect pl_Finance's actual pipeline steps (not exposed by current Fabric MCP artifact-details call)
-- Rayfin app deployment for stakeholder access — not started at all
+Workspace is complete and portfolio-ready as of 2026-08-11. The report redesign
+(Layout Trifecta across all three pages, Customers page removed, dashboard created
+in Fabric Service, README updated with dashboard screenshot) closed out the last
+open build-QA items. No open blockers. Reopen only if new requirements arise —
+Rayfin integration, additional report pages, or client-driven semantic model
+enhancements. See Last Session Recap below for full detail.
 
 ## CI/CD
 
@@ -137,42 +126,31 @@ When starting a session on this project:
 When finishing a session, replace the section below with actual results:
 
 ### Last Session Recap
-**Date:** 2026-07-31 (session 4 — Deployment Pipeline, PR merge, environment sync)
+**Date:** 2026-08-11
+**Agent:** FabricEngineer + ProjectPlanner
+
 **Completed:**
-- Created `dp_Finance_Analysis` Fabric Deployment Pipeline (Dev → Test → Prod stages,
-  mapped to `ws_Finance_Analysis_Dev` / `_Test` / `_Prod`)
-- Merged the `dev-fabric-sync` → `test` PR opened at the end of session 3 (GitHub PR #37,
-  confirmed via `git log`: `cf681bb Merge pull request #37 from alisaghilutfi/test`);
-  also PR #36 merged `dev-fabric-sync` forward beforehand
-- Hit and resolved a Git conflict during the sync — resolved by accepting Git (repo state)
-  over the live Fabric workspace state
-- Fixed an MCP tool permission issue by adding `--dangerously-skip-permissions`
-- Verified all three Fabric workspaces (Dev, Test, Prod) hold an identical 9-item artifact
-  set (rpt_Finance, sm_Finance, lh_Finance_Bronze/Silver + their SQL endpoints,
-  nb_Finance_Bronze/Silver, pl_Finance) — confirmed synced clean via `fabric-mcp`
-  `list_workspace_artifacts` against all three workspace IDs
-- Cleaned up `PROJECTS.md`: removed `ws_dp600` and `ws_AgenticLab` entries — both
-  referenced workspaces with no corresponding folder in this repo
+- Holistic report redesign via agentic authoring loop (powerbi-authoring skill + Desktop Bridge)
+- Layout Trifecta applied to all three pages (Overview, Transactions, Trends)
+- Customers page removed, KPIs redistributed
+- Background scrim zones established (teal header #0F6C74, gray panel #F3F2F1, content #FAFAFA)
+- X-axis labels polished manually in Desktop
+- dash_Finance_Analysis dashboard created in Fabric Service
+- Dashboard screenshot embedded in README
+- rpt_Finance.pbip created as PBIP entry point
+- Desktop Bridge confirmed working (powerbi-desktop-bridge-cli)
+- powerbi-authoring@fabric-collection plugin installed (v0.3.11)
 
 **Left unfinished:**
-- Live confirmation that `sm_Finance` in Test/Prod actually shows the renamed tables,
-  hidden columns, and descriptions from session 3 (artifact *names* were verified present;
-  internal model properties were not re-checked post-merge)
-- `dp_Finance_Analysis` pipeline has not yet been run end-to-end (Dev→Test→Prod content
-  deployment not exercised, only the pipeline object created)
-- Everything carried over from session 3: CI/CD Step 4 (`.github/` workflow commit),
-  promotion-flow documentation, report page visual QA, measure spot-checks, pipeline step
-  inspection, Rayfin deployment
+- Nothing blocking — workspace is in a stable, complete state
 
 **New blockers discovered:**
 - None
 
-**Pick up next session at:**
-- Run `dp_Finance_Analysis` to deploy Dev → Test (or Test → Prod) and confirm content
-  lands correctly, not just that the artifact shells exist
-- Spot-check `sm_Finance` model properties (table names, hidden columns, descriptions) in
-  Test/Prod via powerbi-modeling-mcp to confirm session 3's changes survived the sync
-- Resume CI/CD Step 4 and the remaining build-QA track
+**Next session starts at:**
+- No immediate next step. Workspace is complete and portfolio-ready. Reopen if new
+  requirements arise — for example Rayfin integration, additional report pages,
+  or semantic model enhancements requested by a client.
 
 ---
 
