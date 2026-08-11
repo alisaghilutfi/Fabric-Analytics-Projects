@@ -10,9 +10,7 @@ annotation PBI_QueryOrder = ["DirectLake - lh_Finance_Silver"]
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
-annotation PBI_ProTooling = ["DirectLakeOnOneLakeInWeb","WebModelingEdit","TMDLView_Desktop","MCP-PBIModeling"]
-
-annotation __PBI_ServiceStoredInTmdl = reserved
+annotation PBI_ProTooling = ["DirectLakeOnOneLakeInWeb","WebModelingEdit","TMDLView_Desktop","MCP-PBIModeling","DevMode","RemoteModeling"]
 
 ref table Transactions
 ref table Customers
