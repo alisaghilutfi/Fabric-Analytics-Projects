@@ -1,39 +1,68 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "c01ff76c85c1614a5205",
+  "name": "4d6da56853109e574f31",
   "position": {
     "x": 220,
-    "y": 68,
+    "y": 372,
     "z": 100,
-    "height": 320,
+    "height": 336,
     "width": 1048,
     "tabOrder": 100
   },
   "visual": {
-    "visualType": "lineChart",
+    "visualType": "pivotTable",
     "query": {
       "queryState": {
-        "Category": {
+        "Rows": {
           "projections": [
             {
               "field": {
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Date"
+                      "Entity": "Transactions"
                     }
                   },
-                  "Property": "MonthYear"
+                  "Property": "transaction_type"
                 }
               },
-              "queryRef": "Date.MonthYear",
-              "nativeQueryRef": "MonthYear",
-              "active": true
+              "queryRef": "Transactions.transaction_type",
+              "nativeQueryRef": "transaction_type",
+              "displayName": "Transaction Type"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Transactions"
+                    }
+                  },
+                  "Property": "transaction_status"
+                }
+              },
+              "queryRef": "Transactions.transaction_status",
+              "nativeQueryRef": "transaction_status",
+              "displayName": "Status"
             }
           ]
         },
-        "Y": {
+        "Values": {
           "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Total Transactions"
+                }
+              },
+              "queryRef": "_Measures.Total Transactions",
+              "nativeQueryRef": "Total Transactions"
+            },
             {
               "field": {
                 "Measure": {
@@ -56,39 +85,74 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Total Amount PY"
+                  "Property": "Total Fees"
                 }
               },
-              "queryRef": "_Measures.Total Amount PY",
-              "nativeQueryRef": "Total Amount PY"
+              "queryRef": "_Measures.Total Fees",
+              "nativeQueryRef": "Total Fees"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Avg Risk Score"
+                }
+              },
+              "queryRef": "_Measures.Avg Risk Score",
+              "nativeQueryRef": "Avg Risk Score"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "% Fraud Rate"
+                }
+              },
+              "queryRef": "_Measures.% Fraud Rate",
+              "nativeQueryRef": "% Fraud Rate"
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "Date"
-                  }
-                },
-                "Property": "MonthYearSort"
-              }
-            },
-            "direction": "Ascending"
-          }
-        ],
-        "isDefaultSort": true
       }
     },
     "objects": {
-      "dataPoint": [
+      "columnHeaders": [
         {
           "properties": {
-            "fill": {
+            "columnAdjustment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'growToFit'"
+                }
+              }
+            },
+            "autoSizeColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "backColor": {
               "solid": {
                 "color": {
                   "expr": {
@@ -99,128 +163,81 @@
                 }
               }
             }
-          },
-          "selector": {
-            "metadata": "_Measures.Total Amount"
           }
-        },
+        }
+      ],
+      "rowHeaders": [
         {
           "properties": {
-            "fill": {
+            "fontColor": {
               "solid": {
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#5B6770'"
+                      "Value": "'#242424'"
+                    }
+                  }
+                }
+              }
+            },
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
                     }
                   }
                 }
               }
             }
-          },
-          "selector": {
-            "metadata": "_Measures.Total Amount PY"
           }
         }
       ],
-      "lineStyles": [
+      "values": [
         {
           "properties": {
-            "strokeWidth": {
-              "expr": {
-                "Literal": {
-                  "Value": "3D"
+            "backColorPrimary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
                 }
               }
             },
-            "showMarker": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.Total Amount"
-          }
-        },
-        {
-          "properties": {
-            "strokeWidth": {
-              "expr": {
-                "Literal": {
-                  "Value": "2D"
+            "backColorSecondary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#E6F4F5'"
+                    }
+                  }
                 }
               }
             },
-            "lineStyle": {
-              "expr": {
-                "Literal": {
-                  "Value": "'dashed'"
+            "fontColorPrimary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#242424'"
+                    }
+                  }
                 }
               }
             },
-            "showMarker": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.Total Amount PY"
-          }
-        }
-      ],
-      "categoryAxis": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "valueAxis": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "start": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "legend": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "position": {
-              "expr": {
-                "Literal": {
-                  "Value": "'TopRight'"
+            "fontColorSecondary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#242424'"
+                    }
+                  }
                 }
               }
             }
@@ -229,6 +246,19 @@
       ]
     },
     "visualContainerObjects": {
+      "stylePreset": [
+        {
+          "properties": {
+            "name": {
+              "expr": {
+                "Literal": {
+                  "Value": "'None'"
+                }
+              }
+            }
+          }
+        }
+      ],
       "title": [
         {
           "properties": {
@@ -242,7 +272,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Total Amount: This Period vs Prior Year'"
+                  "Value": "'Transaction Breakdown by Type & Status'"
                 }
               }
             },
@@ -376,7 +406,6 @@
           }
         }
       ]
-    },
-    "drillFilterOtherVisuals": true
+    }
   }
 }

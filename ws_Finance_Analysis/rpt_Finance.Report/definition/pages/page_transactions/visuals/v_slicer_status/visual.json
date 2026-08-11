@@ -1,11 +1,11 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "25623b0c4cba8f24dd4e",
+  "name": "f71402a0d973f90bb7d2",
   "position": {
     "x": 16,
     "y": 72,
     "z": 100,
-    "height": 80,
+    "height": 128,
     "width": 168,
     "tabOrder": 100
   },
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Date"
+                      "Entity": "Transactions"
                     }
                   },
-                  "Property": "Year"
+                  "Property": "transaction_status"
                 }
               },
-              "queryRef": "Date.Year",
-              "nativeQueryRef": "Year"
+              "queryRef": "Transactions.transaction_status",
+              "nativeQueryRef": "transaction_status"
             }
           ]
         }
@@ -40,7 +40,7 @@
             "mode": {
               "expr": {
                 "Literal": {
-                  "Value": "'Dropdown'"
+                  "Value": "'Basic'"
                 }
               }
             }
@@ -60,11 +60,16 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Year'"
+                  "Value": "'Status'"
                 }
               }
             }
           }
+        }
+      ],
+      "general": [
+        {
+          "properties": {}
         }
       ]
     },

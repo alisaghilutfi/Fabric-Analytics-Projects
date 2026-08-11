@@ -1,16 +1,16 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "c01ff76c85c1614a5205",
+  "name": "a6dec3bcb5f854d2bb32",
   "position": {
     "x": 220,
-    "y": 68,
+    "y": 464,
     "z": 100,
-    "height": 320,
-    "width": 1048,
+    "height": 224,
+    "width": 616,
     "tabOrder": 100
   },
   "visual": {
-    "visualType": "lineChart",
+    "visualType": "barChart",
     "query": {
       "queryState": {
         "Category": {
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Date"
+                      "Entity": "Transactions"
                     }
                   },
-                  "Property": "MonthYear"
+                  "Property": "transaction_status"
                 }
               },
-              "queryRef": "Date.MonthYear",
-              "nativeQueryRef": "MonthYear",
+              "queryRef": "Transactions.transaction_status",
+              "nativeQueryRef": "transaction_status",
               "active": true
             }
           ]
@@ -47,20 +47,6 @@
               },
               "queryRef": "_Measures.Total Amount",
               "nativeQueryRef": "Total Amount"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Total Amount PY"
-                }
-              },
-              "queryRef": "_Measures.Total Amount PY",
-              "nativeQueryRef": "Total Amount PY"
             }
           ]
         }
@@ -69,16 +55,16 @@
         "sort": [
           {
             "field": {
-              "Column": {
+              "Measure": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "Date"
+                    "Entity": "_Measures"
                   }
                 },
-                "Property": "MonthYearSort"
+                "Property": "Total Amount"
               }
             },
-            "direction": "Ascending"
+            "direction": "Descending"
           }
         ],
         "isDefaultSort": true
@@ -101,7 +87,71 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.Total Amount"
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "Transactions"
+                          }
+                        },
+                        "Property": "transaction_status"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Success'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#D13438'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "Transactions"
+                          }
+                        },
+                        "Property": "transaction_status"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Failed'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
           }
         },
         {
@@ -119,58 +169,54 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.Total Amount PY"
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "Transactions"
+                          }
+                        },
+                        "Property": "transaction_status"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Pending'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
           }
         }
       ],
-      "lineStyles": [
+      "labels": [
         {
           "properties": {
-            "strokeWidth": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "3D"
+                  "Value": "true"
                 }
               }
             },
-            "showMarker": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#252423'"
+                    }
+                  }
                 }
               }
             }
-          },
-          "selector": {
-            "metadata": "_Measures.Total Amount"
-          }
-        },
-        {
-          "properties": {
-            "strokeWidth": {
-              "expr": {
-                "Literal": {
-                  "Value": "2D"
-                }
-              }
-            },
-            "lineStyle": {
-              "expr": {
-                "Literal": {
-                  "Value": "'dashed'"
-                }
-              }
-            },
-            "showMarker": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.Total Amount PY"
           }
         }
       ],
@@ -193,14 +239,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "start": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
+                  "Value": "false"
                 }
               }
             }
@@ -213,14 +252,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "position": {
-              "expr": {
-                "Literal": {
-                  "Value": "'TopRight'"
+                  "Value": "false"
                 }
               }
             }
@@ -242,7 +274,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Total Amount: This Period vs Prior Year'"
+                  "Value": "'Total Amount by Status'"
                 }
               }
             },
@@ -376,7 +408,6 @@
           }
         }
       ]
-    },
-    "drillFilterOtherVisuals": true
+    }
   }
 }
