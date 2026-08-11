@@ -8,6 +8,8 @@ merge to main.
 
 📝 **Blog post:** [Vibe-coding an end-to-end Finance Analytics Platform in Microsoft Fabric with Claude Code](https://lotusoftware.hashnode.dev/vibe-coding-an-end-to-end-finance-analytics-platform-in-microsoft-fabric-with-claude-code)
 
+![Finance Analytics Dashboard](docs/images/dashboard-overview.png)
+
 ---
 
 ## The Problem
