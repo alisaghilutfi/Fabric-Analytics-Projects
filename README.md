@@ -80,12 +80,17 @@ Lakehouse layers with reverse geocoding and significance classification, exposed
 
 ### ws_DS_BankChurn — Bank Customer Churn Prediction
 
-**Type:** Data Science + Machine Learning  
-**Stack:** PySpark MLlib · LightGBM · MLflow model registry · DirectLake semantic model · Power BI churn dashboard  
+End-to-end ML pipeline on Microsoft Fabric: raw ingestion → feature engineering →
+multi-model MLflow experiment → programmatic champion selection → Direct Lake
+semantic model → 3-page PBIR report → Fabric Data Agent for natural language
+churn analysis.
 
-End-to-end ML pipeline from raw customer data to a registered champion model
-(`lgbm_sm`) and a Power BI predictions report with churn rate, risk segmentation,
-and geography breakdowns.
+**Stack:** PySpark · MLflow · LightGBM · scikit-learn · SMOTE · Direct Lake ·
+DAX · PBIR · Fabric Data Agent
+
+**Highlights:** Programmatic champion model selection via MLflow search_runs ·
+Governed Bronze metadata logging · 10 DAX measures across 4 display folders ·
+Natural language interface via agent_DS_BankChurn
 
 ---
 
