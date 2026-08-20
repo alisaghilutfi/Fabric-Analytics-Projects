@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "9bd2c94c-36ee-4b99-a9c6-5f4891159184",
   "position": {
     "x": 20,
@@ -18,7 +18,11 @@
             {
               "field": {
                 "Measure": {
-                  "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
                   "Property": "Total Customers"
                 }
               },
@@ -28,7 +32,11 @@
             {
               "field": {
                 "Measure": {
-                  "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
                   "Property": "Churned Customers"
                 }
               },
@@ -38,7 +46,11 @@
             {
               "field": {
                 "Measure": {
-                  "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
                   "Property": "Retained Customers"
                 }
               },
@@ -48,7 +60,11 @@
             {
               "field": {
                 "Measure": {
-                  "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
                   "Property": "Churn Rate"
                 }
               },
@@ -58,7 +74,11 @@
             {
               "field": {
                 "Measure": {
-                  "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
                   "Property": "Retained Rate"
                 }
               },
@@ -68,6 +88,39 @@
           ]
         }
       }
+    },
+    "objects": {
+      "value": [
+        {
+          "properties": {
+            "horizontalAlignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
     },
     "drillFilterOtherVisuals": true
   }

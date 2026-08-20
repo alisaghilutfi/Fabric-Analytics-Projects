@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "2e4aab08-19e1-4b5f-9f3d-9ce83ba35eb2",
   "position": {
     "x": 20,
     "y": 360,
     "z": 3,
     "height": 340,
-    "width": 400,
+    "width": 503,
     "tabOrder": 3
   },
   "visual": {
@@ -18,7 +18,11 @@
             {
               "field": {
                 "Measure": {
-                  "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
                   "Property": "Churned Customers"
                 }
               },
@@ -28,7 +32,11 @@
             {
               "field": {
                 "Measure": {
-                  "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
                   "Property": "Retained Customers"
                 }
               },
@@ -38,6 +46,36 @@
           ]
         }
       }
+    },
+    "objects": {
+      "labels": [
+        {
+          "properties": {
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
     },
     "drillFilterOtherVisuals": true
   }

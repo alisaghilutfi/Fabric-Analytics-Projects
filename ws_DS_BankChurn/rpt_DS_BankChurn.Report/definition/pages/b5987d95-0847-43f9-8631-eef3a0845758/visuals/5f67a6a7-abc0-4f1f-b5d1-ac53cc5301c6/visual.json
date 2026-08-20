@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "5f67a6a7-abc0-4f1f-b5d1-ac53cc5301c6",
   "position": {
     "x": 20,
@@ -18,7 +18,11 @@
             {
               "field": {
                 "Measure": {
-                  "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
                   "Property": "Avg Credit Score"
                 }
               },
@@ -28,7 +32,11 @@
             {
               "field": {
                 "Measure": {
-                  "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
                   "Property": "Avg Balance"
                 }
               },
@@ -38,7 +46,11 @@
             {
               "field": {
                 "Measure": {
-                  "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
                   "Property": "Avg Tenure"
                 }
               },
@@ -48,6 +60,39 @@
           ]
         }
       }
+    },
+    "objects": {
+      "value": [
+        {
+          "properties": {
+            "horizontalAlignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
     },
     "drillFilterOtherVisuals": true
   }
