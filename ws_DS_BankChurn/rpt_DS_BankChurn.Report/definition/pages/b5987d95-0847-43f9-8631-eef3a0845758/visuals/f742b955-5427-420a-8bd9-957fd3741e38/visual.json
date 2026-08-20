@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "f742b955-5427-420a-8bd9-957fd3741e38",
   "position": {
     "x": 620,
@@ -37,7 +37,11 @@
             {
               "field": {
                 "Measure": {
-                  "Expression": {"SourceRef": {"Entity": "_Measures"}},
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
                   "Property": "Churn Rate"
                 }
               },
@@ -47,6 +51,21 @@
           ]
         }
       }
+    },
+    "visualContainerObjects": {
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
     },
     "drillFilterOtherVisuals": true
   }
