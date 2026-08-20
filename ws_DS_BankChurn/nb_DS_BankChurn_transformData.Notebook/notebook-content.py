@@ -416,3 +416,37 @@ display(sparkDF, summary=True)
 # META   "language": "python",
 # META   "language_group": "synapse_pyspark"
 # META }
+
+# CELL ********************
+
+from pyspark.sql import Row
+from datetime import datetime, timezone
+
+# Capture ingestion run metadata
+metadata = Row(
+    run_timestamp=datetime.now(timezone.utc),
+    source_url="https://synapseaisolutionsa.blob.core.windows.net/public/bank-churn-customer-data/churn.csv",
+    source_table="churn_clean",
+    rows_written=spark.table("churn_clean").count(),
+    columns_written=len(spark.table("churn_clean").columns),
+    ingestion_mode="overwrite",
+    notebook_name="nb_DS_BankChurn_transformData",
+    spark_app_id=spark.sparkContext.applicationId,
+    schema_version="1.0"
+)
+
+metadata_df = spark.createDataFrame([metadata])
+
+metadata_df.write.format("delta") \
+    .mode("append") \
+    .option("delta.columnMapping.mode", "name") \
+    .saveAsTable("ingestion_metadata")
+
+print(f"Metadata logged: {metadata.rows_written} rows, {metadata.columns_written} columns at {metadata.run_timestamp}")
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
