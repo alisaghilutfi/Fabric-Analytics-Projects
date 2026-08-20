@@ -53,7 +53,7 @@ When finishing a session, replace the section below with actual results:
 **Date:** 2026-08-20
 **Completed:**
 - Fixed geography visual on Churn Overview (replaced empty bar chart with
-  pie chart showing Churn Rate by country: Germany 34.5%, Spain 13.2%,
+  donut chart showing Churn Rate by country: Germany 34.5%, Spain 13.2%,
   France 12.2%)
 - Added Bronze ingestion metadata logging to nb_DS_BankChurn_transformData
   (writes run_timestamp, source_url, rows_written, columns_written,
