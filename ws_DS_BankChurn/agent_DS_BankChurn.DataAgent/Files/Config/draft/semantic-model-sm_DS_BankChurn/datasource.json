@@ -1,0 +1,210 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/dataAgent/definition/dataSource/1.0.0/schema.json",
+  "artifactId": "69631db1-bc58-9ac6-4a23-627d03ff9179",
+  "workspaceId": "00000000-0000-0000-0000-000000000000",
+  "dataSourceInstructions": null,
+  "displayName": "sm_DS_BankChurn",
+  "type": "semantic_model",
+  "userDescription": null,
+  "metadata": {},
+  "elements": [
+    {
+      "id": "9507a9ba-63a2-443e-9cc1-8cf026fe84b6",
+      "is_selected": true,
+      "display_name": "_Measures",
+      "type": "semantic_model.table",
+      "description": "Contains all DAX measures for the BankChurn Data Science project. Measures are organized into display folders covering prediction volume, churn rates, geographic breakdown, and customer risk signals. Data source is the customer_churn_test_predictions Gold table produced by the LightGBM champion model.",
+      "children": [
+        {
+          "id": "f5bba121-cf52-49a4-ba08-581ff926646f",
+          "is_selected": true,
+          "display_name": "Column",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "cedcc4c4-a3ff-4266-913b-2eec7db8fedb",
+          "is_selected": true,
+          "display_name": "Total Customers",
+          "type": "semantic_model.measure",
+          "data_type": "Int64",
+          "description": "Total number of customers scored in the churn prediction test set. Counts every row in the predictions table regardless of filter context.",
+          "children": []
+        },
+        {
+          "id": "b07f43d0-0a75-4612-8791-3502f53a3b36",
+          "is_selected": true,
+          "display_name": "Churned Customers",
+          "type": "semantic_model.measure",
+          "data_type": "Int64",
+          "description": "Number of customers predicted to churn (predictions = 1). Uses CALCULATE with a filter on the predictions column to isolate churned records.",
+          "children": []
+        },
+        {
+          "id": "6a747c7a-d23a-4ad8-a4cd-ec42f88ee990",
+          "is_selected": true,
+          "display_name": "Retained Customers",
+          "type": "semantic_model.measure",
+          "data_type": "Int64",
+          "description": "Number of customers predicted to be retained (predictions = 0). Complements Churned Customers — the two always sum to Total Customers.",
+          "children": []
+        },
+        {
+          "id": "6caec84f-98b2-4573-984b-fcd6b367e573",
+          "is_selected": true,
+          "display_name": "Churn Rate",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": "Proportion of customers predicted to churn out of all scored customers. Divides Churned Customers by Total Customers; returns 0 if denominator is empty.",
+          "children": []
+        },
+        {
+          "id": "d1ed6006-7222-4f9e-9fbf-6fad1da981b7",
+          "is_selected": true,
+          "display_name": "Retained Rate",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": "Proportion of customers predicted to be retained. Complement of Churn Rate — always equals 1 minus Churn Rate.",
+          "children": []
+        },
+        {
+          "id": "3c476866-be3c-4263-8635-5796f7ddf92e",
+          "is_selected": true,
+          "display_name": "Churn Rate Germany",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": "Churn rate among customers from Germany (Geography_Germany = True). Filters the predictions table to German customers before computing the churn ratio.",
+          "children": []
+        },
+        {
+          "id": "a518c171-93a0-4a83-a2e1-3510373b6540",
+          "is_selected": true,
+          "display_name": "Churn Rate Spain",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": "Churn rate among customers from Spain (Geography_Spain = True). Filters the predictions table to Spanish customers before computing the churn ratio.",
+          "children": []
+        },
+        {
+          "id": "be7f8308-a16c-42db-bc6b-f40b681c33f6",
+          "is_selected": true,
+          "display_name": "Churn Rate France",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": "Churn rate among customers from France (Geography_France = True). Filters the predictions table to French customers before computing the churn ratio.",
+          "children": []
+        },
+        {
+          "id": "4ffa4178-9e14-42e8-b2dd-bcfb3597c36d",
+          "is_selected": true,
+          "display_name": "Avg Credit Score",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": "Average credit score across all scored customers in the current filter context. Higher values indicate lower credit risk in the customer segment.",
+          "children": []
+        },
+        {
+          "id": "4af44c83-13bd-4ccd-91dc-0b3d416c17be",
+          "is_selected": true,
+          "display_name": "Avg Balance",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": "Average account balance across all scored customers in the current filter context. Useful for comparing financial exposure between churned and retained segments.",
+          "children": []
+        },
+        {
+          "id": "33dbbfd7-e04a-4b74-903e-c6280ea7c263",
+          "is_selected": true,
+          "display_name": "Avg Tenure",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": "Average tenure in years across all scored customers in the current filter context. Lower tenure in the churned segment signals early-life churn risk.",
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "d26ef429-d0bb-4da7-89be-05c057616667",
+      "is_selected": true,
+      "display_name": "customer_churn_test_predictions",
+      "type": "semantic_model.table",
+      "description": "Contains one row per customer scored by the champion LightGBM churn prediction model. Each record represents a bank customer from the test split, enriched with engineered features (binned credit score, age, balance, salary, tenure) and one-hot encoded geography and gender. The predictions column holds the binary churn label (1 = predicted to churn, 0 = predicted to retain).",
+      "children": [
+        {
+          "id": "0925d92a-c5e5-4a26-9c07-9692912f0c52",
+          "is_selected": true,
+          "display_name": "CreditScore",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "d8e0bba9-7f1c-49fb-8b60-e9bc447a7224",
+          "is_selected": true,
+          "display_name": "Age",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "4e425c13-82bf-43e6-b15d-8948ce166cf5",
+          "is_selected": true,
+          "display_name": "Tenure",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "a1b3cfe0-37a8-4ab0-85c6-be17fd641c9e",
+          "is_selected": true,
+          "display_name": "Balance",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "c28707fe-826f-4a02-89b7-94cf4c04dcf7",
+          "is_selected": true,
+          "display_name": "NumOfProducts",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "47f16baa-88f2-4a8a-bf83-d81d9b2f7bda",
+          "is_selected": true,
+          "display_name": "HasCrCard",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "510c58e2-19fd-4649-8d44-561d144fd7ca",
+          "is_selected": true,
+          "display_name": "IsActiveMember",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "966cc738-894b-4027-b592-02925c16d4b6",
+          "is_selected": true,
+          "display_name": "EstimatedSalary",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        }
+      ]
+    }
+  ]
+}

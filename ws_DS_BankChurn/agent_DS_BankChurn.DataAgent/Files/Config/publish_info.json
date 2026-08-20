@@ -1,0 +1,4 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/dataAgent/definition/publishInfo/1.0.0/schema.json",
+  "description": "Answers natural language questions about bank customer churn predictions \nproduced by a LightGBM champion model. Covers overall churn rate, \nsegment-level analysis by geography, product count, and activity status, \nand customer risk signals (credit score, balance, tenure). Grounded on \nthe sm_DS_BankChurn semantic model (Direct Lake, ~2,000 scored customers)."
+}
