@@ -39,11 +39,11 @@ Semantic model scaffolded. Report file created.
 
 ## ws_DS_BankChurn
 **Purpose:** Data science / ML — customer churn prediction  
-**Status:** Active — semantic model and report complete, pipeline pending  
-**Last updated:** 2026-07-26  
+**Status:** Active — full stack complete including Data Agent. Open: DataPipeline orchestration, table rename (customer_churn_test_predictions → Churn Predictions), scheduled refresh  
+**Last updated:** 2026-08-20  
 **Current focus:** Pipeline orchestration and report polish  
-**Last session:** Reorganized semantic model measures into standalone `_Measures` table (10 DAX measures, 4 display folders), hid 11 raw columns on customer_churn_test_predictions, built rpt_DS_BankChurn PBIR report (3 pages, 15 visuals).  
-**Next session:** Fix empty Geography bar chart on Churn Overview page; consider DataPipeline orchestration for the notebook sequence  
+**Last session:** Fixed Geography visual on Churn Overview (pie chart by country), added Bronze ingestion metadata logging (ingestion_metadata Delta table), created and published agent_DS_BankChurn (Fabric Data Agent grounded on sm_DS_BankChurn), Power BI Pro license purchased for alisaghi_fabric account.  
+**Next session:** Run full pipeline end-to-end after notebooks were re-run — verify customer_churn_test_predictions is current; consider DataPipeline orchestration for the notebook sequence  
 **Blockers:** None known  
 
 ---

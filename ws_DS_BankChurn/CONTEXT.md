@@ -4,7 +4,7 @@
 > The executing agent reads this at session start and writes a recap
 > at session end. Do not edit manually unless correcting an error.
 
-Last updated: 2026-07-26
+Last updated: 2026-08-20
 
 ---
 
@@ -50,16 +50,20 @@ When starting a session on this project:
 When finishing a session, replace the section below with actual results:
 
 ### Last Session Recap
-**Date:** 2026-07-26
+**Date:** 2026-08-20
 **Completed:**
-- Semantic model measures reorganized into standalone `_Measures` table
-  (10 DAX measures across 4 display folders), 11 raw columns hidden
-  on customer_churn_test_predictions
-- rpt_DS_BankChurn PBIR report built — 3 pages, 15 visuals
-- CONTEXT.md and PROJECTS.md updated to reflect actual state
+- Fixed geography visual on Churn Overview (replaced empty bar chart with
+  pie chart showing Churn Rate by country: Germany 34.5%, Spain 13.2%,
+  France 12.2%)
+- Added Bronze ingestion metadata logging to nb_DS_BankChurn_transformData
+  (writes run_timestamp, source_url, rows_written, columns_written,
+  schema_version to ingestion_metadata Delta table in lh_DS_BankChurn)
+- Created and published agent_DS_BankChurn (Fabric Data Agent grounded on
+  sm_DS_BankChurn, natural language churn analysis, system prompt
+  configured, published to workspace — not Git-syncable artifact type)
+- Power BI Pro license purchased for alisaghi_fabric account (€12.10/month)
 
 **Left unfinished:**
-- Geography bar chart on Churn Overview page is empty (needs redesign)
 - customer_churn_test_predictions table not renamed to business-readable name
 - No DataPipeline artifact / orchestration
 - No scheduled refresh on sm_DS_BankChurn
@@ -68,19 +72,21 @@ When finishing a session, replace the section below with actual results:
 - None
 
 **Pick up next session at:**
-- Fix Geography bar chart on Churn Overview page
+- Run full pipeline end-to-end after notebooks were re-run — verify
+  customer_churn_test_predictions is current
 - Consider DataPipeline orchestration for the notebook sequence
 
 ---
 
-## Actual state as of 2026-07-26
+## Actual state as of 2026-08-20
 
 ### Workspace ID: e82dfb36-dba0-483b-8860-67b2a08d0487
 
-### Artifacts (12 total):
+### Artifacts (13 total):
 - lh_DS_BankChurn (Lakehouse + SQL Endpoint auto-paired)
 - nb_DS_BankChurn_transformData — downloads churn.csv, cleans,
-  engineers features, writes churn_clean Delta table
+  engineers features, writes churn_clean Delta table; now also logs
+  Bronze ingestion metadata (see Lakehouse tables below)
 - nb_DS_BankChurn_TrainRegisterML — trains RFC1/RFC2/LightGBM,
   evaluates on val set ROC-AUC, registers champion programmatically
   as champion_BankChurn
@@ -95,17 +101,30 @@ When finishing a session, replace the section below with actual results:
   (Volume, Churn Rate, Geography, Risk Signals), 11 raw columns hidden
 - rpt_DS_BankChurn — PBIR format, 3 pages (Churn Overview, Risk Profile,
   Model Performance), 15 visuals
+- agent_DS_BankChurn — status: Live. Fabric Data Agent grounded on
+  sm_DS_BankChurn for natural language churn analysis, system prompt
+  configured, published to workspace. Note: not a Git-syncable artifact
+  type
+
+### Lakehouse tables (lh_DS_BankChurn):
+- churn_clean — cleaned/engineered source data
+- customer_churn_test_predictions — Gold predictions table (Direct Lake
+  source for sm_DS_BankChurn)
+- ingestion_metadata — Bronze ingestion run log written by
+  nb_DS_BankChurn_transformData (run_timestamp, source_url,
+  source_table, rows_written, columns_written, ingestion_mode,
+  notebook_name, spark_app_id, schema_version)
 
 ### Known issues / open items:
 - MLModel names (rfc1_sm, rfc2_sm, lgbm_sm) use tutorial convention
   with _sm suffix — future projects will use model_ prefix
 - customer_churn_test_predictions table name is not business-readable —
   rename to 'Churn Predictions' in a future session
-- Geography bar chart on Churn Overview page is empty — visual needs
-  redesign to use a dimension column instead of measures as categories
 - No DataPipeline artifact — notebooks run manually; pipeline
   orchestration not yet implemented
 - No scheduled refresh configured on sm_DS_BankChurn
+- Run full pipeline end-to-end after notebooks were re-run — verify
+  customer_churn_test_predictions is current
 
 ### Naming convention note:
 MLModel names follow Microsoft tutorial convention (rfc1_sm, rfc2_sm,
