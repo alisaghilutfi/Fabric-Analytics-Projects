@@ -10,10 +10,10 @@
     "tabOrder": 2
   },
   "visual": {
-    "visualType": "clusteredBarChart",
+    "visualType": "cardVisual",
     "query": {
       "queryState": {
-        "Category": {
+        "Data": {
           "projections": [
             {
               "field": {
