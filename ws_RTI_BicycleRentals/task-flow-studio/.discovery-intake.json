@@ -1,0 +1,19 @@
+{
+  "volume": {
+    "value": "Not sized numerically; bike/dock telemetry events, likely low-to-moderate GB/day",
+    "source": "inferred"
+  },
+  "velocity": {
+    "value": "Real-time streaming (explicit: Eventstream + Eventhouse + Real-Time Dashboard)",
+    "source": "user"
+  },
+  "variety": {
+    "value": "Single streaming source (bike/dock events) landing in Eventhouse, plus a Lakehouse for batch/curated data",
+    "source": "inferred"
+  },
+  "versatility": {
+    "value": "Mixed \u2014 low-code RTI authoring (Eventstream, Activator, Dashboard, Map) alongside a Lakehouse/Semantic Model path",
+    "source": "inferred"
+  },
+  "confidence_floor_met": true
+}

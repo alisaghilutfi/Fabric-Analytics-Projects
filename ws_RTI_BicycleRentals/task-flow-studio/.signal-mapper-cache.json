@@ -1,0 +1,85 @@
+{
+  "signals": [
+    {
+      "signal": "Real-time / Streaming",
+      "value": "Event analytics",
+      "velocity": "Real-time",
+      "confidence": "high",
+      "source_keywords": [
+        "real-time"
+      ],
+      "source_quotes": []
+    },
+    {
+      "signal": "Batch / Scheduled",
+      "value": "Analytics / Reporting",
+      "velocity": "Batch",
+      "confidence": "low",
+      "source_keywords": [
+        "dashboard"
+      ],
+      "source_quotes": []
+    },
+    {
+      "signal": "Both / Mixed (Lambda)",
+      "value": "Mixed analytics",
+      "velocity": "Both",
+      "confidence": "low",
+      "source_keywords": [
+        "(inferred: batch+real-time \u2192 lambda)"
+      ],
+      "source_quotes": []
+    },
+    {
+      "signal": "Machine Learning",
+      "value": "Machine learning",
+      "velocity": "Batch (typically)",
+      "confidence": "high",
+      "source_keywords": [
+        "anomaly detection",
+        "(inferred: Pattern/anomaly discovery)"
+      ],
+      "source_quotes": []
+    },
+    {
+      "signal": "Data Quality / Layered",
+      "value": "Layered analytics",
+      "velocity": "Varies",
+      "confidence": "low",
+      "source_keywords": [
+        "lakehouse"
+      ],
+      "source_quotes": []
+    }
+  ],
+  "task_flow_candidates": [
+    {
+      "id": "event-medallion",
+      "score": 8,
+      "signals": [
+        "Real-time / Streaming",
+        "Both / Mixed (Lambda)"
+      ]
+    },
+    {
+      "id": "event-analytics",
+      "score": 6,
+      "signals": [
+        "Real-time / Streaming"
+      ]
+    },
+    {
+      "id": "basic-machine-learning-models",
+      "score": 5,
+      "signals": [
+        "Machine Learning"
+      ]
+    }
+  ],
+  "primary_velocity": "real-time",
+  "ambiguous": false,
+  "keyword_coverage": 0.15,
+  "project": "existing-fabric-workspace-called",
+  "problem_statement": "I have an existing Fabric workspace called ws_RTI_BicycleRentals built around Real-Time Intelligence. It contains an Eventhouse (eh_RTI_BicycleRentals) with one KQL database, an Eventstream (es_RTI_BicycleRentals), an Activator (activator_BicycleRentals), an Anomaly Detection item (anomalies_BicycleRentals), a Real-Time Dashboard (dashboard_BicycleRentals), a Map (map_RTI_BicycleRentals), a Lakehouse (lh_RTI_BicycleRentals), a Semantic Model (sm_RTI_BicycleRentals), and a Report (rpt_RTI_BicycleRentals). The workspace is connected to a GitHub repo on the dev-fabric-sync branch, last synced 7/27/2026. The Fabric capacity is PAYG in North Europe. I want you to read what is already deployed, document the current RTI architecture, identify any gaps, and describe what a complete end-to-end deployment would look like. Do not create any new items.",
+  "registry_hash": "8bec8b44f01174bba600ae77002607391ecac816ebdaf421f10fdb532aa8e915"
+}
