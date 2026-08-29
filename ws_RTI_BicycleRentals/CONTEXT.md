@@ -4,7 +4,7 @@
 > The executing agent reads this at session start and writes a recap
 > at session end. Do not edit manually unless correcting an error.
 
-Last updated: 2026-07-22
+Last updated: 2026-08-29
 
 ---
 
@@ -96,38 +96,59 @@ live and running.
   Move card, Neighbourhood × Action matrix), About (data lineage + freshness
   card). PBIR validated with `powerbi-report-author validate` (0 errors).
 
+## Task Flow Studio (run 2026-08-29)
+A Task Flow Studio pass confirmed the workspace follows the **event-medallion
+pattern**: Eventstream → Eventhouse Bronze/Silver/Gold (KQL) → semantic
+model/report, matching the architecture already documented above.
+
+- 13 docs committed to `ws_RTI_BicycleRentals/task-flow-studio/` on `main`:
+  discovery-brief.md, project-brief.md, architecture-handoff.md,
+  decisions.json, test-plan.md, validation-report.md, deployment-handoff.md,
+  and cache files (.architecture-cache.json, .capability-llm-cache.json,
+  .capability-llm-prompt.json, .capability-mapper-cache.json,
+  .discovery-intake.json, .signal-mapper-cache.json)
+- GitHub drift resolved — `main`, `test`, and `dev-fabric-sync` are all synced
+
+### Open items from this run
+- **Hot/cold split assumption unverified:** the design assumes Eventhouse
+  (hot) hands off to Lakehouse (cold) for historical storage, but
+  `lh_RTI_BicycleRentals` remains orphaned (see "Orphaned" above, no
+  Eventstream destination, no notebooks, no tables) — this assumption needs
+  verification against actual data flow, not just design intent
+- **Map data binding unconfirmed:** `map_RTI_BicycleRentals` (geospatial
+  station view) — bindings not yet verified against the KQL Gold layer
+- **Anomaly Detection data binding unconfirmed:** `anomalies_BicycleRentals`
+  — bindings and output destination not yet verified
+
 ## Session Recap Template
 When finishing a session, replace the section below with actual results:
 
 ### Last Session Recap
-**Date:** 2026-07-24
+**Date:** 2026-08-29
 **Completed:**
-- Audited actual workspace state — found Eventstream, KQL medallion,
-  Activator, Dashboard, Map, and Anomaly Detector already live (CONTEXT.md was
-  stale)
-- Added `LatestStationSnapshot()` KQL function (Gold layer, all columns,
-  arg_max by BikepointID) since AggregatedData only exposed No_Bikes
-- Built and deployed `sm_RTI_BicycleRentals` — DirectQuery semantic model on
-  the KQL database, 1 fact table + 10 measures
-- Built and deployed `rpt_RTI_BicycleRentals` — 4-page report, PBIR-validated
-- Synced both new items + the KQL function change to git via Fabric's
-  `updateFromGit` / `commitToGit` (branch `dev-fabric-sync`, commit `a716dab`)
+- Ran a Task Flow Studio pass over the workspace; confirmed the
+  event-medallion pattern (Eventstream → Eventhouse Bronze/Silver/Gold →
+  semantic model/report) matches actual implementation
+- Committed 13 Task Flow Studio docs to
+  `ws_RTI_BicycleRentals/task-flow-studio/` on `main`
+- Resolved GitHub drift — `main`, `test`, and `dev-fabric-sync` branches back
+  in sync
 
 **Left unfinished:**
-- DAX measure validation against the live deployed model was not completed
-  (user declined the confirmation prompt mid-session) — recommend running
-  `EVALUATE {...}` over the 10 measures before treating them as verified
-- Report was not visually reviewed in Power BI Desktop / Service (no Desktop
-  instance available this session) — screenshot/rendering review still
-  pending
-- Azure Map visual (Category=BikepointID, Y/X=Lat/Long override, Size=No_Bikes,
-  Series=Action) has not been confirmed to render/geocode correctly in
-  practice
+- Hot/cold split assumption (Eventhouse → Lakehouse historical handoff) not
+  verified against actual data flow — `lh_RTI_BicycleRentals` still orphaned
+- Map (`map_RTI_BicycleRentals`) data bindings not confirmed
+- Anomaly Detection (`anomalies_BicycleRentals`) data bindings not confirmed
+- Carried over from 2026-07-24: DAX measure validation (EVALUATE over the 10
+  measures), visual report review in Desktop/Service, Activator rule logic
+  inspection, Dashboard tile inspection, decision on orphaned Lakehouse
 
 **New blockers discovered:**
 - None
 
 **Pick up next session at:**
+- Verify hot/cold split assumption (Eventhouse → Lakehouse)
+- Confirm Map and Anomaly Detection data bindings
 - Validate the 10 measures live (DAX EVALUATE) and the report visually
   (Desktop reload + screenshot review)
 - Inspect activator_BicycleRentals rule logic and document

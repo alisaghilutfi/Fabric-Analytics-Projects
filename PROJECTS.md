@@ -4,7 +4,7 @@
 > executing agent updates the relevant project's Last Session and
 > Status fields. Do not edit manually unless correcting an error.
 
-Last updated: 2026-08-11
+Last updated: 2026-08-29
 
 ---
 
@@ -71,9 +71,9 @@ Semantic model scaffolded. Report file created.
 ## ws_RTI_BicycleRentals
 **Purpose:** Real-time intelligence project — live bicycle rental station monitoring  
 **Status:** Active  
-**Current focus:** Reporting layer complete; validation and drill-down of Activator/Dashboard/Anomaly Detector still open  
-**Last session:** Audited the workspace and found the KQL medallion (Bronze/Silver/Gold), Eventstream, Activator, Dashboard, Map, and Anomaly Detector already live — CONTEXT.md had been stale. Added a `LatestStationSnapshot()` KQL function (Gold layer, full columns). Built and deployed `sm_RTI_BicycleRentals` (DirectQuery semantic model, 10 measures) and `rpt_RTI_BicycleRentals` (4-page report, PBIR-validated). Synced to git via Fabric's commitToGit (branch `dev-fabric-sync`, commit `a716dab`).  
-**Next session:** Validate the 10 measures live via DAX, visually review the report in Desktop/Service, inspect Activator rule logic and Dashboard tiles, decide on the orphaned Lakehouse, investigate Anomaly Detector output  
+**Current focus:** Event-medallion pattern confirmed via Task Flow Studio; open items are hot/cold split verification and Map/Anomaly Detection data-binding confirmation  
+**Last session (2026-08-29):** Ran a Task Flow Studio pass over the workspace — confirmed the event-medallion pattern (Eventstream → Eventhouse Bronze/Silver/Gold → semantic model/report). Committed 13 Task Flow Studio docs (discovery brief, project brief, architecture handoff, decisions, test plan, validation report, deployment handoff, caches) to `ws_RTI_BicycleRentals/task-flow-studio/` in `main`. Resolved GitHub drift — all branches (main, test, dev-fabric-sync) now synced.  
+**Next session:** Verify the hot/cold split assumption (Eventhouse → Lakehouse handoff for historical data); confirm Map (`map_RTI_BicycleRentals`) and Anomaly Detection (`anomalies_BicycleRentals`) data bindings; still-open from prior session: validate the 10 semantic model measures live via DAX, visually review the report in Desktop/Service, inspect Activator rule logic and Dashboard tiles  
 **Blockers:** None known  
 
 ---
