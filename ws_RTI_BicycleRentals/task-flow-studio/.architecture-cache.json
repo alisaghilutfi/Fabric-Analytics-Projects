@@ -1,0 +1,118 @@
+{
+  "project": "existing-fabric-workspace-called",
+  "task_flow": "event-medallion",
+  "phase": null,
+  "items": [
+    {
+      "id": 1,
+      "name": "eventhouse",
+      "type": "Eventhouse",
+      "depends_on": []
+    },
+    {
+      "id": 2,
+      "name": "eventstream",
+      "type": "Eventstream",
+      "depends_on": [
+        "Eventhouse"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "kql-queryset",
+      "type": "KQLQueryset",
+      "depends_on": [
+        "Eventhouse"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "real-time-dashboard",
+      "type": "KQLDashboard",
+      "depends_on": [
+        "Eventhouse"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "semanticmodel",
+      "type": "Semantic Model",
+      "depends_on": []
+    },
+    {
+      "id": 6,
+      "name": "reflex",
+      "type": "Activator",
+      "depends_on": []
+    },
+    {
+      "id": 7,
+      "name": "lakehouse",
+      "type": "Lakehouse",
+      "depends_on": []
+    }
+  ],
+  "waves": [
+    {
+      "id": 1,
+      "name": "Wave 1",
+      "items": [
+        "eventhouse"
+      ],
+      "parallel": false
+    },
+    {
+      "id": 2,
+      "name": "Wave 2",
+      "items": [
+        "eventstream",
+        "kql-queryset",
+        "real-time-dashboard",
+        "semanticmodel",
+        "reflex",
+        "lakehouse"
+      ],
+      "parallel": true
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-1",
+      "type": "structural",
+      "target": "eventhouse"
+    },
+    {
+      "id": "AC-2",
+      "type": "structural",
+      "target": "eventstream"
+    },
+    {
+      "id": "AC-3",
+      "type": "structural",
+      "target": "kql-queryset"
+    },
+    {
+      "id": "AC-4",
+      "type": "structural",
+      "target": "real-time-dashboard"
+    },
+    {
+      "id": "AC-5",
+      "type": "structural",
+      "target": "semanticmodel"
+    },
+    {
+      "id": "AC-6",
+      "type": "structural",
+      "target": "reflex"
+    },
+    {
+      "id": "AC-7",
+      "type": "structural",
+      "target": "lakehouse"
+    }
+  ],
+  "item_count": 7,
+  "wave_count": 2,
+  "ac_count": 7
+}

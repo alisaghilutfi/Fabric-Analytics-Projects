@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0.0",
+  "problem_hash": "31003aacf72fc324",
+  "registry_version": "2026.05.22-1",
+  "intents": [
+    {
+      "intent_id": "alerting-and-triggers",
+      "confidence": "high",
+      "rationale": "Deployed items explicitly include 'an Activator (activator_BicycleRentals)' and 'an Anomaly Detection item (anomalies_BicycleRentals)', both reactive-automation components."
+    },
+    {
+      "intent_id": "preserve-historical-depth",
+      "confidence": "medium",
+      "rationale": "Workspace already includes 'a Lakehouse (lh_RTI_BicycleRentals)' alongside the Eventhouse, suggesting a cold/historical store paired with the hot streaming path."
+    }
+  ]
+}

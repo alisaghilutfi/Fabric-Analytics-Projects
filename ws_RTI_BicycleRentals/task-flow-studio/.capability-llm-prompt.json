@@ -1,0 +1,130 @@
+{
+  "schema_version": "1.0.0",
+  "registry_version": "2026.05.22-1",
+  "problem_hash": "31003aacf72fc324",
+  "problem_text": "I have an existing Fabric workspace called ws_RTI_BicycleRentals built around Real-Time Intelligence. It contains an Eventhouse (eh_RTI_BicycleRentals) with one KQL database, an Eventstream (es_RTI_BicycleRentals), an Activator (activator_BicycleRentals), an Anomaly Detection item (anomalies_BicycleRentals), a Real-Time Dashboard (dashboard_BicycleRentals), a Map (map_RTI_BicycleRentals), a Lakehouse (lh_RTI_BicycleRentals), a Semantic Model (sm_RTI_BicycleRentals), and a Report (rpt_RTI_BicycleRentals). The workspace is connected to a GitHub repo on the dev-fabric-sync branch, last synced 7/27/2026. The Fabric capacity is PAYG in North Europe. I want you to read what is already deployed, document the current RTI architecture, identify any gaps, and describe what a complete end-to-end deployment would look like. Do not create any new items.",
+  "deterministic_coverage": 0.2,
+  "deterministic_intents": [
+    {
+      "intent_id": "alerting-and-triggers",
+      "confidence": "low"
+    },
+    {
+      "intent_id": "low-latency-event-response",
+      "confidence": "high"
+    },
+    {
+      "intent_id": "semantic-self-service-bi",
+      "confidence": "high"
+    }
+  ],
+  "candidate_intents": [
+    {
+      "intent_id": "expose-data-to-data-scientists",
+      "summary": "User wants data scientists / ML practitioners to access and explore organizational data",
+      "llm_hint": "User is describing a gap between data availability and analytical/ML use of that data. Triggers Python/ML runtime + curated historical store."
+    },
+    {
+      "intent_id": "conversational-ai-self-service",
+      "summary": "User wants natural-language or AI-assisted querying of data",
+      "llm_hint": "User wants non-technical users (analysts, executives) to interrogate data without writing SQL or KQL. Triggers DataAgent with governed semantic context."
+    },
+    {
+      "intent_id": "preserve-historical-depth",
+      "summary": "User has long historical record and wants to derive value from it",
+      "llm_hint": "User has a large historical corpus that needs cheap durable storage AND a structure suitable for analytical workloads (medallion bronze/silver/gold)."
+    },
+    {
+      "intent_id": "modernize-field-intake",
+      "summary": "User has manual/paper-based field intake and wants to digitize it",
+      "llm_hint": "User has humans in the field capturing data manually. Triggers a low-code mobile/form-friendly ingest path (Power Apps + CopyJob/DataPipeline into lakehouse bronze)."
+    },
+    {
+      "intent_id": "low-latency-event-response",
+      "summary": "User needs sub-minute (often sub-second) reaction to incoming signals",
+      "llm_hint": "User cannot tolerate batch latency. Triggers Eventstream (ingest) + Eventhouse (low-latency store) + KQL Dashboard or Real-Time Dashboard (serve)."
+    },
+    {
+      "intent_id": "alerting-and-triggers",
+      "summary": "User wants automated alerts or actions when thresholds are crossed",
+      "llm_hint": "User needs reactive automation. Triggers Activator/Reflex on top of the streaming or analytical layer."
+    },
+    {
+      "intent_id": "prefer-low-code-ingest",
+      "summary": "User explicitly prefers low-code or SQL-first tooling for ingestion/transforms",
+      "llm_hint": "User wants to keep existing SQL/BI team productive without forcing them into PySpark. Bias ingestion toward CopyJob/DataPipeline/Dataflow Gen2."
+    },
+    {
+      "intent_id": "code-first-for-ml-ai",
+      "summary": "User wants code-first Python/Spark for ML/AI workloads even if other workloads are low-code",
+      "llm_hint": "User has or wants ML practitioners working in code. Triggers Notebook (Python/PySpark) bound to Lakehouse + optional MLModel/MLExperiment."
+    },
+    {
+      "intent_id": "semantic-self-service-bi",
+      "summary": "User wants governed semantic model for analyst self-service reporting",
+      "llm_hint": "User wants governed BI consumption. Triggers SemanticModel + Report layered on Lakehouse SQL endpoint or Warehouse."
+    },
+    {
+      "intent_id": "compliance-and-sensitive-data",
+      "summary": "User must handle regulated, sensitive, or governed data",
+      "llm_hint": "User has regulatory obligations. Triggers Variable Library for secrets + workspace-level governance + sensitivity labels."
+    }
+  ],
+  "candidates_to_consider": [
+    "alerting-and-triggers",
+    "code-first-for-ml-ai",
+    "compliance-and-sensitive-data",
+    "conversational-ai-self-service",
+    "expose-data-to-data-scientists",
+    "modernize-field-intake",
+    "prefer-low-code-ingest",
+    "preserve-historical-depth"
+  ],
+  "instructions": "Read the problem_text. For each intent_id under candidates_to_consider, decide whether the problem genuinely expresses that intent \u2014 even when the user does not use exact keywords. Return only intents with confidence 'high' or 'medium'. Be conservative: if the signal is weak, omit the intent. Do NOT invent new intent_ids. Cite a short quote from the problem_text in 'rationale' for every returned intent.",
+  "response_schema": {
+    "type": "object",
+    "required": [
+      "schema_version",
+      "problem_hash",
+      "registry_version",
+      "intents"
+    ],
+    "properties": {
+      "schema_version": {
+        "const": "1.0.0"
+      },
+      "problem_hash": {
+        "type": "string"
+      },
+      "registry_version": {
+        "type": "string"
+      },
+      "intents": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "intent_id",
+            "confidence",
+            "rationale"
+          ],
+          "properties": {
+            "intent_id": {
+              "type": "string"
+            },
+            "confidence": {
+              "enum": [
+                "high",
+                "medium",
+                "low"
+              ]
+            },
+            "rationale": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

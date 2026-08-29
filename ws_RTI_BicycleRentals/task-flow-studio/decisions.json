@@ -1,0 +1,62 @@
+{
+  "decisions": {
+    "storage": {
+      "choice": "Eventhouse",
+      "confidence": "high",
+      "rule_matched": "Real-time streaming → Eventhouse",
+      "guide": "decisions/storage-selection.md",
+      "rationale": "Real-time streaming velocity requires Eventhouse for sub-second ingestion and hot-path analytics"
+    },
+    "ingestion": {
+      "choice": "Eventstream",
+      "confidence": "high",
+      "rule_matched": "Real-time streaming → Eventstream",
+      "guide": "decisions/ingestion-selection.md",
+      "rationale": "Real-time/streaming velocity requires Eventstream for continuous data ingestion"
+    },
+    "processing": {
+      "choice": "KQL Queryset",
+      "confidence": "high",
+      "rule_matched": "Interactive + KQL → KQL Queryset",
+      "guide": "decisions/processing-selection.md",
+      "rationale": "KQL skillset defaults to KQL Queryset for ad-hoc log and time-series exploration"
+    },
+    "visualization": {
+      "choice": "Real-Time Dashboard",
+      "confidence": "high",
+      "rule_matched": "Live streaming data (sub-second) → Real-Time Dashboard",
+      "guide": "decisions/visualization-selection.md",
+      "rationale": "Sub-second streaming data requires Real-Time Dashboard for live operational monitoring"
+    },
+    "skillset": {
+      "choice": null,
+      "confidence": "na",
+      "rule_matched": null,
+      "guide": "decisions/skillset-selection.md",
+      "rationale": "No skillset signals found in discovery brief — architect should specify skillset or team_composition",
+      "note": "No skillset signals detected — provide skillset or team_composition"
+    },
+    "parameterization": {
+      "choice": null,
+      "confidence": "na",
+      "rule_matched": null,
+      "guide": "decisions/parameterization-selection.md",
+      "rationale": "No parameterization signals found in discovery brief — architect should specify environment_count and deployment_tool",
+      "note": "No parameterization signals detected — provide environment_count and deployment_tool"
+    },
+    "api": {
+      "choice": null,
+      "confidence": "na",
+      "rule_matched": null,
+      "guide": "decisions/api-selection.md",
+      "rationale": "No API signals detected — this task flow does not require an API backend",
+      "note": "N/A — no API layer needed for this task flow"
+    }
+  },
+  "ambiguous": [],
+  "unresolved": [
+    "skillset",
+    "parameterization",
+    "api"
+  ]
+}

@@ -1,0 +1,138 @@
+{
+  "intent_matches": [
+    {
+      "intent_id": "alerting-and-triggers",
+      "confidence": "low",
+      "matched_phrases": [
+        "anomaly detection"
+      ],
+      "weighted_score": 2,
+      "source": "merged",
+      "llm_rationale": "Deployed items explicitly include 'an Activator (activator_BicycleRentals)' and 'an Anomaly Detection item (anomalies_BicycleRentals)', both reactive-automation components."
+    },
+    {
+      "intent_id": "low-latency-event-response",
+      "confidence": "high",
+      "matched_phrases": [
+        "real-time",
+        "current"
+      ],
+      "weighted_score": 7,
+      "source": "deterministic"
+    },
+    {
+      "intent_id": "semantic-self-service-bi",
+      "confidence": "high",
+      "matched_phrases": [
+        "semantic model",
+        "dashboard",
+        "report"
+      ],
+      "weighted_score": 5,
+      "source": "deterministic"
+    },
+    {
+      "intent_id": "preserve-historical-depth",
+      "confidence": "medium",
+      "matched_phrases": [],
+      "weighted_score": 0,
+      "source": "llm",
+      "llm_rationale": "Workspace already includes 'a Lakehouse (lh_RTI_BicycleRentals)' alongside the Eventhouse, suggesting a cold/historical store paired with the hot streaming path."
+    }
+  ],
+  "required_capabilities": [
+    {
+      "capability_id": "alerting-trigger",
+      "summary": "Automated trigger/alert mechanism that fires on threshold conditions in streaming or analytical data.",
+      "satisfied_by_items": [
+        "Reflex"
+      ],
+      "supporting_items": [
+        "OperationsAgent"
+      ],
+      "triggered_by_intents": [
+        "alerting-and-triggers"
+      ],
+      "source": "llm"
+    },
+    {
+      "capability_id": "historical-medallion-store",
+      "summary": "Durable, cheap, multi-zone (bronze/silver/gold) store for years of structured + semi-structured history with Spark + SQL access.",
+      "satisfied_by_items": [
+        "Lakehouse"
+      ],
+      "supporting_items": [
+        "Warehouse",
+        "MirroredDatabase"
+      ],
+      "triggered_by_intents": [
+        "preserve-historical-depth"
+      ],
+      "source": "llm"
+    },
+    {
+      "capability_id": "low-latency-event-store",
+      "summary": "A low-latency event/time-series store sized for seconds-class KQL queries on streaming data.",
+      "satisfied_by_items": [
+        "Eventhouse"
+      ],
+      "supporting_items": [
+        "KQLDatabase"
+      ],
+      "triggered_by_intents": [
+        "low-latency-event-response"
+      ],
+      "source": "deterministic"
+    },
+    {
+      "capability_id": "semantic-self-service",
+      "summary": "Governed semantic layer + reporting surface for analyst self-service over the lakehouse or warehouse.",
+      "satisfied_by_items": [
+        "SemanticModel",
+        "Report"
+      ],
+      "supporting_items": [
+        "PaginatedReport",
+        "Dashboard"
+      ],
+      "triggered_by_intents": [
+        "semantic-self-service-bi"
+      ],
+      "source": "deterministic"
+    },
+    {
+      "capability_id": "streaming-ingest",
+      "summary": "Native streaming ingest from sensors, message brokers, or change-data-capture sources.",
+      "satisfied_by_items": [
+        "Eventstream"
+      ],
+      "supporting_items": [],
+      "triggered_by_intents": [
+        "low-latency-event-response"
+      ],
+      "source": "deterministic"
+    }
+  ],
+  "required_items": [
+    "Eventhouse",
+    "Eventstream",
+    "SemanticModel",
+    "Reflex",
+    "Lakehouse"
+  ],
+  "coverage": 0.4,
+  "gaps": [
+    {
+      "type": "low_confidence_intent",
+      "intent_id": "alerting-and-triggers",
+      "matched_phrases": [
+        "anomaly detection"
+      ],
+      "reason": "Weak signal \u2014 may need confirmation"
+    }
+  ],
+  "needs_llm_augmentation": false,
+  "registry_version": "2026.05.22-1",
+  "problem_hash": "31003aacf72fc324",
+  "project": "existing-fabric-workspace-called"
+}
