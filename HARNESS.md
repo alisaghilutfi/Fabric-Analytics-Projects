@@ -13,9 +13,9 @@ making decisions about architecture, tooling, or process.
 ## The Two-Harness System
 
 ```
-ProjectPlanner (claude.ai)          FabricEngineer (Claude Code)
+ProjectPlanner (Claude Desktop)     FabricEngineer (Claude Code)
          │                                    │
-         │  writes instructions               │
+         │  refreshes + writes instructions   │
          ▼                                    │
    CONTEXT.md ──────────────────────────────▶ │ reads at session start
          │                                    │
@@ -27,7 +27,9 @@ ProjectPlanner (claude.ai)          FabricEngineer (Claude Code)
 ```
 
 **ProjectPlanner** — architectural decisions, report design consultation,
-DAX review, content generation. Runs in claude.ai. Never executes.
+DAX review, content generation, and pre-session brief refresh. Runs in
+Claude Desktop (with filesystem, powerbi-modeling-mcp, fabric-mcp, and
+fabric-rti-mcp MCPs). Never executes.
 
 **FabricEngineer** — execution, file edits, Git operations, MCP tool
 calls. Runs in Claude Code (VS Code). Never makes architectural decisions
@@ -40,6 +42,33 @@ PROJECTS.md is the portfolio-wide status registry maintained by agents.
 ---
 
 ## Session Protocols
+
+### Pre-session brief refresh (ProjectPlanner)
+
+Run this in Claude Desktop **before** starting a FabricEngineer session.
+This replaces manually drafting the CONTEXT.md instructions layer.
+Claude Desktop reads the files directly from disk via the filesystem MCP.
+
+```
+Read these two files in order:
+1. PROJECTS.md — find the ws_<name> block in full
+2. ws_<name>/CONTEXT.md — read the Last Session section only
+
+Then propose a rewritten Instructions Layer for ws_<name>/CONTEXT.md:
+- Update "Current Focus" to reflect what last session confirmed is done
+- Update "Next Session Starts At" to the next concrete step
+- Resolve blockers: remove ones last session cleared, add any new ones
+- Do NOT modify the Last Session section — FabricEngineer owns that
+
+Output the proposed Instructions Layer for my review.
+Do not write anything to disk until I confirm.
+```
+
+Once confirmed, write the updated Instructions Layer to
+ws_<name>/CONTEXT.md in place. Then hand off to FabricEngineer
+using the start-of-session prompt below.
+
+---
 
 ### Start-of-session prompt (FabricEngineer)
 
@@ -100,7 +129,7 @@ Blockers, MCP Servers, Agent Instructions):
 → Git history is the archive. Do not accumulate sessions inline.
 
 **Who writes what:**
-- Instructions layer → ProjectPlanner writes this
+- Instructions layer → ProjectPlanner writes this (via pre-session brief refresh prompt in Claude Desktop)
 - Last Session layer → FabricEngineer writes this
 
 ---
@@ -376,4 +405,4 @@ empty folders — Git does not track them.
 
 *This document is maintained by the ProjectPlanner agent after sessions
 that establish new workflow patterns. Update it when a new lesson is
-confirmed — not speculatively. Last updated: 2026-08-11.*
+confirmed — not speculatively. Last updated: 2026-08-31.*
