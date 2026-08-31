@@ -1,0 +1,29 @@
+# <type>(<scope>): <short summary, 50 chars max>
+#
+# Types:
+#   feat     — new capability added
+#   fix      — bug or error corrected
+#   docs     — documentation only (README, CONTEXT, HARNESS, PROJECTS)
+#   chore    — maintenance, config, housekeeping
+#   ci       — GitHub Actions / pipeline changes
+#   refactor — restructured, no behavior change
+#
+# Scopes (optional but recommended):
+#   ws_<name>   — workspace-specific change
+#   harness     — HARNESS.md or CONTEXT.md
+#   portfolio   — PROJECTS.md or root-level files
+#   mcp         — MCP server config or tooling
+#   report      — Power BI report files
+#   model       — semantic model / DAX
+#
+# Examples:
+#   docs(ws_Finance_Analysis): update CONTEXT after report redesign
+#   feat(ws_DS_BankChurn): add Bronze ingestion metadata logging
+#   chore(harness): update HARNESS.md session protocols
+#   ci: add Fabric sm_Finance refresh workflow on push to main
+#
+# Rules:
+#   - Imperative mood: "add" not "added", "fix" not "fixed"
+#   - No period at the end
+#   - No quotes around the message
+#   - 50 chars max on the first line
