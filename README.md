@@ -14,13 +14,13 @@ no manual Fabric UI work.
 ## How This Works
 
 This repo is the **execution harness** of a two-harness agentic system. The planning
-harness (claude.ai) reads business context and writes session instructions. The execution
-harness (Claude Code in VS Code) reads those instructions, executes against Fabric and
-Power BI via MCP servers, and files a recap at session end.
+harness (Claude Desktop) reads business context and writes session instructions via the
+filesystem MCP. The execution harness (Claude Code in VS Code) reads those instructions,
+executes against Fabric and Power BI via MCP servers, and files a recap at session end.
 
 ```mermaid
 flowchart LR
-    A([ProjectPlanner\nclaude.ai]) -->|writes instructions| B[CONTEXT.md]
+    A([ProjectPlanner\nClaude Desktop]) -->|writes instructions| B[CONTEXT.md]
     B -->|read at session start| C([FabricEngineer\nClaude Code])
     C -->|executes via MCP| D[(Microsoft Fabric\nPower BI)]
     D -->|results| C
@@ -132,7 +132,7 @@ exposed via KQL queries and dashboards.
 
 | Layer | Tool |
 |---|---|
-| AI planning agent | claude.ai (ProjectPlanner) |
+| AI planning agent | Claude Desktop (ProjectPlanner) |
 | AI execution agent | Claude Code in VS Code (FabricEngineer) |
 | Fabric operations | fabric-mcp (custom Python MCP server) |
 | Semantic model / DAX | powerbi-modeling-mcp (XMLA endpoint) |
