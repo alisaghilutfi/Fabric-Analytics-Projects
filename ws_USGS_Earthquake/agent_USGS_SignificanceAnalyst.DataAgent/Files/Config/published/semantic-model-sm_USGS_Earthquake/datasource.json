@@ -1,0 +1,174 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/dataAgent/definition/dataSource/1.0.0/schema.json",
+  "artifactId": "856acf3d-ddbc-4ed7-87a8-559018c12f05",
+  "workspaceId": "39caa3ab-a964-45c2-bd5b-7d46ad66c985",
+  "dataSourceInstructions": null,
+  "displayName": "sm_USGS_Earthquake",
+  "type": "semantic_model",
+  "userDescription": null,
+  "metadata": {},
+  "elements": [
+    {
+      "id": "b9343622-befe-4276-ad64-8fc9015751c3",
+      "is_selected": true,
+      "display_name": "_Measures",
+      "type": "semantic_model.table",
+      "description": "Calculated partition containing all DAX measures for the USGS Earthquake project. This agent is scoped to significance/risk analysis only: % High/Moderate/Low Significance, Avg Significance, and Max Significance are exposed. Volume, magnitude, and time-intelligence measures are excluded from this agent's grounding. The Earthquake Events and Date tables are not exposed to this agent.",
+      "children": [
+        {
+          "id": "d9c70766-1fba-446b-89a6-ce83aa657669",
+          "is_selected": false,
+          "display_name": "Total Earthquakes",
+          "type": "semantic_model.measure",
+          "data_type": "Int64",
+          "description": "Total number of recorded seismic events in the current filter context.",
+          "children": []
+        },
+        {
+          "id": "db3b9ab5-2d8f-4164-aa78-273ceca80512",
+          "is_selected": false,
+          "display_name": "Avg Magnitude",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": "Mean earthquake magnitude on the logarithmic Richter-type scale in the current filter context.",
+          "children": []
+        },
+        {
+          "id": "30771b4e-b369-45f6-aa8f-b82019ed0d09",
+          "is_selected": false,
+          "display_name": "Max Magnitude",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": "Strongest single earthquake magnitude in the current filter context.",
+          "children": []
+        },
+        {
+          "id": "ddf6d3e9-042e-41da-ac35-a709616b09d4",
+          "is_selected": false,
+          "display_name": "Min Magnitude",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": "Weakest single earthquake magnitude in the current filter context.",
+          "children": []
+        },
+        {
+          "id": "7b0e6552-464d-4324-bcbb-c20c297415e4",
+          "is_selected": false,
+          "display_name": "Magnitude Band",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": "Categorizes magnitude into Micro (<2), Minor (<4), Moderate (<6), or Strong (>=6).",
+          "children": []
+        },
+        {
+          "id": "b2755cd8-e3f6-4c03-9732-78120602ac63",
+          "is_selected": true,
+          "display_name": "% High Significance",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": "Proportion of events classified as High significance.",
+          "children": []
+        },
+        {
+          "id": "6049f1ba-3f55-4d13-b38b-db332e51382c",
+          "is_selected": true,
+          "display_name": "% Moderate Significance",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": "Proportion of events classified as Moderate significance.",
+          "children": []
+        },
+        {
+          "id": "73850324-7f0c-4cf9-b214-45963ab606d6",
+          "is_selected": true,
+          "display_name": "% Low Significance",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": "Proportion of events classified as Low significance.",
+          "children": []
+        },
+        {
+          "id": "dc3af46c-ea70-4da0-b812-bf1b2d9155c6",
+          "is_selected": true,
+          "display_name": "Avg Significance",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": "Average USGS significance score across events in the current filter context.",
+          "children": []
+        },
+        {
+          "id": "65422cd3-bf93-4edb-bea1-392b0f6c3862",
+          "is_selected": true,
+          "display_name": "Max Significance",
+          "type": "semantic_model.measure",
+          "data_type": "Int64",
+          "description": "Highest USGS significance score in the current filter context.",
+          "children": []
+        },
+        {
+          "id": "29cb1bd2-e8f7-4f22-b96d-b3cb389130ec",
+          "is_selected": false,
+          "display_name": "Earliest Event Date",
+          "type": "semantic_model.measure",
+          "data_type": "DateTime",
+          "description": "Earliest event timestamp in the current filter context.",
+          "children": []
+        },
+        {
+          "id": "31203efc-018b-4420-a974-902eee49de2a",
+          "is_selected": false,
+          "display_name": "Latest Event Date",
+          "type": "semantic_model.measure",
+          "data_type": "DateTime",
+          "description": "Latest event timestamp in the current filter context.",
+          "children": []
+        },
+        {
+          "id": "2950b3e3-b1ff-4c83-b2d4-721b5cfdecc4",
+          "is_selected": false,
+          "display_name": "Total Earthquakes MTD",
+          "type": "semantic_model.measure",
+          "data_type": "Int64",
+          "description": "Count of earthquakes month-to-date relative to the selected date.",
+          "children": []
+        },
+        {
+          "id": "58ee652a-8742-46e8-a5bb-d00c989796c2",
+          "is_selected": false,
+          "display_name": "Total Earthquakes PMTD",
+          "type": "semantic_model.measure",
+          "data_type": "Int64",
+          "description": "Count of earthquakes for the equivalent month-to-date period in the previous month. Hidden helper measure.",
+          "children": []
+        },
+        {
+          "id": "1f420917-cb52-41a2-9655-a89aae00e5c8",
+          "is_selected": false,
+          "display_name": "Total Earthquakes MOM %",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": "Month-over-month percentage change in earthquake count.",
+          "children": []
+        },
+        {
+          "id": "8c65ab2b-1ea1-412a-8185-1434819011ad",
+          "is_selected": false,
+          "display_name": "Avg Magnitude MTD",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": "Average magnitude month-to-date relative to the selected date.",
+          "children": []
+        },
+        {
+          "id": "0b4b902f-8c09-49e6-a201-e17fb721aa71",
+          "is_selected": false,
+          "display_name": "7-Day Rolling Earthquakes",
+          "type": "semantic_model.measure",
+          "data_type": "Int64",
+          "description": "Rolling count of earthquakes over the trailing 7 days.",
+          "children": []
+        }
+      ]
+    }
+  ]
+}
