@@ -4,7 +4,7 @@
 > executing agent updates the relevant project's Last Session and
 > Status fields. Do not edit manually unless correcting an error.
 
-Last updated: 2026-08-29
+Last updated: 2026-09-08
 
 ---
 
@@ -12,8 +12,7 @@ Last updated: 2026-08-29
 **Purpose:** Medallion architecture practice — Bronze/Silver/Gold lakehouse  
 **Status:** Active  
 **Current focus:** Semantic model and Power BI report layer  
-**Last session:** Built Bronze, Silver, Gold notebooks and DataPipeline.
-Semantic model scaffolded. Report file created.  
+**Last session:** Built Bronze, Silver, Gold notebooks and DataPipeline. Semantic model scaffolded. Report file created.  
 **Next session:** Validate semantic model measures, build Power BI report pages  
 **Blockers:** None known  
 
@@ -79,11 +78,11 @@ Semantic model scaffolded. Report file created.
 ---
 
 ## ws_USGS_Earthquake
-**Purpose:** Portfolio documentation project  
-**Status:** Active  
-**Current focus:** Documentation completed  
-**Last session:** USGS_Earthquake portfolio documentation generated  
-**Next session:** TBD  
+**Purpose:** End-to-end USGS seismic analytics — medallion lakehouse, Direct Lake semantic model, 4-page Power BI report. Phase 2: three Fabric Data Agents on sm_USGS_Earthquake  
+**Status:** Active — Phase 2 starting  
+**Current focus:** Creating three domain Fabric Data Agents on sm_USGS_Earthquake  
+**Last session:** Planning session (ProjectPlanner) — confirmed F2 capacity supports Fabric Data Agents (validated via ws_DS_BankChurn on same alisaghif2capacity). Designed three-agent architecture: agent_USGS_SeismicActivity, agent_USGS_GeographicImpact, agent_USGS_SignificanceAnalyst. System prompts drafted. Build order defined.  
+**Next session:** Delete nb_USGS_Earthquake scratch notebook → verify sig_class column → create agent_USGS_SeismicActivity and test independently  
 **Blockers:** None known  
 
 ---
@@ -92,7 +91,7 @@ Semantic model scaffolded. Report file created.
 When a new workspace is created, add a new section above following
 this exact template:
 
-## ws_<name>
+## ws_<n>
 **Purpose:** <what this workspace is for>  
 **Status:** Active / Reference / Paused  
 **Current focus:** <what we are working on right now>  
