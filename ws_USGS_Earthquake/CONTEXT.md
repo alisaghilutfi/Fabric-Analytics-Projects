@@ -298,6 +298,7 @@ Built in ws_DS_BankChurn on same F2 capacity. Confirmed: Fabric Data Agents avai
 | Medium | Branded header strip on all report pages | Dark rectangle #094780, 40px, full width — deferred by Ali |
 | Medium | Drill-through: Geographic -> Event Detail | Wire map/country bar to drill to Page 4 filtered by country |
 | Medium | Date notebook guard in pipeline | `nb_USGS_Earthquake_Date` not wired into pipeline as prerequisite |
+| Medium | Git sync panel broken in ws_USGS_Earthquake | "Missing or corrupted files" on agent_USGS_GeographicImpact — Request ID 70b4fda7. Try Update all from Source Control next session; if it persists, file support ticket (same pattern as ws_RTI_Crypto). |
 | Low | Tooltip page for map | Show Title, Magnitude, Significance Class, Place Description on hover |
 | Low | Custom theme JSON | Replace CY25SU12 default with intentional Lotusoftware palette |
 | Low | Time Intelligence measures info button | button explaining MTD requires filtered date context |
