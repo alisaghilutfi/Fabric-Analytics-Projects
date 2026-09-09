@@ -78,11 +78,11 @@ Last updated: 2026-09-08
 ---
 
 ## ws_USGS_Earthquake
-**Purpose:** End-to-end USGS seismic analytics — medallion lakehouse, Direct Lake semantic model, 4-page Power BI report. Phase 2: three Fabric Data Agents on sm_USGS_Earthquake  
-**Status:** Active — Phase 2 starting  
-**Current focus:** Creating three domain Fabric Data Agents on sm_USGS_Earthquake  
-**Last session:** Planning session (ProjectPlanner) — confirmed F2 capacity supports Fabric Data Agents (validated via ws_DS_BankChurn on same alisaghif2capacity). Designed three-agent architecture: agent_USGS_SeismicActivity, agent_USGS_GeographicImpact, agent_USGS_SignificanceAnalyst. System prompts drafted. Build order defined.  
-**Next session:** Delete nb_USGS_Earthquake scratch notebook → verify sig_class column → create agent_USGS_SeismicActivity and test independently  
+**Purpose:** End-to-end USGS seismic analytics — medallion lakehouse, Direct Lake semantic model, 4-page Power BI report. Phase 2 complete: three Fabric Data Agents live on sm_USGS_Earthquake  
+**Status:** Active — Phase 2 complete  
+**Current focus:** Open for Phase 3 (Azure AI Foundry orchestration) or report polish  
+**Last session:** Created and validated three domain Fabric Data Agents: agent_USGS_SeismicActivity (ID: 3df677c0-b729-4437-befa-c99bb36e50ab), agent_USGS_GeographicImpact (ID: ef62df53-4579-4a04-8b0d-10c7f01dc9b6), agent_USGS_SignificanceAnalyst (ID: 62f796e5-33e4-4ec7-abec-77e9e58d37ec). All three grounded on sm_USGS_Earthquake, domain-scoped, boundary-tested. Geographic refusal boundary added to SeismicActivity prompt after initial test revealed scope leakage.  
+**Next session:** Phase 3 (Foundry orchestration) or report polish items — confirm direction with ProjectPlanner  
 **Blockers:** None known  
 
 ---

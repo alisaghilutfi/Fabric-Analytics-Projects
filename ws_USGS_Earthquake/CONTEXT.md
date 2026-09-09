@@ -295,10 +295,6 @@ Built in ws_DS_BankChurn on same F2 capacity. Confirmed: Fabric Data Agents avai
 
 | Priority | Item | Notes |
 |---|---|---|
-| **Blocker** | Delete `nb_USGS_Earthquake` scratch notebook | ID: 63e42046 — do this first |
-| High | Create agent_USGS_SeismicActivity | Phase 2 step 3 |
-| High | Create agent_USGS_GeographicImpact | Phase 2 step 4 |
-| High | Create agent_USGS_SignificanceAnalyst | Phase 2 step 5 |
 | Medium | Branded header strip on all report pages | Dark rectangle #094780, 40px, full width — deferred by Ali |
 | Medium | Drill-through: Geographic -> Event Detail | Wire map/country bar to drill to Page 4 filtered by country |
 | Medium | Date notebook guard in pipeline | `nb_USGS_Earthquake_Date` not wired into pipeline as prerequisite |
@@ -354,4 +350,4 @@ Not `"python"` — base conda env is Python 3.8.5 which lacks `mcp` package.
 > Owner: FabricEngineer (Claude Code)
 > Overwrite this section after every execution session.
 
-2026-09-08 — ProjectPlanner planning session (claude.ai). Confirmed F2 capacity supports Fabric Data Agents (validated via ws_DS_BankChurn on same alisaghif2capacity). Designed three-agent architecture on sm_USGS_Earthquake: agent_USGS_SeismicActivity, agent_USGS_GeographicImpact, agent_USGS_SignificanceAnalyst. System prompts drafted for all three. Build order defined. No Fabric items created this session — execution begins next session with FabricEngineer.
+2026-09-09 — FabricEngineer execution session (Claude Code). Deleted nb_USGS_Earthquake scratch notebook via REST API. Verified sig_class column live in earthquake_events_gold. Created all three Phase 2 agents: agent_USGS_SeismicActivity (3df677c0), agent_USGS_GeographicImpact (ef62df53), agent_USGS_SignificanceAnalyst (62f796e5). Discovered scope leakage on SeismicActivity — geographic refusal boundary added to system prompt and committed. All three agents validated: core questions answered correctly, boundary redirects confirmed on all six boundary tests. Phase 2 build order complete.
