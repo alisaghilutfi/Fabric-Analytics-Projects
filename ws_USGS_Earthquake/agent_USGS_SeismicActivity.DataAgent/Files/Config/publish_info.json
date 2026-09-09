@@ -1,0 +1,4 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/dataAgent/definition/publishInfo/1.0.0/schema.json",
+  "description": "Answers natural language questions about earthquake frequency, volume, and\nmagnitude trends using USGS global seismic event data. Covers daily/weekly/\nmonthly counts, magnitude distributions and extremes, month-over-month\nchange, and 7-day rolling activity. Grounded on the sm_USGS_Earthquake\nsemantic model (Direct Lake), _Measures table only."
+}
