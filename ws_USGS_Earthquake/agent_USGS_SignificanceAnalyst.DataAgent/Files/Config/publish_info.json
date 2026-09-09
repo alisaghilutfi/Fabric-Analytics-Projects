@@ -1,0 +1,4 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/dataAgent/definition/publishInfo/1.0.0/schema.json",
+  "description": "Answers natural language questions about earthquake significance and risk\nprofile using the USGS significance scoring system. Covers % High/Moderate/\nLow significance, average significance, and peak significance in the\ncurrent filter context. Grounded on the sm_USGS_Earthquake semantic model\n(Direct Lake), _Measures table only \u2014 significance measures exclusively."
+}
