@@ -1,0 +1,124 @@
+table gold_fact_net_sales
+	lineageTag: 577cf7a3-33bc-48fc-9454-52fa1d7415d8
+	sourceLineageTag: [dbo].[gold_fact_net_sales]
+
+	column BU
+		dataType: string
+		lineageTag: 9a4cf174-92c6-465e-8f31-1b7ea5c14f6f
+		sourceLineageTag: BU
+		summarizeBy: none
+		sourceColumn: BU
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cost_Center
+		dataType: string
+		lineageTag: 99c7d97b-89e2-44c9-b4a8-2882ac83cc45
+		sourceLineageTag: Cost_Center
+		summarizeBy: none
+		sourceColumn: Cost_Center
+
+		annotation SummarizationSetBy = Automatic
+
+	column Project
+		dataType: string
+		lineageTag: 38850708-246b-42dd-92a3-d138da21df6a
+		sourceLineageTag: Project
+		summarizeBy: none
+		sourceColumn: Project
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year_Month
+		dataType: int64
+		formatString: 0
+		lineageTag: affbac34-4fa3-4121-8659-1aa6ef16c7c7
+		sourceLineageTag: Year_Month
+		summarizeBy: sum
+		sourceColumn: Year_Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: fa9cec78-ae63-4684-ab1a-afd772501d98
+		sourceLineageTag: Date
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Net_Sales
+		dataType: double
+		lineageTag: fe1a6430-f46c-483e-a27b-5ce8b3173c2d
+		sourceLineageTag: Net_Sales
+		summarizeBy: sum
+		sourceColumn: Net_Sales
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Validation_Flag
+		dataType: string
+		lineageTag: e44631af-4f82-4335-bf9a-0c4733f6f7b5
+		sourceLineageTag: Validation_Flag
+		summarizeBy: none
+		sourceColumn: Validation_Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: string
+		lineageTag: 1b668e31-591e-450b-8c18-3181792999d3
+		sourceLineageTag: Quarter
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_Name
+		dataType: string
+		lineageTag: d834339e-1fed-4f04-916f-a03870e4f6f0
+		sourceLineageTag: Month_Name
+		summarizeBy: none
+		sourceColumn: Month_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Period_Type
+		dataType: string
+		lineageTag: e471f40a-09ab-45b2-8d43-3264aedfc5e0
+		sourceLineageTag: Period_Type
+		summarizeBy: none
+		sourceColumn: Period_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ingestion_Timestamp
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 16983eb5-5f4f-4f3d-bff0-8e1b86f5e05d
+		sourceLineageTag: Ingestion_Timestamp
+		summarizeBy: none
+		sourceColumn: Ingestion_Timestamp
+
+		annotation SummarizationSetBy = Automatic
+
+	column Source_File
+		dataType: string
+		lineageTag: b66543f0-39c3-4499-b821-6cd82f28b6c5
+		sourceLineageTag: Source_File
+		summarizeBy: none
+		sourceColumn: Source_File
+
+		annotation SummarizationSetBy = Automatic
+
+	partition gold_fact_net_sales = entity
+		mode: directLake
+		source
+			entityName: gold_fact_net_sales
+			schemaName: dbo
+			expressionSource: 'DirectLake - lh_AaltoEE'
+

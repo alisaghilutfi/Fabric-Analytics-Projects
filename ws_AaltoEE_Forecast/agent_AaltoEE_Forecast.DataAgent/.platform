@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataAgent",
+    "displayName": "agent_AaltoEE_Forecast",
+    "description": "A financial forecasting assistant for Aalto University \nExecutive Education (Aalto EE)."
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "1b9da77f-c78b-b1ca-4887-b466395cf46f"
+  }
+}

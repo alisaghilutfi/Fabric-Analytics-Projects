@@ -1,0 +1,27 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["DirectLake - lh_AaltoEE"]
+
+annotation PBI_ProTooling = ["DirectLakeOnOneLakeInWeb","WebModelingEdit"]
+
+ref table gold_fact_net_sales
+ref table gold_dim_date
+ref table gold_fact_accruals
+ref table gold_fact_pipeline
+ref table gold_dim_bu
+ref table _Measures
+ref table gold_forecast_snapshot
+
+ref role Programme_Manager_ExEd
+ref role Finance
+ref role Programme_Manager_Qualification
+ref role Programme_Manager_University
+

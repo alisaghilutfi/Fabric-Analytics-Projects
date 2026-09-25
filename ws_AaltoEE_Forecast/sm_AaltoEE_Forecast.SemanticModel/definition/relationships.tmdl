@@ -1,0 +1,28 @@
+relationship d1570c77-f6d5-407d-3574-7b879d82f4ed
+	fromColumn: gold_fact_net_sales.Date
+	toColumn: gold_dim_date.Date
+
+relationship 5ba806e4-b339-ed6f-922d-7c54197b802f
+	fromColumn: gold_fact_accruals.Date
+	toColumn: gold_dim_date.Date
+
+relationship 316974ea-cbf8-ff2a-f38c-4fc7f3934bbf
+	fromColumn: gold_fact_net_sales.BU
+	toColumn: gold_dim_bu.BU_Name
+
+relationship 9856fcd9-2f45-db18-6050-e495905d8f7c
+	fromColumn: gold_fact_accruals.BU
+	toColumn: gold_dim_bu.BU_Name
+
+relationship 6443ff2a-3841-f51c-ec30-b8297c992e4b
+	fromColumn: gold_fact_pipeline.BU
+	toColumn: gold_dim_bu.BU_Name
+
+relationship 9db8c87f-7c68-3d81-d599-7998b88b141f
+	fromColumn: gold_fact_pipeline.Est_Closing_Date
+	toColumn: gold_dim_date.Date
+
+relationship 0527a042-6a91-bb67-fc97-b860cc93fc23
+	fromColumn: gold_forecast_snapshot.BU
+	toColumn: gold_dim_bu.BU_Name
+

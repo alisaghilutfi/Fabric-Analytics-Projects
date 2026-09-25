@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "rpt_AaltoEE_Forecast"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "a7f4a2f9-e751-b129-4bc8-e344d69e4e52"
+  }
+}
