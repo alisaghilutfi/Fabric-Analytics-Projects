@@ -4,7 +4,7 @@
 > executing agent updates the relevant project's Last Session and
 > Status fields. Do not edit manually unless correcting an error.
 
-Last updated: 2026-09-08
+Last updated: 2026-09-25
 
 ---
 
@@ -84,6 +84,16 @@ Last updated: 2026-09-08
 **Last session:** Full Phase 2 execution — three Fabric Data Agents created and validated (SeismicActivity, GeographicImpact, SignificanceAnalyst), boundary refusal tested on all six cross-agent questions, dashboard screenshot captured, README updated with agents, architecture diagram, and key insights  
 **Next session:** Confirm with ProjectPlanner — Phase 3 (Foundry orchestration) or report polish (branded header, drill-through, date notebook pipeline guard)  
 **Blockers:** Git sync panel broken — "Missing or corrupted files" on agent_USGS_GeographicImpact (Request ID 70b4fda7); try Update all from Source Control next session  
+
+---
+
+## ws_AaltoEE_Forecast
+**Purpose:** Net sales forecasting prototype for Aalto EE — actuals (Jeeves), accruals (project delivery), and CRM pipeline (Dynamics 365) in a governed medallion pipeline with DirectLake semantic model, Power BI report, and Fabric Data Agent  
+**Status:** Prototype complete — open for productionisation  
+**Current focus:** Production ingestion (Dataverse shortcut + SharePoint connector) not yet implemented  
+**Last session (2026-09-25):** Documentation pass — `docs/images/` folder added with architecture PNGs; CONTEXT.md and PROJECTS.md written; all session artefacts committed to dev-fabric-sync  
+**Next session:** Implement Dataverse shortcut for CRM pipeline data; configure SharePoint folder connector for actuals; build snapshot comparison report page (Page 4)  
+**Blockers:** Production ingestion requires Aalto EE credentials — not available in prototype environment. Manual Bronze uploads in place.
 
 ---
 

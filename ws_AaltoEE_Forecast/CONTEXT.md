@@ -98,53 +98,39 @@ code that silently removes or corrects them without documented Finance approval:
 
 *(Written by FabricEngineer at session end — summarises what was done)*
 
-### Session: September 2026 — prototype build complete
+### Session: 2026-09-25 — documentation pass and context refresh
 
 **What was completed:**
 
-- `nb_AaltoEE_01_ingest` — Bronze → Silver, all three sources, validation
-  flags, 11/11 acceptance checks pass
-- `nb_AaltoEE_02_transform` — Silver → Gold star schema, Dim BU, Dim Date
-  (2024–2028), three Gold fact tables, forecast snapshot cell added
-- `nb_AaltoEE_03_validate` — 11 acceptance checks, all pass:
-  - silver_net_sales: 795 rows · €14,635,067.81 ✓
-  - silver_accruals: 313 rows · €6,616,025.78 ✓
-  - silver_pipeline: 126 rows · €828,900.00 ✓
-  - Referential integrity: 0 orphan rows across all BU and Date joins ✓
-- `pl_AaltoEE_Build` — pipeline created, run succeeded (5m 22s), all three
-  activities green
-- `sm_AaltoEE_Forecast` — DirectLake semantic model, 6 relationships,
-  8 DAX measures, 3 RLS roles, gold_forecast_snapshot added as table
-- `rpt_AaltoEE_Forecast` — 3 pages (Overview, Monthly Forecast, Pipeline
-  Analysis), Dim BU slicer on all pages, year filter 2026 on pages 1–2,
-  Closing Year slicer on page 3 (uses gold_fact_pipeline[Closing_Year]
-  to avoid Dim Date range mismatch)
-- `agent_AaltoEE_Forecast` — published (workspace only), 3 demo questions
-  confirmed against Gold model
+- `docs/images/` folder created; architecture diagram PNGs added showing
+  medallion pipeline topology (committed in `6f79438` on dev-fabric-sync)
+- CONTEXT.md and PROJECTS.md updated; ws_AaltoEE_Forecast entry added to
+  project registry
+- Session-end documentation committed and pushed to dev-fabric-sync
 
-**Fixes applied during build:**
+**What exists so far:**
 
-- Deduplication defect: restored €341,225.79 of legitimate accrual data
-  by removing Table.Distinct step that excluded Amount column from key
-- BU filter propagation: created Dim BU table, related to all three fact
-  tables, replaced raw BU columns with Dim BU[BU_Name] in all slicers
-- Dim Date extended: 12 rows (2026 only) → 60 rows (2024–2028) to
-  accommodate pipeline closing dates
-- Period_Type added to Dim Date: Historical / Actuals / Forecast / Future
+| Artifact | Type | Status |
+|---|---|---|
+| `nb_AaltoEE_01_ingest` | Notebook | ✅ Complete |
+| `nb_AaltoEE_02_transform` | Notebook | ✅ Complete |
+| `nb_AaltoEE_03_validate` | Notebook | ✅ Complete — 11/11 checks pass |
+| `pl_AaltoEE_Build` | DataPipeline | ✅ Complete — ~6 min, all green |
+| `sm_AaltoEE_Forecast` | Semantic model | ✅ Complete — DirectLake, 8 measures, 3 RLS roles |
+| `rpt_AaltoEE_Forecast` | Report | ✅ Complete — 3 pages |
+| `agent_AaltoEE_Forecast` | Data Agent | ✅ Published — 3 demo questions confirmed |
+| `docs/images/` | Docs | ✅ Added — architecture PNGs committed |
+| Production ingestion connectors | Config | ❌ Not started |
+| Snapshot comparison report page (Page 4) | Report page | ❌ Not started |
 
-**Unresolved items (carry to next session):**
+**Blockers:**
 
 - Production ingestion not yet implemented — Excel files in Bronze manually
   uploaded. Dataverse shortcut and SharePoint folder connector available
   but not configured (requires Aalto EE credentials not available)
-- Snapshot comparison report page (Page 4) not yet built
-- Root README.md not yet updated with ws_AaltoEE_Forecast entry
-- docs/images folder not yet created — architecture PNGs to be added
 
 **Git state:**
 
 - Branch: dev-fabric-sync
-- Folder: /ws_AaltoEE_Forecast
-- Fabric sync: initial commit pending
-- README.md: generated, not yet committed
-- CONTEXT.md: this file — not yet committed
+- All workspace files committed; PR #81 merged to main
+- Fabric sync: active
