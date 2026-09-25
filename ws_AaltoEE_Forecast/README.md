@@ -13,6 +13,8 @@ accrued forecast, and CRM pipeline, and demonstrates how a governed Fabric
 medallion pipeline produces a more accurate forecast than the existing manual
 Excel consolidation process.
 
+![AaltoEE Dashboard](docs/images/dashboard_AaltoEE_Forecast.png)
+
 ---
 
 ## The Problem
