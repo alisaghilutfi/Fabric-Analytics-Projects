@@ -1,0 +1,7 @@
+role Programme_Manager_University
+	modelPermission: read
+
+	tablePermission gold_dim_bu = [BU_Name] = "University Programs BU"
+
+	annotation PBI_Id = cf4cc0eb58e646ae82f5dae9339deaf4
+

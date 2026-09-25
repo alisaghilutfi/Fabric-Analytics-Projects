@@ -1,0 +1,102 @@
+table _Measures
+	lineageTag: 4edc132b-8ab2-446d-b989-8d63c6e2e4f4
+
+	/// Total accrued net sales forecast. Covers Sep–Dec 2026. Source: gold_fact_accruals table.
+	measure 'Accrued Forecast EUR' =
+			
+			SUM ( gold_fact_accruals[Accrued_Net_Sales_Forecast] )
+		formatString: "€"\ #,0;-"€"\ #,0;"€"\ #,0
+		displayFolder: Forecast
+		lineageTag: d6ce2cfd-0964-4232-8e0b-7300973b83fb
+
+		changedProperty = Name
+
+	/// Total net sales from the actuals system. Covers Jan–Aug 2026. Source: gold_fact_net_sales table.
+	measure 'Actual Net Sales EUR' =
+			
+			SUM ( gold_fact_net_sales[Net_Sales] )
+		formatString: "€"\ #,0;-"€"\ #,0;"€"\ #,0
+		displayFolder: Actuals
+		lineageTag: 30ddf138-f0a3-4418-a2ab-a974fda269a6
+
+		changedProperty = Name
+
+	/// Probability-weighted pipeline value for the current year. Source: gold_fact_pipeline table.
+	measure 'Weighted Pipeline EUR' =
+			
+			SUM ( gold_fact_pipeline[Weighted_Value_This_Year] )
+		formatString: "€"\ #,0;-"€"\ #,0;"€"\ #,0
+		displayFolder: Pipeline
+		lineageTag: bf16e830-fa3d-4596-ba47-2241c003c652
+
+	/// Combines actuals (Jan–Aug), accruals (Sep–Dec), and weighted pipeline.
+	measure 'Total Forecast EUR' =
+			
+			VAR Actuals = [Actual Net Sales EUR]
+			VAR Accrued = [Accrued Forecast EUR]
+			VAR Pipeline = [Weighted Pipeline EUR]
+			RETURN
+			    COALESCE ( Actuals, 0 ) +
+			    COALESCE ( Accrued, 0 ) +
+			    COALESCE ( Pipeline, 0 )
+		formatString: "€"\ #,0;-"€"\ #,0;"€"\ #,0
+		displayFolder: Forecast
+		lineageTag: 26cb2c56-d3dc-4bd6-bf46-02fb604ca405
+
+	/// Total unweighted pipeline value. Source: gold_fact_pipeline table.
+	measure 'Total Pipeline EUR' =
+			
+			SUM ( gold_fact_pipeline[Value_EUR] )
+		formatString: "€"\ #,0;-"€"\ #,0;"€"\ #,0
+		displayFolder: Pipeline
+		lineageTag: 88cec1c1-1b19-4f02-bf98-e147bb314f59
+
+	/// Number of open CRM opportunities. Source: gold_fact_pipeline table.
+	measure 'Pipeline Opportunity Count' =
+			
+			COUNTROWS ( gold_fact_pipeline )
+		formatString: 0
+		displayFolder: Pipeline
+		lineageTag: a9d18e36-0043-4b9c-8222-441801e3cd4c
+
+	/// Total forecast amount from the most recent pipeline run, combining Actuals (Jan–Aug), Accruals (Sep–Dec), and Pipeline (full year weighted). Source: gold_forecast_snapshot table.
+	measure 'Latest Snapshot Total EUR' = ```
+			
+			VAR LatestVersion = 
+			    MAXX(
+			        ALL( gold_forecast_snapshot[Snapshot_Version] ),
+			        gold_forecast_snapshot[Snapshot_Version]
+			    )
+			RETURN
+			    CALCULATE(
+			        SUM( gold_forecast_snapshot[Amount] ),
+			        gold_forecast_snapshot[Snapshot_Version] = LatestVersion
+			    )
+			```
+		formatString: "€"\ #,0;-"€"\ #,0;"€"\ #,0
+		displayFolder: Snapshots
+		lineageTag: 788bfd1b-1445-4980-9457-dd3975c519cd
+
+	/// Number of distinct pipeline run versions stored in the snapshot table. Each time pl_AaltoEE runs successfully, one new version is appended. Source: gold_forecast_snapshot table.
+	measure 'Snapshot Version Count' =
+			
+			DISTINCTCOUNT( gold_forecast_snapshot[Snapshot_Version] )
+		formatString: 0
+		displayFolder: Snapshots
+		lineageTag: 881130d8-fa73-4659-80f5-8ad4f2ab2cdc
+
+	column Placeholder
+		isHidden
+		lineageTag: 451ecf2c-fd9d-4f6e-aad9-e71290390184
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Placeholder]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = calculated
+		mode: import
+		source = DATATABLE("Placeholder", STRING, {{""}})
+
+	annotation PBI_Id = ec345da7ac954b04ab7b3181012a62ce
+

@@ -1,0 +1,180 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "d73722b40738d649ed46",
+  "position": {
+    "x": 925.52070263488088,
+    "y": 254.75533249686325,
+    "z": 7,
+    "height": 799.49811794228356,
+    "width": 960.75282308657472,
+    "tabOrder": 7
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "gold_fact_pipeline"
+                    }
+                  },
+                  "Property": "Opportunity_Name"
+                }
+              },
+              "queryRef": "gold_fact_pipeline.Opportunity_Name",
+              "nativeQueryRef": "Opportunity Name",
+              "displayName": "Opportunity Name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "gold_fact_pipeline"
+                    }
+                  },
+                  "Property": "BU"
+                }
+              },
+              "queryRef": "gold_fact_pipeline.BU",
+              "nativeQueryRef": "BU"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "gold_fact_pipeline"
+                    }
+                  },
+                  "Property": "Est_Closing_Date"
+                }
+              },
+              "queryRef": "gold_fact_pipeline.Est_Closing_Date",
+              "nativeQueryRef": "Est Closing Date",
+              "displayName": "Est Closing Date"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "gold_fact_pipeline"
+                    }
+                  },
+                  "Property": "Value_EUR"
+                }
+              },
+              "queryRef": "Sum(gold_fact_pipeline.Value_EUR)",
+              "nativeQueryRef": "Value EUR",
+              "displayName": "Value EUR"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "gold_fact_pipeline"
+                    }
+                  },
+                  "Property": "Probability"
+                }
+              },
+              "queryRef": "Sum(gold_fact_pipeline.Probability)",
+              "nativeQueryRef": "Probability"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "gold_fact_pipeline"
+                    }
+                  },
+                  "Property": "Weighted_Value_This_Year"
+                }
+              },
+              "queryRef": "Sum(gold_fact_pipeline.Weighted_Value_This_Year)",
+              "nativeQueryRef": "Weighted Value This Year",
+              "displayName": "Weighted Value This Year"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "gold_fact_pipeline"
+                  }
+                },
+                "Property": "Weighted_Value_This_Year"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "columnHeaders": [
+        {
+          "properties": {
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Open Opportunities Detail'"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "18D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,5 @@
+role Finance
+	modelPermission: read
+
+	annotation PBI_Id = 4f484f1954c3432a9765b76f59a3d9e5
+

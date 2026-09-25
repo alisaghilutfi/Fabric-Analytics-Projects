@@ -1,0 +1,11 @@
+expression 'DirectLake - lh_AaltoEE' =
+		let
+		    Source = AzureStorage.DataLake("https://onelake.dfs.fabric.microsoft.com/167ca0e1-7e56-40f5-8a99-ccf78ec0ac81/f40e0030-a5ab-40aa-ba4b-90edd23ba8d0", [HierarchicalNavigation=true])
+		in
+		    Source
+	lineageTag: 9b61bb10-78ac-4c6f-a0a2-70b367af2368
+
+	annotation PBI_IncludeFutureArtifacts = False
+
+	annotation PBI_RemovedChildren = [{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[dbo].[silver_net_sales]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[dbo].[silver_accruals]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[dbo].[silver_pipeline]"}},"objectType":"Table"}]
+

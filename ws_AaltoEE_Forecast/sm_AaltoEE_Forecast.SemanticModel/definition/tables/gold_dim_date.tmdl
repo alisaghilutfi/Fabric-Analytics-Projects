@@ -1,0 +1,99 @@
+table gold_dim_date
+	lineageTag: 75074042-84fc-46e3-a58a-f291ee20419e
+	sourceLineageTag: [dbo].[gold_dim_date]
+
+	column Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: bacf93b6-1cf2-49ac-b52e-65f95d88dbc1
+		sourceLineageTag: Date
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: c7c57ba7-e7e5-4eea-875a-5f1e8e9b955a
+		sourceLineageTag: Year
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_Number
+		dataType: int64
+		formatString: 0
+		lineageTag: 9214cafe-bf53-45a0-ad87-0d631bef885b
+		sourceLineageTag: Month_Number
+		summarizeBy: sum
+		sourceColumn: Month_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_Name
+		dataType: string
+		lineageTag: 0741fe75-8818-4d98-a39a-b757b56d01ef
+		sourceLineageTag: Month_Name
+		summarizeBy: none
+		sourceColumn: Month_Name
+		sortByColumn: Month_Sort
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_Short
+		dataType: string
+		lineageTag: d06db1c6-c933-455d-a70a-b2d8ab1e80b7
+		sourceLineageTag: Month_Short
+		summarizeBy: none
+		sourceColumn: Month_Short
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: string
+		lineageTag: fa2bef16-724f-49b9-9538-94932777eabe
+		sourceLineageTag: Quarter
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year_Month
+		dataType: string
+		lineageTag: b0caadcc-4ed4-4b90-a5d9-2ea20ddf4362
+		sourceLineageTag: Year_Month
+		summarizeBy: none
+		sourceColumn: Year_Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_Sort
+		dataType: int64
+		formatString: 0
+		lineageTag: 77898bf7-3fae-480c-8325-9c7863c77a52
+		sourceLineageTag: Month_Sort
+		summarizeBy: sum
+		sourceColumn: Month_Sort
+
+		annotation SummarizationSetBy = Automatic
+
+	column Period_Type
+		dataType: string
+		lineageTag: 3e484e92-64bf-4b42-bf29-2a516d986049
+		sourceLineageTag: Period_Type
+		summarizeBy: none
+		sourceColumn: Period_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	partition gold_dim_date = entity
+		mode: directLake
+		source
+			entityName: gold_dim_date
+			schemaName: dbo
+			expressionSource: 'DirectLake - lh_AaltoEE'
+

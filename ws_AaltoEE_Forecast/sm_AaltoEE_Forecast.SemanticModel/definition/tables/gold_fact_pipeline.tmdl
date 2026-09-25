@@ -1,0 +1,203 @@
+table gold_fact_pipeline
+	lineageTag: c405f771-3f66-4dbe-9f4b-a764fcb638b3
+	sourceLineageTag: [dbo].[gold_fact_pipeline]
+
+	column BU
+		dataType: string
+		lineageTag: 3fed208a-70f5-4b7d-aaa2-2f70a323d6e3
+		sourceLineageTag: BU
+		summarizeBy: none
+		sourceColumn: BU
+
+		annotation SummarizationSetBy = Automatic
+
+	column Opportunity_Name
+		dataType: string
+		lineageTag: f4d31a20-18a8-4256-8001-c1a17a223b76
+		sourceLineageTag: Opportunity_Name
+		summarizeBy: none
+		sourceColumn: Opportunity_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Est_Closing_Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 9e46d6c4-208d-40a8-9874-5d9822004788
+		sourceLineageTag: Est_Closing_Date
+		summarizeBy: none
+		sourceColumn: Est_Closing_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Closing_Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 29895f5f-a1d8-4861-87ca-11dd4ba03e0a
+		sourceLineageTag: Closing_Date
+		summarizeBy: none
+		sourceColumn: Closing_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Program_Start_Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a64553b0-1587-4a00-8da9-6455393aacc5
+		sourceLineageTag: Program_Start_Date
+		summarizeBy: none
+		sourceColumn: Program_Start_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column This_Year_Pct
+		dataType: double
+		lineageTag: 7f0e5f38-9954-42e1-924b-0e60ca7b3204
+		sourceLineageTag: This_Year_Pct
+		summarizeBy: sum
+		sourceColumn: This_Year_Pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Next_Year_Pct
+		dataType: double
+		lineageTag: 4959b787-18a7-4a06-9731-fe0b6fc8c500
+		sourceLineageTag: Next_Year_Pct
+		summarizeBy: sum
+		sourceColumn: Next_Year_Pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Probability
+		dataType: double
+		lineageTag: 04335b45-733c-4a29-ab11-5b2e364d2ffd
+		sourceLineageTag: Probability
+		summarizeBy: sum
+		sourceColumn: Probability
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Probability_Band
+		dataType: string
+		lineageTag: 9bad5372-adec-448e-a988-dab08713b550
+		sourceLineageTag: Probability_Band
+		summarizeBy: none
+		sourceColumn: Probability_Band
+
+		annotation SummarizationSetBy = Automatic
+
+	column Value_EUR
+		dataType: double
+		lineageTag: 04b212c1-47b0-444e-a98f-776e05049d2f
+		sourceLineageTag: Value_EUR
+		summarizeBy: sum
+		sourceColumn: Value_EUR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Est_Value
+		dataType: double
+		lineageTag: 97127777-8770-4045-876a-d9d88aabd9fc
+		sourceLineageTag: Est_Value
+		summarizeBy: sum
+		sourceColumn: Est_Value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Weighted_Value
+		dataType: double
+		lineageTag: 708f817a-e1dd-4407-be33-cc067d2597e8
+		sourceLineageTag: Weighted_Value
+		summarizeBy: sum
+		sourceColumn: Weighted_Value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Weighted_Value_This_Year
+		dataType: double
+		lineageTag: 729f0fa6-779d-41dd-8548-aa28bd50ff01
+		sourceLineageTag: Weighted_Value_This_Year
+		summarizeBy: sum
+		sourceColumn: Weighted_Value_This_Year
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Validation_Flag
+		dataType: string
+		lineageTag: fe0c8a41-cea8-4b34-aa60-c44ce7adb591
+		sourceLineageTag: Validation_Flag
+		summarizeBy: none
+		sourceColumn: Validation_Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column Closing_Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 19e7e19a-f20b-48b6-ad29-93abc5fab82e
+		sourceLineageTag: Closing_Year
+		summarizeBy: sum
+		sourceColumn: Closing_Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Closing_Month
+		dataType: int64
+		formatString: 0
+		lineageTag: 1e32e291-e793-448e-bbd1-b544fb837da2
+		sourceLineageTag: Closing_Month
+		summarizeBy: sum
+		sourceColumn: Closing_Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column BU_Sort
+		dataType: int64
+		formatString: 0
+		lineageTag: 200e45b2-d53b-4703-8509-04fb732e280e
+		sourceLineageTag: BU_Sort
+		summarizeBy: sum
+		sourceColumn: BU_Sort
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ingestion_Timestamp
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 73aca514-9826-4415-86c6-d902900c138c
+		sourceLineageTag: Ingestion_Timestamp
+		summarizeBy: none
+		sourceColumn: Ingestion_Timestamp
+
+		annotation SummarizationSetBy = Automatic
+
+	column Source_File
+		dataType: string
+		lineageTag: 09fd6155-5fcc-42a7-83cb-2e9ee302192f
+		sourceLineageTag: Source_File
+		summarizeBy: none
+		sourceColumn: Source_File
+
+		annotation SummarizationSetBy = Automatic
+
+	partition gold_fact_pipeline = entity
+		mode: directLake
+		source
+			entityName: gold_fact_pipeline
+			schemaName: dbo
+			expressionSource: 'DirectLake - lh_AaltoEE'
+

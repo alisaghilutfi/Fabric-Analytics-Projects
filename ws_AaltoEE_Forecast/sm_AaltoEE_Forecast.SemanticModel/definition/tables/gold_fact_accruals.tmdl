@@ -1,0 +1,143 @@
+table gold_fact_accruals
+	lineageTag: 3e13b30c-f657-40da-a23e-1dd78b894d21
+	sourceLineageTag: [dbo].[gold_fact_accruals]
+
+	column BU
+		dataType: string
+		lineageTag: 69d08a2f-3ab0-4683-ba56-5c95310f9491
+		sourceLineageTag: BU
+		summarizeBy: none
+		sourceColumn: BU
+
+		annotation SummarizationSetBy = Automatic
+
+	column Project_Number
+		dataType: string
+		lineageTag: 2c940e76-e2a5-4623-b8a1-7ce7108c889e
+		sourceLineageTag: Project_Number
+		summarizeBy: none
+		sourceColumn: Project_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Accrual_Basis
+		dataType: string
+		lineageTag: 07fc4868-933b-41e1-8de0-705997766e21
+		sourceLineageTag: Accrual_Basis
+		summarizeBy: none
+		sourceColumn: Accrual_Basis
+
+		annotation SummarizationSetBy = Automatic
+
+	column Accrual_Type
+		dataType: string
+		lineageTag: b2a04b22-570c-4fd4-84f8-b5c4274ec5df
+		sourceLineageTag: Accrual_Type
+		summarizeBy: none
+		sourceColumn: Accrual_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Net_Sales_Year
+		dataType: int64
+		formatString: 0
+		lineageTag: a1fd9fe0-bbb5-47ee-aabb-5675029acbfa
+		sourceLineageTag: Net_Sales_Year
+		summarizeBy: sum
+		sourceColumn: Net_Sales_Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Net_Sales_Month
+		dataType: int64
+		formatString: 0
+		lineageTag: 68662967-dbbd-4cfe-9eff-a374b298efb3
+		sourceLineageTag: Net_Sales_Month
+		summarizeBy: sum
+		sourceColumn: Net_Sales_Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: de3313f4-f598-4239-aeb5-a1abfdbe0d9f
+		sourceLineageTag: Date
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Accrued_Net_Sales_Forecast
+		dataType: double
+		lineageTag: 878eb489-3daa-4fb9-9582-7094198ef28e
+		sourceLineageTag: Accrued_Net_Sales_Forecast
+		summarizeBy: sum
+		sourceColumn: Accrued_Net_Sales_Forecast
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Validation_Flag
+		dataType: string
+		lineageTag: 37a75381-40a0-4254-a374-5f6f6c4082a1
+		sourceLineageTag: Validation_Flag
+		summarizeBy: none
+		sourceColumn: Validation_Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: string
+		lineageTag: b5848ce3-afda-4dac-ad0a-2c16a7cdde2c
+		sourceLineageTag: Quarter
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_Name
+		dataType: string
+		lineageTag: 10e28a8b-4059-4175-9aff-10a66072ec0b
+		sourceLineageTag: Month_Name
+		summarizeBy: none
+		sourceColumn: Month_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Period_Type
+		dataType: string
+		lineageTag: 9a7df82f-db5e-4f08-87d3-94886b66de4e
+		sourceLineageTag: Period_Type
+		summarizeBy: none
+		sourceColumn: Period_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ingestion_Timestamp
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a337fa3e-d7dd-4a6a-a995-0003425f8931
+		sourceLineageTag: Ingestion_Timestamp
+		summarizeBy: none
+		sourceColumn: Ingestion_Timestamp
+
+		annotation SummarizationSetBy = Automatic
+
+	column Source_File
+		dataType: string
+		lineageTag: e3859cad-4762-459a-8769-68d2c1455c57
+		sourceLineageTag: Source_File
+		summarizeBy: none
+		sourceColumn: Source_File
+
+		annotation SummarizationSetBy = Automatic
+
+	partition gold_fact_accruals = entity
+		mode: directLake
+		source
+			entityName: gold_fact_accruals
+			schemaName: dbo
+			expressionSource: 'DirectLake - lh_AaltoEE'
+

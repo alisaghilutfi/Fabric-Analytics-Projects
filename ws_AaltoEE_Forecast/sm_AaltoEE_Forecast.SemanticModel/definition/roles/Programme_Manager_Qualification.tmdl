@@ -1,0 +1,7 @@
+role Programme_Manager_Qualification
+	modelPermission: read
+
+	tablePermission gold_dim_bu = [BU_Name] = "Qualification Programs BU"
+
+	annotation PBI_Id = 34be1c54f7274f4f8533f096feaff366
+

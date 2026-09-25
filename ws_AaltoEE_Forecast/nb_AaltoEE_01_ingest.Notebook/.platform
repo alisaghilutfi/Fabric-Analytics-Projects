@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "nb_AaltoEE_01_ingest"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "d20b97e5-a099-aa04-4216-803d71e74116"
+  }
+}

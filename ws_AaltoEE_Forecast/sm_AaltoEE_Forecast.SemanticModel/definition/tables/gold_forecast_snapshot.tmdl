@@ -1,0 +1,105 @@
+table gold_forecast_snapshot
+	lineageTag: 5ab0abc9-ff4a-4727-95ec-3012e7a1d18d
+	sourceLineageTag: [dbo].[gold_forecast_snapshot]
+
+	column BU
+		dataType: string
+		lineageTag: f0a38aaa-448f-4ac6-a318-da8094a224c2
+		sourceLineageTag: BU
+		summarizeBy: none
+		sourceColumn: BU
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d49e009b-f6d2-4f89-a0bb-0a6ac7cce025
+		sourceLineageTag: Date
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_Name
+		dataType: string
+		lineageTag: 9e41031b-b2c9-4e89-8255-a40f61b7f47c
+		sourceLineageTag: Month_Name
+		summarizeBy: none
+		sourceColumn: Month_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: string
+		lineageTag: 3a472f36-9449-4263-9a25-069186d02e5d
+		sourceLineageTag: Quarter
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Period_Type
+		dataType: string
+		lineageTag: 1002ea5d-0ee7-4555-9913-2550542b49a3
+		sourceLineageTag: Period_Type
+		summarizeBy: none
+		sourceColumn: Period_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Amount
+		dataType: double
+		lineageTag: 4669d252-bd71-49fc-922a-b6a94cfbf24f
+		sourceLineageTag: Amount
+		summarizeBy: sum
+		sourceColumn: Amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Component
+		dataType: string
+		lineageTag: 7d794710-c421-41ec-aa45-456a830d4d6f
+		sourceLineageTag: Component
+		summarizeBy: none
+		sourceColumn: Component
+
+		annotation SummarizationSetBy = Automatic
+
+	column Snapshot_Timestamp
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 13150d2b-2009-41e1-90d1-3c2414b82680
+		sourceLineageTag: Snapshot_Timestamp
+		summarizeBy: none
+		sourceColumn: Snapshot_Timestamp
+
+		annotation SummarizationSetBy = Automatic
+
+	column Snapshot_Date
+		dataType: string
+		lineageTag: c6f2c84a-d601-4915-b7d5-5ef0f6c5b737
+		sourceLineageTag: Snapshot_Date
+		summarizeBy: none
+		sourceColumn: Snapshot_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Snapshot_Version
+		dataType: string
+		lineageTag: 7a31df84-e6ac-4dda-913e-fa9e46461e70
+		sourceLineageTag: Snapshot_Version
+		summarizeBy: none
+		sourceColumn: Snapshot_Version
+
+		annotation SummarizationSetBy = Automatic
+
+	partition gold_forecast_snapshot = entity
+		mode: directLake
+		source
+			entityName: gold_forecast_snapshot
+			schemaName: dbo
+			expressionSource: 'DirectLake - lh_AaltoEE'
+

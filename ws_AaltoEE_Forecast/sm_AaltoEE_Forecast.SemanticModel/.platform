@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "sm_AaltoEE_Forecast"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "ed8450b0-f39a-8dd9-4843-17442b1efeb5"
+  }
+}

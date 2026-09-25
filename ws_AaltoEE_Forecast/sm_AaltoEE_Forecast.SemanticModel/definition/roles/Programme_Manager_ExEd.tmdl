@@ -1,0 +1,7 @@
+role Programme_Manager_ExEd
+	modelPermission: read
+
+	tablePermission gold_dim_bu = [BU_Name] = "ExEd Programs BU"
+
+	annotation PBI_Id = bec7cd2eac1f4ba0a91bd8561f5adf11
+
