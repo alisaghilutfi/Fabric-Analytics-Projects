@@ -94,6 +94,24 @@ Natural language interface via agent_DS_BankChurn
 
 ---
 
+### ws_AaltoEE_Forecast — Aalto EE Net Sales Forecasting
+
+**Type:** Business Intelligence + Forecasting  
+**Stack:** Medallion Lakehouse · PySpark · DirectLake semantic model · Power BI report (3 pages) · Fabric Data Agent · RLS
+
+A net sales forecasting prototype built for the Aalto Executive Education analytics
+role. Combines actuals from Jeeves ERP, accruals from a project delivery system, and
+weighted CRM pipeline from Dynamics 365 into a governed medallion pipeline.
+Gold layer: 795 rows of 2026 actuals (€14.6M), 313 accrual rows (€6.6M), and
+126 weighted pipeline rows (€829K). Forecast snapshots are versioned per pipeline run.
+
+**Highlights:** Three-source medallion pipeline with 11 acceptance checks · Dim BU
+slicer propagation across all three fact tables · RLS roles for Finance,
+Programme_Manager_ExEd, and Ranking_Team · Natural language interface via
+agent_AaltoEE_Forecast with three confirmed demo questions
+
+---
+
 ### ws_Ecommerce_Olist — Brazilian E-Commerce Analytics
 
 **Type:** Data Engineering + Business Intelligence  
