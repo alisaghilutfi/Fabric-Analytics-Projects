@@ -90,21 +90,25 @@ Do not begin any execution until I confirm the proposed step.
 ```
 Session is complete. Update the project docs as follows:
 
-1. In ws_<name>/CONTEXT.md:
-   - Overwrite the entire "Last Session" section with today's
-     recap. Do not add a new "Previous Session" section —
-     the old one is preserved in git history.
-   - In the "What Exists So Far" table, update any rows whose
-     status changed this session. Do not add new rows unless
-     a new artifact was created.
-   - If any blocker was resolved, remove it from the Current
-     Focus section. If a new blocker was discovered, add it.
+1. In ws_<n>/CONTEXT.md:
+   - Overwrite the entire "Last Session" section with today's recap.
+     Do not add a new "Previous Session" section — git history is the archive.
+   - In the "What Exists So Far" table, update rows whose status changed.
+     Do not add new rows unless a new artifact was created.
+   - Resolve blockers: remove cleared ones, add new ones to Current Focus.
 
 2. In PROJECTS.md:
-   - Update the ws_<name> status line and open items to reflect
-     current state. Remove items that are done.
+   - Update the ws_<n> status line and open items. Remove done items.
 
-3. Then run:
+3. In README.md (repo root):
+   - If a new workspace was added this session, add its entry to the
+     Projects section following the existing ### heading + bold metadata
+     + paragraph style.
+   - If an existing workspace changed status (e.g. Active → Complete),
+     update its entry accordingly.
+   - Do not rewrite entries that did not change.
+
+4. Then run:
    git add .
    git commit -m "<imperative summary, 50 chars max>"
    git push origin dev-fabric-sync
@@ -403,6 +407,4 @@ empty folders — Git does not track them.
 > Every session that files its recap makes the next session faster
 > and more accurate.
 
-*This document is maintained by the ProjectPlanner agent after sessions
-that establish new workflow patterns. Update it when a new lesson is
-confirmed — not speculatively. Last updated: 2026-08-31.*
+*Last updated: 2026-09-28.*
