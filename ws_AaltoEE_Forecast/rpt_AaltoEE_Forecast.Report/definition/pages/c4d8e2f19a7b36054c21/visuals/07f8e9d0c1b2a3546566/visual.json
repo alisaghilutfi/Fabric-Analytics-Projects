@@ -61,11 +61,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Latest Snapshot Total EUR"
+                  "Property": "Snapshot Amount EUR"
                 }
               },
-              "queryRef": "_Measures.Latest Snapshot Total EUR",
-              "nativeQueryRef": "Latest Snapshot Total EUR"
+              "queryRef": "_Measures.Snapshot Amount EUR",
+              "nativeQueryRef": "Snapshot Amount EUR"
             }
           ]
         }
@@ -198,7 +198,7 @@
                 "Entity": "_Measures"
               }
             },
-            "Property": "Latest Snapshot Total EUR"
+            "Property": "Snapshot Amount EUR"
           }
         },
         "type": "Advanced"

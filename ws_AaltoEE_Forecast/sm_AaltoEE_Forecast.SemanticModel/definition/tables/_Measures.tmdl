@@ -79,11 +79,19 @@ table _Measures
 
 	/// Number of distinct pipeline run versions stored in the snapshot table. Each time pl_AaltoEE runs successfully, one new version is appended. Source: gold_forecast_snapshot table.
 	measure 'Snapshot Version Count' =
-			
+
 			DISTINCTCOUNT( gold_forecast_snapshot[Snapshot_Version] )
 		formatString: 0
 		displayFolder: Snapshots
 		lineageTag: 881130d8-fa73-4659-80f5-8ad4f2ab2cdc
+
+	/// Sum of forecast amounts in the snapshot table for the selected filter context. Use this measure on version-comparison visuals where each version must show its own total, not the latest version total. Distinct from Latest Snapshot Total EUR which always pins to the most recent snapshot version.
+	measure 'Snapshot Amount EUR' =
+
+			SUM ( 'gold_forecast_snapshot'[Amount] )
+		formatString: "#,0"
+		displayFolder: Snapshots
+		lineageTag: c7e8f9a0-b1c2-d3e4-f5a6-b7c8d9e0f1a2
 
 	column Placeholder
 		isHidden
