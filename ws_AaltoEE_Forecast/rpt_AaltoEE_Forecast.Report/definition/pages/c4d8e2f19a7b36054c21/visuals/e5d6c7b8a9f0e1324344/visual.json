@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "e5d6c7b8a9f0e1324344",
   "position": {
-    "x": 36,
-    "y": 400,
+    "x": 902.48431618569634,
+    "y": 104.34127979924718,
     "z": 4,
-    "height": 120,
-    "width": 856,
+    "height": 111.11668757841908,
+    "width": 1001.4052697616061,
     "tabOrder": 4
   },
   "visual": {
@@ -67,14 +67,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "title": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Period Type'"
+                  "Value": "false"
                 }
               }
             },
@@ -95,6 +88,49 @@
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "textSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "18D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Period Type'"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "18D"
                 }
               }
             }
