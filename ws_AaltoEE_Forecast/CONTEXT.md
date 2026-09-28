@@ -44,12 +44,22 @@ gold_forecast_snapshot ← appended per pipeline run, version: YYYYMMDD_HHMMSS
 
 - Name: `sm_AaltoEE_Forecast`
 - Mode: DirectLake on Gold Delta tables
-- 8 DAX measures in `_Measures` table across 3 display folders
-- 3 RLS roles: Finance (no filter), Programme_Manager_ExEd (ExEd BU only),
-  Ranking_Team (defined, not yet assigned)
+- 9 DAX measures in `_Measures` table across 4 display folders
 - Relationships: Dim Date → 3 fact tables · Dim BU → 3 fact tables
 - No date relationship on gold_forecast_snapshot (intentional — queried by
   version timestamp, not calendar month)
+
+### RLS roles (live model — verified 2026-09-28)
+
+| Role | Filter |
+|---|---|
+| Finance | No filter (full read) |
+| Programme_Manager_ExEd | BU_Name = "ExEd Programs BU" |
+| Programme_Manager_Qualification | BU_Name = "Qualification Programs BU" |
+| Programme_Manager_University | BU_Name = "University Programs BU" |
+
+Note: `Ranking_Team` role documented in previous CONTEXT.md is absent
+from the live model — removed from documentation.
 
 ### Pipeline
 
@@ -58,22 +68,27 @@ gold_forecast_snapshot ← appended per pipeline run, version: YYYYMMDD_HHMMSS
 - Validation: 11/11 acceptance checks pass against source control totals
 - Snapshot: each run appends ~43 rows to gold_forecast_snapshot
 
-### Known gaps — approved next steps
+### Approved next steps (priority order)
 
-1. **Production ingestion** — replace manual Excel Bronze uploads with:
-   - Dataverse shortcut for CRM pipeline data
-   - SharePoint folder connector for actuals and survey exports
-   Both connectors are available in the Fabric capacity (verified).
+**Step 1 — AI-readiness enrichment ✅ COMPLETE (2026-09-28)**
+See Last Session layer for full details.
 
-2. **Forecast adjustment input** — add a governed adjustment fact table
-   allowing Finance to submit project-month corrections with reason codes.
-   Approval workflow via Power Apps + Dataverse.
+**Known gap — Synonyms ⚠️**
+Not writable at this DirectLake compatibility level via TMDL or
+translation API. Workaround: Power BI Desktop → Tools → Language
+& Q&A → Manage Synonyms. Deferred — low priority until Copilot
+usage is validated.
 
-3. **Snapshot comparison report page** — add a Page 4 to rpt_AaltoEE_Forecast
-   showing version-over-version forecast variance using the snapshot table.
+**Step 2 — Production ingestion (BLOCKED — requires Aalto EE credentials)**
+- Dataverse shortcut for CRM pipeline data
+- SharePoint folder connector for actuals and survey exports
 
-4. **Root README update** — add ws_AaltoEE_Forecast entry to the repo root
-   README.md Projects section.
+**Step 3 — Forecast adjustment input**
+Governed adjustment fact table with Finance input via Power Apps +
+Dataverse. Approval workflow with reason codes.
+
+**Step 4 — Root README update**
+Add ws_AaltoEE_Forecast entry to repo root README.md Projects section.
 
 ### Data quality flags — do not auto-resolve
 
@@ -98,15 +113,31 @@ code that silently removes or corrects them without documented Finance approval:
 
 *(Written by FabricEngineer at session end — summarises what was done)*
 
-### Session: 2026-09-25 — documentation pass and context refresh
+### Session: 2026-09-28 — AI-readiness enrichment + Page 4 build
 
 **What was completed:**
 
-- `docs/images/` folder created; architecture diagram PNGs added showing
-  medallion pipeline topology (committed in `6f79438` on dev-fabric-sync)
-- CONTEXT.md and PROJECTS.md updated; ws_AaltoEE_Forecast entry added to
-  project registry
-- Session-end documentation committed and pushed to dev-fabric-sync
+1. AI-readiness enrichment of `sm_AaltoEE_Forecast` via powerbi-modeling-mcp:
+   - 42 raw columns hidden across 6 tables
+   - `dataCategory: "Date"` set on 7 DateTime columns
+   - Table descriptions added to all 7 tables (Copilot/agent-ready)
+   - All 8 measure descriptions already present — no changes needed
+   - Synonyms blocked at DirectLake compatibility level — workaround documented
+   - Agent validation: all 3 demo questions pass ✅
+
+2. Page 4 — Snapshot Comparison built in `rpt_AaltoEE_Forecast`:
+   - Title, 2 KPI cards, 2 slicers (Snapshot_Version dropdown, Period_Type tile),
+     line chart (forecast by month per version), stacked bar chart (forecast by
+     component per version)
+   - New measure `Snapshot Amount EUR` added for correct per-version filter context
+     on comparison charts; KPI cards retain `Latest Snapshot Total EUR`
+   - Canvas: 1920×1080, FitToPage, Fluent2 theme inherited from existing pages
+
+3. powerbi-modeling-mcp upgraded from 0.1.9 (Downloads) to 1.0.0 (VS Code
+   extension) in both `claude_desktop_config.json` and Claude Code. `--accept-eula`
+   flag added. Stale 0.1.9 processes removed.
+
+**Commits:** `dc2c828` (Page 4), `acf4ca0` (Snapshot Amount EUR measure + chart fix)
 
 **What exists so far:**
 
@@ -115,22 +146,16 @@ code that silently removes or corrects them without documented Finance approval:
 | `nb_AaltoEE_01_ingest` | Notebook | ✅ Complete |
 | `nb_AaltoEE_02_transform` | Notebook | ✅ Complete |
 | `nb_AaltoEE_03_validate` | Notebook | ✅ Complete — 11/11 checks pass |
-| `pl_AaltoEE_Build` | DataPipeline | ✅ Complete — ~6 min, all green |
-| `sm_AaltoEE_Forecast` | Semantic model | ✅ Complete — DirectLake, 8 measures, 3 RLS roles |
-| `rpt_AaltoEE_Forecast` | Report | ✅ Complete — 3 pages |
+| `pl_AaltoEE` | DataPipeline | ✅ Complete — ~6 min, all green |
+| `sm_AaltoEE_Forecast` | Semantic model | ✅ Complete — DirectLake, 9 measures, 3 RLS roles, AI-ready |
+| `rpt_AaltoEE_Forecast` | Report | ✅ Complete — 4 pages |
 | `agent_AaltoEE_Forecast` | Data Agent | ✅ Published — 3 demo questions confirmed |
 | `docs/images/` | Docs | ✅ Added — architecture PNGs committed |
-| Production ingestion connectors | Config | ❌ Not started |
-| Snapshot comparison report page (Page 4) | Report page | ❌ Not started |
+| Synonyms | Semantic model | ⚠️ Blocked — DirectLake compatibility level |
+| Production ingestion connectors | Config | ❌ Not started — requires Aalto EE credentials |
 
 **Blockers:**
-
-- Production ingestion not yet implemented — Excel files in Bronze manually
-  uploaded. Dataverse shortcut and SharePoint folder connector available
-  but not configured (requires Aalto EE credentials not available)
-
-**Git state:**
-
-- Branch: dev-fabric-sync
-- All workspace files committed; PR #81 merged to main
-- Fabric sync: active
+- Production ingestion not yet implemented — Dataverse shortcut and SharePoint
+  folder connector require Aalto EE credentials not available in prototype environment
+- Synonyms not writable at this DirectLake compatibility level — workaround:
+  Power BI Desktop → Tools → Language & Q&A → Manage Synonyms
