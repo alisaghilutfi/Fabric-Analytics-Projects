@@ -4,7 +4,7 @@
 > executing agent updates the relevant project's Last Session and
 > Status fields. Do not edit manually unless correcting an error.
 
-Last updated: 2026-09-25
+Last updated: 2026-09-28
 
 ---
 
@@ -88,12 +88,23 @@ Last updated: 2026-09-25
 ---
 
 ## ws_AaltoEE_Forecast
-**Purpose:** Net sales forecasting prototype for Aalto EE — actuals (Jeeves), accruals (project delivery), and CRM pipeline (Dynamics 365) in a governed medallion pipeline with DirectLake semantic model, Power BI report, and Fabric Data Agent  
+**Purpose:** Net sales forecasting prototype for Aalto EE — actuals (Jeeves),
+accruals (project delivery), and CRM pipeline (Dynamics 365) in a governed
+medallion pipeline with DirectLake semantic model, 4-page Power BI report,
+and Fabric Data Agent  
 **Status:** Prototype complete — open for productionisation  
-**Current focus:** Production ingestion (Dataverse shortcut + SharePoint connector) not yet implemented  
-**Last session (2026-09-25):** Documentation pass — `docs/images/` folder added with architecture PNGs; CONTEXT.md and PROJECTS.md written; all session artefacts committed to dev-fabric-sync  
-**Next session:** Implement Dataverse shortcut for CRM pipeline data; configure SharePoint folder connector for actuals; build snapshot comparison report page (Page 4)  
-**Blockers:** Production ingestion requires Aalto EE credentials — not available in prototype environment. Manual Bronze uploads in place.
+**Current focus:** Production ingestion (Dataverse shortcut + SharePoint
+connector) not yet implemented — blocked on Aalto EE credentials  
+**Last session (2026-09-28):** AI-readiness enrichment of sm_AaltoEE_Forecast
+(42 columns hidden, 7 date categories, 7 table descriptions, agent validation
+passed); Page 4 Snapshot Comparison built; Snapshot Amount EUR measure added
+for correct version-comparison filter context; powerbi-modeling-mcp upgraded
+to 1.0.0. Commits: dc2c828, acf4ca0  
+**Next session:** Production ingestion when Aalto EE credentials available;
+otherwise synonym workaround via Power BI Desktop  
+**Blockers:** Production ingestion requires Aalto EE credentials — not
+available in prototype environment. Synonyms blocked at DirectLake
+compatibility level.
 
 ---
 
