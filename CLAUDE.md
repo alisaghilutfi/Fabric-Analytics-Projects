@@ -14,6 +14,9 @@ Workspace-specific context lives in ws_<name>/CLAUDE.md.
 | Report           | `rpt_`  | `rpt_Finance`              |
 | DataPipeline     | `pl_`   | `pl_Finance`               |
 | Measures table   | `_`     | `_Measures`                |
+| Dashboard        | `dashboard_` | `dashboard_Finance_Analysis` |
+| ML Model         | `model_`     | `model_BankChurn`            |
+| Deployment Pipeline | `dp_`    | `dp_Finance_Analysis`        |
 
 ---
 
@@ -118,8 +121,8 @@ joinOnDateBehavior: DatePartOnly
 
 ## Design: powerbi.tips Layout Trifecta
 
-- **Scrim**: single background image (Figma/PowerPoint export), not individual shapes
-- **Page layout**: 1280×720, left nav panel (200px), top header (80px), content zone
+- **Scrim**: single background image (Python Pillow script (1280×720px — never PowerPoint, DPI mismatch)), not individual shapes
+- **Page layout**: 1280×720, left nav panel (200px), top header (56px), content zone
 - **Theme**: Power Designer export — applied as SharedResources base theme in `report.json`
 - **Colors**: max 4 intentional colors, consistent semantic meaning
 - **Typography**: DIN for callouts/KPIs, Segoe UI for labels
@@ -134,3 +137,7 @@ joinOnDateBehavior: DatePartOnly
 - `%pip` is blocked in pipeline execution — use Fabric Environment for extra packages
 - Null GUID (00000000-0000-0000-0000-000000000000) as workspaceId in pipeline activity JSON is valid and confirmed working for same-workspace notebook references — resolves correctly across Dev/Test/Prod without hardcoding environment-specific IDs.
 - `logicalId` values in `.platform` files must be stable UUIDs — never regenerate them after first Fabric sync
+- Theme file renamed with hash on Fabric sync →
+  Apply as customTheme under RegisteredResources in report.json
+  (not baseTheme under SharedResources). Update report.json to
+  reference hashed filename after first Fabric sync.
