@@ -3,7 +3,7 @@
 An end-to-end Microsoft Fabric analytics project built on real organisational
 data from Aalto University Executive Education. Covers three-source data
 ingestion, Silver validation with documented anomaly flags, Gold star-schema
-transformation, DirectLake semantic modelling, a three-page Power BI report,
+transformation, DirectLake semantic modelling, a four-page Power BI report,
 a forecast snapshot table, and a natural language Data Agent — all on a single
 Fabric F2 capacity.
 
@@ -49,9 +49,9 @@ flowchart LR
     B[lh_AaltoEE\nSilver Delta tables] -->|star schema\ntransformation| C
     C[lh_AaltoEE\nGold Delta tables] -->|DirectLake| D
     C -->|append per run| E[gold_forecast_snapshot]
-    D[sm_AaltoEE_Forecast\n8 DAX measures · RLS] -->|live connection| F
+    D[sm_AaltoEE_Forecast\n9 DAX measures · RLS] -->|live connection| F
     D -->|natural language| G
-    F[rpt_AaltoEE_Forecast\n3-page report]
+    F[rpt_AaltoEE_Forecast\n4-page report]
     G[agent_AaltoEE_Forecast\nFabric Data Agent]
 
     style A1 fill:#E1F5EE,stroke:#0F6E56,color:#085041
@@ -98,10 +98,10 @@ Gold tables in OneLake with no import refresh cycle. The `_Measures` calculated
 table pattern keeps all DAX in one place; raw Silver columns are hidden from
 report view.
 
-**RLS with three roles** — Finance sees all BUs; Programme_Manager_ExEd is
-filtered to ExEd Programs BU through the Dim BU dimension, propagating to all
-three fact tables automatically; Ranking_Team role defined for FT submission
-data access.
+**RLS with four roles** — Finance sees all BUs; Programme_Manager_ExEd,
+Programme_Manager_Qualification, and Programme_Manager_University are each
+filtered to their respective BU through the Dim BU dimension, propagating to
+all three fact tables automatically.
 
 **Dim Date covers 2024–2028** — the original date dimension covered only 2026,
 leaving pipeline opportunities (which close between 2024 and 2028) unconnected
@@ -139,9 +139,9 @@ in the 313-row Silver table pending a Finance duplicate decision.
 | `nb_AaltoEE_01_ingest` | Notebook | pandas — reads Bronze Excel, applies Silver transformations, writes Delta tables, validation flags |
 | `nb_AaltoEE_02_transform` | Notebook | PySpark — reads Silver, builds Gold star schema, appends forecast snapshot |
 | `nb_AaltoEE_03_validate` | Notebook | 11 acceptance checks against source control totals — row counts, monetary totals, referential integrity |
-| `pl_AaltoEE_Build` | Data Pipeline | Orchestrates ingest → transform → validate in sequence. Each step only runs if the previous succeeded. Runtime: ~6 minutes. |
-| `sm_AaltoEE_Forecast` | Semantic model | DirectLake · `_Measures` table · 8 DAX measures · 3 display folders · 3 RLS roles · Dim BU + Dim Date (2024–2028) |
-| `rpt_AaltoEE_Forecast` | Report | 3-page report — Overview, Monthly Forecast, Pipeline Analysis |
+| `pl_AaltoEE` | Data Pipeline | Orchestrates ingest → transform → validate in sequence. Each step only runs if the previous succeeded. Runtime: ~6 minutes. |
+| `sm_AaltoEE_Forecast` | Semantic model | DirectLake · `_Measures` table · 9 DAX measures · 4 display folders · 4 RLS roles · Dim BU + Dim Date (2024–2028) |
+| `rpt_AaltoEE_Forecast` | Report | 4-page report — Overview, Monthly Forecast, Pipeline Analysis, Snapshot Comparison |
 | `agent_AaltoEE_Forecast` | Data Agent | Fabric Data Agent grounded on `sm_AaltoEE_Forecast` — natural language forecast queries |
 
 ---
@@ -167,8 +167,8 @@ in the 313-row Silver table pending a Finance duplicate decision.
 
 ## Semantic Model — DAX Measure Library
 
-8 measures across 3 display folders, all using `VAR`/`RETURN` pattern with
-Copilot descriptions. Silver ingestion metadata columns hidden from report view.
+9 measures across 4 display folders, all using `VAR`/`RETURN` pattern with
+Copilot descriptions. Raw columns hidden from report view.
 
 | Display folder | Measure | What it answers |
 | -------------- | ------- | --------------- |
@@ -178,8 +178,9 @@ Copilot descriptions. Silver ingestion metadata columns hidden from report view.
 | Pipeline | `Weighted Pipeline EUR` | Probability-weighted CRM pipeline value for 2026 |
 | Pipeline | `Total Pipeline EUR` | Unweighted total pipeline value |
 | Pipeline | `Pipeline Opportunity Count` | Count of open CRM opportunities |
-| Snapshots | `Latest Snapshot Total EUR` | Total from the most recent pipeline run version |
+| Snapshots | `Latest Snapshot Total EUR` | Total from the most recent pipeline run version (always pins to latest) |
 | Snapshots | `Snapshot Version Count` | Number of distinct pipeline run versions stored |
+| Snapshots | `Snapshot Amount EUR` | SUM of Amount for the selected filter context — use on version-comparison visuals where each version must show its own total |
 
 ---
 
@@ -220,6 +221,13 @@ to avoid Dim Date range mismatch), pipeline value by probability column chart,
 BU × Probability Band stacked bar chart, and open opportunities detail table
 sorted by Weighted Value This Year descending.
 
+**Page 4 — Snapshot Comparison**
+Two KPI cards (Latest Snapshot Total EUR, Snapshot Version Count), Snapshot_Version
+dropdown slicer (multi-select for version-over-version comparison), Period_Type slicer,
+line chart (Snapshot Amount EUR by month across versions), and stacked bar chart
+(Snapshot Amount EUR by component per version). Uses gold_forecast_snapshot standalone
+— no relationship to gold_dim_date.
+
 ---
 
 ## Production Ingestion Path
@@ -245,11 +253,11 @@ the ws_AaltoEE_Forecast Fabric capacity and were verified during development.
 
 - **Notebooks:** three-stage pipeline — `nb_AaltoEE_01_ingest` →
   `nb_AaltoEE_02_transform` → `nb_AaltoEE_03_validate`
-- **Pipeline:** run `pl_AaltoEE_Build` to execute all three notebooks in
+- **Pipeline:** run `pl_AaltoEE` to execute all three notebooks in
   sequence and append a new forecast snapshot version
-- **Semantic model:** `_Measures` table contains all 8 DAX measures
-- **Report:** three pages covering executive overview, monthly forecast
-  detail, and CRM pipeline analysis
+- **Semantic model:** `_Measures` table contains all 9 DAX measures
+- **Report:** four pages covering executive overview, monthly forecast
+  detail, CRM pipeline analysis, and snapshot version comparison
 - **Data Agent:** ask `agent_AaltoEE_Forecast` questions like
   *"What is the total full-year forecast for 2026?"* or
   *"What is the accrued forecast for September 2026?"*
