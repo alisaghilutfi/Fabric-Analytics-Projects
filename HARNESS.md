@@ -90,7 +90,7 @@ Do not begin any execution until I confirm the proposed step.
 ```
 Session is complete. Update the project docs as follows:
 
-1. In ws_<n>/CONTEXT.md:
+1. In ws_<name>/CONTEXT.md:
    - Overwrite the entire "Last Session" section with today's recap.
      Do not add a new "Previous Session" section — git history is the archive.
    - In the "What Exists So Far" table, update rows whose status changed.
@@ -98,18 +98,18 @@ Session is complete. Update the project docs as follows:
    - Resolve blockers: remove cleared ones, add new ones to Current Focus.
 
 2. In PROJECTS.md:
-   - Update the ws_<n> status line and open items. Remove done items.
+   - Update the ws_<name> status line and open items. Remove done items.
 
-3b. In ws_<name>/README.md:
-    - Update only the sections whose facts changed this session:
-      - Intro paragraph: artifact counts (pages, measures, RLS roles)
-      - "What Was Built" table: artifact names, measure count, page count, role count
-      - Measure Library table: add or remove measures that changed
-      - Report Pages section: add or remove pages that changed
-      - Any role or architecture notes that no longer match the live model
+3a. In ws_<name>/README.md:
+    - Update only the sections whose facts changed this session.
+      Sections that commonly drift: intro paragraph (artifact counts),
+      "What Was Built" table, measure or DAX library table, report pages
+      section, RLS roles section, and any architecture notes that no
+      longer match the live model.
     - Do not rewrite prose that did not change.
+    - If the workspace has no README.md, skip this step.
 
-3. In README.md (repo root):
+3b. In README.md (repo root):
    - If a new workspace was added this session, add its entry to the
      Projects section following the existing ### heading + bold metadata
      + paragraph style.
