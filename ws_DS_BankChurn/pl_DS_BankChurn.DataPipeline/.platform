@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "pl_DS_BankChurn"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "c3a7f2e1-84b9-4d56-a1e3-2f9c0b8d7e45"
+  }
+}
