@@ -48,6 +48,8 @@ gold_forecast_snapshot ← appended per pipeline run, version: YYYYMMDD_HHMMSS
 - Relationships: Dim Date → 3 fact tables · Dim BU → 3 fact tables
 - No date relationship on gold_forecast_snapshot (intentional — queried by
   version timestamp, not calendar month)
+- README.md sections to keep current: intro counts, What Was Built table,
+  Measure Library table, Report Pages section.
 
 ### RLS roles (live model — verified 2026-09-28)
 

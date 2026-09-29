@@ -100,6 +100,15 @@ Session is complete. Update the project docs as follows:
 2. In PROJECTS.md:
    - Update the ws_<n> status line and open items. Remove done items.
 
+3b. In ws_<name>/README.md:
+    - Update only the sections whose facts changed this session:
+      - Intro paragraph: artifact counts (pages, measures, RLS roles)
+      - "What Was Built" table: artifact names, measure count, page count, role count
+      - Measure Library table: add or remove measures that changed
+      - Report Pages section: add or remove pages that changed
+      - Any role or architecture notes that no longer match the live model
+    - Do not rewrite prose that did not change.
+
 3. In README.md (repo root):
    - If a new workspace was added this session, add its entry to the
      Projects section following the existing ### heading + bold metadata
