@@ -112,7 +112,7 @@ compatibility level.
 When a new workspace is created, add a new section above following
 this exact template:
 
-## ws_<n>
+## ws_<name>
 **Purpose:** <what this workspace is for>  
 **Status:** Active / Reference / Paused  
 **Current focus:** <what we are working on right now>  
