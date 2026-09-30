@@ -57,7 +57,7 @@ When finishing a session, replace the section below with actual results:
 - AI-Readiness audit + full remediation on sm_DS_BankChurn:
   - 8 raw columns hidden (CreditScore, Age, Tenure, Balance, NumOfProducts,
     HasCrCard, IsActiveMember, EstimatedSalary) — all 20 columns now hidden
-  - Table description written for customer_churn_test_predictions
+  - Table description written for Churn Predictions (customer_churn_test_predictions)
   - `predictions` column renamed to `Churn Prediction`; 5 DAX references
     updated in _Measures.tmdl
   - All changes via direct TMDL edit (powerbi-modeling-mcp write gate blocked)
@@ -65,7 +65,8 @@ When finishing a session, replace the section below with actual results:
 - pl_DS_BankChurn DataPipeline created: 3-notebook Succeeded chain using
   notebook logicalIds; corrected after first commit (Fabric item IDs → logicalIds)
 - Lakehouse table renamed: customer_churn_test_predictions → churn_predictions
-  (Fabric normalised Churn_Predictions to lowercase); entityName updated in TMDL
+  (Fabric normalised Churn_Predictions to lowercase); entityName updated in TMDL;
+  TMDL table declaration renamed to 'Churn Predictions' (display name)
 - nb_DS_BankChurn_Predictions updated with ALTER TABLE rename cell
 - settings.local.json updated: fabric-mcp removed, mcp__powerbi-modeling-mcp__*
   wildcard added; does not fix server-internal write gate
@@ -125,9 +126,9 @@ When finishing a session, replace the section below with actual results:
 
 ### Lakehouse tables (lh_DS_BankChurn):
 - churn_clean — cleaned/engineered source data
-- churn_predictions — Gold predictions table (renamed from
-  customer_churn_test_predictions 2026-09-30; Direct Lake source for
-  sm_DS_BankChurn; entityName binding updated in TMDL)
+- churn_predictions — Gold predictions table (physical name; renamed from
+  customer_churn_test_predictions 2026-09-30; TMDL display name: 'Churn Predictions';
+  Direct Lake source for sm_DS_BankChurn; entityName binding updated in TMDL)
 - ingestion_metadata — Bronze ingestion run log written by
   nb_DS_BankChurn_transformData (run_timestamp, source_url,
   source_table, rows_written, columns_written, ingestion_mode,
