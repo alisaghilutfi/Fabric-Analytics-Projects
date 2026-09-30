@@ -69,7 +69,7 @@ the ML training data lineage.
 
 **_Measures calculated table pattern** — all 11 DAX measures live in a dedicated
 `_Measures` table, keeping the predictions table clean and the field pane readable.
-All 20 columns in `customer_churn_test_predictions` are hidden from report view —
+All 20 columns in `'Churn Predictions'` (`churn_predictions` Delta table) are hidden from report view —
 raw one-hot encoded columns (Geography_*, Gender_*), engineered score columns
 (New*Score), and the 8 original numeric features.
 
