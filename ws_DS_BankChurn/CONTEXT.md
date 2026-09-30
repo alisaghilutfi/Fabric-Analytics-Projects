@@ -129,3 +129,16 @@ When finishing a session, replace the section below with actual results:
 ### Naming convention note:
 MLModel names follow Microsoft tutorial convention (rfc1_sm, rfc2_sm,
 lgbm_sm). Future projects will use model_ prefix for ML model artifacts.
+
+---
+
+## Data Agent Benchmarks (2026-09-29)
+Agent: agent_DS_BankChurn | Model: sm_DS_BankChurn | Run date: 2026-09-29
+
+| Question | Answer |
+|---|---|
+| How many customers are predicted to churn? | 365 customers |
+| What is the churn rate in Germany? | 34.5% |
+| Which customer segment has the highest churn risk? | Customers with 3–4 products; 3-product micro-segments show 100% predicted churn rate |
+| What is the average credit score of churned customers? | 640 |
+| How does churn rate compare across France, Germany, and Spain? | Germany 34.5%, Spain 13.2%, France 12.2% — Germany ~3x higher than France/Spain |

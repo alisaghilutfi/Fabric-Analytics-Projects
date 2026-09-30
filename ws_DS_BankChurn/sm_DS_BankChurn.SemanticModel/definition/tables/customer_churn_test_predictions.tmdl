@@ -1,4 +1,4 @@
-/// Contains one row per customer scored by the champion LightGBM churn prediction model. Each record represents a bank customer from the test split, enriched with engineered features (binned credit score, age, balance, salary, tenure) and one-hot encoded geography and gender. The predictions column holds the binary churn label (1 = predicted to churn, 0 = predicted to retain).
+/// Scored ML test split from churn.csv. One row per customer (10,000 rows, 19 columns). Source: nb_DS_BankChurn_Predictions via MLFlowTransformer scoring champion_BankChurn (lgbm_sm, val_roc_auc: 0.8495). Cross-sectional snapshot — no date grain. Use Churn Prediction column (0 = retained, 1 = churned) as the primary filter axis.
 table customer_churn_test_predictions
 	lineageTag: d26ef429-d0bb-4da7-89be-05c057616667
 	sourceLineageTag: [dbo].[customer_churn_test_predictions]
@@ -9,6 +9,7 @@ table customer_churn_test_predictions
 		lineageTag: 0925d92a-c5e5-4a26-9c07-9692912f0c52
 		sourceLineageTag: CreditScore
 		summarizeBy: sum
+		isHidden
 		sourceColumn: CreditScore
 
 		annotation SummarizationSetBy = Automatic
@@ -19,6 +20,7 @@ table customer_churn_test_predictions
 		lineageTag: d8e0bba9-7f1c-49fb-8b60-e9bc447a7224
 		sourceLineageTag: Age
 		summarizeBy: sum
+		isHidden
 		sourceColumn: Age
 
 		annotation SummarizationSetBy = Automatic
@@ -29,6 +31,7 @@ table customer_churn_test_predictions
 		lineageTag: 4e425c13-82bf-43e6-b15d-8948ce166cf5
 		sourceLineageTag: Tenure
 		summarizeBy: sum
+		isHidden
 		sourceColumn: Tenure
 
 		annotation SummarizationSetBy = Automatic
@@ -38,6 +41,7 @@ table customer_churn_test_predictions
 		lineageTag: a1b3cfe0-37a8-4ab0-85c6-be17fd641c9e
 		sourceLineageTag: Balance
 		summarizeBy: sum
+		isHidden
 		sourceColumn: Balance
 
 		annotation SummarizationSetBy = Automatic
@@ -50,6 +54,7 @@ table customer_churn_test_predictions
 		lineageTag: c28707fe-826f-4a02-89b7-94cf4c04dcf7
 		sourceLineageTag: NumOfProducts
 		summarizeBy: sum
+		isHidden
 		sourceColumn: NumOfProducts
 
 		annotation SummarizationSetBy = Automatic
@@ -60,6 +65,7 @@ table customer_churn_test_predictions
 		lineageTag: 47f16baa-88f2-4a8a-bf83-d81d9b2f7bda
 		sourceLineageTag: HasCrCard
 		summarizeBy: sum
+		isHidden
 		sourceColumn: HasCrCard
 
 		annotation SummarizationSetBy = Automatic
@@ -70,6 +76,7 @@ table customer_churn_test_predictions
 		lineageTag: 510c58e2-19fd-4649-8d44-561d144fd7ca
 		sourceLineageTag: IsActiveMember
 		summarizeBy: sum
+		isHidden
 		sourceColumn: IsActiveMember
 
 		annotation SummarizationSetBy = Automatic
@@ -79,6 +86,7 @@ table customer_churn_test_predictions
 		lineageTag: 966cc738-894b-4027-b592-02925c16d4b6
 		sourceLineageTag: EstimatedSalary
 		summarizeBy: sum
+		isHidden
 		sourceColumn: EstimatedSalary
 
 		annotation SummarizationSetBy = Automatic
@@ -196,7 +204,7 @@ table customer_churn_test_predictions
 
 		annotation SummarizationSetBy = Automatic
 
-	column predictions
+	column 'Churn Prediction'
 		dataType: int64
 		formatString: 0
 		lineageTag: 66b16389-b232-4070-a763-1facb82ddbf1

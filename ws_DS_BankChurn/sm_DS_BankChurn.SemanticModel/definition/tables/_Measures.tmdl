@@ -13,7 +13,7 @@ table _Measures
 			VAR _churned =
 				CALCULATE(
 					COUNTROWS('customer_churn_test_predictions'),
-					'customer_churn_test_predictions'[predictions] = 1
+					'customer_churn_test_predictions'[Churn Prediction] = 1
 				)
 			RETURN
 				_churned
@@ -26,7 +26,7 @@ table _Measures
 			VAR _retained =
 				CALCULATE(
 					COUNTROWS('customer_churn_test_predictions'),
-					'customer_churn_test_predictions'[predictions] = 0
+					'customer_churn_test_predictions'[Churn Prediction] = 0
 				)
 			RETURN
 				_retained
@@ -64,7 +64,7 @@ table _Measures
 				CALCULATE(
 					COUNTROWS('customer_churn_test_predictions'),
 					'customer_churn_test_predictions'[Geography_Germany] = True(),
-					'customer_churn_test_predictions'[predictions] = 1
+					'customer_churn_test_predictions'[Churn Prediction] = 1
 				)
 			RETURN
 				DIVIDE(_churned, _total, 0)
@@ -83,7 +83,7 @@ table _Measures
 				CALCULATE(
 					COUNTROWS('customer_churn_test_predictions'),
 					'customer_churn_test_predictions'[Geography_Spain] = True(),
-					'customer_churn_test_predictions'[predictions] = 1
+					'customer_churn_test_predictions'[Churn Prediction] = 1
 				)
 			RETURN
 				DIVIDE(_churned, _total, 0)
@@ -102,7 +102,7 @@ table _Measures
 				CALCULATE(
 					COUNTROWS('customer_churn_test_predictions'),
 					'customer_churn_test_predictions'[Geography_France] = True(),
-					'customer_churn_test_predictions'[predictions] = 1
+					'customer_churn_test_predictions'[Churn Prediction] = 1
 				)
 			RETURN
 				DIVIDE(_churned, _total, 0)
