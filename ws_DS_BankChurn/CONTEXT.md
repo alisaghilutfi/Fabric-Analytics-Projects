@@ -64,9 +64,9 @@ When finishing a session, replace the section below with actual results:
 - Data Agent validated — 5 benchmark questions recorded in CONTEXT.md
 - pl_DS_BankChurn DataPipeline created: 3-notebook Succeeded chain using
   notebook logicalIds; corrected after first commit (Fabric item IDs → logicalIds)
-- Lakehouse table renamed: customer_churn_test_predictions → churn_predictions
-  (Fabric normalised Churn_Predictions to lowercase); entityName updated in TMDL;
-  TMDL table declaration renamed to 'Churn Predictions' (display name)
+- Lakehouse table renamed to churn_predictions (physical Delta), semantic model
+  display name updated to 'Churn Predictions' in TMDL, all TMDL references updated
+  (23 DAX replacements in _Measures.tmdl); entityName: churn_predictions confirmed
 - nb_DS_BankChurn_Predictions updated with ALTER TABLE rename cell
 - settings.local.json updated: fabric-mcp removed, mcp__powerbi-modeling-mcp__*
   wildcard added; does not fix server-internal write gate
@@ -83,9 +83,10 @@ When finishing a session, replace the section below with actual results:
   or Claude Code permissions. No config option found. Current latest version.
 
 **Pick up next session at:**
-- Fabric portal → ws_DS_BankChurn → Source Control → Update all (applies TMDL
-  changes to live model)
 - Configure scheduled refresh on sm_DS_BankChurn
+- Fabric portal → ws_DS_BankChurn → Source Control → Update all (applies TMDL
+  changes to live model: 'Churn Predictions' display name, entityName, 8 hidden
+  columns, table description)
 - Investigate powerbi-modeling-mcp write gate (VS Code Extension Settings panel)
 
 ---
@@ -113,10 +114,10 @@ When finishing a session, replace the section below with actual results:
 - champion_BankChurn (MLModel — programmatically selected champion;
   Version 2 as of 2026-09-29 re-run, val_roc_auc: 0.8495)
 - sm_DS_BankChurn — Direct Lake on churn_predictions (entityName:
-  churn_predictions, schemaName: dbo), _Measures table with 11 DAX
-  measures across 4 display folders (Volume, Churn Rate, Geography,
-  Risk Signals), all 20 columns hidden, table description set,
-  predictions column renamed to Churn Prediction in TMDL
+  churn_predictions, schemaName: dbo; TMDL display name: 'Churn Predictions'),
+  _Measures table with 11 DAX measures across 4 display folders (Volume,
+  Churn Rate, Geography, Risk Signals), all 20 columns hidden, table description
+  set, predictions column renamed to 'Churn Prediction' in TMDL
   Note: TMDL changes pending Fabric Source Control sync
 - rpt_DS_BankChurn — PBIR format, 3 pages (Churn Overview, Risk Profile,
   Model Performance), 15 visuals

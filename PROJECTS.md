@@ -41,8 +41,8 @@ Last updated: 2026-09-28
 **Status:** Active — full stack complete including Data Agent and DataPipeline. Open: Fabric Source Control sync, scheduled refresh  
 **Last updated:** 2026-09-30  
 **Current focus:** AI-readiness and pipeline polish complete; pending Fabric Source Control sync to apply TMDL changes  
-**Last session (2026-09-29/30):** Full pipeline re-run (10,000 rows, champion_BankChurn v2, val_roc_auc: 0.8495); AI-readiness remediation on sm_DS_BankChurn (8 raw columns hidden → all 20 hidden, table description, predictions → Churn Prediction rename, 5 DAX references updated); Data Agent validated with 5 benchmarks; pl_DS_BankChurn DataPipeline built (3-notebook Succeeded chain, logicalIds, null GUID workspaceId); lakehouse table renamed customer_churn_test_predictions → churn_predictions; TMDL entityName updated. Commits: 174d9df, 1022267, 459a471, latest entityName fix.  
-**Next session:** Fabric portal → Source Control → Update all (apply TMDL changes to live model); configure scheduled refresh on sm_DS_BankChurn; investigate powerbi-modeling-mcp write gate (VS Code Extension Settings)  
+**Last session (2026-09-29/30):** Full pipeline re-run (10,000 rows, champion_BankChurn v2, val_roc_auc: 0.8495); AI-readiness remediation on sm_DS_BankChurn (8 raw columns hidden → all 20 hidden, table description, predictions → Churn Prediction rename, 5 DAX references updated); Data Agent validated with 5 benchmarks; pl_DS_BankChurn DataPipeline built (3-notebook Succeeded chain, logicalIds, null GUID workspaceId); lakehouse table renamed customer_churn_test_predictions → churn_predictions (physical), TMDL display name updated to 'Churn Predictions', 23 DAX references updated in _Measures.tmdl.  
+**Next session:** Configure scheduled refresh on sm_DS_BankChurn; Fabric portal → Source Control → Update all (apply TMDL changes to live model); investigate powerbi-modeling-mcp write gate  
 **Blockers:** powerbi-modeling-mcp v1.0.0 write gate hardcoded — all MCP writes blocked; TMDL-direct is working pattern. Fabric Source Control sync required to apply committed TMDL changes to live model.  
 
 ---
