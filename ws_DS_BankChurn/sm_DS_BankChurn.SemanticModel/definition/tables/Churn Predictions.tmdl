@@ -1,5 +1,5 @@
 /// Scored ML test split from churn.csv. One row per customer (10,000 rows, 19 columns). Source: nb_DS_BankChurn_Predictions via MLFlowTransformer scoring champion_BankChurn (lgbm_sm, val_roc_auc: 0.8495). Cross-sectional snapshot — no date grain. Use Churn Prediction column (0 = retained, 1 = churned) as the primary filter axis.
-table customer_churn_test_predictions
+table 'Churn Predictions'
 	lineageTag: d26ef429-d0bb-4da7-89be-05c057616667
 	sourceLineageTag: [dbo].[customer_churn_test_predictions]
 
