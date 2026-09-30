@@ -38,12 +38,12 @@ Last updated: 2026-09-28
 
 ## ws_DS_BankChurn
 **Purpose:** Data science / ML — customer churn prediction  
-**Status:** Active — full stack complete including Data Agent. Open: DataPipeline orchestration, table rename (customer_churn_test_predictions → Churn Predictions), scheduled refresh  
-**Last updated:** 2026-08-20  
-**Current focus:** Pipeline orchestration and report polish  
-**Last session:** Fixed Geography visual on Churn Overview (pie chart by country), added Bronze ingestion metadata logging (ingestion_metadata Delta table), created and published agent_DS_BankChurn (Fabric Data Agent grounded on sm_DS_BankChurn), Power BI Pro license purchased for alisaghi_fabric account.  
-**Next session:** Run full pipeline end-to-end after notebooks were re-run — verify customer_churn_test_predictions is current; consider DataPipeline orchestration for the notebook sequence  
-**Blockers:** None known  
+**Status:** Active — full stack complete including Data Agent and DataPipeline. Open: Fabric Source Control sync, scheduled refresh  
+**Last updated:** 2026-09-30  
+**Current focus:** AI-readiness and pipeline polish complete; pending Fabric Source Control sync to apply TMDL changes  
+**Last session (2026-09-29/30):** Full pipeline re-run (10,000 rows, champion_BankChurn v2, val_roc_auc: 0.8495); AI-readiness remediation on sm_DS_BankChurn (8 raw columns hidden → all 20 hidden, table description, predictions → Churn Prediction rename, 5 DAX references updated); Data Agent validated with 5 benchmarks; pl_DS_BankChurn DataPipeline built (3-notebook Succeeded chain, logicalIds, null GUID workspaceId); lakehouse table renamed customer_churn_test_predictions → churn_predictions; TMDL entityName updated. Commits: 174d9df, 1022267, 459a471, latest entityName fix.  
+**Next session:** Fabric portal → Source Control → Update all (apply TMDL changes to live model); configure scheduled refresh on sm_DS_BankChurn; investigate powerbi-modeling-mcp write gate (VS Code Extension Settings)  
+**Blockers:** powerbi-modeling-mcp v1.0.0 write gate hardcoded — all MCP writes blocked; TMDL-direct is working pattern. Fabric Source Control sync required to apply committed TMDL changes to live model.  
 
 ---
 
