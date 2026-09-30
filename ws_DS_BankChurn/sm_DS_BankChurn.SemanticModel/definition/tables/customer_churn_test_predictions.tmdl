@@ -218,7 +218,7 @@ table customer_churn_test_predictions
 	partition customer_churn_test_predictions = entity
 		mode: directLake
 		source
-			entityName: customer_churn_test_predictions
+			entityName: churn_predictions
 			schemaName: dbo
 			expressionSource: 'DirectLake - lh_DS_BankChurn'
 

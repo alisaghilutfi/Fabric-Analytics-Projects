@@ -27,8 +27,8 @@ flowchart LR
     A([churn.csv\nPublic demo dataset]) -->|PySpark ingestion + metadata logging| B[lh_DS_BankChurn\nchurn_clean Delta table]
     B -->|Feature engineering + SMOTE| C[ML Experiment\nRFC x2 · LightGBM]
     C -->|Programmatic champion selection\nval ROC-AUC| D[champion_BankChurn\nMLModel]
-    D -->|Batch scoring| E[customer_churn_test_predictions\nGold Delta table]
-    E -->|DirectLake| F[sm_DS_BankChurn\n10 DAX measures]
+    D -->|Batch scoring| E[churn_predictions\nGold Delta table]
+    E -->|DirectLake| F[sm_DS_BankChurn\n11 DAX measures]
     F -->|Live connection| G[rpt_DS_BankChurn\n3-page report]
     F -->|Natural language| H[agent_DS_BankChurn\nFabric Data Agent]
 
@@ -58,18 +58,20 @@ comparison meaningful.
 `champion_BankChurn`. No hardcoded model name in the scoring notebook.
 
 **DirectLake on scored predictions** — the semantic model frames directly against
-the `customer_churn_test_predictions` Gold Delta table. `delta.columnMapping.mode=name`
-is set at write time to prevent DirectLake framing failures if the feature set changes.
+the `churn_predictions` Gold Delta table (renamed from `customer_churn_test_predictions`
+2026-09-30). `delta.columnMapping.mode=name` is set at write time to prevent DirectLake
+framing failures if the feature set changes.
 
 **Governed Bronze ingestion metadata** — every notebook run writes a metadata row
 to `ingestion_metadata` Delta table recording run timestamp, source URL, row count,
 column count, Spark application ID, and schema version. Supports auditability of
 the ML training data lineage.
 
-**_Measures calculated table pattern** — all 10 DAX measures live in a dedicated
+**_Measures calculated table pattern** — all 11 DAX measures live in a dedicated
 `_Measures` table, keeping the predictions table clean and the field pane readable.
-Raw one-hot encoded columns (Geography_*, Gender_*) and engineered score columns
-(New*Score) are hidden from report view.
+All 20 columns in `customer_churn_test_predictions` are hidden from report view —
+raw one-hot encoded columns (Geography_*, Gender_*), engineered score columns
+(New*Score), and the 8 original numeric features.
 
 **Fabric Data Agent grounded on semantic model** — `agent_DS_BankChurn` is
 published and grounded on `sm_DS_BankChurn`, allowing business users to query
@@ -84,12 +86,13 @@ for the core capability.
 |---|---|---|
 | `nb_DS_BankChurn_transformData` | Notebook | PySpark — CSV ingestion, feature engineering, Bronze metadata logging, writes `churn_clean` |
 | `nb_DS_BankChurn_TrainRegisterML` | Notebook | MLflow — trains RFC x2 + LightGBM, logs val ROC-AUC, selects and registers `champion_BankChurn` |
-| `nb_DS_BankChurn_Predictions` | Notebook | Loads `champion_BankChurn`, scores `churn_test`, writes `customer_churn_test_predictions` with columnMapping |
-| `lh_DS_BankChurn` | Lakehouse | Single lakehouse — `churn_clean`, `churn_test`, `customer_churn_test_predictions`, `ingestion_metadata` Delta tables |
+| `nb_DS_BankChurn_Predictions` | Notebook | Loads `champion_BankChurn`, scores `churn_test`, writes `churn_predictions` with columnMapping; includes ALTER TABLE rename cell |
+| `pl_DS_BankChurn` | DataPipeline | Orchestrates 3 notebooks in sequence (TransformData → TrainRegisterML → Predictions), Succeeded dependency chain |
+| `lh_DS_BankChurn` | Lakehouse | Single lakehouse — `churn_clean`, `churn_test`, `churn_predictions`, `ingestion_metadata` Delta tables |
 | `bank-churn-experiment` | MLExperiment | Tracks all model training runs with val ROC-AUC metrics |
 | `rfc1_sm`, `rfc2_sm`, `lgbm_sm` | MLModel | Three candidate models (tutorial naming convention) |
 | `champion_BankChurn` | MLModel | Programmatically selected champion — registered via MLflow search_runs |
-| `sm_DS_BankChurn` | Semantic model | DirectLake · `_Measures` table · 10 DAX measures · 4 display folders · 11 hidden columns · Copilot descriptions |
+| `sm_DS_BankChurn` | Semantic model | DirectLake · `_Measures` table · 11 DAX measures · 4 display folders · 20 hidden columns · Copilot descriptions |
 | `rpt_DS_BankChurn` | Report | 3-page PBIR report — Churn Overview, Risk Profile, Model Performance |
 | `agent_DS_BankChurn` | Data Agent | Fabric Data Agent grounded on `sm_DS_BankChurn` — natural language churn analysis |
 
@@ -97,8 +100,8 @@ for the core capability.
 
 ## Semantic Model — DAX Measure Library
 
-10 measures across 4 display folders, all using `VAR`/`RETURN` pattern with
-Copilot descriptions. One-hot encoded and engineered columns hidden from report view.
+11 measures across 4 display folders, all using `VAR`/`RETURN` pattern with
+Copilot descriptions. All 20 columns hidden from report view.
 
 | Display folder | What it answers |
 |---|---|
@@ -111,7 +114,7 @@ Copilot descriptions. One-hot encoded and engineered columns hidden from report 
 
 ## Key Insights from the Model
 
-- **18.3% overall churn rate** across 2,000 scored test customers
+- **3.65% overall churn rate** across 10,000 scored test customers
 - **Germany churns at 34.5%** — nearly 3× the French rate (12.2%)
 - **Products 3–4 drive near-100% churn** — customers with 3 or 4 products are
   almost certain to churn, a strong signal for product portfolio management
@@ -131,3 +134,4 @@ Copilot descriptions. One-hot encoded and engineered columns hidden from report 
   like "What is the churn rate for inactive German customers?"
 - **`CONTEXT.md`** — session handoff document with decisions, current state, and
   next planned steps
+- **Data Agent:** benchmark results recorded in `CONTEXT.md` under "Data Agent Benchmarks"

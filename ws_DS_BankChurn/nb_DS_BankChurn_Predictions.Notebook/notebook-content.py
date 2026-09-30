@@ -131,3 +131,14 @@ print(f"Spark DataFrame saved to delta table: {table_name}")
 # META   "language": "python",
 # META   "language_group": "synapse_pyspark"
 # META }
+
+# CELL ********************
+
+spark.sql("ALTER TABLE lh_DS_BankChurn.dbo.customer_churn_test_predictions RENAME TO Churn_Predictions")
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
