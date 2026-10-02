@@ -78,6 +78,10 @@ Lakehouse layers with reverse geocoding and significance classification, exposed
 three domain-scoped Data Agents and an Ontology item (Earthquake Events + Date
 entity types) built on the semantic model.
 
+> **Git sync blocker (2026-10-02):** Three DataAgent .platform files contain null
+> logicalIds. Real GUIDs exist in Fabric but need to be synced to repo. Repair steps
+> documented in PROJECTS.md and ws_USGS_Earthquake/CONTEXT.md.
+
 ---
 
 ### ws_DS_BankChurn — Bank Customer Churn Prediction
@@ -145,6 +149,7 @@ exposed via KQL queries and dashboards.
 
 > **Status:** Paused — pending resolution of a `Git_GitProviderCommitRejectedByPolicy`
 > error (Microsoft support ticket open). Workspace artifacts are intact.
+> Blockers tracked in PROJECTS.md and ws_RTI_Crypto/CONTEXT.md.
 
 ---
 
@@ -154,9 +159,9 @@ exposed via KQL queries and dashboards.
 |---|---|
 | AI planning agent | Claude Desktop (ProjectPlanner) |
 | AI execution agent | Claude Code in VS Code (FabricEngineer) |
-| Fabric operations | fabric-mcp (custom Python MCP server) |
-| Semantic model / DAX | powerbi-modeling-mcp (XMLA endpoint) |
-| Fabric skills | skills-for-fabric (CLAUDE.md) |
+| Fabric operations | Fabric Core MCP Server (remote connector) |
+| Semantic model / DAX | powerbi-authoring-local (XMLA endpoint, extension) |
+| Fabric skills | skills-for-fabric v0.3.18 (Copilot CLI) |
 | Context management | PROJECTS.md + ws_\<name\>/CONTEXT.md |
 | Git strategy | dev-fabric-sync → test → main (PR-based promotion) |
 | CI/CD | GitHub Actions — semantic model refresh on merge to main |
@@ -180,3 +185,5 @@ specialising in Microsoft Fabric, Power BI, and agentic analytics systems.
 - LinkedIn: [ali-saghi-fabric](https://www.linkedin.com/in/ali-saghi-fabric/)
 - GitHub: [alisaghilutfi](https://github.com/alisaghilutfi)
 - X: [@alis05111](https://x.com/alis05111)
+
+*Last updated: 2026-10-02 (MCP & Skills configuration, ws_USGS_Earthquake & ws_RTI_Crypto blockers).*

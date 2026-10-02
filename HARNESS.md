@@ -177,6 +177,82 @@ git checkout dev-fabric-sync
 
 ---
 
+## MCP & Skills Configuration
+
+### VS Code MCP Servers (mcp.json + extensions)
+
+**Local `mcp.json` servers:**
+- `com.microsoft/azure` — Azure resources & AI Foundry (68 tools)
+- `fabric-rti-mcp` — KQL queries against Eventhouse
+
+**Extension-registered servers (auto-loaded):**
+- `powerbi-authoring-local` — Semantic model XMLA operations
+  - **Permissions wildcard:** `mcp__powerbi-authoring-local__*`
+- `Fabric MCP` — Fabric API specs for code generation
+- `Pylance MCP Server` — Python language intelligence
+
+**Note on naming:** `powerbi-authoring-local` is the runtime registration name
+(what appears in "MCP: List Servers"). The extension ID is
+`analysis-services.powerbi-modeling-mcp`. Use the runtime name in permission
+wildcards.
+
+### Skills-for-Fabric (v0.3.18)
+
+Installed via **Copilot CLI (Route 1)** on 2026-10-02:
+
+```powershell
+cd C:\Users\alisa\skills-for-fabric
+git pull origin main  # v0.3.18
+copilot plugin install powerbi-authoring@fabric-collection
+copilot plugin install fabric-skills@fabric-collection
+```
+
+**Install location:** `~/.copilot/installed-plugins/fabric-collection/`  
+**Not:** `~/.claude/skills/` (Route 4, manual ZIP only)
+
+**Update command:**
+```powershell
+copilot plugin update --all
+```
+
+### Write Gate Fix (2026-10-02)
+
+Semantic model write operations (`column_operations Update`, etc.) previously
+hung with confirmation dialogs despite `bypassPermissions` setting.
+
+**Root cause:** Three simultaneous conditions:
+1. `.vscode/settings.json` contained stale `--require-confirmation false` flag
+2. Three competing processes running (old v0.1.9, npx cache, duplicate extension)
+3. Wrong permission wildcard in `settings.local.json`
+
+**Fix applied:**
+- Commit `020ea88`: removed `--require-confirmation false` from `.vscode/settings.json`
+- Killed 3 stale processes by PID
+- Corrected permission wildcard to `mcp__powerbi-authoring-local__*`
+- Verified: write test on `sm_AdventureWorks` succeeded silently
+
+**Going forward:** `.vscode/settings.json` should contain ONLY:
+```json
+{"args": "--start --accept-eula"}
+```
+
+### Session Startup Checklist
+
+Every new session:
+```powershell
+# 1. Authenticate for KQL access
+az login --tenant c8cb697b-07d1-4c61-a5d9-bbe5ad099fe8 --use-device-code
+# Sign in as: alisaghi_fabric@alisaghi2015gmail.onmicrosoft.com
+
+# 2. (Optional) Check for stale processes
+Get-Process | Where-Object { $_.Path -like "*powerbi-authoring*" } | Format-List Id, Path
+
+# 3. Open Claude Code
+# MCP: List Servers should show all 5 servers in Stopped state (ready to connect)
+```
+
+---
+
 ## Report Design Workflow
 
 ### Phase 1 — Plugin and Bridge setup (one-time per machine)
@@ -359,6 +435,9 @@ Set as Canvas background (not Wallpaper), Stretch fit, 0% transparency.
 | `powerbi-report-author` is not an npm package | It comes bundled with `powerbi-authoring@fabric-collection` plugin |
 | `@pbir/cli` does not exist on npm | The correct package is `@microsoft/powerbi-desktop-bridge-cli` |
 | `list_workspace_artifacts` returns Eventhouse and KQL Database with identical `displayName` | Always filter on `type` before acting |
+| `powerbi-authoring-local` write operations hang despite `bypassPermissions` | Check `.vscode/settings.json` contains ONLY `{"args": "--start --accept-eula"}`. Kill stale processes: `Get-Process \| Where-Object { $_.Path -like "*powerbi-authoring*" } \| Stop-Process -Force`. Verify permission wildcard in `settings.local.json` is `mcp__powerbi-authoring-local__*`. |
+| Stale `powerbi-modeling-mcp` processes (from Downloads, npx cache, or old extensions) compete with current process | Inventory: `Get-Process \| Where-Object { $_.Path -like "*powerbi*" } \| Format-List Id, Path, StartTime`. Only one process should be running: the one from `~/.vscode/extensions/analysis-services.powerbi-modeling-mcp-*/server/`. Kill others by PID: `Stop-Process -Id <PID> -Force`. |
+| Extension-registered MCP servers not appearing in "MCP: List Servers" | Extension must be installed via VS Code Marketplace or Copilot CLI, not manually. Verify `~/.vscode/extensions/analysis-services.powerbi-modeling-mcp-*/` exists. Do NOT add extension servers to `mcp.json` — they auto-register. |
 
 ---
 
@@ -416,4 +495,4 @@ empty folders — Git does not track them.
 > Every session that files its recap makes the next session faster
 > and more accurate.
 
-*Last updated: 2026-09-28.*
+*Last updated: 2026-10-02 (MCP & Skills configuration section added, write gate fix documented).*
