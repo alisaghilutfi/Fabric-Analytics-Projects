@@ -1,12 +1,12 @@
 # ws_USGS_Earthquake — Project Context
-> Last updated: 2026-09-08 by ProjectPlanner (claude.ai)
-> Next agent: FabricEngineer (Claude Code)
+> Last updated: 2026-10-02 by FabricEngineer (Claude Code)
+> Next agent: ProjectPlanner (claude.ai)
 
 ---
 
 ## Project Summary
 
-End-to-end Microsoft Fabric analytics solution ingesting live USGS seismic event data through a Bronze → Silver → Gold medallion architecture, surfaced in a 4-page Power BI Direct Lake report. Fully operational and pipeline-idempotent. Now entering Phase 2: Fabric Data Agent layer on top of sm_USGS_Earthquake.
+End-to-end Microsoft Fabric analytics solution ingesting live USGS seismic event data through a Bronze → Silver → Gold medallion architecture, surfaced in a 4-page Power BI Direct Lake report. Fully operational and pipeline-idempotent. Phase 2 complete. Phase 3 in progress: Ontology layer (onto_USGS_Earthquake) created 2026-10-02.
 
 ---
 
@@ -40,9 +40,10 @@ Note: Capacity was listed as "Trial" in prior context — confirmed F2 (alisaghi
 | `pl_USGS_Earthquake` | DataPipeline | `da73eec0-8422-4a21-9956-0185255710d5` | Bronze->Silver->Gold, -7d rolling |
 | `sm_USGS_Earthquake` | SemanticModel | `856acf3d-ddbc-4ed7-87a8-559018c12f05` | Direct Lake, 3 tables, 17 measures |
 | `rpt_USGS_Earthquake` | Report | `21c62478-fd88-4c21-b79b-b20f6383b2c3` | 4 pages, PBIR format |
-| `agent_USGS_SeismicActivity` | Data Agent | `3df677c0-b729-4437-befa-c99bb36e50ab` | Grounds into sm_USGS_Earthquake, _Measures table only |
-| `agent_USGS_GeographicImpact` | Data Agent | `ef62df53-4579-4a04-8b0d-10c7f01dc9b6` | Grounds into sm_USGS_Earthquake, _Measures + Country Code/Place Description columns |
-| `agent_USGS_SignificanceAnalyst` | Data Agent | `62f796e5-33e4-4ec7-abec-77e9e58d37ec` | Grounds into sm_USGS_Earthquake, _Measures table only |
+| `agent_USGS_SeismicActivity` | Data Agent | `3df677c0-b729-4437-befa-c99bb36e50ab` (artifactId) / logicalId: `b36e50ab-c99b-befa-4437-b7293df677c0` | Grounds into sm_USGS_Earthquake, _Measures table only |
+| `agent_USGS_GeographicImpact` | Data Agent | `ef62df53-4579-4a04-8b0d-10c7f01dc9b6` (artifactId) / logicalId: `f01dc9b6-10c7-8b0d-4a04-4579ef62df53` | Grounds into sm_USGS_Earthquake, _Measures + Country Code/Place Description columns |
+| `agent_USGS_SignificanceAnalyst` | Data Agent | `62f796e5-33e4-4ec7-abec-77e9e58d37ec` (artifactId) / logicalId: `e58d37ec-77e9-abec-4ec7-33e462f796e5` | Grounds into sm_USGS_Earthquake, _Measures table only |
+| `onto_USGS_Earthquake` | Ontology | `fef44ff8-0ff0-476e-8374-0b6bf449750f` | 2 entity types: Earthquake Events, Date. 1 relationship: Earthquake Events to Date (ontology-first) |
 
 ---
 
@@ -293,7 +294,8 @@ Built in ws_DS_BankChurn on same F2 capacity. Confirmed: Fabric Data Agents avai
 | Medium | Branded header strip on all report pages | Dark rectangle #094780, 40px, full width — deferred by Ali |
 | Medium | Drill-through: Geographic -> Event Detail | Wire map/country bar to drill to Page 4 filtered by country |
 | Medium | Date notebook guard in pipeline | `nb_USGS_Earthquake_Date` not wired into pipeline as prerequisite |
-| Medium | Git sync panel broken in ws_USGS_Earthquake | "Missing or corrupted files" on agent_USGS_GeographicImpact — Request ID 70b4fda7. Try Update all from Source Control next session; if it persists, file support ticket (same pattern as ws_RTI_Crypto). |
+| Medium | Phase 3b — Rayfin app | Deferred. Build earthquake activity app via Rayfin into ws_USGS_Earthquake |
+| Low | Wire onto_USGS_Earthquake to Data Agents | Connect ontology for inherited context once item stabilises in preview |
 | Low | Tooltip page for map | Show Title, Magnitude, Significance Class, Place Description on hover |
 | Low | Custom theme JSON | Replace CY25SU12 default with intentional Lotusoftware palette |
 | Low | Time Intelligence measures info button | button explaining MTD requires filtered date context |
@@ -311,6 +313,7 @@ Built in ws_DS_BankChurn on same F2 capacity. Confirmed: Fabric Data Agents avai
 - Direct Lake `Significance Class` column framing failed after multiple overwrites — fixed by writing directly to ABFSS path with column mapping baked in from scratch
 - MSAL token is in-process only by default — `SerializableTokenCache` must be persisted to disk for Claude Desktop subprocess launches to authenticate silently
 - Fabric Data Agents: available at F2, confirmed on same capacity (alisaghif2capacity). Do not expose raw fact tables to agents — expose measures only to keep answers governed.
+- `DataAgent .platform logicalId` is a little-endian byte-swapped UUID of the artifact id — not the id from `list_items`. Artifacts created outside Git sync have `logicalId: null` in Fabric and `00000000-…` in Git. Fix: `git rm` the agent folders, push, let Fabric commit → Git write the correct logicalId from the Changes tab.
 
 ---
 
@@ -346,4 +349,4 @@ Not `"python"` — base conda env is Python 3.8.5 which lacks `mcp` package.
 > Owner: FabricEngineer (Claude Code)
 > Overwrite this section after every execution session.
 
-2026-09-09 — FabricEngineer execution session (Claude Code). Full Phase 2 close-out session. Deleted nb_USGS_Earthquake scratch notebook via REST API. Verified sig_class column live in earthquake_events_gold via SQL analytics endpoint. Created all three Phase 2 agents: agent_USGS_SeismicActivity (3df677c0), agent_USGS_GeographicImpact (ef62df53), agent_USGS_SignificanceAnalyst (62f796e5). Discovered scope leakage on SeismicActivity — geographic refusal boundary added to system prompt and committed. All three agents validated: core questions answered correctly, boundary redirects confirmed on all six boundary tests. Dashboard screenshot added to docs/images/. README.md updated with Phase 2 agents, architecture diagram, key insights section, and dashboard image. Git sync panel showing "Missing or corrupted files" on agent_USGS_GeographicImpact — noted in Outstanding Items for next session.
+2026-10-02 — Git sync fixed for all three DataAgents (root cause: logicalId is little-endian byte-swap of artifact id, not the id from list_items; fixed by git rm agent folders, push, Fabric commit → Git). Phase 3a complete: onto_USGS_Earthquake Ontology item created, committed empty first (applying DataAgent lesson), Ontology Agent built two entity types (Earthquake Events, Date) with one ontology-first relationship, validation passed (9,164 events, max magnitude 7.5, top country US, 1,461 dates, 2024–2027 range).

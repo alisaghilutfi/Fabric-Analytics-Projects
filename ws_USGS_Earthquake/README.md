@@ -3,8 +3,9 @@
 An end-to-end analytics platform on Microsoft Fabric ingesting live earthquake data
 from the USGS REST API, processing it through a Bronze → Silver → Gold medallion
 architecture with reverse geocoding and significance classification, surfacing it as
-a four-page Power BI geospatial report with time intelligence, and enabling natural
-language querying through three domain-scoped Fabric Data Agents.
+a four-page Power BI geospatial report with time intelligence, enabling natural
+language querying through three domain-scoped Fabric Data Agents, and an Ontology
+item for semantic enrichment.
 
 ![USGS Earthquake Dashboard](docs/images/dashboard_USGS_Earthquake.png)
 
@@ -109,6 +110,7 @@ preventing full-table reprocessing on every run.
 | `agent_USGS_SeismicActivity` | Data Agent | Fabric Data Agent — time-series trends, event volume, magnitude analysis |
 | `agent_USGS_GeographicImpact` | Data Agent | Fabric Data Agent — country-level patterns, geographic distribution |
 | `agent_USGS_SignificanceAnalyst` | Data Agent | Fabric Data Agent — significance scoring, risk classification |
+| `onto_USGS_Earthquake` | Ontology | 2 entity types (Earthquake Events, Date) with 1 ontology-first relationship; grounded on Gold Lakehouse tables |
 
 ---
 

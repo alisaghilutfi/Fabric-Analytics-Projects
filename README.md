@@ -70,11 +70,13 @@ availability, capacity, rebalancing, and recency.
 ### ws_USGS_Earthquake — USGS Earthquake Analytics
 
 **Type:** Data Engineering + Analytics  
-**Stack:** REST API ingestion · Medallion Lakehouse · PySpark · reverse_geocoder · DirectLake semantic model · Power BI geospatial report  
+**Stack:** REST API ingestion · Medallion Lakehouse · PySpark · reverse_geocoder · DirectLake semantic model · Power BI geospatial report · Fabric Data Agents (×3) · Ontology  
 
 Live USGS earthquake data ingested via REST API, processed through Bronze/Silver/Gold
 Lakehouse layers with reverse geocoding and significance classification, exposed as a
-4-page Power BI report with map visuals and time intelligence.
+4-page Power BI report with map visuals and time intelligence. Phase 3a complete:
+three domain-scoped Data Agents and an Ontology item (Earthquake Events + Date
+entity types) built on the semantic model.
 
 ---
 
