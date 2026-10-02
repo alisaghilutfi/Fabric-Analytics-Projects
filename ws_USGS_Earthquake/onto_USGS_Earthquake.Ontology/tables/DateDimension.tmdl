@@ -1,0 +1,76 @@
+table DateDimension
+	lineageTag: e5f9214a-3d2c-4872-9f0d-8778ef995a25
+
+	column Date
+		dataType: dateTime
+		lineageTag: 2c4785bd-5d0a-42a8-8e07-69797b3ef8e1
+		sourceColumn: Date
+
+	column Year
+		dataType: int64
+		lineageTag: 0df3cda1-8b02-4584-af2c-4377539c22bf
+		sourceColumn: Year
+
+	column Quarter
+		dataType: string
+		lineageTag: 358c6b27-4481-44f0-b52a-bdb08433b28f
+		sourceColumn: Quarter
+
+	column MonthNumber
+		dataType: int64
+		lineageTag: 8ba1a975-835f-4535-a10d-bb53cf69bdb5
+		sourceColumn: MonthNumber
+
+	column MonthName
+		dataType: string
+		lineageTag: 52ff2d28-7ca6-4728-a562-064dd7cd6681
+		sourceColumn: MonthName
+
+	column MonthYear
+		dataType: string
+		lineageTag: 9562ed7a-ba5c-4c97-990b-b718be1bd4ad
+		sourceColumn: MonthYear
+
+	column Day
+		dataType: int64
+		lineageTag: c90ec491-b45f-4585-baf9-702e5e6efc5f
+		sourceColumn: Day
+
+	column DayOfWeek
+		dataType: string
+		lineageTag: a3dccdb3-61fa-4512-b908-b66432f8f8f1
+		sourceColumn: DayOfWeek
+
+	column Weekday
+		dataType: int64
+		lineageTag: aab4bd75-3073-45f8-a534-5a6a8f0e2d62
+		sourceColumn: Weekday
+
+	column IsWeekend
+		dataType: boolean
+		lineageTag: 1649b48f-c232-4dfb-928f-f87022bcc7eb
+		sourceColumn: IsWeekend
+
+	partition DateDimension = entity
+		mode: directLake
+		source
+			entityName: DateDimension
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+		annotation ONT_WorkspaceId = 00000000-0000-0000-0000-000000000000
+
+		annotation ONT_ItemId = 4d845083-1833-b5a8-4230-3b18fda3c40e
+
+		annotation ONT_ItemKind = Lakehouse
+
+		annotation ONT_ItemName = lh_USGS_Earthquake
+
+		annotation ONT_WorkspaceName = WORKSPACE_NAME_PLACEHOLDER
+
+		annotation ONT_SqlEndpoint = pnu4xsgra5quzjozxps22cm75a-vor4uolevhbelpk3pvdk2zwjqu.datawarehouse.fabric.microsoft.com
+
+		annotation ONT_SqlDatabase = lh_USGS_Earthquake
+
+		annotation ONT_PinnedAtUtc = 2026-10-02T16:05:37Z
+

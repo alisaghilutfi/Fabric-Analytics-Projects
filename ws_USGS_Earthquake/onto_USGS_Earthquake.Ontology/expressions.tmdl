@@ -1,0 +1,7 @@
+expression DatabaseQuery =
+		let
+		    Source = AzureStorage.DataLake("https://onelake.dfs.fabric.microsoft.com/39caa3ab-a964-45c2-bd5b-7d46ad66c985/fda3c40e-3b18-4230-b5a8-18334d845083", [HierarchicalNavigation=true])
+		in
+		    Source
+	lineageTag: e086cc19-30bb-4b7d-a560-177ecb885892
+

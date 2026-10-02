@@ -1,4 +1,10 @@
 model Model
 
+ref table DateDimension
+ref table earthquake_events_gold
+
+ref entity Date
+ref entity 'Earthquake Events'
+
 ref namespace default
 
