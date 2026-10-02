@@ -1,0 +1,186 @@
+/// One row per seismic event recorded by the USGS, including location, magnitude, significance, timestamps, country code, and significance classification.
+entity 'Earthquake Events'
+	lineageTag: ab5272db-d49a-4be9-bd6f-11713a585483
+	backingTable: earthquake_events_gold
+	keyProperty: id
+
+	property id
+		dataType: string
+		lineageTag: caddb1f9-0c9a-4199-aa32-21b994f3090e
+
+		backingConfiguration
+			valueColumn: earthquake_events_gold.id
+
+		synonym 'event id'
+
+		synonym 'USGS id'
+
+		synonym 'quake id'
+
+		synonym 'seismic event id'
+
+	property longitude
+		dataType: double
+		lineageTag: 2a32ef86-cfb5-48dc-a8ee-1c896d00f450
+
+		backingConfiguration
+			valueColumn: earthquake_events_gold.longitude
+
+		synonym longitude
+
+		synonym 'east-west coordinate'
+
+		synonym 'x coordinate'
+
+	property latitude
+		dataType: double
+		lineageTag: 5300c26a-4d92-43c4-8b2e-c4d8ccc37cef
+
+		backingConfiguration
+			valueColumn: earthquake_events_gold.latitude
+
+		synonym latitude
+
+		synonym 'north-south coordinate'
+
+		synonym 'y coordinate'
+
+	/// The depth or elevation in meters of the earthquake hypocenter, the point where the event originated.
+	property elevation
+		dataType: double
+		lineageTag: ce260058-75ce-496c-b1ef-d38666ca9d11
+
+		backingConfiguration
+			valueColumn: earthquake_events_gold.elevation
+
+		synonym depth
+
+		synonym 'hypocenter depth'
+
+		synonym elevation
+
+	property title
+		dataType: string
+		lineageTag: e90c9b3b-a695-402f-aaec-5ae13f84a494
+
+		backingConfiguration
+			valueColumn: earthquake_events_gold.title
+
+		synonym 'event title'
+
+		synonym 'earthquake title'
+
+		synonym 'quake label'
+
+	property place_description
+		dataType: string
+		lineageTag: 60c29de4-4e40-4af3-b507-019dc91cf26b
+
+		backingConfiguration
+			valueColumn: earthquake_events_gold.place_description
+
+		synonym 'location description'
+
+		synonym 'nearest place'
+
+		synonym 'event location'
+
+	property sig
+		dataType: int64
+		lineageTag: 670e867d-ddb7-4911-b3b0-3083929fb7a0
+
+		backingConfiguration
+			valueColumn: earthquake_events_gold.sig
+
+		synonym 'significance score'
+
+		synonym 'impact score'
+
+		synonym 'USGS significance'
+
+	property mag
+		dataType: double
+		lineageTag: 32736aa2-5bec-45f6-ba1b-9e3fc6347cad
+
+		backingConfiguration
+			valueColumn: earthquake_events_gold.mag
+
+		synonym 'earthquake magnitude'
+
+		synonym 'event magnitude'
+
+		synonym 'quake size'
+
+	property magType
+		dataType: string
+		lineageTag: b39ac850-e20a-4cb6-9b14-91f956cec593
+
+		backingConfiguration
+			valueColumn: earthquake_events_gold.magType
+
+		synonym 'magnitude type'
+
+		synonym 'magnitude scale'
+
+		synonym 'measurement method'
+
+	property time
+		dataType: dateTime
+		lineageTag: ad652f02-9e2c-4edc-ac29-66e6da042bc2
+
+		backingConfiguration
+			valueColumn: earthquake_events_gold.time
+
+		synonym 'occurrence time'
+
+		synonym 'earthquake time'
+
+		synonym 'event timestamp'
+
+	property updated
+		dataType: dateTime
+		lineageTag: 3f29dac8-de6d-4c22-9977-45c38f735fe5
+
+		backingConfiguration
+			valueColumn: earthquake_events_gold.updated
+
+		synonym 'last modified'
+
+		synonym 'updated time'
+
+		synonym 'record updated time'
+
+	property country_code
+		dataType: string
+		lineageTag: c75f4745-d1fd-40a7-86df-a88d99abf1ae
+
+		backingConfiguration
+			valueColumn: earthquake_events_gold.country_code
+
+		synonym country
+
+		synonym 'ISO country code'
+
+		synonym 'nation code'
+
+	property sig_class
+		dataType: string
+		lineageTag: 0f088c9a-aa94-4353-8fe4-e183ce25ce6f
+
+		backingConfiguration
+			valueColumn: earthquake_events_gold.sig_class
+
+		synonym 'significance band'
+
+		synonym 'impact class'
+
+		synonym 'severity class'
+
+	synonym 'Earthquake Event'
+
+	synonym 'Seismic Event'
+
+	synonym Quake
+
+	synonym 'Seismic Activity'
+

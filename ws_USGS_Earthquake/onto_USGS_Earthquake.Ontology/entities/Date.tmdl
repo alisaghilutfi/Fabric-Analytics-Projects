@@ -1,0 +1,83 @@
+/// Calendar dimension with one row per day and year, quarter, month, weekday, and weekend attributes.
+entity Date
+	lineageTag: 6d3b2879-df49-4443-b26e-6c74e999c289
+	backingTable: DateDimension
+
+	property Date
+		dataType: dateTime
+		lineageTag: 7cde3a6d-f859-4600-8322-56abce72cc68
+
+		backingConfiguration
+			valueColumn: DateDimension.Date
+
+	property Year
+		dataType: int64
+		lineageTag: ede2dc41-9119-4b80-9862-0bea2d48a3c5
+
+		backingConfiguration
+			valueColumn: DateDimension.Year
+
+	property Quarter
+		dataType: string
+		lineageTag: 363355cf-85ef-438d-bdaa-b3e6609872e1
+
+		backingConfiguration
+			valueColumn: DateDimension.Quarter
+
+	property MonthNumber
+		dataType: int64
+		lineageTag: 178bc7b9-7cc6-49a0-a99c-ad0e96980dfa
+
+		backingConfiguration
+			valueColumn: DateDimension.MonthNumber
+
+	property MonthName
+		dataType: string
+		lineageTag: 27005ffe-79f8-47fc-8638-06bf862e5600
+
+		backingConfiguration
+			valueColumn: DateDimension.MonthName
+
+	property MonthYear
+		dataType: string
+		lineageTag: 2c8cdb35-1f77-45b5-86dd-f04b50e61bd7
+
+		backingConfiguration
+			valueColumn: DateDimension.MonthYear
+
+	property Day
+		dataType: int64
+		lineageTag: 22ff082d-da7f-4009-95fc-8e72603e67aa
+
+		backingConfiguration
+			valueColumn: DateDimension.Day
+
+	property DayOfWeek
+		dataType: string
+		lineageTag: 976fe303-8f38-4529-85e8-38e98f1879d4
+
+		backingConfiguration
+			valueColumn: DateDimension.DayOfWeek
+
+	property Weekday
+		dataType: int64
+		lineageTag: 1c330a8c-db19-4589-a860-9aaf715afc2e
+
+		backingConfiguration
+			valueColumn: DateDimension.Weekday
+
+	property IsWeekend
+		dataType: boolean
+		lineageTag: 35302b4b-6cb2-4084-91dd-1d8dc6dbb025
+
+		backingConfiguration
+			valueColumn: DateDimension.IsWeekend
+
+	synonym Calendar
+
+	synonym 'Calendar Date'
+
+	synonym 'Date Dimension'
+
+	synonym Day
+

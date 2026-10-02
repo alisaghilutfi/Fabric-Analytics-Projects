@@ -1,0 +1,91 @@
+table earthquake_events_gold
+	lineageTag: b475bce7-6348-4c1c-8c0a-f944990caf2f
+
+	column id
+		dataType: string
+		lineageTag: bdaee8d5-fde5-4fb8-8a37-cc935f66a354
+		sourceColumn: id
+
+	column longitude
+		dataType: double
+		lineageTag: 0bd835f2-259c-4a31-8196-5af36a0bd89e
+		sourceColumn: longitude
+
+	column latitude
+		dataType: double
+		lineageTag: 82b4496c-35cc-42bd-9e98-7c45b95e6180
+		sourceColumn: latitude
+
+	column elevation
+		dataType: double
+		lineageTag: 46f3ae61-cb61-48e2-9678-70bcbbebfd51
+		sourceColumn: elevation
+
+	column title
+		dataType: string
+		lineageTag: 55bbf917-5126-4290-b341-2b6f3c65ad93
+		sourceColumn: title
+
+	column place_description
+		dataType: string
+		lineageTag: 4d07aad7-bd8e-4563-ab1a-9812e085a2dc
+		sourceColumn: place_description
+
+	column sig
+		dataType: int64
+		lineageTag: deba5d6c-28e3-4883-90bc-889979cbb3ec
+		sourceColumn: sig
+
+	column mag
+		dataType: double
+		lineageTag: 5ec8381a-26ec-4809-8768-ec40f502130d
+		sourceColumn: mag
+
+	column magType
+		dataType: string
+		lineageTag: d63c30d4-3d1c-491f-bc1b-c8196e5463d4
+		sourceColumn: magType
+
+	column time
+		dataType: dateTime
+		lineageTag: 7fcdce09-adf8-4a55-b8d0-c664092004d8
+		sourceColumn: time
+
+	column updated
+		dataType: dateTime
+		lineageTag: 217f6797-9d13-4a6f-900f-3db1a039ecfc
+		sourceColumn: updated
+
+	column country_code
+		dataType: string
+		lineageTag: f3695c64-02c2-4241-9ad0-c446551ecda2
+		sourceColumn: country_code
+
+	column sig_class
+		dataType: string
+		lineageTag: 13f31847-0df5-48fa-b7a1-2c237baf076b
+		sourceColumn: sig_class
+
+	partition earthquake_events_gold = entity
+		mode: directLake
+		source
+			entityName: earthquake_events_gold
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+		annotation ONT_WorkspaceId = 00000000-0000-0000-0000-000000000000
+
+		annotation ONT_ItemId = 4d845083-1833-b5a8-4230-3b18fda3c40e
+
+		annotation ONT_ItemKind = Lakehouse
+
+		annotation ONT_ItemName = lh_USGS_Earthquake
+
+		annotation ONT_WorkspaceName = WORKSPACE_NAME_PLACEHOLDER
+
+		annotation ONT_SqlEndpoint = pnu4xsgra5quzjozxps22cm75a-vor4uolevhbelpk3pvdk2zwjqu.datawarehouse.fabric.microsoft.com
+
+		annotation ONT_SqlDatabase = lh_USGS_Earthquake
+
+		annotation ONT_PinnedAtUtc = 2026-10-02T16:05:37Z
+
