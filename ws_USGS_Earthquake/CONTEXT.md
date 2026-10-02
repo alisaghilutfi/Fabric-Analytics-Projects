@@ -40,14 +40,9 @@ Note: Capacity was listed as "Trial" in prior context — confirmed F2 (alisaghi
 | `pl_USGS_Earthquake` | DataPipeline | `da73eec0-8422-4a21-9956-0185255710d5` | Bronze->Silver->Gold, -7d rolling |
 | `sm_USGS_Earthquake` | SemanticModel | `856acf3d-ddbc-4ed7-87a8-559018c12f05` | Direct Lake, 3 tables, 17 measures |
 | `rpt_USGS_Earthquake` | Report | `21c62478-fd88-4c21-b79b-b20f6383b2c3` | 4 pages, PBIR format |
-
-Phase 2 artifacts to be created (not yet in workspace):
-
-| Artifact | Type | Notes |
-|---|---|---|
-| `agent_USGS_SeismicActivity` | Data Agent | Grounds into sm_USGS_Earthquake, _Measures table only |
-| `agent_USGS_GeographicImpact` | Data Agent | Grounds into sm_USGS_Earthquake, _Measures + Country Code/Place Description columns |
-| `agent_USGS_SignificanceAnalyst` | Data Agent | Grounds into sm_USGS_Earthquake, _Measures table only |
+| `agent_USGS_SeismicActivity` | Data Agent | `3df677c0-b729-4437-befa-c99bb36e50ab` | Grounds into sm_USGS_Earthquake, _Measures table only |
+| `agent_USGS_GeographicImpact` | Data Agent | `ef62df53-4579-4a04-8b0d-10c7f01dc9b6` | Grounds into sm_USGS_Earthquake, _Measures + Country Code/Place Description columns |
+| `agent_USGS_SignificanceAnalyst` | Data Agent | `62f796e5-33e4-4ec7-abec-77e9e58d37ec` | Grounds into sm_USGS_Earthquake, _Measures table only |
 
 ---
 
