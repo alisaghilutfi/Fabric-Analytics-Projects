@@ -78,12 +78,12 @@ Last updated: 2026-09-28
 ---
 
 ## ws_USGS_Earthquake
-**Purpose:** End-to-end USGS seismic analytics — medallion lakehouse, Direct Lake semantic model, 4-page Power BI report, and three domain-scoped Fabric Data Agents  
-**Status:** Active — Phase 2 complete, open for Phase 3 or polish  
-**Current focus:** Open — confirm direction with ProjectPlanner next session  
-**Last session:** Full Phase 2 execution — three Fabric Data Agents created and validated (SeismicActivity, GeographicImpact, SignificanceAnalyst), boundary refusal tested on all six cross-agent questions, dashboard screenshot captured, README updated with agents, architecture diagram, and key insights  
-**Next session:** Confirm with ProjectPlanner — Phase 3 (Foundry orchestration) or report polish (branded header, drill-through, date notebook pipeline guard)  
-**Blockers:** Git sync panel broken — "Missing or corrupted files" on agent_USGS_GeographicImpact (Request ID 70b4fda7); try Update all from Source Control next session  
+**Purpose:** End-to-end USGS seismic analytics — medallion lakehouse, Direct Lake semantic model, 4-page Power BI report, three domain-scoped Fabric Data Agents, and Ontology item  
+**Status:** Active — Phase 3 in progress  
+**Current focus:** Phase 3b Rayfin (deferred), report polish still open  
+**Last session:** Git sync fixed for all three DataAgents (logicalId byte-swap root cause). Phase 3a complete: onto_USGS_Earthquake created with Earthquake Events + Date entities, validated against live data.  
+**Next session:** Phase 3b — Rayfin app, OR report polish (branded header, drill-through)  
+**Blockers:** None  
 
 ---
 
