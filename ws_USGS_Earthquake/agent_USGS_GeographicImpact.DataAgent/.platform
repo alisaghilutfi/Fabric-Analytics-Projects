@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataAgent",
+    "displayName": "agent_USGS_GeographicImpact",
+    "description": ""
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "f01dc9b6-10c7-8b0d-4a04-4579ef62df53"
+  }
+}

@@ -1,0 +1,4 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/dataAgent/definition/publishInfo/1.0.0/schema.json",
+  "description": "Answers natural language questions about where earthquakes occur and which\ncountries or regions are most affected, using USGS global seismic event\ndata. Covers country-level and regional patterns via country code,\nplace description, latitude, and longitude. Grounded on the\nsm_USGS_Earthquake semantic model (Direct Lake); geographic columns plus\nTotal Earthquakes only."
+}

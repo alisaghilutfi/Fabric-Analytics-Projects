@@ -1,0 +1,291 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/dataAgent/definition/dataSource/1.0.0/schema.json",
+  "artifactId": "18c12f05-5590-87a8-4ed7-ddbc856acf3d",
+  "workspaceId": "00000000-0000-0000-0000-000000000000",
+  "dataSourceInstructions": null,
+  "displayName": "sm_USGS_Earthquake",
+  "type": "semantic_model",
+  "userDescription": null,
+  "metadata": {},
+  "elements": [
+    {
+      "id": "c770edfd-5fab-40c6-875f-1d26e36e8f17",
+      "is_selected": false,
+      "display_name": "Earthquake Events",
+      "type": "semantic_model.table",
+      "description": "One row per seismic event recorded by the USGS. Sourced from the Gold Delta table (earthquake_events_gold) via Direct Lake. Contains location, magnitude, significance, timestamps, country code, and significance classification for each event.",
+      "children": [
+        {
+          "id": "e6305c25-8331-4251-9977-5333e3460605",
+          "is_selected": true,
+          "display_name": "Title",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": "A short human-readable label for the earthquake event, typically combining the magnitude and location (e.g. 'M 4.5 - 10km NE of City'). Useful for labelling visuals and tooltips.",
+          "children": []
+        },
+        {
+          "id": "bcd2bc0d-fad8-4f28-b8ae-ae1b213e3f38",
+          "is_selected": true,
+          "display_name": "Place Description",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": "A descriptive text of the geographic area nearest to the earthquake epicenter, as reported by the USGS (e.g. '10km NE of Tokyo, Japan'). Provides more detail than the Title alone.",
+          "children": []
+        },
+        {
+          "id": "69912c50-73f5-416a-af87-10c44aabbe2a",
+          "is_selected": true,
+          "display_name": "Magnitude Type",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": "The method or scale used to calculate the Magnitude (e.g. 'ml' for local magnitude, 'mb' for body wave, 'mw' for moment magnitude). Different methods are used depending on the region and the size of the event.",
+          "children": []
+        },
+        {
+          "id": "5df55080-f552-4a84-b20e-d80782ae4d83",
+          "is_selected": true,
+          "display_name": "Event Time",
+          "type": "semantic_model.column",
+          "data_type": "DateTime",
+          "description": "The date and time (UTC) when the earthquake occurred. Use this column for time-based analysis such as trends over days, months, or years.",
+          "children": []
+        },
+        {
+          "id": "cd9427a5-7c4d-4d21-8ee0-e9b7c6e8b30d",
+          "is_selected": true,
+          "display_name": "Country Code",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": "The two-letter ISO country code of the country where the earthquake occurred (e.g. 'US', 'JP', 'TR'). Used for geographic filtering and country-level aggregations.",
+          "children": []
+        },
+        {
+          "id": "a918a6f2-8818-430c-a7e1-c3aad54d1065",
+          "is_selected": true,
+          "display_name": "Significance Class",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": "A categorical classification of the earthquake's significance into three bands: Low, Moderate, or High. Derived from the numeric Significance score to make filtering and visual segmentation easier for report users.",
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "aff96b1e-2463-4d5e-bb39-64e99e1650b3",
+      "is_selected": true,
+      "display_name": "_Measures",
+      "type": "semantic_model.table",
+      "description": "Calculated partition containing all DAX measures for the USGS Earthquake project. This agent is scoped to significance/risk analysis only: % High/Moderate/Low Significance, Avg Significance, and Max Significance are exposed. Volume, magnitude, and time-intelligence measures are excluded from this agent's grounding. The Earthquake Events and Date tables are not exposed to this agent.",
+      "children": [
+        {
+          "id": "a7551b40-d0e5-4f8c-b693-4bf28dfcaa93",
+          "is_selected": true,
+          "display_name": "Column",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "b6a78c40-0aca-41a4-99fe-0ff06d933de2",
+          "is_selected": false,
+          "display_name": "Avg Magnitude",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": "Mean earthquake magnitude on the logarithmic Richter-type scale in the current filter context.",
+          "children": []
+        },
+        {
+          "id": "97264098-f7f9-4f61-a25f-c6be1b14cb41",
+          "is_selected": false,
+          "display_name": "Max Magnitude",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": "Strongest single earthquake magnitude in the current filter context.",
+          "children": []
+        },
+        {
+          "id": "3a731344-c83b-4974-a64d-b5a7dca11a47",
+          "is_selected": false,
+          "display_name": "Min Magnitude",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": "Weakest single earthquake magnitude in the current filter context.",
+          "children": []
+        },
+        {
+          "id": "b63f05de-c9a2-4426-8f00-cd667de93a2f",
+          "is_selected": true,
+          "display_name": "% High Significance",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": "Proportion of events classified as High significance.",
+          "children": []
+        },
+        {
+          "id": "b4850cff-3472-4caa-8468-8fa327e71ce5",
+          "is_selected": true,
+          "display_name": "Avg Significance",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": "Average USGS significance score across events in the current filter context.",
+          "children": []
+        },
+        {
+          "id": "a0af2f2e-8b6a-44c9-8f1a-75950286bd72",
+          "is_selected": true,
+          "display_name": "Max Significance",
+          "type": "semantic_model.measure",
+          "data_type": "Int64",
+          "description": "Highest USGS significance score in the current filter context.",
+          "children": []
+        },
+        {
+          "id": "e7a42632-7910-4737-8bad-227422dacb96",
+          "is_selected": false,
+          "display_name": "Earliest Event Date",
+          "type": "semantic_model.measure",
+          "data_type": "DateTime",
+          "description": "Earliest event timestamp in the current filter context.",
+          "children": []
+        },
+        {
+          "id": "7cd94f5e-64dd-4708-b18c-e29f1f5b20bf",
+          "is_selected": false,
+          "display_name": "Latest Event Date",
+          "type": "semantic_model.measure",
+          "data_type": "DateTime",
+          "description": "Latest event timestamp in the current filter context.",
+          "children": []
+        },
+        {
+          "id": "8856ebdc-14a8-4337-b674-af2034adb90e",
+          "is_selected": false,
+          "display_name": "Total Earthquakes",
+          "type": "semantic_model.measure",
+          "data_type": "Int64",
+          "description": "Total number of recorded seismic events in the current filter context.",
+          "children": []
+        },
+        {
+          "id": "097d7f69-535f-46fa-9518-6ff2196fe632",
+          "is_selected": false,
+          "display_name": "Total Earthquakes MTD",
+          "type": "semantic_model.measure",
+          "data_type": "Int64",
+          "description": "Count of earthquakes month-to-date relative to the selected date.",
+          "children": []
+        },
+        {
+          "id": "497b182a-a035-4627-848e-a7330bdf5723",
+          "is_selected": false,
+          "display_name": "Total Earthquakes MOM %",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": "Month-over-month percentage change in earthquake count.",
+          "children": []
+        },
+        {
+          "id": "eaeaee12-f32f-4d3b-859e-2959e801f9db",
+          "is_selected": false,
+          "display_name": "Avg Magnitude MTD",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": "Average magnitude month-to-date relative to the selected date.",
+          "children": []
+        },
+        {
+          "id": "e2856a1d-5f26-45a3-a63d-75a8385d111f",
+          "is_selected": false,
+          "display_name": "7-Day Rolling Earthquakes",
+          "type": "semantic_model.measure",
+          "data_type": "Int64",
+          "description": "Rolling count of earthquakes over the trailing 7 days.",
+          "children": []
+        },
+        {
+          "id": "c615cdab-722c-4f41-b428-599f23566f24",
+          "is_selected": true,
+          "display_name": "% Moderate Significance",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": "Proportion of events classified as Moderate significance.",
+          "children": []
+        },
+        {
+          "id": "288ff69c-bfa3-4d10-abb7-fea87ca93ae5",
+          "is_selected": true,
+          "display_name": "% Low Significance",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": "Proportion of events classified as Low significance.",
+          "children": []
+        },
+        {
+          "id": "38ab3320-dd4b-43f8-9dd0-f8ff67e9d365",
+          "is_selected": false,
+          "display_name": "Magnitude Band",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": "Categorizes magnitude into Micro (<2), Minor (<4), Moderate (<6), or Strong (>=6).",
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "05e5aa11-be8a-4a8e-81a6-99546fa7066d",
+      "is_selected": false,
+      "display_name": "Date",
+      "type": "semantic_model.table",
+      "description": "Calendar dimension spanning 2024–2027. One row per day with Year, Quarter, Month, Week, and Weekend attributes. Joined to Earthquake Events via Event Time (DatePartOnly) to enable time-based filtering and time intelligence measures.",
+      "children": [
+        {
+          "id": "d1c1266e-b3f8-475d-bbd5-2159669e64ef",
+          "is_selected": true,
+          "display_name": "Date",
+          "type": "semantic_model.column",
+          "data_type": "DateTime",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "78da1764-1f2b-4a39-b5c6-1fc1345f4535",
+          "is_selected": true,
+          "display_name": "Year",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "bed616d9-8379-4e44-ba7b-03cd7551e2fa",
+          "is_selected": true,
+          "display_name": "MonthName",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "ecca4a00-6834-495a-a206-13fa2eed3e20",
+          "is_selected": true,
+          "display_name": "MonthYear",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "09281861-d115-4b76-9e94-547a62b1efdc",
+          "is_selected": true,
+          "display_name": "DayOfWeek",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataAgent",
+    "displayName": "agent_USGS_SignificanceAnalyst",
+    "description": ""
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "e58d37ec-77e9-abec-4ec7-33e462f796e5"
+  }
+}
