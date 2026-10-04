@@ -4,17 +4,7 @@
 > executing agent updates the relevant project's Last Session and
 > Status fields. Do not edit manually unless correcting an error.
 
-Last updated: 2026-09-28
-
----
-
-## ws_AdventureWorks
-**Purpose:** Medallion architecture practice — Bronze/Silver/Gold lakehouse  
-**Status:** Active  
-**Current focus:** Semantic model and Power BI report layer  
-**Last session:** Built Bronze, Silver, Gold notebooks and DataPipeline. Semantic model scaffolded. Report file created.  
-**Next session:** Validate semantic model measures, build Power BI report pages  
-**Blockers:** None known  
+Last updated: 2026-10-04
 
 ---
 
@@ -44,26 +34,6 @@ Last updated: 2026-09-28
 **Last session (2026-09-29/30):** Full pipeline re-run (10,000 rows, champion_BankChurn v2, val_roc_auc: 0.8495); AI-readiness remediation on sm_DS_BankChurn (8 raw columns hidden → all 20 hidden, table description, predictions → Churn Prediction rename, 5 DAX references updated); Data Agent validated with 5 benchmarks; pl_DS_BankChurn DataPipeline built (3-notebook Succeeded chain, logicalIds, null GUID workspaceId); lakehouse table renamed customer_churn_test_predictions → churn_predictions (physical), TMDL display name updated to 'Churn Predictions', 23 DAX references updated in _Measures.tmdl.  
 **Next session:** Configure scheduled refresh on sm_DS_BankChurn; Fabric portal → Source Control → Update all (apply TMDL changes to live model); investigate powerbi-modeling-mcp write gate  
 **Blockers:** powerbi-modeling-mcp v1.0.0 write gate hardcoded — all MCP writes blocked; TMDL-direct is working pattern. Fabric Source Control sync required to apply committed TMDL changes to live model.  
-
----
-
-## ws_RTI_Crypto
-**Purpose:** Real-time intelligence — live crypto prices via Eventhouse and KQL  
-**Status:** Git blocked — support ticket pending  
-**Current focus:** Blocked on Microsoft support; no Fabric work planned until resolved  
-**Last session:** Git integration failed with `Git_GitProviderCommitRejectedByPolicy` (request ID `1e57bbf7-fa24-4989-b4e4-caf3f5048441`); workspace disconnected from Git. Support ticket filed with Microsoft. Documented artifact inventory (eh_RTI_Crypto Eventhouse + KQLDatabase, es_RTI_Crypto Eventstream, lh_RTI_Crypto Lakehouse, nb_RTI_Crypto, nb_RTI_Crypto_Automated, auto-generated compaction notebook) in CONTEXT.md.  
-**Next session:** Check support ticket status before any Git operation on this workspace  
-**Blockers:** Workspace disconnected from Git — `Git_GitProviderCommitRejectedByPolicy`, Microsoft support ticket pending  
-
----
-
-## ws_Ecommerce_Olist
-**Purpose:** End-to-end Fabric analytics on the Olist Brazilian e-commerce dataset — medallion architecture with Power BI reporting  
-**Status:** Discovered, synced — build not started  
-**Current focus:** Full audit of existing artifacts before adding new work  
-**Last session:** Discovered 2026-07-27 — pre-existing workspace already synced to GitHub with a full stack (lh_Ecommerce_Olist Lakehouse; wh_Ecommerce_Olist Warehouse with Gold schema Fact_Sales, Dim_Customers, Dim_Products, Dim_Sellers, Dim_Date, Agg_Customer_Intelligence; nb_Ecommerce_Olist_Bronze/Silver; pl_Ecommerce_Olist DataPipeline; sm_Ecommerce_Olist SemanticModel; rpt_Ecommerce_Olist Report), but no CONTEXT.md existed. Wrote CONTEXT.md to establish baseline.  
-**Next session:** Audit Gold schema grain/relationships, build DAX measure library on sm_Ecommerce_Olist, review report pages  
-**Blockers:** None known  
 
 ---
 
@@ -119,3 +89,18 @@ this exact template:
 **Last session:** <what was done last time>  
 **Next session:** <where to pick up>  
 **Blockers:** <anything blocking progress>
+
+---
+
+## Archived
+Workspaces kept for reference only — not active portfolio items.
+
+| Workspace | Reason |
+|---|---|
+| ws_RTI_Crypto | Superseded by ws_RTI_BicycleRentals |
+| ws_DigitalTwin_Bus | Deprioritised |
+| ws_AgenticLab_* | Exam/trial workspaces |
+| ws_AdventureWorks | Sample content only |
+| ws_Ecommerce_Olist | Replaced by ws_Ecommerce (Whiskique) |
+| ws_Contoso | Sample content only |
+| ws_dp700_*, ws_dp600 | DP exam prep — retired |

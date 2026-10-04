@@ -118,41 +118,6 @@ agent_AaltoEE_Forecast with three confirmed demo questions
 
 ---
 
-### ws_Ecommerce_Olist — Brazilian E-Commerce Analytics
-
-**Type:** Data Engineering + Business Intelligence  
-**Stack:** Lakehouse · Fabric Warehouse (Gold schema) · Spark notebooks · DataPipeline · DirectLake semantic model · Power BI report  
-
-Order analytics over the public Olist dataset with a Warehouse-based Gold layer
-(star schema: Fact_Sales, Dim_Customers, Dim_Products, Dim_Sellers, Dim_Date,
-Agg_Customer_Intelligence).
-
----
-
-### ws_AdventureWorks — AdventureWorks Sales Analytics
-
-**Type:** Data Engineering + Business Intelligence  
-**Stack:** Medallion architecture · Spark notebooks · DirectLake semantic model · Power BI report  
-
-End-to-end star schema over AdventureWorks sales data sourced from SQL Server,
-built entirely from VS Code using Claude Code and Fabric skills.
-
----
-
-### ws_RTI_Crypto — Live Crypto Price Intelligence
-
-**Type:** Real-Time Intelligence  
-**Stack:** Eventstream · Eventhouse · KQL Database · KQL dashboards  
-
-Live crypto price ingestion processed in-stream and stored for historical analysis,
-exposed via KQL queries and dashboards.
-
-> **Status:** Paused — pending resolution of a `Git_GitProviderCommitRejectedByPolicy`
-> error (Microsoft support ticket open). Workspace artifacts are intact.
-> Blockers tracked in PROJECTS.md and ws_RTI_Crypto/CONTEXT.md.
-
----
-
 ## Development Stack
 
 | Layer | Tool |
