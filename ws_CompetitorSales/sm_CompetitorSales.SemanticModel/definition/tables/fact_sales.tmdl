@@ -1,0 +1,70 @@
+table fact_sales
+	lineageTag: c5000010-0000-4000-8000-000000000001
+	sourceLineageTag: [dbo].[gold_fact_sales]
+
+	column ProductID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c5000011-0000-4000-8000-000000000001
+		sourceLineageTag: ProductID
+		summarizeBy: none
+		sourceColumn: ProductID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: c5000012-0000-4000-8000-000000000001
+		sourceLineageTag: Date
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Zip
+		dataType: string
+		isHidden
+		lineageTag: c5000013-0000-4000-8000-000000000001
+		sourceLineageTag: Zip
+		summarizeBy: none
+		sourceColumn: Zip
+
+		annotation SummarizationSetBy = Automatic
+
+	column Units
+		dataType: int64
+		formatString: #,0
+		lineageTag: c5000014-0000-4000-8000-000000000001
+		sourceLineageTag: Units
+		summarizeBy: sum
+		sourceColumn: Units
+
+		annotation SummarizationSetBy = Automatic
+
+	column Revenue
+		dataType: double
+		formatString: $ #,##0
+		lineageTag: c5000015-0000-4000-8000-000000000001
+		sourceLineageTag: Revenue
+		summarizeBy: sum
+		sourceColumn: Revenue
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: c5000016-0000-4000-8000-000000000001
+		sourceLineageTag: Country
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_sales = entity
+		mode: directLake
+		source
+			entityName: gold_fact_sales
+			schemaName: dbo
+			expressionSource: 'DirectLake - lh_CompetitorSales'

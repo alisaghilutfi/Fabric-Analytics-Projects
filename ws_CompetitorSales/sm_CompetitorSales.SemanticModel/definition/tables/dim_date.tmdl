@@ -1,0 +1,119 @@
+table dim_date
+	lineageTag: c5000050-0000-4000-8000-000000000001
+	sourceLineageTag: [dbo].[DateDimension]
+
+	column Date
+		dataType: dateTime
+		isKey
+		formatString: Short Date
+		lineageTag: c5000051-0000-4000-8000-000000000001
+		sourceLineageTag: Date
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: c5000052-0000-4000-8000-000000000001
+		sourceLineageTag: Year
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: string
+		lineageTag: c5000053-0000-4000-8000-000000000001
+		sourceLineageTag: Quarter
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNumber
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c5000054-0000-4000-8000-000000000001
+		sourceLineageTag: MonthNumber
+		summarizeBy: none
+		sourceColumn: MonthNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthName
+		dataType: string
+		lineageTag: c5000055-0000-4000-8000-000000000001
+		sourceLineageTag: MonthName
+		summarizeBy: none
+		sourceColumn: MonthName
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthYear
+		dataType: string
+		lineageTag: c5000056-0000-4000-8000-000000000001
+		sourceLineageTag: MonthYear
+		summarizeBy: none
+		sourceColumn: MonthYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthYearCode
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c5000057-0000-4000-8000-000000000001
+		sourceLineageTag: MonthYearCode
+		summarizeBy: none
+		sourceColumn: MonthYearCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column Day
+		dataType: int64
+		formatString: 0
+		lineageTag: c5000058-0000-4000-8000-000000000001
+		sourceLineageTag: Day
+		summarizeBy: none
+		sourceColumn: Day
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayOfWeek
+		dataType: string
+		lineageTag: c5000059-0000-4000-8000-000000000001
+		sourceLineageTag: DayOfWeek
+		summarizeBy: none
+		sourceColumn: DayOfWeek
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsWeekend
+		dataType: boolean
+		lineageTag: c500005a-0000-4000-8000-000000000001
+		sourceLineageTag: IsWeekend
+		summarizeBy: none
+		sourceColumn: IsWeekend
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearOffset
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c500005b-0000-4000-8000-000000000001
+		sourceLineageTag: YearOffset
+		summarizeBy: none
+		sourceColumn: YearOffset
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_date = entity
+		mode: directLake
+		source
+			entityName: DateDimension
+			schemaName: dbo
+			expressionSource: 'DirectLake - lh_CompetitorSales'

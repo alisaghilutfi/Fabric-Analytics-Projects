@@ -1,0 +1,8 @@
+expression 'DirectLake - lh_CompetitorSales' =
+		let
+		    Source = AzureStorage.DataLake("https://onelake.dfs.fabric.microsoft.com/bdf49d9a-d2e4-444b-b666-735d2460b5cb/46efa811-c9ab-4952-99e3-9c5ee33f09c5", [HierarchicalNavigation=true])
+		in
+		    Source
+	lineageTag: c5000001-0000-4000-8000-000000000001
+
+	annotation PBI_IncludeFutureArtifacts = False

@@ -22,7 +22,7 @@
 
 # CELL ********************
 
-from pyspark.sql.functions import col
+from pyspark.sql.functions import coalesce, col, lit
 
 # METADATA ********************
 
@@ -34,7 +34,8 @@ from pyspark.sql.functions import col
 # CELL ********************
 
 # ── Gold: dim_product ────────────────────────────────────────────────────────
-df_product = spark.read.table("silver_product")
+df_product = spark.read.table("silver_product") \
+    .withColumn("Category", coalesce(col("Category"), lit("Uncategorised")))
 df_product.write.mode("overwrite").option("overwriteSchema", "true") \
     .saveAsTable("gold_dim_product")
 print(f"✅ gold_dim_product: {df_product.count()} rows")

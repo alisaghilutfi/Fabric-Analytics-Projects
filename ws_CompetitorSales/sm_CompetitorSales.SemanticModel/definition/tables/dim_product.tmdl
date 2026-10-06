@@ -1,0 +1,70 @@
+table dim_product
+	lineageTag: c5000020-0000-4000-8000-000000000001
+	sourceLineageTag: [dbo].[gold_dim_product]
+
+	column ProductID
+		dataType: int64
+		isHidden
+		isKey
+		formatString: 0
+		lineageTag: c5000021-0000-4000-8000-000000000001
+		sourceLineageTag: ProductID
+		summarizeBy: none
+		sourceColumn: ProductID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product
+		dataType: string
+		lineageTag: c5000022-0000-4000-8000-000000000001
+		sourceLineageTag: Product
+		summarizeBy: none
+		sourceColumn: Product
+
+		annotation SummarizationSetBy = Automatic
+
+	column Segment
+		dataType: string
+		lineageTag: c5000023-0000-4000-8000-000000000001
+		sourceLineageTag: Segment
+		summarizeBy: none
+		sourceColumn: Segment
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: c5000024-0000-4000-8000-000000000001
+		sourceLineageTag: Category
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column ManufacturerID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c5000025-0000-4000-8000-000000000001
+		sourceLineageTag: ManufacturerID
+		summarizeBy: none
+		sourceColumn: ManufacturerID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Price
+		dataType: double
+		formatString: $ #,##0.00
+		lineageTag: c5000026-0000-4000-8000-000000000001
+		sourceLineageTag: Price
+		summarizeBy: none
+		sourceColumn: Price
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_product = entity
+		mode: directLake
+		source
+			entityName: gold_dim_product
+			schemaName: dbo
+			expressionSource: 'DirectLake - lh_CompetitorSales'

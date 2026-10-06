@@ -1,0 +1,41 @@
+table dim_manufacturer
+	lineageTag: c5000030-0000-4000-8000-000000000001
+	sourceLineageTag: [dbo].[gold_dim_manufacturer]
+
+	column ManufacturerID
+		dataType: int64
+		isHidden
+		isKey
+		formatString: 0
+		lineageTag: c5000031-0000-4000-8000-000000000001
+		sourceLineageTag: ManufacturerID
+		summarizeBy: none
+		sourceColumn: ManufacturerID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Manufacturer
+		dataType: string
+		lineageTag: c5000032-0000-4000-8000-000000000001
+		sourceLineageTag: Manufacturer
+		summarizeBy: none
+		sourceColumn: Manufacturer
+
+		annotation SummarizationSetBy = Automatic
+
+	column Logo
+		dataType: string
+		isHidden
+		lineageTag: c5000033-0000-4000-8000-000000000001
+		sourceLineageTag: Logo
+		summarizeBy: none
+		sourceColumn: Logo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_manufacturer = entity
+		mode: directLake
+		source
+			entityName: gold_dim_manufacturer
+			schemaName: dbo
+			expressionSource: 'DirectLake - lh_CompetitorSales'
