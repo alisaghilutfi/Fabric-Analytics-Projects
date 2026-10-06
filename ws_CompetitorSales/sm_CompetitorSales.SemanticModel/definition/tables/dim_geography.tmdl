@@ -1,0 +1,66 @@
+table dim_geography
+	lineageTag: c5000040-0000-4000-8000-000000000001
+	sourceLineageTag: [dbo].[gold_dim_geography]
+
+	column Zip
+		dataType: string
+		isHidden
+		isKey
+		lineageTag: c5000041-0000-4000-8000-000000000001
+		sourceLineageTag: Zip
+		summarizeBy: none
+		sourceColumn: Zip
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: c5000042-0000-4000-8000-000000000001
+		sourceLineageTag: City
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column State
+		dataType: string
+		lineageTag: c5000043-0000-4000-8000-000000000001
+		sourceLineageTag: State
+		summarizeBy: none
+		sourceColumn: State
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: c5000044-0000-4000-8000-000000000001
+		sourceLineageTag: Region
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column District
+		dataType: string
+		lineageTag: c5000045-0000-4000-8000-000000000001
+		sourceLineageTag: District
+		summarizeBy: none
+		sourceColumn: District
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: c5000046-0000-4000-8000-000000000001
+		sourceLineageTag: Country
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_geography = entity
+		mode: directLake
+		source
+			entityName: gold_dim_geography
+			schemaName: dbo
+			expressionSource: 'DirectLake - lh_CompetitorSales'
