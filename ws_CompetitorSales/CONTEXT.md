@@ -137,14 +137,14 @@ Columns to include:
 | `Date` | PK — relationship to fact_sales |
 | `Year` | |
 | `Quarter` | e.g. "Q1" |
-| `Month Number` | Integer sort key |
-| `Month Name` | e.g. "January" |
-| `Month Year` | e.g. "Jan 2020" — axis label |
-| `Month Year Code` | Integer e.g. 202001 — sort column for Month Year |
+| `MonthNumber` | Integer |
+| `MonthName` | e.g. "January" |
+| `MonthYear` | e.g. "Jan 2020" — axis label |
+| `MonthYearCode` | Integer e.g. 202001 — sort column for MonthYear |
 | `Day` | |
-| `Day of Week` | e.g. "Monday" |
-| `Is Weekend` | Boolean |
-| `Year Offset` | Current year = 0; useful for relative period slicers |
+| `DayOfWeek` | e.g. "Monday" |
+| `IsWeekend` | Boolean |
+| `YearOffset` | Current year = 0 |
 
 ### _Measures calculated table
 
@@ -238,7 +238,7 @@ Countries with Sales = DISTINCTCOUNT('dim_geography'[Country])
 | `dim_product` | `ProductID` (after rename), `ManufacturerID` |
 | `dim_manufacturer` | `ManufacturerID`, `Logo` |
 | `dim_geography` | `Zip` |
-| `dim_date` | `Month Number`, `Month Year Code`, `Year Offset` |
+| `dim_date` | `MonthNumber`, `MonthYearCode`, `YearOffset` |
 
 ---
 
