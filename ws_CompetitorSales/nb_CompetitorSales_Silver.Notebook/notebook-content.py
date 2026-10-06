@@ -91,7 +91,9 @@ print(f"✅ silver_product: {df_product.count()} rows")
 
 # ── Silver: Manufacturer (pass-through — already unpivoted in Bronze) ─────────
 df_manufacturer = spark.read.table("bronze_manufacturer")
-df_manufacturer.write.mode("overwrite").saveAsTable("silver_manufacturer")
+df_manufacturer.write.mode("overwrite") \
+    .option("overwriteSchema", "true") \
+    .saveAsTable("silver_manufacturer")
 print(f"✅ silver_manufacturer: {df_manufacturer.count()} rows")
 
 # METADATA ********************
