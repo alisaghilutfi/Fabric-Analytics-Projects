@@ -52,27 +52,40 @@ for table_name, file_path in sales_files.items():
 # CELL ********************
 
 # ── Bronze: Dimensions (bi_dimensions.xlsx) ─────────────────────────────────
-# Product Details sheet — standard header, no skip needed
-# Manufacturer sheet — wide format (15 cols); written as-is, unpivot in Silver
-# Geography sheet — 3 metadata header rows skipped via skiprows
+#
+# Sheet structure (discovered at runtime):
+# - Product Details: row 0 = sheet title, row 1 = real header → use header=1
+# - Manufacturer: 4 rows × 15 cols wide format
+#     row 0 = Column1..Column15 (junk)
+#     row 1 = ManufacturerID values (1–14)
+#     row 2 = Manufacturer names
+#     row 3 = Logo URLs
+#   → manual transpose into 3-column, 15-row table
+# - Geography: 3 metadata header rows → skiprows=3, header=0
 
 import pandas as pd
-from pyspark.sql import SparkSession
 
 xlsx_path = "/lakehouse/default/Files/Bronze/Dimensions/bi_dimensions.xlsx"
 
 # Product Details
-df_product = pd.read_excel(xlsx_path, sheet_name="Product Details")
+df_product = pd.read_excel(xlsx_path, sheet_name="Product Details", header=1)
+df_product.columns = df_product.columns.str.strip()
 spark.createDataFrame(df_product).write.mode("overwrite").saveAsTable("bronze_product")
 print(f"✅ bronze_product: {len(df_product)} rows")
 
-# Manufacturer (wide — write as-is)
-df_manufacturer = pd.read_excel(xlsx_path, sheet_name="Manufacturer")
-spark.createDataFrame(df_manufacturer).write.mode("overwrite").saveAsTable("bronze_manufacturer")
-print(f"✅ bronze_manufacturer: {len(df_manufacturer)} rows")
+# Manufacturer — manual unpivot from wide format
+df_mfr_raw = pd.read_excel(xlsx_path, sheet_name="Manufacturer", header=None)
+df_mfr = pd.DataFrame({
+    "ManufacturerID": df_mfr_raw.iloc[1, :].values,
+    "Manufacturer":   df_mfr_raw.iloc[2, :].values,
+    "Logo":           df_mfr_raw.iloc[3, :].values,
+})
+spark.createDataFrame(df_mfr).write.mode("overwrite").saveAsTable("bronze_manufacturer")
+print(f"✅ bronze_manufacturer: {len(df_mfr)} rows")
 
-# Geography (skip 3 metadata header rows)
-df_geography = pd.read_excel(xlsx_path, sheet_name="Geography", skiprows=3)
+# Geography
+df_geography = pd.read_excel(xlsx_path, sheet_name="Geography", skiprows=3, header=0)
+df_geography.columns = df_geography.columns.str.strip()
 spark.createDataFrame(df_geography).write.mode("overwrite").saveAsTable("bronze_geography")
 print(f"✅ bronze_geography: {len(df_geography)} rows")
 

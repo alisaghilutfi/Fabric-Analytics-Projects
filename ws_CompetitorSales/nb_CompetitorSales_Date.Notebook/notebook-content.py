@@ -13,51 +13,37 @@
 
 from pyspark.sql.functions import (
     col, year, month, quarter, dayofmonth, date_format,
-    dayofweek, when, concat, lit, expr
+    dayofweek, when, concat, lit
 )
 
-# METADATA ********************
+# ── Configuration ────────────────────────────────────────────────────────────
+start_date  = "2016-01-01"
+end_date    = "2022-12-31"
+today_year  = 2026  # static reference for YearOffset
 
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
-start_date = "2016-01-01"
-end_date   = "2022-12-31"
-
+# ── Generate date spine ───────────────────────────────────────────────────────
 dates_df = spark.sql(f"""
-    SELECT explode(sequence(to_date('{start_date}'), to_date('{end_date}'),
-    interval 1 day)) AS Date
+    SELECT explode(sequence(
+        to_date('{start_date}'),
+        to_date('{end_date}'),
+        interval 1 day
+    )) AS Date
 """)
 
-from pyspark.sql.functions import trunc, last_day, months_between, floor
-
-today_year = 2026  # static reference for Year Offset
-
+# ── Add calendar columns ──────────────────────────────────────────────────────
 dim_date = dates_df \
     .withColumn("Year",          year("Date")) \
     .withColumn("Quarter",       concat(lit("Q"), quarter("Date"))) \
-    .withColumn("Month Number",  month("Date")) \
-    .withColumn("Month Name",    date_format("Date", "MMMM")) \
-    .withColumn("Month Year",    date_format("Date", "MMM yyyy")) \
-    .withColumn("Month Year Code", (year("Date") * 100 + month("Date")).cast("int")) \
+    .withColumn("MonthNumber",   month("Date")) \
+    .withColumn("MonthName",     date_format("Date", "MMMM")) \
+    .withColumn("MonthYear",     date_format("Date", "MMM yyyy")) \
+    .withColumn("MonthYearCode", (year("Date") * 100 + month("Date")).cast("int")) \
     .withColumn("Day",           dayofmonth("Date")) \
-    .withColumn("Day of Week",   date_format("Date", "EEEE")) \
-    .withColumn("Is Weekend",    when(dayofweek("Date").isin(1, 7), True).otherwise(False)) \
-    .withColumn("Year Offset",   (year("Date") - today_year).cast("int"))
+    .withColumn("DayOfWeek",     date_format("Date", "EEEE")) \
+    .withColumn("IsWeekend",     when(dayofweek("Date").isin(1, 7), True).otherwise(False)) \
+    .withColumn("YearOffset",    (year("Date") - today_year).cast("int"))
 
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
+# ── Write to Lakehouse DateDimension table ────────────────────────────────────
 dim_date.write.format("delta") \
     .mode("overwrite") \
     .option("overwriteSchema", "true") \
