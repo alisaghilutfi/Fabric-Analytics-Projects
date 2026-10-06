@@ -34,7 +34,9 @@
         "dependsOn": [
           {
             "activity": "Bronze_Notebook",
-            "dependencyConditions": ["Succeeded"]
+            "dependencyConditions": [
+              "Succeeded"
+            ]
           }
         ]
       },
@@ -55,7 +57,9 @@
         "dependsOn": [
           {
             "activity": "Silver_Notebook",
-            "dependencyConditions": ["Succeeded"]
+            "dependencyConditions": [
+              "Succeeded"
+            ]
           }
         ]
       }
