@@ -357,7 +357,13 @@ Synonyms: DirectLake limitation — defer to Power BI Desktop → Tools → Lang
 | Fabric workspace | ✅ Created — ID `bdf49d9a-d2e4-444b-b666-735d2460b5cb` |
 | Git integration | ✅ Connected — `/ws_CompetitorSales` on `dev-fabric-sync` |
 | CONTEXT.md | ✅ This file |
-| All Fabric items | ❌ Not yet created |
+| `nb_CompetitorSales_Date` | ✅ Complete — DateDimension 2,557 rows |
+| `nb_CompetitorSales_Bronze` | ✅ Complete — 1,798,121 sales rows + 3 dimension tables |
+| `nb_CompetitorSales_Silver` | ✅ Complete — silver_sales 1,798,121 rows, AC-7 and AC-8 pass |
+| `nb_CompetitorSales_Gold` | ✅ Complete — gold_fact_sales 1,798,121 rows, AC-10 pass (0 orphans), OPTIMIZE done |
+| `sm_CompetitorSales` | ❌ Not yet created |
+| `rpt_CompetitorSales` | ❌ Not yet created |
+| `agent_CompetitorSales` | ❌ Not yet created |
 
 ---
 
@@ -368,9 +374,11 @@ Synonyms: DirectLake limitation — defer to Power BI Desktop → Tools → Lang
 Read ws_CompetitorSales/CONTEXT.md and
 _projects/analyze-sales-performance-market/docs/architecture-handoff.md in full.
 
-Wave 1: Create lh_CompetitorSales (Lakehouse) in workspace
+Wave 4: Create sm_CompetitorSales (SemanticModel) in workspace
 bdf49d9a-d2e4-444b-b666-735d2460b5cb using Fabric Core MCP Server.
-Confirm item ID before proceeding to Wave 2 (pl_CompetitorSales).
+DirectLake mode over Gold tables in lh_CompetitorSales
+(46efa811-c9ab-4952-99e3-9c5ee33f09c5).
+Confirm item ID before proceeding to Wave 5 (rpt_CompetitorSales).
 
 
 ---
@@ -382,6 +390,14 @@ in Fabric portal (Git sync confirmed). FabricEngineer blocked on workspace creat
 due to InsufficientScopes on Fabric Core MCP connector — OAuth reconnect needed or
 workspace created manually. Workspace ID confirmed:
 `bdf49d9a-d2e4-444b-b666-735d2460b5cb`.*
+
+*2026-10-06 — Bronze/Silver/Gold notebooks executed successfully. All AC criteria met:
+AC-7 (silver_sales 1,798,121 rows), AC-8 (silver_manufacturer 15 rows), AC-10
+(0 orphaned fact rows). DateDimension written (2,557 rows). OPTIMIZE complete on
+gold_fact_sales. Key fixes applied during run: Bronze xlsx header=1 for Product
+Details, manual iloc unpivot for Manufacturer, Silver manufacturer changed to
+pass-through. dim_date column names confirmed as camelCase (MonthNumber,
+MonthYearCode etc). Next: Wave 4 — sm_CompetitorSales.*
 
 ---
 *Instructions layer: ProjectPlanner (Claude.ai) · 2026-10-05*
