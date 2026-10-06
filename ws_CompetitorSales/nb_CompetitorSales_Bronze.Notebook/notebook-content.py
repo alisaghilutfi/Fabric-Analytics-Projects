@@ -76,11 +76,13 @@ print(f"✅ bronze_product: {len(df_product)} rows")
 # Manufacturer — manual unpivot from wide format
 df_mfr_raw = pd.read_excel(xlsx_path, sheet_name="Manufacturer", header=None)
 df_mfr = pd.DataFrame({
-    "ManufacturerID": df_mfr_raw.iloc[1, :].values,
+    "ManufacturerID": pd.to_numeric(df_mfr_raw.iloc[1, :].values, errors="coerce"),
     "Manufacturer":   df_mfr_raw.iloc[2, :].values,
     "Logo":           df_mfr_raw.iloc[3, :].values,
 })
-spark.createDataFrame(df_mfr).write.mode("overwrite").saveAsTable("bronze_manufacturer")
+df_mfr = df_mfr.dropna(subset=["ManufacturerID"])
+df_mfr["ManufacturerID"] = df_mfr["ManufacturerID"].astype(int)
+spark.createDataFrame(df_mfr).write.mode("overwrite").option("overwriteSchema", "true").saveAsTable("bronze_manufacturer")
 print(f"✅ bronze_manufacturer: {len(df_mfr)} rows")
 
 # Geography
