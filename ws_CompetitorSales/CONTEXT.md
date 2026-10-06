@@ -357,11 +357,11 @@ Synonyms: DirectLake limitation — defer to Power BI Desktop → Tools → Lang
 | Fabric workspace | ✅ Created — ID `bdf49d9a-d2e4-444b-b666-735d2460b5cb` |
 | Git integration | ✅ Connected — `/ws_CompetitorSales` on `dev-fabric-sync` |
 | CONTEXT.md | ✅ This file |
-| `nb_CompetitorSales_Date` | ✅ Complete — DateDimension 2,557 rows |
+| `nb_CompetitorSales_Date` | ⚠️ DateDimension write pending — capacity limit hit; fix committed (saveAsTable + lakehouse attachment in metadata) |
 | `nb_CompetitorSales_Bronze` | ✅ Complete — 1,798,121 sales rows + 3 dimension tables |
 | `nb_CompetitorSales_Silver` | ✅ Complete — silver_sales 1,798,121 rows, AC-7 and AC-8 pass |
 | `nb_CompetitorSales_Gold` | ✅ Complete — gold_fact_sales 1,798,121 rows, AC-10 pass (0 orphans), OPTIMIZE done |
-| `sm_CompetitorSales` | ❌ Not yet created |
+| `sm_CompetitorSales` | ⚠️ Created (ID: 2d55bd9f-5512-40de-803b-6d5be8fc4eb0) — refresh blocked pending DateDimension registration |
 | `rpt_CompetitorSales` | ❌ Not yet created |
 | `agent_CompetitorSales` | ❌ Not yet created |
 
@@ -371,14 +371,12 @@ Synonyms: DirectLake limitation — defer to Power BI Desktop → Tools → Lang
 
 **FabricEngineer — Step 1:**
 
-Read ws_CompetitorSales/CONTEXT.md and
-_projects/analyze-sales-performance-market/docs/architecture-handoff.md in full.
+Read ws_CompetitorSales/CONTEXT.md in full.
 
-Wave 4: Create sm_CompetitorSales (SemanticModel) in workspace
-bdf49d9a-d2e4-444b-b666-735d2460b5cb using Fabric Core MCP Server.
-DirectLake mode over Gold tables in lh_CompetitorSales
-(46efa811-c9ab-4952-99e3-9c5ee33f09c5).
-Confirm item ID before proceeding to Wave 5 (rpt_CompetitorSales).
+1. Run `nb_CompetitorSales_Date` — confirm DateDimension: 2,557 rows in lh_CompetitorSales
+2. Trigger `sm_CompetitorSales` refresh in Fabric portal — confirm warning triangles gone
+3. Verify DAX: `EVALUATE ROW("Revenue", [Revenue])` returns data
+4. Wave 5: create `rpt_CompetitorSales`
 
 
 ---
@@ -398,6 +396,15 @@ gold_fact_sales. Key fixes applied during run: Bronze xlsx header=1 for Product
 Details, manual iloc unpivot for Manufacturer, Silver manufacturer changed to
 pass-through. dim_date column names confirmed as camelCase (MonthNumber,
 MonthYearCode etc). Next: Wave 4 — sm_CompetitorSales.*
+
+*2026-10-06 — Waves 1–4 substantially complete. Gold validated (1,798,121 rows,
+0 orphans, OPTIMIZE done). Pipeline clean. sm_CompetitorSales created
+(ID: 2d55bd9f-5512-40de-803b-6d5be8fc4eb0) with snowflake schema, all 12 measures,
+display folders. DateDimension blocked by HTTP 430 capacity limit — fix committed
+(saveAsTable + lakehouse metadata attachment). Key fixes this session: Bronze xlsx
+header=1, manual iloc Manufacturer unpivot (14 rows), Silver/Gold overwriteSchema,
+dim_date camelCase columns, definition.pbism missing from initial TMDL, abfss path
+format requires workspace/lakehouse name not ID.*
 
 ---
 *Instructions layer: ProjectPlanner (Claude.ai) · 2026-10-05*
