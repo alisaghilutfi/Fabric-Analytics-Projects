@@ -89,22 +89,8 @@ print(f"✅ silver_product: {df_product.count()} rows")
 
 # CELL ********************
 
-# ── Silver: Manufacturer (unpivot) ───────────────────────────────────────────
-# Source is wide format: one column per manufacturer attribute.
-# Target: ManufacturerID, Manufacturer, Logo — one row per manufacturer.
-# Use pandas for the unpivot since the source is small (15 manufacturers).
-
-import pandas as pd
-
-df_mfr_pd = spark.read.table("bronze_manufacturer").toPandas()
-
-# Inspect columns at runtime — wide format means column names encode the data.
-# Standard unpivot: melt all non-ID columns.
-# Adjust id_vars if the source has a different structure after Bronze inspection.
-df_mfr_melted = df_mfr_pd.melt(var_name="Manufacturer", value_name="Logo")
-df_mfr_melted.insert(0, "ManufacturerID", range(1, len(df_mfr_melted) + 1))
-
-df_manufacturer = spark.createDataFrame(df_mfr_melted)
+# ── Silver: Manufacturer (pass-through — already unpivoted in Bronze) ─────────
+df_manufacturer = spark.read.table("bronze_manufacturer")
 df_manufacturer.write.mode("overwrite").saveAsTable("silver_manufacturer")
 print(f"✅ silver_manufacturer: {df_manufacturer.count()} rows")
 
