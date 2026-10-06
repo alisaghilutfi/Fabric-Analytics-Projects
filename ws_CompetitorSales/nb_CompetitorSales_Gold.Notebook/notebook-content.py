@@ -22,7 +22,7 @@
 
 # CELL ********************
 
-from pyspark.sql.functions import col, coalesce, lit
+from pyspark.sql.functions import coalesce, col, lit
 
 # METADATA ********************
 
@@ -34,7 +34,6 @@ from pyspark.sql.functions import col, coalesce, lit
 # CELL ********************
 
 # ── Gold: dim_product ────────────────────────────────────────────────────────
-# Coalesce null Category values before writing — prevents DirectLake framing issues
 df_product = spark.read.table("silver_product") \
     .withColumn("Category", coalesce(col("Category"), lit("Uncategorised")))
 df_product.write.mode("overwrite").option("overwriteSchema", "true") \

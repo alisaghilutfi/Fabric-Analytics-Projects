@@ -82,7 +82,9 @@ df_mfr = pd.DataFrame({
 })
 df_mfr = df_mfr.dropna(subset=["ManufacturerID"])
 df_mfr["ManufacturerID"] = df_mfr["ManufacturerID"].astype(int)
-spark.createDataFrame(df_mfr).write.mode("overwrite").option("overwriteSchema", "true").saveAsTable("bronze_manufacturer")
+spark.createDataFrame(df_mfr).write.mode("overwrite") \
+    .option("overwriteSchema", "true") \
+    .saveAsTable("bronze_manufacturer")
 print(f"✅ bronze_manufacturer: {len(df_mfr)} rows")
 
 # Geography
@@ -90,6 +92,16 @@ df_geography = pd.read_excel(xlsx_path, sheet_name="Geography", skiprows=3, head
 df_geography.columns = df_geography.columns.str.strip()
 spark.createDataFrame(df_geography).write.mode("overwrite").saveAsTable("bronze_geography")
 print(f"✅ bronze_geography: {len(df_geography)} rows")
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
 
 # METADATA ********************
 
