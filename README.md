@@ -125,8 +125,8 @@ agent_AaltoEE_Forecast with three confirmed demo questions
 | AI planning agent | Claude Desktop (ProjectPlanner) |
 | AI execution agent | Claude Code in VS Code (FabricEngineer) |
 | Fabric operations | Fabric Core MCP Server (remote connector) |
-| Semantic model / DAX | powerbi-authoring-local (XMLA endpoint, extension) |
-| Fabric skills | skills-for-fabric v0.3.18 (Copilot CLI) |
+| Power BI modeling | powerbi-modeling-mcp v1.0.0 (Claude Code plugin; Claude Desktop read-only) |
+| Fabric skills | skills-for-fabric v0.3.19 (Claude Code plugin + Copilot CLI) |
 | Context management | PROJECTS.md + ws_\<name\>/CONTEXT.md |
 | Git strategy | dev-fabric-sync → test → main (PR-based promotion) |
 | CI/CD | GitHub Actions — semantic model refresh on merge to main |
@@ -151,4 +151,4 @@ specialising in Microsoft Fabric, Power BI, and agentic analytics systems.
 - GitHub: [alisaghilutfi](https://github.com/alisaghilutfi)
 - X: [@alis05111](https://x.com/alis05111)
 
-*Last updated: 2026-10-02 (MCP & Skills configuration, ws_USGS_Earthquake & ws_RTI_Crypto blockers).*
+*Last updated: 2026-10-07 (skills v0.3.19, powerbi-modeling-mcp v1.0.0 stack entry).*

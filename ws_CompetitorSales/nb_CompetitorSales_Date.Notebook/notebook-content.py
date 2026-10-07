@@ -6,18 +6,7 @@
 # META   "kernel_info": {
 # META     "name": "synapse_pyspark"
 # META   },
-# META   "dependencies": {
-# META     "lakehouse": {
-# META       "default_lakehouse": "46efa811-c9ab-4952-99e3-9c5ee33f09c5",
-# META       "default_lakehouse_name": "lh_CompetitorSales",
-# META       "default_lakehouse_workspace_id": "bdf49d9a-d2e4-444b-b666-735d2460b5cb",
-# META       "known_lakehouses": [
-# META         {
-# META           "id": "46efa811-c9ab-4952-99e3-9c5ee33f09c5"
-# META         }
-# META       ]
-# META     }
-# META   }
+# META   "dependencies": {}
 # META }
 
 # CELL ********************
@@ -58,7 +47,7 @@ dim_date = dates_df \
 dim_date.write.format("delta") \
     .mode("overwrite") \
     .option("overwriteSchema", "true") \
-    .saveAsTable("DateDimension")
+    .save("abfss://ws_CompetitorSales@onelake.dfs.fabric.microsoft.com/lh_CompetitorSales.Lakehouse/Tables/DateDimension")
 
 print(f"✅ DateDimension: {dim_date.count()} rows")
 
