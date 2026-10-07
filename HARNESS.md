@@ -196,45 +196,15 @@ git checkout dev-fabric-sync
 `analysis-services.powerbi-modeling-mcp`. Use the runtime name in permission
 wildcards.
 
-### Skills-for-Fabric (v0.3.18)
+### Skills-for-Fabric (v0.3.19)
 
-Installed via **Copilot CLI (Route 1)** on 2026-10-02:
+skills-for-fabric v0.3.19, two separate installs. Claude Code: `~/.claude/plugins/cache/fabric-collection/` (powerbi-authoring, fabric-skills); update with `claude plugin marketplace update fabric-collection` then `claude plugin update <plugin>@fabric-collection`. Copilot CLI: `~/.copilot/installed-plugins/fabric-collection/`; update with `copilot plugin update --all`. Always update both. fabric-authoring and fabric-consumption are legacy aliases of fabric-skills.
 
-```powershell
-cd C:\Users\alisa\skills-for-fabric
-git pull origin main  # v0.3.18
-copilot plugin install powerbi-authoring@fabric-collection
-copilot plugin install fabric-skills@fabric-collection
-```
+### Write Gate — root cause (resolved 2026-10-07)
 
-**Install location:** `~/.copilot/installed-plugins/fabric-collection/`  
-**Not:** `~/.claude/skills/` (Route 4, manual ZIP only)
+`C:\Users\alisa\.mcp.json` registered powerbi-modeling-mcp v0.1.9 (Downloads folder). Claude Code loads `.mcp.json` from parent directories as project scope. v0.1.9 requires write confirmation by default (v1.0.0 skips it), so every write was auto-declined. Fix: `~/.mcp.json` renamed to `.mcp.json.retired-2026-10-07`, v0.1.9 deleted. Writes use prefix `mcp__plugin_powerbi-authoring_powerbi-modeling-mcp__*`. Verified by reversible write test on `sm_USGS_Earthquake`. Commit `020ea88` was not the real fix.
 
-**Update command:**
-```powershell
-copilot plugin update --all
-```
-
-### Write Gate Fix (2026-10-02)
-
-Semantic model write operations (`column_operations Update`, etc.) previously
-hung with confirmation dialogs despite `bypassPermissions` setting.
-
-**Root cause:** Three simultaneous conditions:
-1. `.vscode/settings.json` contained stale `--require-confirmation false` flag
-2. Three competing processes running (old v0.1.9, npx cache, duplicate extension)
-3. Wrong permission wildcard in `settings.local.json`
-
-**Fix applied:**
-- Commit `020ea88`: removed `--require-confirmation false` from `.vscode/settings.json`
-- Killed 3 stale processes by PID
-- Corrected permission wildcard to `mcp__powerbi-authoring-local__*`
-- Verified: write test on `sm_AdventureWorks` succeeded silently
-
-**Going forward:** `.vscode/settings.json` should contain ONLY:
-```json
-{"args": "--start --accept-eula"}
-```
+- Claude Desktop (ProjectPlanner) runs powerbi-modeling-mcp v1.0.0 with `--start --read-only --accept-eula`.
 
 ### Session Startup Checklist
 
@@ -249,6 +219,13 @@ Get-Process | Where-Object { $_.Path -like "*powerbi-authoring*" } | Format-List
 
 # 3. Open Claude Code
 # MCP: List Servers should show all 5 servers in Stopped state (ready to connect)
+
+# 4. Check MCP registrations
+# Run: claude mcp list 2>$null | Select-String "powerbi|fabric-mcp"
+# Expected exactly two lines:
+#   plugin:powerbi-authoring:powerbi-modeling-mcp (npx, Connected)
+#   plugin:fabric-skills:powerbi-modeling-mcp (HTTP, Connected)
+# Any other powerbi-modeling-mcp or fabric-mcp line is a stale registration — remove it first.
 ```
 
 ---
@@ -435,9 +412,13 @@ Set as Canvas background (not Wallpaper), Stretch fit, 0% transparency.
 | `powerbi-report-author` is not an npm package | It comes bundled with `powerbi-authoring@fabric-collection` plugin |
 | `@pbir/cli` does not exist on npm | The correct package is `@microsoft/powerbi-desktop-bridge-cli` |
 | `list_workspace_artifacts` returns Eventhouse and KQL Database with identical `displayName` | Always filter on `type` before acting |
-| `powerbi-authoring-local` write operations hang despite `bypassPermissions` | Check `.vscode/settings.json` contains ONLY `{"args": "--start --accept-eula"}`. Kill stale processes: `Get-Process \| Where-Object { $_.Path -like "*powerbi-authoring*" } \| Stop-Process -Force`. Verify permission wildcard in `settings.local.json` is `mcp__powerbi-authoring-local__*`. |
+| Writes declined 'when asked to confirm' | Stale v0.1.9 registration (requires confirmation by default) — check `claude mcp list` / `claude mcp get <name>` for scope, remove the stale entry |
 | Stale `powerbi-modeling-mcp` processes (from Downloads, npx cache, or old extensions) compete with current process | Inventory: `Get-Process \| Where-Object { $_.Path -like "*powerbi*" } \| Format-List Id, Path, StartTime`. Only one process should be running: the one from `~/.vscode/extensions/analysis-services.powerbi-modeling-mcp-*/server/`. Kill others by PID: `Stop-Process -Id <PID> -Force`. |
 | Extension-registered MCP servers not appearing in "MCP: List Servers" | Extension must be installed via VS Code Marketplace or Copilot CLI, not manually. Verify `~/.vscode/extensions/analysis-services.powerbi-modeling-mcp-*/` exists. Do NOT add extension servers to `mcp.json` — they auto-register. |
+| `.mcp.json` in parent folder loads as project scope | Claude Code walks up directories — keep no `.mcp.json` in `C:\Users\alisa\` |
+| JSON config invalid after PowerShell edit | PS 5.1 `Set-Content -Encoding UTF8` writes a BOM — write with `[IO.File]::WriteAllText($p,$json,(New-Object System.Text.UTF8Encoding($false)))` |
+| `powerbi-modeling-mcp` reports no connection | Server starts unconnected — connect via XMLA to workspace/model first; Power BI Desktop not required |
+| Plugin MCP tool names | Format `mcp__plugin_<plugin>_<server>__` — use this prefix in permission wildcards |
 
 ---
 
@@ -495,4 +476,4 @@ empty folders — Git does not track them.
 > Every session that files its recap makes the next session faster
 > and more accurate.
 
-*Last updated: 2026-10-02 (MCP & Skills configuration section added, write gate fix documented).*
+*Last updated: 2026-10-07 (write-gate root cause corrected, skills v0.3.19, MCP gotchas expanded).*
