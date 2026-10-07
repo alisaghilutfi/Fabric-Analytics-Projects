@@ -114,6 +114,6 @@ table dim_date
 	partition dim_date = entity
 		mode: directLake
 		source
-			entityName: DateDimension
+			entityName: datedimension
 			schemaName: dbo
 			expressionSource: 'DirectLake - lh_CompetitorSales'
