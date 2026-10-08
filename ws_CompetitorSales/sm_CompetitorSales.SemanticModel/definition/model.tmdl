@@ -6,15 +6,16 @@ model Model
 		legacyRedirects
 		returnErrorValuesAsNull
 
-annotation PBI_QueryOrder = ["DirectLake - lh_CompetitorSales"]
-
 annotation __PBI_TimeIntelligenceEnabled = 1
 
-annotation PBI_ProTooling = ["DirectLakeOnOneLakeInWeb","WebModelingEdit","TMDLView_Desktop","MCP-PBIModeling","DevMode","RemoteModeling"]
+annotation PBI_QueryOrder = ["DirectLake - lh_CompetitorSales"]
 
-ref table fact_sales
-ref table dim_product
-ref table dim_manufacturer
-ref table dim_geography
-ref table dim_date
+annotation PBI_ProTooling = ["DirectLakeOnOneLakeInWeb"]
+
+ref table datedimension
+ref table gold_dim_geography
+ref table gold_dim_manufacturer
+ref table gold_dim_product
+ref table gold_fact_sales
 ref table _Measures
+

@@ -23,6 +23,7 @@
 # CELL ********************
 
 from pyspark.sql.functions import coalesce, col, lit
+from pyspark.sql.types import DateType
 
 # METADATA ********************
 
@@ -82,6 +83,7 @@ print(f"✅ gold_dim_geography: {df_geography.count()} rows")
 # ── Gold: fact_sales ─────────────────────────────────────────────────────────
 # Validate before writing: check for orphaned ProductIDs (AC-10)
 df_sales = spark.read.table("silver_sales")
+df_sales = df_sales.withColumn("Date", col("Date").cast(DateType()))
 df_product = spark.read.table("silver_product")
 
 orphaned = df_sales.join(df_product, on="ProductID", how="left_anti")

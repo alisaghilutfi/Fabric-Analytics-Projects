@@ -1,16 +1,12 @@
-relationship fact_to_dim_product
-	fromColumn: fact_sales.ProductID
-	toColumn: dim_product.ProductID
+relationship fact_sales_ProductID_dim_product_ProductID
+	fromColumn: gold_fact_sales.ProductID
+	toColumn: gold_dim_product.ProductID
 
-relationship dim_product_to_dim_manufacturer
-	fromColumn: dim_product.ManufacturerID
-	toColumn: dim_manufacturer.ManufacturerID
+relationship dim_product_ManufacturerID_dim_manufacturer_ManufacturerID
+	fromColumn: gold_dim_product.ManufacturerID
+	toColumn: gold_dim_manufacturer.ManufacturerID
 
-relationship fact_to_dim_geography
-	fromColumn: fact_sales.Zip
-	toColumn: dim_geography.Zip
+relationship fact_sales_Zip_dim_geography_Zip
+	fromColumn: gold_fact_sales.Zip
+	toColumn: gold_dim_geography.Zip
 
-relationship fact_to_dim_date
-	joinOnDateBehavior: datePartOnly
-	fromColumn: fact_sales.Date
-	toColumn: dim_date.Date

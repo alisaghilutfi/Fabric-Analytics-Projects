@@ -1,12 +1,10 @@
-table dim_geography
-	lineageTag: c5000040-0000-4000-8000-000000000001
+table gold_dim_geography
+	lineageTag: 2b1dd6e5-c3e2-41c3-8445-681b77586508
 	sourceLineageTag: [dbo].[gold_dim_geography]
 
 	column Zip
 		dataType: string
-		isHidden
-		isKey
-		lineageTag: c5000041-0000-4000-8000-000000000001
+		lineageTag: 73c92f50-53b4-469f-a523-e35384dda2f2
 		sourceLineageTag: Zip
 		summarizeBy: none
 		sourceColumn: Zip
@@ -15,7 +13,7 @@ table dim_geography
 
 	column City
 		dataType: string
-		lineageTag: c5000042-0000-4000-8000-000000000001
+		lineageTag: 209b2581-328d-45bf-b59d-f49ccae9989c
 		sourceLineageTag: City
 		summarizeBy: none
 		sourceColumn: City
@@ -24,7 +22,7 @@ table dim_geography
 
 	column State
 		dataType: string
-		lineageTag: c5000043-0000-4000-8000-000000000001
+		lineageTag: a2a73f93-81a1-4cea-99c4-79e7b4a47901
 		sourceLineageTag: State
 		summarizeBy: none
 		sourceColumn: State
@@ -33,7 +31,7 @@ table dim_geography
 
 	column Region
 		dataType: string
-		lineageTag: c5000044-0000-4000-8000-000000000001
+		lineageTag: 23ef1552-1bbd-4fa3-b067-d69db9733ab7
 		sourceLineageTag: Region
 		summarizeBy: none
 		sourceColumn: Region
@@ -42,7 +40,7 @@ table dim_geography
 
 	column District
 		dataType: string
-		lineageTag: c5000045-0000-4000-8000-000000000001
+		lineageTag: 4808facb-78f4-4454-9c83-92aa28315bca
 		sourceLineageTag: District
 		summarizeBy: none
 		sourceColumn: District
@@ -51,16 +49,16 @@ table dim_geography
 
 	column Country
 		dataType: string
-		lineageTag: c5000046-0000-4000-8000-000000000001
+		lineageTag: 6ab4f1de-f3ed-404d-8b03-a5cefde9f92d
 		sourceLineageTag: Country
 		summarizeBy: none
 		sourceColumn: Country
 
 		annotation SummarizationSetBy = Automatic
 
-	partition dim_geography = entity
+	partition gold_dim_geography = entity
 		mode: directLake
 		source
 			entityName: gold_dim_geography
-			schemaName: dbo
 			expressionSource: 'DirectLake - lh_CompetitorSales'
+
