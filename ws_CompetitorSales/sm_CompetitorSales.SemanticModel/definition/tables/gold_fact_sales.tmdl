@@ -13,7 +13,8 @@ table gold_fact_sales
 		annotation SummarizationSetBy = Automatic
 
 	column Date
-		dataType: string
+		dataType: dateTime
+		formatString: General Date
 		lineageTag: 118a14ff-7b2a-4030-9f33-e36e95837fca
 		sourceLineageTag: Date
 		summarizeBy: none
