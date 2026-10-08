@@ -56,7 +56,7 @@ from pyspark.sql import DataFrame
 df_all = [df_usa] + df_intl
 df_sales = reduce(DataFrame.unionByName, df_all)
 
-df_sales.write.mode("overwrite").saveAsTable("silver_sales")
+df_sales.write.mode("overwrite").saveAsTable("dbo.silver_sales")
 print(f"✅ silver_sales: {df_sales.count()} rows")
 
 # METADATA ********************
@@ -77,7 +77,7 @@ df_product = spark.read.table("bronze_product") \
     .withColumn("Price", regexp_replace(col("Price"), r"[^0-9.]", "")) \
     .withColumn("Price", trim(col("Price")).cast(DoubleType()))
 
-df_product.write.mode("overwrite").saveAsTable("silver_product")
+df_product.write.mode("overwrite").saveAsTable("dbo.silver_product")
 print(f"✅ silver_product: {df_product.count()} rows")
 
 # METADATA ********************
@@ -93,7 +93,7 @@ print(f"✅ silver_product: {df_product.count()} rows")
 df_manufacturer = spark.read.table("bronze_manufacturer")
 df_manufacturer.write.mode("overwrite") \
     .option("overwriteSchema", "true") \
-    .saveAsTable("silver_manufacturer")
+    .saveAsTable("dbo.silver_manufacturer")
 print(f"✅ silver_manufacturer: {df_manufacturer.count()} rows")
 
 # METADATA ********************
@@ -109,7 +109,7 @@ print(f"✅ silver_manufacturer: {df_manufacturer.count()} rows")
 # Already clean after Bronze header-row skip. Pass through as-is.
 
 df_geography = spark.read.table("bronze_geography")
-df_geography.write.mode("overwrite").saveAsTable("silver_geography")
+df_geography.write.mode("overwrite").saveAsTable("dbo.silver_geography")
 print(f"✅ silver_geography: {df_geography.count()} rows")
 
 # METADATA ********************

@@ -29,12 +29,12 @@
 from pyspark.sql.functions import lit
 
 sales_files = {
-    "bronze_sales_usa":     "Files/Bronze/Sales/Sales.csv",
-    "bronze_sales_canada":  "Files/Bronze/Sales/Canada.csv",
-    "bronze_sales_germany": "Files/Bronze/Sales/Germany.csv",
-    "bronze_sales_japan":   "Files/Bronze/Sales/Japan.csv",
-    "bronze_sales_mexico":  "Files/Bronze/Sales/Mexico.csv",
-    "bronze_sales_nigeria": "Files/Bronze/Sales/Nigeria.csv",
+    "dbo.bronze_sales_usa":     "Files/Bronze/Sales/Sales.csv",
+    "dbo.bronze_sales_canada":  "Files/Bronze/Sales/Canada.csv",
+    "dbo.bronze_sales_germany": "Files/Bronze/Sales/Germany.csv",
+    "dbo.bronze_sales_japan":   "Files/Bronze/Sales/Japan.csv",
+    "dbo.bronze_sales_mexico":  "Files/Bronze/Sales/Mexico.csv",
+    "dbo.bronze_sales_nigeria": "Files/Bronze/Sales/Nigeria.csv",
 }
 
 for table_name, file_path in sales_files.items():
@@ -70,7 +70,7 @@ xlsx_path = "/lakehouse/default/Files/Bronze/Dimensions/bi_dimensions.xlsx"
 # Product Details
 df_product = pd.read_excel(xlsx_path, sheet_name="Product Details", header=1)
 df_product.columns = df_product.columns.str.strip()
-spark.createDataFrame(df_product).write.mode("overwrite").saveAsTable("bronze_product")
+spark.createDataFrame(df_product).write.mode("overwrite").saveAsTable("dbo.bronze_product")
 print(f"✅ bronze_product: {len(df_product)} rows")
 
 # Manufacturer — manual unpivot from wide format
@@ -84,13 +84,13 @@ df_mfr = df_mfr.dropna(subset=["ManufacturerID"])
 df_mfr["ManufacturerID"] = df_mfr["ManufacturerID"].astype(int)
 spark.createDataFrame(df_mfr).write.mode("overwrite") \
     .option("overwriteSchema", "true") \
-    .saveAsTable("bronze_manufacturer")
+    .saveAsTable("dbo.bronze_manufacturer")
 print(f"✅ bronze_manufacturer: {len(df_mfr)} rows")
 
 # Geography
 df_geography = pd.read_excel(xlsx_path, sheet_name="Geography", skiprows=3, header=0)
 df_geography.columns = df_geography.columns.str.strip()
-spark.createDataFrame(df_geography).write.mode("overwrite").saveAsTable("bronze_geography")
+spark.createDataFrame(df_geography).write.mode("overwrite").saveAsTable("dbo.bronze_geography")
 print(f"✅ bronze_geography: {len(df_geography)} rows")
 
 # METADATA ********************

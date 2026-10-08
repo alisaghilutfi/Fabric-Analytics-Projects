@@ -47,7 +47,7 @@ dim_date = dates_df \
 dim_date.write.format("delta") \
     .mode("overwrite") \
     .option("overwriteSchema", "true") \
-    .save("abfss://ws_CompetitorSales@onelake.dfs.fabric.microsoft.com/lh_CompetitorSales.Lakehouse/Tables/DateDimension")
+    .saveAsTable("dbo.DateDimension")
 
 print(f"✅ DateDimension: {dim_date.count()} rows")
 

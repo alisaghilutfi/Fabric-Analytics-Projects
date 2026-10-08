@@ -37,7 +37,7 @@ from pyspark.sql.functions import coalesce, col, lit
 df_product = spark.read.table("silver_product") \
     .withColumn("Category", coalesce(col("Category"), lit("Uncategorised")))
 df_product.write.mode("overwrite").option("overwriteSchema", "true") \
-    .saveAsTable("gold_dim_product")
+    .saveAsTable("dbo.gold_dim_product")
 print(f"✅ gold_dim_product: {df_product.count()} rows")
 
 # METADATA ********************
@@ -52,7 +52,7 @@ print(f"✅ gold_dim_product: {df_product.count()} rows")
 # ── Gold: dim_manufacturer ───────────────────────────────────────────────────
 df_manufacturer = spark.read.table("silver_manufacturer")
 df_manufacturer.write.mode("overwrite").option("overwriteSchema", "true") \
-    .saveAsTable("gold_dim_manufacturer")
+    .saveAsTable("dbo.gold_dim_manufacturer")
 print(f"✅ gold_dim_manufacturer: {df_manufacturer.count()} rows")
 
 # METADATA ********************
@@ -67,7 +67,7 @@ print(f"✅ gold_dim_manufacturer: {df_manufacturer.count()} rows")
 # ── Gold: dim_geography ──────────────────────────────────────────────────────
 df_geography = spark.read.table("silver_geography")
 df_geography.write.mode("overwrite").option("overwriteSchema", "true") \
-    .saveAsTable("gold_dim_geography")
+    .saveAsTable("dbo.gold_dim_geography")
 print(f"✅ gold_dim_geography: {df_geography.count()} rows")
 
 # METADATA ********************
@@ -90,7 +90,7 @@ print(f"Orphaned fact rows (unmatched ProductID): {orphan_count}")
 assert orphan_count == 0, f"AC-10 FAILED: {orphan_count} orphaned rows — fix Silver join before writing Gold"
 
 df_sales.write.mode("overwrite").option("overwriteSchema", "true") \
-    .saveAsTable("gold_fact_sales")
+    .saveAsTable("dbo.gold_fact_sales")
 print(f"✅ gold_fact_sales: {df_sales.count()} rows")
 
 # METADATA ********************
