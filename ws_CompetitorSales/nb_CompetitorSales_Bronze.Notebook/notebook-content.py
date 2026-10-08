@@ -102,6 +102,26 @@ print(f"✅ bronze_geography: {len(df_geography)} rows")
 
 # CELL ********************
 
+import requests
+import notebookutils
+
+# Get token
+token = notebookutils.credentials.getToken("pbi")
+
+# Trigger refresh via REST API
+workspace_id = "bdf49d9a-d2e4-444b-b666-735d2460b5cb"
+dataset_id = "2d55bd9f-5512-40de-803b-6d5be8fc4eb0"
+
+url = f"https://api.powerbi.com/v1.0/myorg/groups/{workspace_id}/datasets/{dataset_id}/refreshes"
+
+headers = {
+    "Authorization": f"Bearer {token}",
+    "Content-Type": "application/json"
+}
+
+response = requests.post(url, headers=headers, json={})
+print(f"Status: {response.status_code}")
+print(f"Response: {response.text}")
 
 # METADATA ********************
 
