@@ -89,6 +89,9 @@ orphan_count = orphaned.count()
 print(f"Orphaned fact rows (unmatched ProductID): {orphan_count}")
 assert orphan_count == 0, f"AC-10 FAILED: {orphan_count} orphaned rows — fix Silver join before writing Gold"
 
+from pyspark.sql.types import DateType
+df_sales = df_sales.withColumn("Date", col("Date").cast(DateType()))
+
 df_sales.write.mode("overwrite").option("overwriteSchema", "true") \
     .saveAsTable("gold_fact_sales")
 print(f"✅ gold_fact_sales: {df_sales.count()} rows")

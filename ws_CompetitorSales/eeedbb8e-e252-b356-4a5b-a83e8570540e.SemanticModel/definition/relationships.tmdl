@@ -1,0 +1,17 @@
+relationship fact_sales_ProductID_dim_product_ProductID
+	fromColumn: gold_fact_sales.ProductID
+	toColumn: gold_dim_product.ProductID
+
+relationship dim_product_ManufacturerID_dim_manufacturer_ManufacturerID
+	fromColumn: gold_dim_product.ManufacturerID
+	toColumn: gold_dim_manufacturer.ManufacturerID
+
+relationship fact_sales_Zip_dim_geography_Zip
+	fromColumn: gold_fact_sales.Zip
+	toColumn: gold_dim_geography.Zip
+
+relationship fact_sales_Date_datedimension_Date
+	joinOnDateBehavior: datePartOnly
+	fromColumn: gold_fact_sales.Date
+	toColumn: datedimension.Date
+

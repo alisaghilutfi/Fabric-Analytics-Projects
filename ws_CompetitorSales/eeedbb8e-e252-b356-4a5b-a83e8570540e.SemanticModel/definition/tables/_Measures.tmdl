@@ -1,0 +1,103 @@
+table _Measures
+
+	/// Total pre-calculated revenue across all sales transactions in the current filter context. Revenue is pre-calculated in source — not derived from Units × Price.
+	measure Revenue =
+			VAR _result = SUM('gold_fact_sales'[Revenue])
+			RETURN _result
+		formatString: $ #,##0
+		displayFolder: Sales Performance
+
+	/// Total units sold across all sales transactions in the current filter context.
+	measure 'Units Sold' =
+			VAR _result = SUM('gold_fact_sales'[Units])
+			RETURN _result
+		formatString: #,0
+		displayFolder: Sales Performance
+
+	/// Average revenue per transaction in the current filter context.
+	measure 'Avg Revenue per Transaction' =
+			VAR _result = DIVIDE([Revenue], [Transaction Count])
+			RETURN _result
+		formatString: $ #,##0.00
+		displayFolder: Sales Performance
+
+	/// Count of all sales transactions in the current filter context.
+	measure 'Transaction Count' =
+			VAR _result = COUNTROWS('gold_fact_sales')
+			RETURN _result
+		formatString: #,0
+		displayFolder: Volume
+
+	/// Count of distinct products with at least one sale in the current filter context.
+	measure 'Products Sold' =
+			VAR _result = DISTINCTCOUNT('gold_fact_sales'[ProductID])
+			RETURN _result
+		formatString: #,0
+		displayFolder: Volume
+
+	/// Count of distinct manufacturers with revenue in the current filter context.
+	measure 'Manufacturers Active' =
+			VAR _result = DISTINCTCOUNT('gold_dim_product'[ManufacturerID])
+			RETURN _result
+		formatString: #,0
+		displayFolder: Volume
+
+	/// Selected manufacturer's revenue as a proportion of total revenue across all manufacturers in the current filter context. Returns 0 if total is zero.
+	measure 'Market Share %' =
+			VAR _SelectedRev = [Revenue]
+			VAR _TotalRev = CALCULATE([Revenue], ALL('gold_dim_manufacturer'))
+			RETURN DIVIDE(_SelectedRev, _TotalRev, 0)
+		formatString: 0.0%
+		displayFolder: Market Share
+
+	/// Revenue versus prior year. Returns BLANK() if no prior year data.
+	measure 'Revenue YoY Change' =
+			VAR _Current = [Revenue]
+			VAR _Prior = CALCULATE([Revenue], DATEADD('datedimension'[Date], -1, YEAR))
+			RETURN _Current - _Prior
+		formatString: $ +#,##0;$ -#,##0;0
+		displayFolder: Market Share
+
+	/// Revenue YoY change as a percentage of prior year.
+	measure 'Revenue YoY %' =
+			VAR _Current = [Revenue]
+			VAR _Prior = CALCULATE([Revenue], DATEADD('datedimension'[Date], -1, YEAR))
+			RETURN DIVIDE(_Current - _Prior, _Prior, BLANK())
+		formatString: +0.0%;-0.0%
+		displayFolder: Market Share
+
+	/// Market share versus prior year market share.
+	measure 'Market Share YoY Change' =
+			VAR _Current = [Market Share %]
+			VAR _Prior = CALCULATE([Market Share %], DATEADD('datedimension'[Date], -1, YEAR))
+			RETURN _Current - _Prior
+		formatString: +0.0%;-0.0%
+		displayFolder: Market Share
+
+	/// Manufacturer rank by revenue among all manufacturers in the current filter context. 1 = highest revenue.
+	measure 'Revenue Rank' =
+			VAR _result = RANKX(ALL('gold_dim_manufacturer'), [Revenue], , DESC, Dense)
+			RETURN _result
+		formatString: 0
+		displayFolder: Market Share
+
+	/// Count of distinct countries with at least one sale in the current filter context.
+	measure 'Countries with Sales' =
+			VAR _result = DISTINCTCOUNT('gold_dim_geography'[Country])
+			RETURN _result
+		formatString: #,0
+		displayFolder: Geography
+
+	column Column
+		isHidden
+		formatString: 0
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
