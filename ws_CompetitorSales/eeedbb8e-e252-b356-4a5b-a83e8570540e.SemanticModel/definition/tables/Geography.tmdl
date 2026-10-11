@@ -1,4 +1,4 @@
-table gold_dim_geography
+table Geography
 	lineageTag: 2b1dd6e5-c3e2-41c3-8445-681b77586508
 	sourceLineageTag: [dbo].[gold_dim_geography]
 
