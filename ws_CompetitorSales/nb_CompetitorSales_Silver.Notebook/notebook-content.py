@@ -24,6 +24,8 @@
 
 from pyspark.sql.functions import col, lit, regexp_replace, trim
 from pyspark.sql.types import DoubleType
+from functools import reduce
+from pyspark.sql import DataFrame
 
 # METADATA ********************
 
@@ -49,14 +51,10 @@ intl_tables = [
 ]
 
 df_intl = [spark.read.table(t) for t in intl_tables]
-
-from functools import reduce
-from pyspark.sql import DataFrame
-
 df_all = [df_usa] + df_intl
 df_sales = reduce(DataFrame.unionByName, df_all)
 
-df_sales.write.mode("overwrite").saveAsTable("dbo.silver_sales")
+df_sales.write.mode("overwrite").saveAsTable("silver_sales")
 print(f"✅ silver_sales: {df_sales.count()} rows")
 
 # METADATA ********************
@@ -77,7 +75,9 @@ df_product = spark.read.table("bronze_product") \
     .withColumn("Price", regexp_replace(col("Price"), r"[^0-9.]", "")) \
     .withColumn("Price", trim(col("Price")).cast(DoubleType()))
 
-df_product.write.mode("overwrite").saveAsTable("dbo.silver_product")
+df_product.write.mode("overwrite") \
+    .option("overwriteSchema", "true") \
+    .saveAsTable("silver_product")
 print(f"✅ silver_product: {df_product.count()} rows")
 
 # METADATA ********************
@@ -90,10 +90,11 @@ print(f"✅ silver_product: {df_product.count()} rows")
 # CELL ********************
 
 # ── Silver: Manufacturer (pass-through — already unpivoted in Bronze) ─────────
+
 df_manufacturer = spark.read.table("bronze_manufacturer")
 df_manufacturer.write.mode("overwrite") \
     .option("overwriteSchema", "true") \
-    .saveAsTable("dbo.silver_manufacturer")
+    .saveAsTable("silver_manufacturer")
 print(f"✅ silver_manufacturer: {df_manufacturer.count()} rows")
 
 # METADATA ********************
@@ -109,7 +110,7 @@ print(f"✅ silver_manufacturer: {df_manufacturer.count()} rows")
 # Already clean after Bronze header-row skip. Pass through as-is.
 
 df_geography = spark.read.table("bronze_geography")
-df_geography.write.mode("overwrite").saveAsTable("dbo.silver_geography")
+df_geography.write.mode("overwrite").saveAsTable("silver_geography")
 print(f"✅ silver_geography: {df_geography.count()} rows")
 
 # METADATA ********************

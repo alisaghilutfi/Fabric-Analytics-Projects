@@ -23,6 +23,7 @@
 # CELL ********************
 
 from pyspark.sql.functions import coalesce, col, lit
+from pyspark.sql.functions import concat, lit as lit_fn
 from pyspark.sql.types import DateType
 
 # METADATA ********************
@@ -35,10 +36,11 @@ from pyspark.sql.types import DateType
 # CELL ********************
 
 # ── Gold: dim_product ────────────────────────────────────────────────────────
+
 df_product = spark.read.table("silver_product") \
     .withColumn("Category", coalesce(col("Category"), lit("Uncategorised")))
 df_product.write.mode("overwrite").option("overwriteSchema", "true") \
-    .saveAsTable("dbo.gold_dim_product")
+    .saveAsTable("gold_dim_product")
 print(f"✅ gold_dim_product: {df_product.count()} rows")
 
 # METADATA ********************
@@ -51,9 +53,10 @@ print(f"✅ gold_dim_product: {df_product.count()} rows")
 # CELL ********************
 
 # ── Gold: dim_manufacturer ───────────────────────────────────────────────────
+
 df_manufacturer = spark.read.table("silver_manufacturer")
 df_manufacturer.write.mode("overwrite").option("overwriteSchema", "true") \
-    .saveAsTable("dbo.gold_dim_manufacturer")
+    .saveAsTable("gold_dim_manufacturer")
 print(f"✅ gold_dim_manufacturer: {df_manufacturer.count()} rows")
 
 # METADATA ********************
@@ -66,9 +69,11 @@ print(f"✅ gold_dim_manufacturer: {df_manufacturer.count()} rows")
 # CELL ********************
 
 # ── Gold: dim_geography ──────────────────────────────────────────────────────
-df_geography = spark.read.table("silver_geography")
+
+df_geography = spark.read.table("silver_geography") \
+    .withColumn("ZipCountry", concat(col("Zip"), lit_fn("_"), col("Country")))
 df_geography.write.mode("overwrite").option("overwriteSchema", "true") \
-    .saveAsTable("dbo.gold_dim_geography")
+    .saveAsTable("gold_dim_geography")
 print(f"✅ gold_dim_geography: {df_geography.count()} rows")
 
 # METADATA ********************
@@ -82,20 +87,20 @@ print(f"✅ gold_dim_geography: {df_geography.count()} rows")
 
 # ── Gold: fact_sales ─────────────────────────────────────────────────────────
 # Validate before writing: check for orphaned ProductIDs (AC-10)
-df_sales = spark.read.table("silver_sales")
-df_sales = df_sales.withColumn("Date", col("Date").cast(DateType()))
+
+df_sales = spark.read.table("silver_sales") \
+    .withColumn("Date", col("Date").cast(DateType())) \
+    .withColumn("ZipCountry", concat(col("Zip"), lit_fn("_"), col("Country")))
+
 df_product = spark.read.table("silver_product")
 
 orphaned = df_sales.join(df_product, on="ProductID", how="left_anti")
 orphan_count = orphaned.count()
 print(f"Orphaned fact rows (unmatched ProductID): {orphan_count}")
-assert orphan_count == 0, f"AC-10 FAILED: {orphan_count} orphaned rows — fix Silver join before writing Gold"
-
-from pyspark.sql.types import DateType
-df_sales = df_sales.withColumn("Date", col("Date").cast(DateType()))
+assert orphan_count == 0, f"AC-10 FAILED: {orphan_count} orphaned rows"
 
 df_sales.write.mode("overwrite").option("overwriteSchema", "true") \
-    .saveAsTable("dbo.gold_fact_sales")
+    .saveAsTable("gold_fact_sales")
 print(f"✅ gold_fact_sales: {df_sales.count()} rows")
 
 # METADATA ********************
@@ -108,6 +113,7 @@ print(f"✅ gold_fact_sales: {df_sales.count()} rows")
 # CELL ********************
 
 # ── Gold: OPTIMIZE fact_sales (V-Order for DirectLake) ───────────────────────
+
 spark.sql("OPTIMIZE gold_fact_sales")
 print("✅ OPTIMIZE complete")
 

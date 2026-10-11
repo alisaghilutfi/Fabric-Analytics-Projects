@@ -16,12 +16,10 @@ from pyspark.sql.functions import (
     dayofweek, when, concat, lit
 )
 
-# ── Configuration ────────────────────────────────────────────────────────────
 start_date  = "2016-01-01"
 end_date    = "2022-12-31"
-today_year  = 2026  # static reference for YearOffset
+today_year  = 2026
 
-# ── Generate date spine ───────────────────────────────────────────────────────
 dates_df = spark.sql(f"""
     SELECT explode(sequence(
         to_date('{start_date}'),
@@ -30,7 +28,6 @@ dates_df = spark.sql(f"""
     )) AS Date
 """)
 
-# ── Add calendar columns ──────────────────────────────────────────────────────
 dim_date = dates_df \
     .withColumn("Year",          year("Date")) \
     .withColumn("Quarter",       concat(lit("Q"), quarter("Date"))) \
@@ -43,11 +40,10 @@ dim_date = dates_df \
     .withColumn("IsWeekend",     when(dayofweek("Date").isin(1, 7), True).otherwise(False)) \
     .withColumn("YearOffset",    (year("Date") - today_year).cast("int"))
 
-# ── Write to Lakehouse DateDimension table ────────────────────────────────────
 dim_date.write.format("delta") \
     .mode("overwrite") \
     .option("overwriteSchema", "true") \
-    .saveAsTable("dbo.DateDimension")
+    .saveAsTable("DateDimension")
 
 print(f"✅ DateDimension: {dim_date.count()} rows")
 
