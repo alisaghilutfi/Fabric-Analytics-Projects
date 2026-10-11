@@ -1,4 +1,4 @@
-table gold_dim_manufacturer
+table Manufacturer
 	lineageTag: dba62b12-50c0-4f1e-b52b-bd97151601a0
 	sourceLineageTag: [dbo].[gold_dim_manufacturer]
 
@@ -30,7 +30,7 @@ table gold_dim_manufacturer
 
 		annotation SummarizationSetBy = Automatic
 
-	partition gold_dim_manufacturer = entity
+	partition Manufacturer = entity
 		mode: directLake
 		source
 			entityName: gold_dim_manufacturer

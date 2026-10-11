@@ -1,4 +1,4 @@
-table gold_dim_product
+table Product
 	lineageTag: a182783f-edf6-4cf7-8a14-05d62b63d634
 	sourceLineageTag: [dbo].[gold_dim_product]
 
@@ -60,7 +60,7 @@ table gold_dim_product
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	partition gold_dim_product = entity
+	partition Product = entity
 		mode: directLake
 		source
 			entityName: gold_dim_product

@@ -1,4 +1,4 @@
-table datedimension
+table Date
 	lineageTag: 6a9b39bf-6971-48aa-985e-82de39d6a6ba
 	sourceLineageTag: [dbo].[datedimension]
 
@@ -108,7 +108,7 @@ table datedimension
 
 		annotation SummarizationSetBy = Automatic
 
-	partition datedimension = entity
+	partition Date = entity
 		mode: directLake
 		source
 			entityName: datedimension
