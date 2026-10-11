@@ -1,4 +1,4 @@
-table Geography
+table gold_dim_geography
 	lineageTag: 2b1dd6e5-c3e2-41c3-8445-681b77586508
 	sourceLineageTag: [dbo].[gold_dim_geography]
 
@@ -56,7 +56,7 @@ table Geography
 
 		annotation SummarizationSetBy = Automatic
 
-	partition Geography = entity
+	partition gold_dim_geography = entity
 		mode: directLake
 		source
 			entityName: gold_dim_geography

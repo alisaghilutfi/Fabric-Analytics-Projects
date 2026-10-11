@@ -1,18 +1,21 @@
 table _Measures
+	lineageTag: 5f759548-e93a-495f-b10c-b98edad4e058
 
 	/// Total pre-calculated revenue across all sales transactions in the current filter context. Revenue is pre-calculated in source — not derived from Units × Price.
 	measure Revenue =
-			VAR _result = SUM('Sales'[Revenue])
+			VAR _result = SUM('gold_fact_sales'[Revenue])
 			RETURN _result
 		formatString: $ #,##0
 		displayFolder: Sales Performance
+		lineageTag: b1d87b95-7fd5-4182-92fc-0619673cc22e
 
 	/// Total units sold across all sales transactions in the current filter context.
 	measure 'Units Sold' =
-			VAR _result = SUM('Sales'[Units])
+			VAR _result = SUM('gold_fact_sales'[Units])
 			RETURN _result
 		formatString: #,0
 		displayFolder: Sales Performance
+		lineageTag: 36a2cc09-84ba-4347-b6f0-40eec180426c
 
 	/// Average revenue per transaction in the current filter context.
 	measure 'Avg Revenue per Transaction' =
@@ -20,77 +23,88 @@ table _Measures
 			RETURN _result
 		formatString: $ #,##0.00
 		displayFolder: Sales Performance
+		lineageTag: d6ef51b5-ecfa-42c8-9ef4-b796279b961e
 
 	/// Count of all sales transactions in the current filter context.
 	measure 'Transaction Count' =
-			VAR _result = COUNTROWS('Sales')
+			VAR _result = COUNTROWS('gold_fact_sales')
 			RETURN _result
 		formatString: #,0
 		displayFolder: Volume
+		lineageTag: 7926c7e0-bd08-4893-9b8a-db66c11e0c71
 
 	/// Count of distinct products with at least one sale in the current filter context.
 	measure 'Products Sold' =
-			VAR _result = DISTINCTCOUNT('Sales'[ProductID])
+			VAR _result = DISTINCTCOUNT('gold_fact_sales'[ProductID])
 			RETURN _result
 		formatString: #,0
 		displayFolder: Volume
+		lineageTag: a1444ae0-9050-4526-922f-3e668e503e28
 
 	/// Count of distinct manufacturers with revenue in the current filter context.
 	measure 'Manufacturers Active' =
-			VAR _result = DISTINCTCOUNT('Product'[ManufacturerID])
+			VAR _result = DISTINCTCOUNT('gold_dim_product'[ManufacturerID])
 			RETURN _result
 		formatString: #,0
 		displayFolder: Volume
+		lineageTag: 61931430-2219-484b-b439-60fd9e76c7b0
 
 	/// Selected manufacturer's revenue as a proportion of total revenue across all manufacturers in the current filter context. Returns 0 if total is zero.
 	measure 'Market Share %' =
 			VAR _SelectedRev = [Revenue]
-			VAR _TotalRev = CALCULATE([Revenue], ALL('Manufacturer'))
+			VAR _TotalRev = CALCULATE([Revenue], ALL('gold_dim_manufacturer'))
 			RETURN DIVIDE(_SelectedRev, _TotalRev, 0)
 		formatString: 0.0%
 		displayFolder: Market Share
+		lineageTag: c3b4ce43-dddd-4890-803b-faf491c7da1e
 
 	/// Revenue versus prior year. Returns BLANK() if no prior year data.
 	measure 'Revenue YoY Change' =
 			VAR _Current = [Revenue]
-			VAR _Prior = CALCULATE([Revenue], DATEADD('Date'[Date], -1, YEAR))
+			VAR _Prior = CALCULATE([Revenue], DATEADD('datedimension'[Date], -1, YEAR))
 			RETURN _Current - _Prior
 		formatString: $ +#,##0;$ -#,##0;0
 		displayFolder: Market Share
+		lineageTag: f67822ae-0117-4488-b2cc-7f559626427d
 
 	/// Revenue YoY change as a percentage of prior year.
 	measure 'Revenue YoY %' =
 			VAR _Current = [Revenue]
-			VAR _Prior = CALCULATE([Revenue], DATEADD('Date'[Date], -1, YEAR))
+			VAR _Prior = CALCULATE([Revenue], DATEADD('datedimension'[Date], -1, YEAR))
 			RETURN DIVIDE(_Current - _Prior, _Prior, BLANK())
 		formatString: +0.0%;-0.0%
 		displayFolder: Market Share
+		lineageTag: 8607221a-5da7-42b6-ab96-767eccdadf25
 
 	/// Market share versus prior year market share.
 	measure 'Market Share YoY Change' =
 			VAR _Current = [Market Share %]
-			VAR _Prior = CALCULATE([Market Share %], DATEADD('Date'[Date], -1, YEAR))
+			VAR _Prior = CALCULATE([Market Share %], DATEADD('datedimension'[Date], -1, YEAR))
 			RETURN _Current - _Prior
 		formatString: +0.0%;-0.0%
 		displayFolder: Market Share
+		lineageTag: 496999b4-0707-4b37-b7b3-d6bbbabc5b3f
 
 	/// Manufacturer rank by revenue among all manufacturers in the current filter context. 1 = highest revenue.
 	measure 'Revenue Rank' =
-			VAR _result = RANKX(ALL('Manufacturer'), [Revenue], , DESC, Dense)
+			VAR _result = RANKX(ALL('gold_dim_manufacturer'), [Revenue], , DESC, Dense)
 			RETURN _result
 		formatString: 0
 		displayFolder: Market Share
+		lineageTag: 6c217378-42ff-438c-8cae-2f826e3d80e6
 
 	/// Count of distinct countries with at least one sale in the current filter context.
 	measure 'Countries with Sales' =
-			VAR _result = DISTINCTCOUNT('Geography'[Country])
+			VAR _result = DISTINCTCOUNT('gold_dim_geography'[Country])
 			RETURN _result
 		formatString: #,0
 		displayFolder: Geography
+		lineageTag: e377e42a-bf0a-473a-ae1b-ecd7e4c80f63
 
 	column Column
 		isHidden
 		formatString: 0
+		lineageTag: 82a3c4b1-ac16-4d49-ac2b-bed950b33432
 		summarizeBy: sum
 		isNameInferred
 		sourceColumn: [Column]

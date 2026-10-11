@@ -1,4 +1,4 @@
-table Sales
+table gold_fact_sales
 	lineageTag: 04cd5f98-f3e1-4c77-b3d9-f06e080d4800
 	sourceLineageTag: [dbo].[gold_fact_sales]
 
@@ -61,7 +61,7 @@ table Sales
 
 		annotation SummarizationSetBy = Automatic
 
-	partition Sales = entity
+	partition gold_fact_sales = entity
 		mode: directLake
 		source
 			entityName: gold_fact_sales

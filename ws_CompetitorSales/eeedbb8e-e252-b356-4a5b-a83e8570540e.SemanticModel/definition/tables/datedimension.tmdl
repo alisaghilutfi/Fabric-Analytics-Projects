@@ -1,4 +1,4 @@
-table Date
+table datedimension
 	lineageTag: 6a9b39bf-6971-48aa-985e-82de39d6a6ba
 	sourceLineageTag: [dbo].[datedimension]
 
@@ -56,6 +56,7 @@ table Date
 		sourceLineageTag: MonthYear
 		summarizeBy: none
 		sourceColumn: MonthYear
+		sortByColumn: MonthYearCode
 
 		annotation SummarizationSetBy = Automatic
 
@@ -108,7 +109,7 @@ table Date
 
 		annotation SummarizationSetBy = Automatic
 
-	partition Date = entity
+	partition datedimension = entity
 		mode: directLake
 		source
 			entityName: datedimension
