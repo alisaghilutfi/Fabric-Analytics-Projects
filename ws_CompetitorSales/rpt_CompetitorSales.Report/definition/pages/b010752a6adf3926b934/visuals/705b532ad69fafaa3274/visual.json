@@ -1,10 +1,10 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "705b532ad69fafaa3274",
   "position": {
     "x": 40,
     "y": 20,
-    "z": 2,
+    "z": 5000,
     "height": 40,
     "width": 940
   },
@@ -20,13 +20,12 @@
                   {
                     "value": "Market Share",
                     "textStyle": {
+                      "fontWeight": "bold",
                       "fontFamily": "Segoe UI",
-                      "fontSize": "14pt",
-                      "fontWeight": "bold"
+                      "fontSize": "14pt"
                     }
                   }
-                ],
-                "horizontalTextAlignment": "left"
+                ]
               }
             ]
           }

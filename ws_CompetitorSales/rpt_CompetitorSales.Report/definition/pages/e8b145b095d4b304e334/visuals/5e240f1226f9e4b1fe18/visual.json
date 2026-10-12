@@ -1,10 +1,10 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "5e240f1226f9e4b1fe18",
   "position": {
-    "x": 40,
-    "y": 672,
-    "z": 1,
+    "x": 980.25974025974017,
+    "y": 115.32467532467531,
+    "z": 3000,
     "height": 368,
     "width": 915
   },
@@ -73,7 +73,7 @@
             "showAxisTitle": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             }
@@ -84,6 +84,26 @@
         {
           "properties": {
             "showAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "labels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "bold": {
               "expr": {
                 "Literal": {
                   "Value": "true"
@@ -221,6 +241,33 @@
                   "Value": "'Revenue by Region'"
                 }
               }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "20D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
             }
           }
         }
@@ -232,6 +279,17 @@
     "filters": [
       {
         "name": "b09b41885628e8210670",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "gold_dim_geography"
+              }
+            },
+            "Property": "Region"
+          }
+        },
+        "type": "TopN",
         "filter": {
           "Version": 2,
           "From": [
@@ -350,6 +408,20 @@
           ]
         },
         "restatement": "Top 10 region by revenue"
+      },
+      {
+        "name": "c49b3d95e1c9b8a5041a",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Revenue"
+          }
+        },
+        "type": "Advanced"
       }
     ]
   },

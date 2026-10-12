@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "c534d0724aee3bf5577e",
   "position": {
-    "x": 965,
-    "y": 294,
-    "z": 1,
-    "height": 368,
-    "width": 915
+    "x": 980.25974025974017,
+    "y": 121.55844155844154,
+    "z": 2000,
+    "height": 917.92207792207785,
+    "width": 899.22077922077915
   },
   "visual": {
     "visualType": "clusteredBarChart",
@@ -73,6 +73,13 @@
             "showAxisTitle": {
               "expr": {
                 "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
                   "Value": "true"
                 }
               }
@@ -86,7 +93,48 @@
             "showAxisTitle": {
               "expr": {
                 "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "labels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "labelOverflow": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "optimizeLabelDisplay": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "labelPosition": {
+              "expr": {
+                "Literal": {
+                  "Value": "'InsideEnd'"
                 }
               }
             }
@@ -221,6 +269,33 @@
                   "Value": "'Revenue by Product'"
                 }
               }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "20D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
             }
           }
         }
@@ -232,6 +307,17 @@
     "filters": [
       {
         "name": "d96506c274a5a71c02da",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "gold_dim_product"
+              }
+            },
+            "Property": "Product"
+          }
+        },
+        "type": "TopN",
         "filter": {
           "Version": 2,
           "From": [
@@ -349,7 +435,36 @@
             }
           ]
         },
-        "restatement": "Top 10 product by revenue"
+        "restatement": "Top 10 product by revenue",
+        "howCreated": "User"
+      },
+      {
+        "name": "d3db81eead20c7ae1e18",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "gold_dim_product"
+              }
+            },
+            "Property": "Product"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "70f37dbeb1d187a40cb6",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Revenue"
+          }
+        },
+        "type": "Advanced"
       }
     ]
   },

@@ -11,3 +11,7 @@ relationship fact_sales_Date_datedimension_Date
 	fromColumn: gold_fact_sales.Date
 	toColumn: datedimension.Date
 
+relationship 5854a030-ac9f-d97d-fc94-fb62d583e2f6
+	fromColumn: gold_fact_sales.ZipCountry
+	toColumn: gold_dim_geography.ZipCountry
+

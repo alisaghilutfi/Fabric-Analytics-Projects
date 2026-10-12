@@ -1,18 +1,36 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "ba1adb710af8386429a0",
   "position": {
-    "x": 40,
-    "y": 294,
-    "z": 1,
-    "height": 368,
-    "width": 915
+    "x": 28.051948051948049,
+    "y": 515.84415584415581,
+    "z": 1000,
+    "height": 543.8961038961038,
+    "width": 1867.012987012987
   },
   "visual": {
-    "visualType": "clusteredBarChart",
+    "visualType": "treemap",
     "query": {
       "queryState": {
-        "Category": {
+        "Details": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "gold_dim_geography"
+                    }
+                  },
+                  "Property": "State"
+                }
+              },
+              "queryRef": "gold_dim_geography.State",
+              "nativeQueryRef": "State"
+            }
+          ]
+        },
+        "Group": {
           "projections": [
             {
               "field": {
@@ -26,28 +44,12 @@
                 }
               },
               "queryRef": "gold_dim_geography.Country",
+              "nativeQueryRef": "Country",
               "active": true
             }
           ]
         },
-        "Series": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "gold_dim_geography"
-                    }
-                  },
-                  "Property": "State"
-                }
-              },
-              "queryRef": "gold_dim_geography.State"
-            }
-          ]
-        },
-        "Y": {
+        "Values": {
           "projections": [
             {
               "field": {
@@ -84,10 +86,10 @@
       }
     },
     "objects": {
-      "categoryAxis": [
+      "labels": [
         {
           "properties": {
-            "showAxisTitle": {
+            "show": {
               "expr": {
                 "Literal": {
                   "Value": "true"
@@ -97,13 +99,13 @@
           }
         }
       ],
-      "valueAxis": [
+      "legend": [
         {
           "properties": {
-            "showAxisTitle": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             }
@@ -238,12 +240,85 @@
                   "Value": "'Revenue by Country and State'"
                 }
               }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "20D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
             }
           }
         }
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "045611b4605b5f8c2a60",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "gold_dim_geography"
+              }
+            },
+            "Property": "Country"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "8d53f9e89bca435616a4",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Revenue"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "84e83a6113730ae2d11b",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "gold_dim_geography"
+              }
+            },
+            "Property": "State"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
   },
   "howCreated": "Copilot"
 }

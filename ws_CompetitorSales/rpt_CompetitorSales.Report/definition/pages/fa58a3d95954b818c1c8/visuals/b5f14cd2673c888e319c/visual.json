@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "b5f14cd2673c888e319c",
   "position": {
-    "x": 40,
-    "y": 294,
-    "z": 1,
-    "height": 368,
-    "width": 915
+    "x": 40.519480519480517,
+    "y": 121.55844155844154,
+    "z": 1000,
+    "height": 419.22077922077921,
+    "width": 914.80519480519479
   },
   "visual": {
     "visualType": "pivotTable",
@@ -262,6 +262,7 @@
     "filters": [
       {
         "name": "624672fc2e6e71d731fd",
+        "type": "Passthrough",
         "filter": {
           "Version": 2,
           "From": [
@@ -302,7 +303,8 @@
             }
           ]
         },
-        "restatement": "Gold dim manufacturers that have gold dim products"
+        "restatement": "Gold dim manufacturers that have gold dim products",
+        "howCreated": "User"
       }
     ]
   },

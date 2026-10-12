@@ -1,10 +1,10 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "339f7e9ef6328fd97ae9",
   "position": {
     "x": 965.21334367726911,
     "y": 293.4367726920093,
-    "z": 1,
+    "z": 4000,
     "height": 664.32893716058959,
     "width": 914.56943366951123
   },
@@ -90,7 +90,7 @@
             "showAxisTitle": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             }
@@ -103,7 +103,46 @@
             "showAxisTitle": {
               "expr": {
                 "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "labels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "lineStyles": [
+        {
+          "properties": {
+            "areaShow": {
+              "expr": {
+                "Literal": {
                   "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "legend": [
+        {
+          "properties": {
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'TopRight'"
                 }
               }
             }
@@ -236,6 +275,33 @@
               "expr": {
                 "Literal": {
                   "Value": "'Market Share % by MonthYear and Manufacturer'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "20D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }
@@ -563,48 +629,6 @@
         },
         "restatement": "Top 5 manufacturer by market share %",
         "howCreated": "User"
-      },
-      {
-        "name": "9301b615489ab1c171e7",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "datedimension"
-              }
-            },
-            "Property": "MonthYear"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "8a57f253f2a901e61282",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "gold_dim_manufacturer"
-              }
-            },
-            "Property": "Manufacturer"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "75a1719f3d3cabfad6a8",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Market Share %"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   },
