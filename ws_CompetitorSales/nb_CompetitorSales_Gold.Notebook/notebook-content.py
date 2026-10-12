@@ -22,8 +22,8 @@
 
 # CELL ********************
 
-from pyspark.sql.functions import coalesce, col, lit
-from pyspark.sql.functions import concat, lit as lit_fn
+from pyspark.sql.functions import col, concat, lit, to_date, coalesce, when
+from pyspark.sql.functions import lit as lit_fn
 from pyspark.sql.types import DateType
 
 # METADATA ********************
@@ -71,7 +71,8 @@ print(f"✅ gold_dim_manufacturer: {df_manufacturer.count()} rows")
 # ── Gold: dim_geography ──────────────────────────────────────────────────────
 
 df_geography = spark.read.table("silver_geography") \
-    .withColumn("ZipCountry", concat(col("Zip"), lit_fn("_"), col("Country")))
+    .withColumn("Country", when(col("Country") == "USA", "United States").otherwise(col("Country"))) \
+    .withColumn("ZipCountry", concat(col("Zip"), lit("_"), col("Country")))
 df_geography.write.mode("overwrite").option("overwriteSchema", "true") \
     .saveAsTable("gold_dim_geography")
 print(f"✅ gold_dim_geography: {df_geography.count()} rows")
@@ -89,7 +90,7 @@ print(f"✅ gold_dim_geography: {df_geography.count()} rows")
 # Validate before writing: check for orphaned ProductIDs (AC-10)
 
 df_sales = spark.read.table("silver_sales") \
-    .withColumn("Date", col("Date").cast(DateType())) \
+    .withColumn("Date", to_date(col("Date"), "MM/dd/yyyy")) \
     .withColumn("ZipCountry", concat(col("Zip"), lit_fn("_"), col("Country")))
 
 df_product = spark.read.table("silver_product")

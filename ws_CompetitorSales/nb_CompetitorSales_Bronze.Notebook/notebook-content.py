@@ -126,3 +126,22 @@ print(f"✅ bronze_geography: {len(df_geography)} rows")
 # META   "language": "python",
 # META   "language_group": "synapse_pyspark"
 # META }
+
+# CELL ********************
+
+# from pyspark.sql.functions import col
+
+# df = spark.read.table("silver_sales")
+
+# # Check the actual data type
+# print("Date dtype:", dict(df.dtypes)["Date"])
+
+# # Show sample values
+# df.select("Date").show(5, truncate=False)
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
