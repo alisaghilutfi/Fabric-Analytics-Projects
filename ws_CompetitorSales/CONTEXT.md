@@ -361,7 +361,7 @@ Synonyms: DirectLake limitation — defer to Power BI Desktop → Tools → Lang
 | `nb_CompetitorSales_Bronze` | ✅ Complete — 1,798,121 sales rows + 3 dimension tables |
 | `nb_CompetitorSales_Silver` | ✅ Complete — silver_sales 1,798,121 rows, AC-7 and AC-8 pass |
 | `nb_CompetitorSales_Gold` | ✅ Complete — gold_fact_sales 1,798,121 rows, AC-10 pass (0 orphans), OPTIMIZE done |
-| `sm_CompetitorSales` | ⚠️ Created (ID: 2d55bd9f-5512-40de-803b-6d5be8fc4eb0) — refresh blocked pending DateDimension registration |
+| `sm_CompetitorSales` | ✅ Complete — ID: `8570540e-a83e-4a5b-b356-e252eeedbb8e`, 4 relationships, 12 measures, DAX verified (Revenue $695M, Transactions 1,798,121, Sintec market share 17%) |
 | `rpt_CompetitorSales` | ❌ Not yet created |
 | `agent_CompetitorSales` | ❌ Not yet created |
 
@@ -369,14 +369,17 @@ Synonyms: DirectLake limitation — defer to Power BI Desktop → Tools → Lang
 
 ## 6 · Next Session Starts At
 
-**FabricEngineer — Step 1:**
+**FabricEngineer — Wave 5:**
 
 Read ws_CompetitorSales/CONTEXT.md in full.
 
-1. Run `nb_CompetitorSales_Date` — confirm DateDimension: 2,557 rows in lh_CompetitorSales
-2. Trigger `sm_CompetitorSales` refresh in Fabric portal — confirm warning triangles gone
-3. Verify DAX: `EVALUATE ROW("Revenue", [Revenue])` returns data
-4. Wave 5: create `rpt_CompetitorSales`
+Create `rpt_CompetitorSales` bound to `sm_CompetitorSales`
+(ID: `8570540e-a83e-4a5b-b356-e252eeedbb8e`).
+Four pages per CONTEXT.md Section 3:
+1. Sales Overview
+2. Market Share
+3. Regional Performance
+4. Product Analysis
 
 
 ---
@@ -405,6 +408,14 @@ display folders. DateDimension blocked by HTTP 430 capacity limit — fix commit
 header=1, manual iloc Manufacturer unpivot (14 rows), Silver/Gold overwriteSchema,
 dim_date camelCase columns, definition.pbism missing from initial TMDL, abfss path
 format requires workspace/lakehouse name not ID.*
+
+*2026-10-08 — sm_CompetitorSales rebuilt via Fabric UI after Git-synced version failed
+Power BI service registration (404). All 4 relationships and 12 measures added via
+powerbi-modeling-mcp REST API (XMLA write was enabled but REST API used as fallback).
+Date relationship required DateType cast in Gold notebook (gold_fact_sales[Date] was
+String); column type also corrected in TMDL (string → dateTime). DAX verified:
+Revenue $695M, 1,798,121 transactions, Sintec 17% market share. TMDL exported to
+Git — gold_* table names replace old dim_*/fact_sales naming.*
 
 ---
 *Instructions layer: ProjectPlanner (Claude.ai) · 2026-10-05*

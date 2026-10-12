@@ -67,13 +67,11 @@ import pandas as pd
 
 xlsx_path = "/lakehouse/default/Files/Bronze/Dimensions/bi_dimensions.xlsx"
 
-# Product Details
 df_product = pd.read_excel(xlsx_path, sheet_name="Product Details", header=1)
 df_product.columns = df_product.columns.str.strip()
 spark.createDataFrame(df_product).write.mode("overwrite").saveAsTable("bronze_product")
 print(f"✅ bronze_product: {len(df_product)} rows")
 
-# Manufacturer — manual unpivot from wide format
 df_mfr_raw = pd.read_excel(xlsx_path, sheet_name="Manufacturer", header=None)
 df_mfr = pd.DataFrame({
     "ManufacturerID": pd.to_numeric(df_mfr_raw.iloc[1, :].values, errors="coerce"),
@@ -87,7 +85,6 @@ spark.createDataFrame(df_mfr).write.mode("overwrite") \
     .saveAsTable("bronze_manufacturer")
 print(f"✅ bronze_manufacturer: {len(df_mfr)} rows")
 
-# Geography
 df_geography = pd.read_excel(xlsx_path, sheet_name="Geography", skiprows=3, header=0)
 df_geography.columns = df_geography.columns.str.strip()
 spark.createDataFrame(df_geography).write.mode("overwrite").saveAsTable("bronze_geography")
@@ -102,26 +99,45 @@ print(f"✅ bronze_geography: {len(df_geography)} rows")
 
 # CELL ********************
 
-import requests
-import notebookutils
+# import requests
+# import notebookutils
 
-# Get token
-token = notebookutils.credentials.getToken("pbi")
+# # Get token
+# token = notebookutils.credentials.getToken("pbi")
 
-# Trigger refresh via REST API
-workspace_id = "bdf49d9a-d2e4-444b-b666-735d2460b5cb"
-dataset_id = "2d55bd9f-5512-40de-803b-6d5be8fc4eb0"
+# # Trigger refresh via REST API
+# workspace_id = "bdf49d9a-d2e4-444b-b666-735d2460b5cb"
+# dataset_id = "2d55bd9f-5512-40de-803b-6d5be8fc4eb0"
 
-url = f"https://api.powerbi.com/v1.0/myorg/groups/{workspace_id}/datasets/{dataset_id}/refreshes"
+# url = f"https://api.powerbi.com/v1.0/myorg/groups/{workspace_id}/datasets/{dataset_id}/refreshes"
 
-headers = {
-    "Authorization": f"Bearer {token}",
-    "Content-Type": "application/json"
-}
+# headers = {
+#     "Authorization": f"Bearer {token}",
+#     "Content-Type": "application/json"
+# }
 
-response = requests.post(url, headers=headers, json={})
-print(f"Status: {response.status_code}")
-print(f"Response: {response.text}")
+# response = requests.post(url, headers=headers, json={})
+# print(f"Status: {response.status_code}")
+# print(f"Response: {response.text}")
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
+# from pyspark.sql.functions import col
+
+# df = spark.read.table("silver_sales")
+
+# # Check the actual data type
+# print("Date dtype:", dict(df.dtypes)["Date"])
+
+# # Show sample values
+# df.select("Date").show(5, truncate=False)
 
 # METADATA ********************
 

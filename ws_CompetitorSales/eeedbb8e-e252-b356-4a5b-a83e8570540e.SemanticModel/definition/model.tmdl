@@ -10,7 +10,7 @@ annotation __PBI_TimeIntelligenceEnabled = 1
 
 annotation PBI_QueryOrder = ["DirectLake - lh_CompetitorSales"]
 
-annotation PBI_ProTooling = ["DirectLakeOnOneLakeInWeb"]
+annotation PBI_ProTooling = ["DirectLakeOnOneLakeInWeb","MCP-PBIModeling","WebModelingEdit","DaxQueryView_Desktop"]
 
 ref table datedimension
 ref table gold_dim_geography

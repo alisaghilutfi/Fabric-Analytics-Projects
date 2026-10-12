@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "rpt_CompetitorSales"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "f6d6564d-a05a-9a79-47dc-1e9f3394423b"
+  }
+}

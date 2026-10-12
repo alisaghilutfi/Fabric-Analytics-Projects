@@ -7,7 +7,7 @@ table gold_fact_sales
 		formatString: 0
 		lineageTag: 01d360d3-2b4e-412c-9517-3704758ae90c
 		sourceLineageTag: ProductID
-		summarizeBy: count
+		summarizeBy: none
 		sourceColumn: ProductID
 
 		annotation SummarizationSetBy = Automatic
@@ -58,6 +58,15 @@ table gold_fact_sales
 		sourceLineageTag: Country
 		summarizeBy: none
 		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column ZipCountry
+		dataType: string
+		lineageTag: 1c496f79-88d2-49ae-9b30-867865286cfe
+		sourceLineageTag: ZipCountry
+		summarizeBy: none
+		sourceColumn: ZipCountry
 
 		annotation SummarizationSetBy = Automatic
 

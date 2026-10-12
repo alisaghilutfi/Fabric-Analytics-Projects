@@ -56,6 +56,15 @@ table gold_dim_geography
 
 		annotation SummarizationSetBy = Automatic
 
+	column ZipCountry
+		dataType: string
+		lineageTag: 086f80ba-8534-42c8-93f0-7a24068333b4
+		sourceLineageTag: ZipCountry
+		summarizeBy: none
+		sourceColumn: ZipCountry
+
+		annotation SummarizationSetBy = Automatic
+
 	partition gold_dim_geography = entity
 		mode: directLake
 		source
