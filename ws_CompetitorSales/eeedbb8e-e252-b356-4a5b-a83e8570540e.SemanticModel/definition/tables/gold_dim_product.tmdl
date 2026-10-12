@@ -1,4 +1,4 @@
-table Product
+table gold_dim_product
 	lineageTag: a182783f-edf6-4cf7-8a14-05d62b63d634
 	sourceLineageTag: [dbo].[gold_dim_product]
 
