@@ -45,6 +45,14 @@ Studio does not.
 
 > Variable Library — dropped; not required for this project.
 
+### Semantic Model Table Names (Marco Russo / SQLBI convention)
+
+- Fact tables: plural (e.g. `Sales`, `Orders`, `Transactions`)
+- Dimension tables: singular (e.g. `Product`, `Customer`, `Date`, `Geography`)
+- Measures table: `_Measures` (leading underscore, sorts to top)
+- `entityName` in TMDL always uses the physical Gold table name (e.g. `gold_fact_sales`)
+- Display name in TMDL uses the convention above (e.g. `table Sales`)
+
 ---
 
 ## Source Schema (confirmed)
@@ -360,26 +368,20 @@ Synonyms: DirectLake limitation — defer to Power BI Desktop → Tools → Lang
 | `nb_CompetitorSales_Date` | ⚠️ DateDimension write pending — capacity limit hit; fix committed (saveAsTable + lakehouse attachment in metadata) |
 | `nb_CompetitorSales_Bronze` | ✅ Complete — 1,798,121 sales rows + 3 dimension tables |
 | `nb_CompetitorSales_Silver` | ✅ Complete — silver_sales 1,798,121 rows, AC-7 and AC-8 pass |
-| `nb_CompetitorSales_Gold` | ✅ Complete — gold_fact_sales 1,798,121 rows, AC-10 pass (0 orphans), OPTIMIZE done |
+| `nb_CompetitorSales_Gold` | ✅ Complete — Date NULL fixed (to_date MM/dd/yyyy), ZipCountry composite key added, pipeline runs clean |
 | `sm_CompetitorSales` | ✅ Complete — ID: `8570540e-a83e-4a5b-b356-e252eeedbb8e`, 4 relationships, 12 measures, DAX verified (Revenue $695M, Transactions 1,798,121, Sintec market share 17%) |
-| `rpt_CompetitorSales` | ❌ Not yet created |
+| `rpt_CompetitorSales` | ✅ Complete — 4 pages complete, all slicers functional (Country, Year, Manufacturer), ZipCountry relationship resolved |
 | `agent_CompetitorSales` | ❌ Not yet created |
 
 ---
 
 ## 6 · Next Session Starts At
 
-**FabricEngineer — Wave 5:**
-
-Read ws_CompetitorSales/CONTEXT.md in full.
-
-Create `rpt_CompetitorSales` bound to `sm_CompetitorSales`
-(ID: `8570540e-a83e-4a5b-b356-e252eeedbb8e`).
-Four pages per CONTEXT.md Section 3:
-1. Sales Overview
-2. Market Share
-3. Regional Performance
-4. Product Analysis
+AI-Readiness pass (Phase 2–4 per Section 2 of this file):
+1. Add table descriptions via plugin:powerbi-authoring (5 tables)
+2. Set data categories on Geography columns (Country, State)
+3. Configure "Prep data for AI" in sm_CompetitorSales settings
+4. Create agent_CompetitorSales with 4 seed example queries from Section 2
 
 
 ---
@@ -416,6 +418,24 @@ Date relationship required DateType cast in Gold notebook (gold_fact_sales[Date]
 String); column type also corrected in TMDL (string → dateTime). DAX verified:
 Revenue $695M, 1,798,121 transactions, Sintec 17% market share. TMDL exported to
 Git — gold_* table names replace old dim_*/fact_sales naming.*
+
+*2026-10-11 — ZipCountry composite key added to resolve duplicate Zip in Geography
+(176k rows, 6 countries). Manual notebook edits applied directly in Fabric UI (dbo.
+prefix reverted, ZipCountry added). Pipeline ran successfully — 1,798,121 rows,
+gold_dim_geography and gold_fact_sales both have ZipCountry. Blocker: Date column NULL
+in gold_fact_sales — DateType cast failing. Semantic model table renames confirmed live
+via plugin:powerbi-authoring XMLA. Report has 4 pages but Geography and Date slicers
+not yet functional.*
+
+*2026-10-12 — Wave 5 complete. Date NULL fixed (to_date MM/dd/yyyy format).
+ZipCountry composite key resolves duplicate Zip across 6 countries —
+Sales[ZipCountry]→Geography[ZipCountry] relationship live via XMLA.
+EDA notebook (nb_CompetitorSales_EDA) built and validated: 0 NULLs, 0 PK
+duplicates, 0 Sales→Product orphans, 55,594 Sales→Geography orphans (known,
+documented). rpt_CompetitorSales 4 pages live: Sales Overview, Market Share,
+Regional Performance, Product Analysis. All slicers functional. README.md
+and ws_CompetitorSales/Readme.md written. Analyst Mindset Framework applied.
+Next: AI-Readiness pass.*
 
 ---
 *Instructions layer: ProjectPlanner (Claude.ai) · 2026-10-05*

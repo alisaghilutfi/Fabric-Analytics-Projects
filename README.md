@@ -118,6 +118,34 @@ agent_AaltoEE_Forecast with three confirmed demo questions
 
 ---
 
+### ws_CompetitorSales — Competitive Sales Intelligence
+
+**Type:** Data Engineering + Business Intelligence  
+**Stack:** Medallion Lakehouse · PySpark · DirectLake semantic model · 
+Power BI report (4 pages) · ZipCountry composite key · Copilot-assisted 
+report authoring
+
+~1.8M sales transactions across 6 countries (USA, Japan, Nigeria, Germany, 
+Mexico, Canada) and 14 competing manufacturers (2014–2021). Built to answer 
+one question: *where should Sintec focus product, geography, and pricing 
+strategy to defend and grow market share?*
+
+Framed through the Analyst Mindset (Jon Christiansen): the question type is 
+**Comparison** (Sintec vs. 13 competitors) with a **Relationship** layer 
+(revenue drivers by geography and product). Revenue is the operationalised 
+outcome variable. Known limitation: 1,530 US Zip codes (7.38% of US rows) 
+absent from Geography — documented, not silently dropped.
+
+Gold star schema with snowflake extension: `fact_sales` (1,798,121 rows), 
+`dim_product` (2,412 rows), `dim_manufacturer` (14 rows), `dim_geography` 
+(176,931 rows, ZipCountry composite key), `DateDimension` (2,557 rows). 
+EDA notebook runs after every pipeline execution as a validation gate.
+Twelve DAX measures across Volume, Time Intelligence, and Competitive Share 
+display folders. Artisans leads overall (~$235M, 33.8%); Sintec is #2 
+(~$117M, 16.8%) but leads the US market in 2021.
+
+---
+
 ## Development Stack
 
 | Layer | Tool |
