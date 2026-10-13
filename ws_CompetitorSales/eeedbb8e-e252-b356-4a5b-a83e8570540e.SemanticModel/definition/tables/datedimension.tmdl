@@ -47,6 +47,7 @@ table datedimension
 		sourceLineageTag: MonthName
 		summarizeBy: none
 		sourceColumn: MonthName
+		sortByColumn: MonthNumber
 
 		annotation SummarizationSetBy = Automatic
 
