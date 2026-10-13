@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "dfa06db507ed44cfb58e",
   "position": {
-    "x": 40.217222653219551,
-    "y": 293.4367726920093,
+    "x": 38.961038961038959,
+    "y": 391.16883116883116,
     "z": 3000,
-    "height": 664.32893716058959,
-    "width": 914.56943366951123
+    "height": 618.7012987012987,
+    "width": 914.80519480519479
   },
   "visual": {
     "visualType": "clusteredBarChart",
@@ -225,7 +225,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Market Share % by Manufacturer'"
+                  "Value": "'Market Share by Manufacturer'"
                 }
               }
             },
