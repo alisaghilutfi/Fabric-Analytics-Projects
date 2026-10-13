@@ -81,14 +81,19 @@ compatibility level.
 ## ws_CompetitorSales
 **Purpose:** Competitive sales intelligence — Sintec vs. 13 manufacturers 
 across 6 countries, ~1.8M transactions 2014–2021  
-**Status:** Active — Wave 5 complete, AI-Readiness pending  
+**Status:** Active — report complete, AI-Readiness pending  
 **Current focus:** AI-Readiness pass (table descriptions, data categories, 
 agent_CompetitorSales)  
-**Last session (2026-10-12):** Wave 5 complete. 4-page report live with all 
-slicers functional. ZipCountry composite key resolves Geography relationship. 
-EDA validation notebook built. README and Analyst Mindset Framework applied.  
-**Next session:** AI-Readiness pass — table descriptions, data categories, 
-Prep data for AI, agent_CompetitorSales  
+**Last session (2026-10-13):** SQLBI table naming reverted — physical Gold names
+confirmed live and in Git. datedimension[MonthYear] sortByColumn set to
+MonthYearCode; datedimension[MonthName] sortByColumn set to MonthNumber (both
+via XMLA, committed). Visual titles applied across all 4 report pages.
+rpt_CompetitorSales source control committed. docs/images/ folder created,
+dashboard_CompetitorSales.png added, README updated with image reference.
+HARNESS.md dash_ prefix corrected to dashboard_. Retrospective completed —
+6 workflow improvement findings documented.  
+**Next session:** AI-Readiness pass — table descriptions (5 tables), data
+categories on Geography columns, Prep data for AI, agent_CompetitorSales  
 **Blockers:** None
 
 ---

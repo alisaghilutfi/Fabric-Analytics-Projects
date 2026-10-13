@@ -99,12 +99,11 @@ is acceptable and avoids denormalising ManufacturerID into the fact table.
 uses `to_date(col("Date"), "MM/dd/yyyy")` which casts correctly to a DateType
 column in `gold_fact_sales`.
 
-**SQLBI table naming convention** — semantic model display names follow the
-Marco Russo / SQLBI convention: fact tables plural (`Sales`), dimension tables
-singular (`Product`, `Manufacturer`, `Geography`, `Date`), measures table
-`_Measures` (leading underscore sorts to top). The physical Delta table names
-(`gold_fact_sales`, `gold_dim_product` etc.) are preserved in the TMDL
-`entityName` fields.
+**Physical Gold names used as semantic model display names** — the TMDL table
+names match the physical Delta table names exactly (`gold_fact_sales`,
+`gold_dim_product`, `gold_dim_manufacturer`, `gold_dim_geography`,
+`datedimension`, `_Measures`). SQLBI display-name aliases (Sales, Product,
+etc.) were trialled and reverted — physical names are confirmed live and in Git.
 
 **plugin:powerbi-authoring required for all XMLA writes** — the remote HTTP
 MCP endpoint (`plugin:fabric-skills`) is read-only by design despite having
@@ -139,7 +138,7 @@ pass. Each is handled explicitly rather than silently dropped.
 | `nb_CompetitorSales_Date` | Notebook | DateDimension 2014–2022, calendar year, MonthYearCode sort column |
 | `nb_CompetitorSales_EDA` | Notebook | Post-pipeline Gold validation — NULLs, PK uniqueness, referential integrity, value distributions, revenue assert |
 | `pl_CompetitorSales` | Data Pipeline | Orchestrates Bronze → Silver → Gold notebooks in sequence |
-| `sm_CompetitorSales` | Semantic model | DirectLake · `_Measures` table · 12 DAX measures · 4 display folders · 4 relationships · SQLBI naming |
+| `sm_CompetitorSales` | Semantic model | DirectLake · `_Measures` table · 12 DAX measures · 4 display folders · 4 relationships · physical Gold table names |
 | `rpt_CompetitorSales` | Report | 4-page report — Sales Overview, Market Share, Regional Performance, Product Analysis |
 
 ---
@@ -195,10 +194,10 @@ Raw columns hidden from report view.
 
 | From | To | Cardinality | Direction | Notes |
 |---|---|---|---|---|
-| Sales[ProductID] | Product[ProductID] | Many-to-One | Single | |
-| Product[ManufacturerID] | Manufacturer[ManufacturerID] | Many-to-One | Single | Snowflake second hop |
-| Sales[ZipCountry] | Geography[ZipCountry] | Many-to-One | Single | Composite key |
-| Sales[Date] | Date[Date] | Many-to-One | Single | DatePartOnly join |
+| gold_fact_sales[ProductID] | gold_dim_product[ProductID] | Many-to-One | Single | |
+| gold_dim_product[ManufacturerID] | gold_dim_manufacturer[ManufacturerID] | Many-to-One | Single | Snowflake second hop |
+| gold_fact_sales[ZipCountry] | gold_dim_geography[ZipCountry] | Many-to-One | Single | Composite key |
+| gold_fact_sales[Date] | datedimension[Date] | Many-to-One | Single | DatePartOnly join |
 
 ---
 
