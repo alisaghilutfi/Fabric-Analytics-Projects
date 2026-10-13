@@ -465,7 +465,7 @@ empty folders — Git does not track them.
 | DataPipeline | `pl_` | `pl_Finance` |
 | SemanticModel | `sm_` | `sm_Finance` |
 | Report | `rpt_` | `rpt_Finance` |
-| Dashboard | `dash_` | `dash_Finance_Analysis` |
+| Dashboard | `dashboard_` | `dashboard_Finance_Analysis` |
 | ML Model | `model_` | `model_BankChurn` |
 | Deployment Pipeline | `dp_` | `dp_Finance_Analysis` |
 
