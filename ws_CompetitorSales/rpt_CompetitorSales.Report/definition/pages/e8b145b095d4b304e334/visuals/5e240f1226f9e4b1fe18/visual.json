@@ -408,20 +408,6 @@
           ]
         },
         "restatement": "Top 10 region by revenue"
-      },
-      {
-        "name": "c49b3d95e1c9b8a5041a",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Revenue"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   },

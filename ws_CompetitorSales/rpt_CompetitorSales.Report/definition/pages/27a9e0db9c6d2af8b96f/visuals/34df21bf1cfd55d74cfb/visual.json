@@ -22,11 +22,11 @@
                       "Entity": "datedimension"
                     }
                   },
-                  "Property": "MonthYear"
+                  "Property": "MonthName"
                 }
               },
-              "queryRef": "datedimension.MonthYear",
-              "nativeQueryRef": "MonthYear",
+              "queryRef": "datedimension.MonthName",
+              "nativeQueryRef": "MonthName",
               "active": true
             }
           ]
@@ -60,6 +60,13 @@
                   "Value": "false"
                 }
               }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -73,6 +80,13 @@
                   "Value": "false"
                 }
               }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -84,6 +98,20 @@
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "showMarker": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "markerSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "7D"
                 }
               }
             }
@@ -242,7 +270,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Revenue by MonthYear'"
+                  "Value": "'Revenue Trend by Month'"
                 }
               }
             },

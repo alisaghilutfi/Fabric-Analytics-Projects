@@ -22,10 +22,11 @@
                       "Entity": "datedimension"
                     }
                   },
-                  "Property": "MonthYear"
+                  "Property": "MonthName"
                 }
               },
-              "queryRef": "datedimension.MonthYear",
+              "queryRef": "datedimension.MonthName",
+              "nativeQueryRef": "MonthName",
               "active": true
             }
           ]
@@ -76,6 +77,13 @@
                   "Value": "false"
                 }
               }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -91,6 +99,27 @@
               }
             },
             "secShowAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "secShow": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "secBold": {
               "expr": {
                 "Literal": {
                   "Value": "true"
@@ -109,6 +138,13 @@
                   "Value": "'Top'"
                 }
               }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -120,6 +156,47 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            },
+            "enableValueDataLabel": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "enableDetailDataLabel": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "enableBackground": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "lineStyles": [
+        {
+          "properties": {
+            "showMarker": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "markerSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "7D"
                 }
               }
             }
@@ -251,7 +328,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Units Sold and Revenue YoY % by MonthYear'"
+                  "Value": "'Volume & Growth Rate by Month'"
                 }
               }
             },
