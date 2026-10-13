@@ -136,9 +136,10 @@ Framed through the Analyst Mindset (Jon Christiansen): the question type is
 outcome variable. Known limitation: 1,530 US Zip codes (7.38% of US rows) 
 absent from Geography — documented, not silently dropped.
 
-Gold star schema with snowflake extension: `fact_sales` (1,798,121 rows), 
-`dim_product` (2,412 rows), `dim_manufacturer` (14 rows), `dim_geography` 
-(176,931 rows, ZipCountry composite key), `DateDimension` (2,557 rows). 
+Gold star schema with snowflake extension: `gold_fact_sales` (1,798,121 rows), 
+`gold_dim_product` (2,412 rows), `gold_dim_manufacturer` (14 rows), 
+`gold_dim_geography` (176,931 rows, ZipCountry composite key), 
+`datedimension` (2,557 rows). 
 EDA notebook runs after every pipeline execution as a validation gate.
 Twelve DAX measures across Volume, Time Intelligence, and Competitive Share 
 display folders. Artisans leads overall (~$235M, 33.8%); Sintec is #2 
