@@ -14,6 +14,8 @@ intelligence report from raw multi-country sales data. The focal question:
 *where should Sintec focus product, geography, and pricing strategy to defend
 and grow market share?*
 
+![Dashboard](docs/images/dashboard_CompetitorSales.png)
+
 ---
 
 ## The Problem
