@@ -365,7 +365,7 @@ Synonyms: DirectLake limitation — defer to Power BI Desktop → Tools → Lang
 | Fabric workspace | ✅ Created — ID `bdf49d9a-d2e4-444b-b666-735d2460b5cb` |
 | Git integration | ✅ Connected — `/ws_CompetitorSales` on `dev-fabric-sync` |
 | CONTEXT.md | ✅ This file |
-| `nb_CompetitorSales_Date` | ⚠️ DateDimension write pending — capacity limit hit; fix committed (saveAsTable + lakehouse attachment in metadata) |
+| `nb_CompetitorSales_Date` | ✅ Complete — DateDimension 2,557 rows written |
 | `nb_CompetitorSales_Bronze` | ✅ Complete — 1,798,121 sales rows + 3 dimension tables |
 | `nb_CompetitorSales_Silver` | ✅ Complete — silver_sales 1,798,121 rows, AC-7 and AC-8 pass |
 | `nb_CompetitorSales_Gold` | ✅ Complete — Date NULL fixed (to_date MM/dd/yyyy), ZipCountry composite key added, pipeline runs clean |
@@ -435,6 +435,18 @@ duplicates, 0 Sales→Product orphans, 55,594 Sales→Geography orphans (known,
 documented). rpt_CompetitorSales 4 pages live: Sales Overview, Market Share,
 Regional Performance, Product Analysis. All slicers functional. README.md
 and ws_CompetitorSales/Readme.md written. Analyst Mindset Framework applied.
+Next: AI-Readiness pass.*
+
+*2026-10-13 — SQLBI table naming reverted — physical Gold names confirmed live
+and in Git (gold_fact_sales, gold_dim_product, gold_dim_manufacturer,
+gold_dim_geography, datedimension, _Measures). datedimension[MonthYear]
+sortByColumn set to MonthYearCode via XMLA (already in TMDL — no extra commit).
+datedimension[MonthName] sortByColumn set to MonthNumber via XMLA; TMDL updated
+and committed (4dcaf4c). Visual titles applied across all 4 report pages;
+rpt_CompetitorSales source control committed. docs/images/ folder created with
+.gitkeep; dashboard_CompetitorSales.png added; README.md updated with image
+reference. HARNESS.md Dashboard prefix corrected from dash_ to dashboard_.
+Retrospective completed — 6 workflow improvement findings documented.
 Next: AI-Readiness pass.*
 
 ---
