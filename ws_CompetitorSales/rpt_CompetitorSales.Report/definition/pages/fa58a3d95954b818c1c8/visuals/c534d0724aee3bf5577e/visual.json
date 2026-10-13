@@ -266,7 +266,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Revenue by Product'"
+                  "Value": "'Top 10 Products by Revenue'"
                 }
               }
             },
@@ -437,34 +437,6 @@
         },
         "restatement": "Top 10 product by revenue",
         "howCreated": "User"
-      },
-      {
-        "name": "d3db81eead20c7ae1e18",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "gold_dim_product"
-              }
-            },
-            "Property": "Product"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "70f37dbeb1d187a40cb6",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Revenue"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   },
