@@ -40,9 +40,9 @@ Last updated: 2026-10-04
 ## ws_RTI_BicycleRentals
 **Purpose:** Real-time intelligence project — live bicycle rental station monitoring  
 **Status:** Active  
-**Current focus:** Event-medallion pattern confirmed via Task Flow Studio; open items are hot/cold split verification and Map/Anomaly Detection data-binding confirmation  
-**Last session (2026-08-29):** Ran a Task Flow Studio pass over the workspace — confirmed the event-medallion pattern (Eventstream → Eventhouse Bronze/Silver/Gold → semantic model/report). Committed 13 Task Flow Studio docs (discovery brief, project brief, architecture handoff, decisions, test plan, validation report, deployment handoff, caches) to `ws_RTI_BicycleRentals/task-flow-studio/` in `main`. Resolved GitHub drift — all branches (main, test, dev-fabric-sync) now synced.  
-**Next session:** Verify the hot/cold split assumption (Eventhouse → Lakehouse handoff for historical data); confirm Map (`map_RTI_BicycleRentals`) and Anomaly Detection (`anomalies_BicycleRentals`) data bindings; still-open from prior session: validate the 10 semantic model measures live via DAX, visually review the report in Desktop/Service, inspect Activator rule logic and Dashboard tiles  
+**Current focus:** rpt_RTI_BicycleRentals manifest.json 404 fixed; pending browser verification of all 4 pages  
+**Last session (2026-10-14):** Fixed manifest.json 404 on rpt_RTI_BicycleRentals: deleted broken Service artifact, added missing .pbip project manifest, fixed azureMap visual (Lat/Long Average aggregation), reprovisioned via Fabric Reports API (pack + POST, then updateDefinition — both LRO Succeeded). Created learnings.md with 4 workflow findings. Committed to dev-fabric-sync (8429af1). Service preview screenshot validation blocked by RENDER_TIMEOUT (transient).  
+**Next session:** Open rpt_RTI_BicycleRentals in browser to confirm all 4 pages render; verify hot/cold split (Eventhouse → Lakehouse); confirm Map and Anomaly Detection data bindings; validate 10 measures live (DAX EVALUATE); inspect Activator rules and Dashboard tiles; decide on orphaned Lakehouse  
 **Blockers:** None known  
 
 ---

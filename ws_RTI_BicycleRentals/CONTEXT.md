@@ -124,33 +124,42 @@ model/report, matching the architecture already documented above.
 When finishing a session, replace the section below with actual results:
 
 ### Last Session Recap
-**Date:** 2026-08-29
+**Date:** 2026-10-14
 **Completed:**
-- Ran a Task Flow Studio pass over the workspace; confirmed the
-  event-medallion pattern (Eventstream → Eventhouse Bronze/Silver/Gold →
-  semantic model/report) matches actual implementation
-- Committed 13 Task Flow Studio docs to
-  `ws_RTI_BicycleRentals/task-flow-studio/` on `main`
-- Resolved GitHub drift — `main`, `test`, and `dev-fabric-sync` branches back
-  in sync
+- Diagnosed and fixed rpt_RTI_BicycleRentals manifest.json 404 error:
+  - Confirmed PBIR files in Git were structurally complete (0 errors, 0
+    warnings from powerbi-report-author validate)
+  - Deleted broken Service artifact via Fabric MCP
+  - Added missing rpt_RTI_BicycleRentals.pbip project manifest
+  - Fixed azureMap visual: Lat/Long now use Average aggregation (Function: 4)
+    to resolve DataViewMappingError_LocationAndLatLongGroup RENDER_FAILED error
+  - Reprovisioned report via Fabric Reports API (pack + POST /reports, then
+    updateDefinition after map fix — both LRO Succeeded)
+  - definition.pbir byPath ↔ byConnection lifecycle applied correctly
+  - Service preview screenshot validation blocked by RENDER_TIMEOUT (transient
+    DirectQuery latency); report is live in Service — verify in browser
+- Created learnings.md with four workflow findings from this session
+- Committed to dev-fabric-sync (commit 8429af1)
 
 **Left unfinished:**
-- Hot/cold split assumption (Eventhouse → Lakehouse historical handoff) not
-  verified against actual data flow — `lh_RTI_BicycleRentals` still orphaned
-- Map (`map_RTI_BicycleRentals`) data bindings not confirmed
-- Anomaly Detection (`anomalies_BicycleRentals`) data bindings not confirmed
-- Carried over from 2026-07-24: DAX measure validation (EVALUATE over the 10
-  measures), visual report review in Desktop/Service, Activator rule logic
-  inspection, Dashboard tile inspection, decision on orphaned Lakehouse
+- Service screenshot validation blocked by RENDER_TIMEOUT — browser verify needed
+- Hot/cold split assumption (Eventhouse → Lakehouse historical handoff) still
+  not verified — lh_RTI_BicycleRentals still orphaned
+- Map (map_RTI_BicycleRentals) data bindings not confirmed
+- Anomaly Detection (anomalies_BicycleRentals) data bindings not confirmed
+- DAX measure validation (EVALUATE over the 10 measures) still pending
+- Activator rule logic inspection still pending
+- Dashboard tile inspection still pending
 
 **New blockers discovered:**
 - None
 
 **Pick up next session at:**
+- Open rpt_RTI_BicycleRentals in the browser and confirm all 4 pages render
+  (Live Network Overview, Station Detail, Rebalancing Ops, About)
 - Verify hot/cold split assumption (Eventhouse → Lakehouse)
 - Confirm Map and Anomaly Detection data bindings
-- Validate the 10 measures live (DAX EVALUATE) and the report visually
-  (Desktop reload + screenshot review)
+- Validate the 10 measures live (DAX EVALUATE)
 - Inspect activator_BicycleRentals rule logic and document
 - Inspect dashboard_BicycleRentals tile definitions and document
 - Decide: wire lh_RTI_BicycleRentals for historical Delta layer or remove
