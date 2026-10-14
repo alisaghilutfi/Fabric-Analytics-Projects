@@ -6,14 +6,13 @@
         "id": "7effa431-979c-4541-a5be-bb3cfedab16b",
         "clusterUri": "https://trd-mpt42n4h5vmke6909h.z2.kusto.fabric.microsoft.com",
         "type": "Fabric",
-        "databaseItemId": "04574108-6fa5-4b33-9d87-4c6cd78bcdf8",
-        "databaseItemName": "eh_RTI_BicycleRentals"
+        "databaseItemId": "04574108-6fa5-4b33-9d87-4c6cd78bcdf8"
       }
     ],
     "tabs": [
       {
         "id": "838de6ac-6849-4735-a818-81ce07d5c7ce",
-        "content": "//***********************************************************************************************************\n// Here are two articles to help you get started with KQL:\n// KQL reference guide - https://aka.ms/KQLguide\n// SQL - KQL conversions - https://aka.ms/sqlcheatsheet\n//***********************************************************************************************************\n\n// Use \"take\" to view a sample number of records in the table and check the data.\nRawData\n| take 10\n\nTransformedData\n| take 10\n\nAggregatedData\n| take 10\n\n// See how many records are in the table.\nRawData\n| count\n\nTransformedData\n| count\n\nAggregatedData\n| count\n\n// This query returns the number of ingestions per hour in the given table.\nRawData\n| summarize IngestionCount = count() by bin(ingestion_time(), 1h)\n\n",
+        "content": "//***********************************************************************************************************\n// Here are two articles to help you get started with KQL:\n// KQL reference guide - https://aka.ms/KQLguide\n// SQL - KQL conversions - https://aka.ms/sqlcheatsheet\n//***********************************************************************************************************\n\n// Use \"take\" to view a sample number of records in the table and check the data.\nRawData\n| take 10\n\nTransformedData\n| take 10\n\nAggregatedData\n| take 10\n\n// See how many records are in the table.\nRawData\n| count\n\nTransformedData\n| count\n\nAggregatedData\n| count\n\n// This query returns the number of ingestions per hour in the given table.\nRawData\n| summarize IngestionCount = count() by bin(ingestion_time(), 1h)\n\nLatestStationSnapshot()\n| take 5",
         "title": "query_Basics",
         "dataSourceId": "7effa431-979c-4541-a5be-bb3cfedab16b"
       },
