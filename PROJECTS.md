@@ -39,11 +39,11 @@ Last updated: 2026-10-04
 
 ## ws_RTI_BicycleRentals
 **Purpose:** Real-time intelligence project — live bicycle rental station monitoring  
-**Status:** Active  
-**Current focus:** rpt_RTI_BicycleRentals manifest.json 404 fixed; pending browser verification of all 4 pages  
-**Last session (2026-10-14):** Fixed manifest.json 404 on rpt_RTI_BicycleRentals: deleted broken Service artifact, added missing .pbip project manifest, fixed azureMap visual (Lat/Long Average aggregation), reprovisioned via Fabric Reports API (pack + POST, then updateDefinition — both LRO Succeeded). Created learnings.md with 4 workflow findings. Committed to dev-fabric-sync (8429af1). Service preview screenshot validation blocked by RENDER_TIMEOUT (transient).  
-**Next session:** Open rpt_RTI_BicycleRentals in browser to confirm all 4 pages render; verify hot/cold split (Eventhouse → Lakehouse); confirm Map and Anomaly Detection data bindings; validate 10 measures live (DAX EVALUATE); inspect Activator rules and Dashboard tiles; decide on orphaned Lakehouse  
-**Blockers:** None known  
+**Status:** Blocked — rpt_RTI_BicycleRentals not provisioned; all programmatic paths fail on Trial capacity  
+**Current focus:** Service UI "Create report" from sm_RTI_BicycleRentals — only remaining untested provisioning path  
+**Last session (2026-10-14):** Fixed sm_RTI_BicycleRentals OAuth2 credentials (DMTS_DatasourceHasNoCredentialError). Validated all 10 DAX measures live (Total Stations = 120, Network Utilization = 48.1%). Full manifest.json 404 diagnosis on rpt_RTI_BicycleRentals: PBIR files are valid (0 errors), but all programmatic provisioning paths confirmed failing on Trial capacity — Git sync, Fabric API (POST /reports + updateDefinition), and Desktop Bridge (PID 28068, bridge connected) all produce 404. Report deleted from workspace; not recreated. .pbip project manifest created. learnings.md created with 4 findings (commit 8429af1).  
+**Next session:** (1) FabricEngineer: list workspace items via MCP and delete any duplicate/orphan rpt_RTI_BicycleRentals artifacts; (2) Ali: Fabric Service UI → sm_RTI_BicycleRentals → "Create report" → save as rpt_RTI_BicycleRentals; (3) FabricEngineer: download new report definition via API, diff against PBIR in Git, commit to dev-fabric-sync  
+**Blockers:** manifest.json 404 on all programmatic provisioning paths — confirmed Trial capacity limitation. Duplicate/orphan report items may exist in workspace from failed publish attempts — need MCP cleanup. rpt_RTI_BicycleRentals does not currently exist in workspace.  
 
 ---
 
