@@ -4,7 +4,7 @@
 > The executing agent reads this at session start and writes a recap
 > at session end. Do not edit manually unless correcting an error.
 
-Last updated: 2026-08-29
+Last updated: 2026-10-14
 
 ---
 
@@ -89,12 +89,19 @@ live and running.
   visible; Timestamp, No_Bikes, No_Empty_Docks, BikesToBeFilled, Action
   hidden). `_Measures` table with 10 measures across Availability / Capacity /
   Rebalancing / Recency display folders, all with Copilot-ready descriptions.
+  **Credentials fixed 2026-10-14:** OAuth2 bound via Service → Data source
+  credentials → AzureDataExplorer (root cause: DMTS_DatasourceHasNoCredentialError).
+  Validated live: Total Stations = 120, Network Utilization % = 48.1%.
 - **rpt_RTI_BicycleRentals** (Report) — 4 pages: Live Network Overview (KPI
   row, azureMap, Top-10 restock bar chart, Neighbourhood slicer), Station
   Detail (table with Fill/Empty conditional formatting, Action + Neighbourhood
   slicers), Rebalancing Ops (Restock vs Emptying bar chart, Total Bikes To
   Move card, Neighbourhood × Action matrix), About (data lineage + freshness
   card). PBIR validated with `powerbi-report-author validate` (0 errors).
+  **BLOCKED 2026-10-14:** Does not exist in workspace — all programmatic
+  provisioning paths (Git sync, Fabric API, Desktop Bridge) produce
+  `manifest.json 404` on this Trial capacity. Service UI "Create report"
+  from sm_RTI_BicycleRentals is the only remaining untested path.
 
 ## Task Flow Studio (run 2026-08-29)
 A Task Flow Studio pass confirmed the workspace follows the **event-medallion
@@ -124,34 +131,44 @@ model/report, matching the architecture already documented above.
 When finishing a session, replace the section below with actual results:
 
 ### Last Session Recap
-**Date:** 2026-08-29
+**Date:** 2026-10-14
 **Completed:**
-- Ran a Task Flow Studio pass over the workspace; confirmed the
-  event-medallion pattern (Eventstream → Eventhouse Bronze/Silver/Gold →
-  semantic model/report) matches actual implementation
-- Committed 13 Task Flow Studio docs to
-  `ws_RTI_BicycleRentals/task-flow-studio/` on `main`
-- Resolved GitHub drift — `main`, `test`, and `dev-fabric-sync` branches back
-  in sync
-
-**Left unfinished:**
-- Hot/cold split assumption (Eventhouse → Lakehouse historical handoff) not
-  verified against actual data flow — `lh_RTI_BicycleRentals` still orphaned
-- Map (`map_RTI_BicycleRentals`) data bindings not confirmed
-- Anomaly Detection (`anomalies_BicycleRentals`) data bindings not confirmed
-- Carried over from 2026-07-24: DAX measure validation (EVALUATE over the 10
-  measures), visual report review in Desktop/Service, Activator rule logic
-  inspection, Dashboard tile inspection, decision on orphaned Lakehouse
+- sm_RTI_BicycleRentals credentials fixed: bound OAuth2 via Service → Data
+  source credentials → AzureDataExplorer (root cause: DMTS_DatasourceHasNoCredentialError)
+- KQL Gold layer validated live: `LatestStationSnapshot()` returns 120 stations,
+  live ingestion confirmed
+- All 10 DAX measures validated live via EVALUATE: Total Stations = 120,
+  Network Utilization % = 48.1%
+- manifest.json 404 fully diagnosed on rpt_RTI_BicycleRentals:
+  - PBIR files confirmed structurally valid (0 errors, powerbi-report-author validate)
+  - azureMap visual fixed: Lat/Long wrapped in Average aggregation (Function: 4)
+    to resolve DataViewMappingError_LocationAndLatLongGroup
+  - All programmatic provisioning paths attempted and confirmed failing:
+    - Git sync delete + reprovision → still 404
+    - Fabric API pack + POST /reports (create) → still 404
+    - Fabric API updateDefinition → still 404
+    - Desktop Bridge publish (PID 28068, bridge connected) → still 404
+  - Root cause confirmed: Trial capacity limitation — Service-side blob storage
+    cannot be provisioned via any programmatic path on this capacity tier
+  - rpt_RTI_BicycleRentals deleted from workspace; not recreated
+- .pbip project manifest created (was missing; required for Desktop to open project)
+- learnings.md created with 4 workflow findings; committed to dev-fabric-sync (8429af1)
 
 **New blockers discovered:**
-- None
+- manifest.json 404 on all programmatic provisioning paths (API, Git sync,
+  Desktop Bridge) — confirmed Trial capacity limitation; Service UI the only
+  remaining path
+- Duplicate/orphan report items may exist in workspace from failed publish
+  attempts — need MCP cleanup before next attempt
+- rpt_RTI_BicycleRentals does not exist in workspace (deleted, not yet recreated)
 
 **Pick up next session at:**
-- Verify hot/cold split assumption (Eventhouse → Lakehouse)
-- Confirm Map and Anomaly Detection data bindings
-- Validate the 10 measures live (DAX EVALUATE) and the report visually
-  (Desktop reload + screenshot review)
-- Inspect activator_BicycleRentals rule logic and document
-- Inspect dashboard_BicycleRentals tile definitions and document
-- Decide: wire lh_RTI_BicycleRentals for historical Delta layer or remove
-- Investigate anomalies_BicycleRentals output destination
+1. FabricEngineer: list workspace items via MCP, delete any duplicate/orphan
+   rpt_RTI_BicycleRentals items (null logicalId or stale artifacts)
+2. Ali: Fabric Service UI → open sm_RTI_BicycleRentals → "Create report" →
+   save as rpt_RTI_BicycleRentals
+3. FabricEngineer: download the new report definition via Fabric API, diff
+   against existing PBIR in Git, commit any changes to dev-fabric-sync
+4. Verify all 4 pages render in browser after Service UI creation
+5. Resume deferred items: hot/cold split verification, Map/Anomaly data bindings,
+   Activator rules, Dashboard tiles, orphaned Lakehouse decision

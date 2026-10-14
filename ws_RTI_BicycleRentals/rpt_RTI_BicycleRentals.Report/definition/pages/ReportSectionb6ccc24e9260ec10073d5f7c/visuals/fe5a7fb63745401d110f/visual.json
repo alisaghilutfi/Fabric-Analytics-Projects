@@ -36,16 +36,21 @@
           "projections": [
             {
               "field": {
-                "Column": {
+                "Aggregation": {
                   "Expression": {
-                    "SourceRef": {
-                      "Entity": "Station Snapshot"
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Station Snapshot"
+                        }
+                      },
+                      "Property": "Latitude"
                     }
                   },
-                  "Property": "Latitude"
+                  "Function": 4
                 }
               },
-              "queryRef": "Station Snapshot.Latitude",
+              "queryRef": "Average(Station Snapshot.Latitude)",
               "nativeQueryRef": "Latitude",
               "active": true
             }
@@ -55,16 +60,21 @@
           "projections": [
             {
               "field": {
-                "Column": {
+                "Aggregation": {
                   "Expression": {
-                    "SourceRef": {
-                      "Entity": "Station Snapshot"
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Station Snapshot"
+                        }
+                      },
+                      "Property": "Longitude"
                     }
                   },
-                  "Property": "Longitude"
+                  "Function": 4
                 }
               },
-              "queryRef": "Station Snapshot.Longitude",
+              "queryRef": "Average(Station Snapshot.Longitude)",
               "nativeQueryRef": "Longitude",
               "active": true
             }

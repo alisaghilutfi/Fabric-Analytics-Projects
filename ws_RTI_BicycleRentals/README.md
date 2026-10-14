@@ -89,8 +89,8 @@ on `type` when listing workspace artifacts via MCP to avoid acting on the wrong 
 | `activator_BicycleRentals` | Reflex | Alert/activator artifact — rule logic defined in Fabric |
 | `dashboard_BicycleRentals` | KQL Dashboard | Native KQL dashboard tiles |
 | `anomalies_BicycleRentals` | Anomaly Detector | Anomaly detection over the event stream |
-| `sm_RTI_BicycleRentals` | Semantic model | DirectQuery to KQL · 10 DAX measures · 4 display folders · Copilot descriptions |
-| `rpt_RTI_BicycleRentals` | Report | 4-page live dashboard · PBIR format · 0 validation errors |
+| `sm_RTI_BicycleRentals` | Semantic model | DirectQuery to KQL · 10 DAX measures · 4 display folders · Copilot descriptions · OAuth2 credentials bound |
+| `rpt_RTI_BicycleRentals` | Report | 4-page live dashboard · PBIR format · 0 validation errors · **not in workspace** — manifest.json 404 on all programmatic paths (Trial capacity); pending Service UI recreation |
 
 ---
 
