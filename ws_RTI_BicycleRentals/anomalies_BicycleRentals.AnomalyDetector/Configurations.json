@@ -15,6 +15,7 @@
         "artifactId": "d78bcdf8-4c6c-9d87-4b33-6fa504574108"
       },
       "modelOption": {
+        "analysisCompletedAt": null,
         "modelSelection": {
           "modelAlgorithm": "KNN",
           "modelVersion": "1.0",
@@ -54,6 +55,7 @@
           }
         ]
       },
+      "analysisRequestId": null,
       "detectionSettings": {
         "confidence": 75,
         "autoPublish": false

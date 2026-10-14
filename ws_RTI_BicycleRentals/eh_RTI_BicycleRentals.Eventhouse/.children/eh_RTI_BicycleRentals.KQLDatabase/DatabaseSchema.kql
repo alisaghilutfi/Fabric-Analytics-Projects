@@ -16,4 +16,4 @@
 }
 .create-or-alter materialized-view with (Folder = "Gold")  AggregatedData on table TransformedData { TransformedData
    | summarize arg_max(Timestamp,No_Bikes) by BikepointID }
-.alter table TransformedData policy update "[{\"IsEnabled\":true,\"Source\":\"RawData\",\"Query\":\"TransformRawData()\",\"IsTransactional\":false,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
+.alter table TransformedData policy update "[{\"IsEnabled\":true,\"Source\":\"RawData\",\"Query\":\"TransformRawData()\",\"IsTransactional\":false,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null,\"IsAsync\":false}]"
