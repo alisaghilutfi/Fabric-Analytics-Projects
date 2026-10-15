@@ -4,8 +4,9 @@ An end-to-end analytics platform on Microsoft Fabric ingesting live earthquake d
 from the USGS REST API, processing it through a Bronze → Silver → Gold medallion
 architecture with reverse geocoding and significance classification, surfacing it as
 a four-page Power BI geospatial report with time intelligence, enabling natural
-language querying through three domain-scoped Fabric Data Agents, and an Ontology
-item for semantic enrichment.
+language querying through three domain-scoped Fabric Data Agents, an Ontology
+item for semantic enrichment, and a deployed Rayfin Fabric App for interactive
+analytics dashboards.
 
 ![USGS Earthquake Dashboard](docs/images/dashboard_USGS_Earthquake.png)
 
@@ -111,6 +112,7 @@ preventing full-table reprocessing on every run.
 | `agent_USGS_GeographicImpact` | Data Agent | Fabric Data Agent — country-level patterns, geographic distribution |
 | `agent_USGS_SignificanceAnalyst` | Data Agent | Fabric Data Agent — significance scoring, risk classification |
 | `onto_USGS_Earthquake` | Ontology | 2 entity types (Earthquake Events, Date) with 1 ontology-first relationship; grounded on Gold Lakehouse tables |
+| `FabricApp_USGS_Earthquake` | Fabric App (Rayfin) | React + Vite app — create-rayfin@1.36.2, 3-screen UI (Search / Results / Subscribe). sm_usgs_earthquake function-bridge connector; AlertSubscription entity. Live: https://daily-cave-2c1879b505-northeurope.webapp.fabricapps.net |
 
 ---
 

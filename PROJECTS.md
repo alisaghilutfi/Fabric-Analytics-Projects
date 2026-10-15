@@ -48,12 +48,12 @@ Last updated: 2026-10-04
 ---
 
 ## ws_USGS_Earthquake
-**Purpose:** End-to-end USGS seismic analytics — medallion lakehouse, Direct Lake semantic model, 4-page Power BI report, three domain-scoped Fabric Data Agents, and Ontology item  
-**Status:** Active — Phase 3 in progress  
-**Current focus:** Phase 3b Rayfin (deferred), report polish still open  
-**Last session:** Git sync fixed for all three DataAgents (logicalId byte-swap root cause). Phase 3a complete: onto_USGS_Earthquake created with Earthquake Events + Date entities, validated against live data.  
-**Next session:** Phase 3b — Rayfin app, OR report polish (branded header, drill-through)  
-**Blockers:** None  
+**Purpose:** End-to-end USGS seismic analytics — medallion lakehouse, Direct Lake semantic model, 4-page Power BI report, three domain-scoped Fabric Data Agents, Ontology item, and Rayfin Fabric App  
+**Status:** Active — Phase 3b complete; backfill + validation pending  
+**Current focus:** Run pl_USGS_Earthquake backfill (2026-01-09 → today); validate earthquake list in deployed app  
+**Last session (2026-10-15):** Phase 3b complete — FabricApp_USGS_Earthquake deployed via `rayfin up`. 3-screen app (Search/Results/Subscribe) wired to sm_usgs_earthquake via function-bridge connector; AlertSubscription entity for alert preferences; KPI cards country-filtered via CALCULATE; earthquake list via TOPN/FILTER. Live at https://daily-cave-2c1879b505-northeurope.webapp.fabricapps.net  
+**Next session:** Run pl_USGS_Earthquake to backfill Gold table (stale at 2026-01-08); validate earthquake list in app; dashboard_USGS_Earthquake manual portal delete; nb_Bronze phantom diff Undo  
+**Blockers:** Gold table stale (newest event: 2026-01-08) — earthquake list returns empty until pipeline backfill run; dashboard_USGS_Earthquake manual portal delete pending; nb_Bronze phantom diff Undo pending in Fabric Source Control  
 
 ---
 
