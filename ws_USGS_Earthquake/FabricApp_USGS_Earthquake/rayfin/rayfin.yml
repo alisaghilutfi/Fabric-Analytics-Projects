@@ -13,6 +13,8 @@ services:
       enabled: false
     allowedRedirectUris:
       - http://localhost:5173
+      - http://127.0.0.1:5173
+      - https://daily-cave-2c1879b505-northeurope.webapp.fabricapps.net
   data:
     enabled: true
     path: packages/data
@@ -27,16 +29,11 @@ services:
     assetAccess: protected
     embedded:
       only: false
+  storage:
+    enabled: false
+  functions:
+    enabled: false
 connectors:
-  - name: lh_usgs_earthquake
-    config:
-      workspaceId: 39caa3ab-a964-45c2-bd5b-7d46ad66c985
-      itemId: 229ffbb2-7c95-4ef9-836f-57b1083675c3
-    auth:
-      type: application
-    operations:
-      - name: read
-    type: fabric-sqlanalytics
   - name: sm_usgs_earthquake
     type: fabric-semanticmodel
     config:
