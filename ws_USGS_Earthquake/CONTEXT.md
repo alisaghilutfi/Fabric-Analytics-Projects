@@ -44,6 +44,7 @@ Note: Capacity was listed as "Trial" in prior context — confirmed F2 (alisaghi
 | `agent_USGS_GeographicImpact` | Data Agent | `ef62df53-4579-4a04-8b0d-10c7f01dc9b6` (artifactId) / logicalId: `f01dc9b6-10c7-8b0d-4a04-4579ef62df53` | Grounds into sm_USGS_Earthquake, _Measures + Country Code/Place Description columns |
 | `agent_USGS_SignificanceAnalyst` | Data Agent | `62f796e5-33e4-4ec7-abec-77e9e58d37ec` (artifactId) / logicalId: `e58d37ec-77e9-abec-4ec7-33e462f796e5` | Grounds into sm_USGS_Earthquake, _Measures table only |
 | `onto_USGS_Earthquake` | Ontology | `fef44ff8-0ff0-476e-8374-0b6bf449750f` | 2 entity types: Earthquake Events, Date. 1 relationship: Earthquake Events to Date (ontology-first) |
+| `FabricApp_USGS_Earthquake` | Fabric App (Rayfin) | AppBackend: `251ae692-14f8-4fc9-a41b-c12ecbfa0904` (logicalId: null) | React + Vite, create-rayfin@1.36.2, blankapp template. Status: In Progress — scaffold + packs done, connector packages not yet installed |
 
 ---
 
@@ -287,6 +288,51 @@ Built in ws_DS_BankChurn on same F2 capacity. Confirmed: Fabric Data Agents avai
 
 ---
 
+## Phase 3b — Rayfin App (FabricApp_USGS_Earthquake)
+
+### Objective
+A React + Vite web app backed by Rayfin that surfaces USGS earthquake analytics — semantic model queries, live KPIs and charts — as a deployable Fabric app in `ws_USGS_Earthquake`.
+
+### Scaffold (2026-10-15)
+- Command: `npm create @microsoft/rayfin@latest -- "FabricApp_USGS_Earthquake" --template blankapp --workspace "ws_USGS_Earthquake"` (create-rayfin@1.36.2)
+- Location: `ws_USGS_Earthquake/FabricApp_USGS_Earthquake/`
+- 18 agent skills seeded under `.agents/skills/` (analytics, connectors, data-modeling, dax-authoring, visuals, crud-ui, fabric-data-agent, etc.)
+- `.mcp.json` registers `@microsoft/rayfin-mcp` as local MCP server
+- `rayfin/.env` contains `RAYFIN_WORKSPACE_NAME=ws_USGS_Earthquake`
+
+### Packs enabled (2026-10-15)
+- `data-modeling` — `data.enabled = true`, `data.dialect = mssql`, starter `Item.ts` seeded
+- `connectors` — frontend connector SDK + `connectors.ts` seeded
+- `analytics` — `connectors.enabled = true`, semantic model query hook added
+
+### Connectors registered (2026-10-15)
+
+| Alias | Type | Status |
+|---|---|---|
+| `lh_usgs_earthquake` | `fabric-sqlanalytics` | Added to `rayfin.yml`; schema discovery failed — TDS port 1433 blocked from dev machine; `schema.ts` placeholder only; NOT wired into `connectors.ts` |
+| `sm_usgs_earthquake` | `fabric-semanticmodel` | Added to `rayfin.yml`; wired into `connectors.ts` (1 client-side runtime); connector packages NOT yet installed |
+
+### Packages to install (Step 11 — next session)
+```sh
+# Semantic model connector (required):
+npm install -w @rayfin-app/frontend @microsoft/rayfin-connector-fabric-semanticmodel@1.36.2 @microsoft/rayfin-connectors@1.36.2
+
+# Lakehouse connector (optional — only if direct SQL access needed alongside sm):
+npm install -w @rayfin-app/frontend @microsoft/rayfin-connector-fabric-graphql@1.36.2
+```
+
+### Build order (Steps 11–13+ — next session)
+1. Install connector packages (Step 11)
+2. `npx rayfin connector inspect --name sm_usgs_earthquake` — validate semantic model access (Step 12)
+3. Generate entities from semantic model connector following `@microsoft/rayfin-connector-fabric-semanticmodel` docs (Step 13)
+4. Build app UI — query `sm_usgs_earthquake` for KPIs and charts, wire `useSemanticModelQuery` hook
+5. `rayfin up` to deploy to `ws_USGS_Earthquake`
+
+### Decision pending
+Lakehouse SQL analytics connector (`lh_usgs_earthquake`) is blocked on TDS port 1433. Since `sm_USGS_Earthquake` already exposes all 17 measures and the Gold table via Direct Lake, the SQL connector may not be needed. Decide at Step 11 whether to retain or remove it from `rayfin.yml`.
+
+---
+
 ## Outstanding Items
 
 | Priority | Item | Notes |
@@ -294,7 +340,7 @@ Built in ws_DS_BankChurn on same F2 capacity. Confirmed: Fabric Data Agents avai
 | Medium | Branded header strip on all report pages | Dark rectangle #094780, 40px, full width — deferred by Ali |
 | Medium | Drill-through: Geographic -> Event Detail | Wire map/country bar to drill to Page 4 filtered by country |
 | Medium | Date notebook guard in pipeline | `nb_USGS_Earthquake_Date` not wired into pipeline as prerequisite |
-| Medium | Phase 3b — Rayfin app | Deferred. Build earthquake activity app via Rayfin into ws_USGS_Earthquake |
+| Medium | Phase 3b — Rayfin app | In Progress (2026-10-15). Scaffold + packs complete. Connector packages not yet installed. See Phase 3b section above. |
 | Low | Wire onto_USGS_Earthquake to Data Agents | Connect ontology for inherited context once item stabilises in preview |
 | Low | Tooltip page for map | Show Title, Magnitude, Significance Class, Place Description on hover |
 | Low | Custom theme JSON | Replace CY25SU12 default with intentional Lotusoftware palette |
@@ -344,9 +390,19 @@ Not `"python"` — base conda env is Python 3.8.5 which lacks `mcp` package.
 
 ---
 
+## Blockers
+
+| Item | Detail |
+|---|---|
+| Step 11–13 not yet run | `@microsoft/rayfin-connector-fabric-semanticmodel@1.36.2` and `@microsoft/rayfin-connectors@1.36.2` not installed in `@rayfin-app/frontend`; `sm_usgs_earthquake` connector wired but not usable until packages are installed |
+| `dashboard_USGS_Earthquake` manual portal delete pending | Fabric REST API returns `FeatureNotAvailable` for Dashboard delete; must be deleted manually in Fabric portal |
+| `nb_USGS_Earthquake_Bronze` phantom diff Undo pending | Fabric Source Control panel shows a phantom diff; no intentional change was made — Undo in the Source Control panel to clear it |
+
+---
+
 ## Last Session
 
 > Owner: FabricEngineer (Claude Code)
 > Overwrite this section after every execution session.
 
-2026-10-02 — Git sync fixed for all three DataAgents (root cause: logicalId is little-endian byte-swap of artifact id, not the id from list_items; fixed by git rm agent folders, push, Fabric commit → Git). Phase 3a complete: onto_USGS_Earthquake Ontology item created, committed empty first (applying DataAgent lesson), Ontology Agent built two entity types (Earthquake Events, Date) with one ontology-first relationship, validation passed (9,164 events, max magnitude 7.5, top country US, 1,461 dates, 2024–2027 range).
+2026-10-15 — Source control audit: workspace list pulled via Fabric MCP (19 items); `dashboard_USGS_Earthquake` (logicalId: null) confirmed present — API delete blocked (`FeatureNotAvailable`), manual portal delete pending. `nb_USGS_Earthquake_Bronze` phantom diff identified — Undo pending in Source Control panel. Scratch notebook `nb_USGS_Earthquake` (63e42046) confirmed absent from both workspace and Git — already clean. Phase 3b started: `FabricApp_USGS_Earthquake` scaffolded with create-rayfin@1.36.2 (`blankapp` template); packs `data-modeling`, `connectors`, `analytics` enabled; `lh_usgs_earthquake` connector added to `rayfin.yml` (schema discovery failed — TDS port 1433 blocked); `sm_usgs_earthquake` connector added and wired into `connectors.ts`; connector packages not yet installed (Step 11 pending). App committed to `dev-fabric-sync` excluding `node_modules`.
