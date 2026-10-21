@@ -340,8 +340,8 @@ Lakehouse SQL analytics connector (`lh_usgs_earthquake`) is blocked on TDS port 
 | Medium | Branded header strip on all report pages | Dark rectangle #094780, 40px, full width — deferred by Ali |
 | Medium | Drill-through: Geographic -> Event Detail | Wire map/country bar to drill to Page 4 filtered by country |
 | Medium | Date notebook guard in pipeline | `nb_USGS_Earthquake_Date` not wired into pipeline as prerequisite |
-| Medium | Phase 3b — Rayfin app | ✅ Complete (2026-10-15). Deployed at https://daily-cave-2c1879b505-northeurope.webapp.fabricapps.net |
-| Medium | Run pl_USGS_Earthquake backfill | Gold table stale (newest event: 2026-01-08). Run pipeline for 2026-01-09 → today; then validate earthquake list in app |
+| Medium | Branded header strip on all report pages | Dark rectangle #094780, 40px, full width — deferred by Ali |
+| Medium | Configure pl_USGS_Earthquake on a schedule | Daily or weekly trigger so Gold table stays current without manual runs |
 | Low | Wire onto_USGS_Earthquake to Data Agents | Connect ontology for inherited context once item stabilises in preview |
 | Low | Tooltip page for map | Show Title, Magnitude, Significance Class, Place Description on hover |
 | Low | Custom theme JSON | Replace CY25SU12 default with intentional Lotusoftware palette |
@@ -395,8 +395,7 @@ Not `"python"` — base conda env is Python 3.8.5 which lacks `mcp` package.
 
 | Item | Detail |
 |---|---|
-| Gold table stale | Pipeline last ran through 2026-01-08; earthquake list in app returns empty for any country. Run `pl_USGS_Earthquake` with date range 2026-01-09 → today to backfill; then validate app list screen |
-| `dashboard_USGS_Earthquake` manual portal delete pending | Fabric REST API returns `FeatureNotAvailable` for Dashboard delete; must be deleted manually in Fabric portal |
+| Gold table refresh needed | Pipeline runs on demand only; schedule not configured. Gold table will grow stale between manual runs. |
 | `nb_USGS_Earthquake_Bronze` phantom diff Undo pending | Fabric Source Control panel shows a phantom diff; no intentional change was made — Undo in the Source Control panel to clear it |
 
 ---
@@ -406,4 +405,4 @@ Not `"python"` — base conda env is Python 3.8.5 which lacks `mcp` package.
 > Owner: FabricEngineer (Claude Code)
 > Overwrite this section after every execution session.
 
-2026-10-15 — Phase 3b complete. `lh_usgs_earthquake` connector removed from `rayfin.yml` (TDS port 1433 blocked from dev machine; `sm_USGS_Earthquake` exposes all required data via Direct Lake). Connector packages confirmed installed (`@microsoft/rayfin-connector-fabric-semanticmodel@1.36.2`, `@microsoft/rayfin-connectors@1.36.2`). All 3 semantic model entities validated via `connector inspect` (`Earthquake Events` ✅, `Date` ✅, `_Measures` ✅ expected null). `fabric-semanticmodel` confirmed Category B (function-bridge) — no entity generation; wired via `ConnectorsRayfinClient` + `fabricSemanticModel()` runtime. `Subscription` entity renamed to `AlertSubscription` (GraphQL reserved type). App UI built: 3 screens (Search, Results, Subscribe); country-filtered KPI cards via `EVALUATE ROW(...)` + `CALCULATE`, earthquake list via `TOPN/FILTER` with explicit `DATE()`. `formatKpi` helper for % and magnitude formatting; KPI label stripping for `[bracket]` column names. `rayfin up --yes` deployed successfully. Live URL: https://daily-cave-2c1879b505-northeurope.webapp.fabricapps.net. Note: Gold table stale (newest event: 2026-01-08) — earthquake list returns empty until pipeline backfill run.
+2026-10-21 — UI polish session. Tailwind design system migration: DM Sans + DM Mono fonts (Google Fonts), seismograph SVG background on search screen, country autocomplete dropdown (75 countries), light/dark toggle via `useAppTheme`, badge padding and tracking polish, KPI numeric font via inline `style` (bypasses Tailwind arbitrary-value parsing), subscribe button text updated. Three files changed: `index.html`, `global.css` (@theme + .dark blocks replaced with earthquake navy/warm-stone palette), `App.tsx` (full rewrite). App deployed and visually validated. Also: `env_USGS_Earthquake` Spark compute reduced (8→4 cores, 56→28 GB driver+executor) to fit F2 capacity limit; `pl_USGS_Earthquake` backfill run (9,164 → 11,051 rows in `earthquake_events_gold`).

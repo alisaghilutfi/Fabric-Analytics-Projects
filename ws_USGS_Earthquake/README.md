@@ -112,7 +112,13 @@ preventing full-table reprocessing on every run.
 | `agent_USGS_GeographicImpact` | Data Agent | Fabric Data Agent — country-level patterns, geographic distribution |
 | `agent_USGS_SignificanceAnalyst` | Data Agent | Fabric Data Agent — significance scoring, risk classification |
 | `onto_USGS_Earthquake` | Ontology | 2 entity types (Earthquake Events, Date) with 1 ontology-first relationship; grounded on Gold Lakehouse tables |
-| `FabricApp_USGS_Earthquake` | Fabric App (Rayfin) | React + Vite app — create-rayfin@1.36.2, 3-screen UI (Search / Results / Subscribe). sm_usgs_earthquake function-bridge connector; AlertSubscription entity. Live: https://daily-cave-2c1879b505-northeurope.webapp.fabricapps.net |
+| `FabricApp_USGS_Earthquake` | Fabric App (Rayfin) | React + Vite app — create-rayfin@1.36.2, 3-screen UI (Search / Results / Subscribe). Tailwind design system, DM Sans/Mono fonts, country autocomplete (75 countries), light/dark toggle, seismograph SVG background. sm_usgs_earthquake function-bridge connector; AlertSubscription entity. **UI complete.** Live: https://daily-cave-2c1879b505-northeurope.webapp.fabricapps.net |
+
+---
+
+## App Preview
+
+![Earthquake Alert App — Results Screen](docs/images/app-screenshot.png)
 
 ---
 
