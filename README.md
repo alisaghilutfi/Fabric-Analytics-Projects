@@ -67,20 +67,19 @@ availability, capacity, rebalancing, and recency.
 
 ---
 
-### ws_USGS_Earthquake — USGS Earthquake Analytics
+### ws_USGS_Earthquake — USGS Earthquake Alert
 
-**Type:** Data Engineering + Analytics  
-**Stack:** REST API ingestion · Medallion Lakehouse · PySpark · reverse_geocoder · DirectLake semantic model · Power BI geospatial report · Fabric Data Agents (×3) · Ontology  
+**Type:** Data Engineering + Analytics + Fabric App  
+**Stack:** REST API ingestion · Medallion Lakehouse · PySpark · reverse_geocoder · DirectLake semantic model · Power BI geospatial report · Fabric Data Agents (×3) · Ontology · Fabric App (Rayfin)
 
-Live USGS earthquake data ingested via REST API, processed through Bronze/Silver/Gold
-Lakehouse layers with reverse geocoding and significance classification, exposed as a
-4-page Power BI report with map visuals and time intelligence. Phase 3a complete:
-three domain-scoped Data Agents and an Ontology item (Earthquake Events + Date
-entity types) built on the semantic model.
-
-> **Git sync blocker (2026-10-02):** Three DataAgent .platform files contain null
-> logicalIds. Real GUIDs exist in Fabric but need to be synced to repo. Repair steps
-> documented in PROJECTS.md and ws_USGS_Earthquake/CONTEXT.md.
+Live USGS earthquake data ingested via REST API, processed through
+Bronze/Silver/Gold Lakehouse layers with reverse geocoding and
+significance classification, exposed as a 4-page Power BI report
+with map visuals and time intelligence. Three domain-scoped Data
+Agents and an Ontology item built on the semantic model. Phase 3b
+complete: a deployed Fabric App (Rayfin) with country search,
+DAX-bound KPI cards, earthquake list, and alert subscriptions —
+live at https://daily-cave-2c1879b505-northeurope.webapp.fabricapps.net
 
 ---
 
