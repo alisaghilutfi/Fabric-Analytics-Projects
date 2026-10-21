@@ -396,7 +396,6 @@ Not `"python"` — base conda env is Python 3.8.5 which lacks `mcp` package.
 | Item | Detail |
 |---|---|
 | Gold table refresh needed | Pipeline runs on demand only; schedule not configured. Gold table will grow stale between manual runs. |
-| `dashboard_USGS_Earthquake` manual portal delete pending | Fabric REST API returns `FeatureNotAvailable` for Dashboard delete; must be deleted manually in Fabric portal |
 | `nb_USGS_Earthquake_Bronze` phantom diff Undo pending | Fabric Source Control panel shows a phantom diff; no intentional change was made — Undo in the Source Control panel to clear it |
 
 ---

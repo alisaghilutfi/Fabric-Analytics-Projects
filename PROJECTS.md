@@ -52,8 +52,8 @@ Last updated: 2026-10-04
 **Status:** Active — Phase 3b UI complete; pipeline schedule pending  
 **Current focus:** Configure pl_USGS_Earthquake scheduled trigger (daily/weekly)  
 **Last session (2026-10-21):** UI polish — Tailwind design system, DM Sans/Mono fonts, seismograph SVG background, country autocomplete dropdown (75 countries), light/dark toggle, badge/KPI polish. Pipeline backfill run (9,164 → 11,051 rows). App live at https://daily-cave-2c1879b505-northeurope.webapp.fabricapps.net  
-**Next session:** Configure pl_USGS_Earthquake schedule; dashboard_USGS_Earthquake manual portal delete; nb_Bronze phantom diff Undo  
-**Blockers:** Pipeline schedule not configured — Gold table will grow stale between manual runs; dashboard_USGS_Earthquake manual portal delete pending; nb_Bronze phantom diff Undo pending in Fabric Source Control  
+**Next session:** Configure pl_USGS_Earthquake schedule; nb_Bronze phantom diff Undo  
+**Blockers:** Pipeline schedule not configured — Gold table will grow stale between manual runs; nb_Bronze phantom diff Undo pending in Fabric Source Control  
 
 ---
 
