@@ -57,13 +57,16 @@ every merge to main.
 
 ### ws_RTI_BicycleRentals — Real-Time Bicycle Network Monitor
 
-**Type:** Real-Time Intelligence  
-**Stack:** Eventstream · Eventhouse · KQL Database (187M rows) · DirectQuery semantic model · Power BI live dashboard  
+**Type:** Real-Time Intelligence + Fabric App  
+**Stack:** Eventstream · Eventhouse · KQL Database (187M rows) · DirectQuery semantic model · Rayfin Fabric App  
 
 Real-time operational monitoring of a bicycle rental network. KQL medallion architecture
 with Bronze/Silver/Gold layers via update policies and materialized views. Semantic model
 built on DirectQuery to KQL with 10 measures across 4 display folders covering
-availability, capacity, rebalancing, and recency.
+availability, capacity, rebalancing, and recency. Phase 3b complete: a deployed Fabric
+App (Rayfin) with KPI cards, station availability table, station drill-down, and
+rebalancing write-back via AlertSubscription entity —
+live at https://humid-gem-4f2e8b4d0a-northeurope.webapp.fabricapps.net
 
 ---
 

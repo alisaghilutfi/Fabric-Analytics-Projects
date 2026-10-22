@@ -33,12 +33,13 @@ operational monitoring of a bike rental network.
   `.create-or-alter function`
 
 ## Current Focus
-Active development — ready for next phase:
-1. Set up Eventstream for bicycle rental event ingestion
-2. Create Eventhouse and KQL Database
-3. Build KQL queries for live rental monitoring
-4. Build Lakehouse for historical analysis
-5. Create live Power BI dashboard
+FabricApp_RTI_BicycleRentals is live. Open items:
+- Root.spec.tsx scaffold placeholder tests (3 failures — non-blocking, update to reflect real app entry)
+- Optional: neighbourhood filter on Network Overview, mark-resolved flow on Rebalancing Queue
+- rpt_RTI_BicycleRentals still does not exist in workspace (Trial capacity limitation — not the active focus)
+
+**Operational note:** `es_RTI_BicycleRentals` Eventstream may go inactive and stop feeding the KQL pipeline.
+If KQL row counts are stale, restart via Fabric portal → open `es_RTI_BicycleRentals` → **Activate all → Now**.
 
 ## Instructions for Executing Agent
 When starting a session on this project:
@@ -82,7 +83,7 @@ live and running.
 ### Orphaned
 - lh_RTI_BicycleRentals.Lakehouse — exists, no Eventstream destination, no notebooks, no tables
 
-### Reporting Layer (built this session)
+### Reporting Layer
 - **sm_RTI_BicycleRentals** (SemanticModel) — DirectQuery on
   `LatestStationSnapshot()` via `AzureDataExplorer.Contents`. Table
   `Station Snapshot` (BikepointID, Street, Neighbourhood, Latitude/Longitude
@@ -92,16 +93,16 @@ live and running.
   **Credentials fixed 2026-10-14:** OAuth2 bound via Service → Data source
   credentials → AzureDataExplorer (root cause: DMTS_DatasourceHasNoCredentialError).
   Validated live: Total Stations = 120, Network Utilization % = 48.1%.
-- **rpt_RTI_BicycleRentals** (Report) — 4 pages: Live Network Overview (KPI
-  row, azureMap, Top-10 restock bar chart, Neighbourhood slicer), Station
-  Detail (table with Fill/Empty conditional formatting, Action + Neighbourhood
-  slicers), Rebalancing Ops (Restock vs Emptying bar chart, Total Bikes To
-  Move card, Neighbourhood × Action matrix), About (data lineage + freshness
-  card). PBIR validated with `powerbi-report-author validate` (0 errors).
-  **BLOCKED 2026-10-14:** Does not exist in workspace — all programmatic
-  provisioning paths (Git sync, Fabric API, Desktop Bridge) produce
-  `manifest.json 404` on this Trial capacity. Service UI "Create report"
-  from sm_RTI_BicycleRentals is the only remaining untested path.
+- **rpt_RTI_BicycleRentals** (Report) — PBIR validated (0 errors). **BLOCKED:**
+  Does not exist in workspace — all programmatic provisioning paths (Git sync,
+  Fabric API, Desktop Bridge) produce `manifest.json 404` on Trial capacity.
+  Not the active focus; deferred.
+- **FabricApp_RTI_BicycleRentals** (Rayfin App) — 3-screen operational tool
+  connecting directly to `sm_RTI_BicycleRentals`. Screens: Network Overview
+  (KPI cards + 120-station table), Station Detail (per-station stats + flag
+  action), Rebalancing Queue (Fill/Empty stations + flag button). AlertSubscription
+  entity for write-back. Rayfin item ID: `3d942f93-b1f3-4e01-abf8-e664b0ff969b`.
+  **Live URL: https://humid-gem-4f2e8b4d0a-northeurope.webapp.fabricapps.net**
 
 ## Task Flow Studio (run 2026-08-29)
 A Task Flow Studio pass confirmed the workspace follows the **event-medallion
@@ -131,47 +132,41 @@ model/report, matching the architecture already documented above.
 When finishing a session, replace the section below with actual results:
 
 ### Last Session Recap
-**Date:** 2026-10-14
-**Completed:**
-- sm_RTI_BicycleRentals credentials fixed: bound OAuth2 via Service → Data
-  source credentials → AzureDataExplorer (root cause: DMTS_DatasourceHasNoCredentialError)
-- KQL Gold layer validated live: `LatestStationSnapshot()` returns 120 stations,
-  live ingestion confirmed
-- All 10 DAX measures validated live via EVALUATE: Total Stations = 120,
-  Network Utilization % = 48.1%
-- manifest.json 404 fully diagnosed on rpt_RTI_BicycleRentals:
-  - PBIR files confirmed structurally valid (0 errors, powerbi-report-author validate)
-  - azureMap visual fixed: Lat/Long wrapped in Average aggregation (Function: 4)
-    to resolve DataViewMappingError_LocationAndLatLongGroup
-  - All programmatic provisioning paths attempted and confirmed failing:
-    - Git sync delete + reprovision → still 404
-    - Fabric API pack + POST /reports (create) → still 404
-    - Fabric API updateDefinition → still 404
-    - Desktop Bridge publish (PID 28068, bridge connected) → still 404
-  - Root cause confirmed: Trial capacity limitation — Service-side blob storage
-    cannot be provisioned via any programmatic path on this capacity tier
-  - rpt_RTI_BicycleRentals deleted from workspace; not recreated
-- .pbip project manifest created (was missing; required for Desktop to open project)
-- learnings.md created with 4 workflow findings; committed to dev-fabric-sync (8429af1)
+**Date:** 2026-10-22
 
-**New blockers discovered:**
-- manifest.json 404 on all programmatic provisioning paths (API, Git sync,
-  Desktop Bridge) — confirmed Trial capacity limitation; Service UI the only
-  remaining path
-- Duplicate/orphan report items may exist in workspace from failed publish
-  attempts — need MCP cleanup before next attempt
-- rpt_RTI_BicycleRentals does not exist in workspace (deleted, not yet recreated)
+**Completed:**
+- es_RTI_BicycleRentals Eventstream restarted via Fabric portal → Activate all → Now
+  (had gone inactive; KQL row counts were stale)
+- sm_RTI_BicycleRentals connector smoke-tested: EVALUATE query against `Station Snapshot`
+  confirmed live (Total Stations = 120, Network Utilization % = 48.1%)
+  — root cause of prior smoke-test failures: Windows PowerShell strips inner double-quotes
+  from single-quoted strings passed to external processes; fix: `--% ` stop-parsing token
+  with doubled double-quotes: `npx rayfin --% connector invoke ... --input "{""query"":""...""}"`
+- FabricApp_RTI_BicycleRentals built and deployed:
+  - Scaffold: `npm create @microsoft/rayfin@latest` (universal-app template confirmed working)
+  - Rayfin CLI 1.36.2; packs: connectors, analytics, data-modeling
+  - Connector: sm_rti_bicyclerentals (fabric-semanticmodel, delegated auth, version "1")
+  - App.tsx: 3 screens — Network Overview (KPI cards + 120-station table),
+    Station Detail (per-station stats + flag action), Rebalancing Queue (Fill/Empty + flag)
+  - AlertSubscription entity: stationId (int), street, neighbourhood, action,
+    flaggedAt, resolvedAt (optional), userId
+  - KPI label truncation fixed: 4 short labels (AVG BIKES, LOW STOCK %, UTILIZATION %,
+    LAST SNAPSHOT) replace long default names
+  - Pre-deploy gates: typecheck ✅, build ✅, lint ✅, 60/63 tests ✅
+    (3 failures are scaffold EmptyStatePreview placeholder tests — non-blocking)
+  - Deployed: `npx rayfin up --workspace-id 7bdd5482-61f9-4cb6-b70e-42723751f60f`
+  - Live URL: https://humid-gem-4f2e8b4d0a-northeurope.webapp.fabricapps.net
+  - Rayfin item ID: 3d942f93-b1f3-4e01-abf8-e664b0ff969b
+- docs/images/ created with 4 screenshots; README updated with Live App section
+- All code committed to dev-fabric-sync
 
 **Pick up next session at:**
-1. FabricEngineer: list workspace items via MCP, delete any duplicate/orphan
-   rpt_RTI_BicycleRentals items (null logicalId or stale artifacts)
-2. Ali: Fabric Service UI → open sm_RTI_BicycleRentals → "Create report" →
-   save as rpt_RTI_BicycleRentals
-3. FabricEngineer: download the new report definition via Fabric API, diff
-   against existing PBIR in Git, commit any changes to dev-fabric-sync
-4. Verify all 4 pages render in browser after Service UI creation
-5. Resume deferred items: hot/cold split verification, Map/Anomaly data bindings,
-   Activator rules, Dashboard tiles, orphaned Lakehouse decision
+1. Update Root.spec.tsx: replace EmptyStatePreview placeholder assertions with
+   real app entry assertions (heading "Bicycle Network Monitor", KPI cards present)
+2. Smoke-test live app in browser — verify connector queries and AlertSubscription writes
+3. Optional: neighbourhood filter dropdown on Network Overview screen
+4. Optional: "Mark resolved" flow on Rebalancing Queue (set resolvedAt on AlertSubscription rows)
+5. rpt_RTI_BicycleRentals: try Fabric Service UI "Create report" from sm_RTI_BicycleRentals
 
 ---
 
