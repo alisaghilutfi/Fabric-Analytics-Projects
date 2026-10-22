@@ -4,7 +4,7 @@
 > The executing agent reads this at session start and writes a recap
 > at session end. Do not edit manually unless correcting an error.
 
-Last updated: 2026-07-27
+Last updated: 2026-10-22
 
 ---
 
@@ -17,20 +17,29 @@ crypto prices via Eventhouse and KQL.
 - **GitHub repo:** alisaghilutfi/Fabric-Analytics-Projects
 - **Git branch:** dev-fabric-sync
 
-## ⚠️ Git Integration BLOCKED
+## ⚠️ Git Integration BLOCKED — Root Cause Identified 2026-10-22
 
-The workspace is currently **disconnected from Git**. Git sync failed with:
+The workspace cannot commit to GitHub via Fabric Git integration.
 
-```
-Error:      Git_GitProviderCommitRejectedByPolicy
-Request ID: 1e57bbf7-fa24-4989-b4e4-caf3f5048441
-```
+**Root cause (confirmed 2026-10-22):** Fabric has no stored GitHub OAuth
+token for this workspace. The `/git-credentials` page in Fabric settings
+renders blank — no token was ever successfully issued. All other workspaces
+work because they were connected before this issue appeared and have cached
+tokens. This workspace was never successfully initialized.
 
-A Microsoft support ticket is pending on this issue. Until it is
-resolved, do **not** attempt to reconnect or force-sync this workspace —
-changes made in the workspace will not reflect in this repo, and this
-repo's `ws_RTI_Crypto/` folder will not reflect the live workspace
-(hence no artifact files present here, only this CONTEXT.md).
+**Error history:**
+- Request ID `1e57bbf7` (2026-07-27) — first occurrence
+- Request ID `ecda6951` (2026-10-22) — confirmed same root cause
+- Request ID `f097518f` (2026-10-22) — confirmed same root cause
+
+**Fix when revisiting:** Disconnect workspace → reconnect via Workspace
+settings → Git integration → watch for GitHub OAuth popup during reconnect
+— that popup is what issues the token. If popup is suppressed or skipped,
+the token will not be created and the block will persist.
+
+**This is NOT a branch policy issue.** The `protect-main` ruleset only
+targets `main`, and `dev-fabric-sync` has no protection rules. The block
+is purely a missing OAuth credential on the Fabric side.
 
 ## Artifacts (as last known in workspace)
 | Artifact | Type | Notes |
@@ -64,20 +73,27 @@ When starting a session on this project:
 When finishing a session, replace the section below with actual results:
 
 ### Last Session Recap
-**Date:** 2026-07-27
+**Date:** 2026-10-22
 **Completed:**
-- Documented the Git integration block (`Git_GitProviderCommitRejectedByPolicy`,
-  request ID `1e57bbf7-fa24-4989-b4e4-caf3f5048441`) and current artifact
-  inventory in this CONTEXT.md
+- Full schema reconnaissance via FabricEngineer (kusto + Fabric Core MCP)
+- Confirmed workspace items: Eventhouse, KQL Database, Eventstream,
+  Lakehouse, 3 Notebooks — no semantic model, no report
+- Confirmed data: 617,460 rows in Crypto_Price, 615 symbols, stale since
+  2026-01-30 (ingestion not running)
+- Root cause of Git block identified: missing Fabric OAuth token (not a
+  branch policy issue as previously thought)
+- Workspace disconnected from Git and re-archived
+- Pivoted Rayfin app build to ws_RTI_BicycleRentals (working Git sync,
+  live semantic model, 187M rows)
 
 **Left unfinished:**
-- Git reconnection — pending Microsoft support ticket resolution
-
-**New blockers discovered:**
-- Workspace disconnected from Git; cannot commit/sync until support
-  resolves the policy rejection
+- Git OAuth initialization — requires disconnect/reconnect with OAuth popup
+- Ingestion restart — nb_RTI_Crypto needs manual run to resume live data
+- Semantic model — does not exist, needs to be built before any reporting
 
 **Pick up next session at:**
-- Check support ticket status before any Git operation on this workspace
-- Once unblocked, reconnect Git and verify the artifact inventory above
-  against the live workspace
+1. Fix Git OAuth: Workspace settings → Git integration → Disconnect →
+   Reconnect → watch for GitHub OAuth popup → complete authorization
+2. Restart ingestion: run nb_RTI_Crypto in Fabric portal
+3. Build sm_RTI_Crypto (DirectLake on Gold_Crypto_Daily)
+4. Build FabricApp_RTI_Crypto (Rayfin, 3 screens)

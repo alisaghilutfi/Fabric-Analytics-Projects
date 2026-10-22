@@ -3,7 +3,9 @@
 A real-time operational intelligence platform monitoring a bicycle rental network via
 live event stream processing. Eventstream feeds a KQL medallion architecture (187M rows)
 with Bronze, Silver via update policy, and Gold via materialized view. A DirectQuery
-semantic model with 10 DAX measures powers a four-page live Power BI dashboard.
+semantic model with 10 DAX measures powers both a live operational Rayfin app
+([FabricApp_RTI_BicycleRentals](https://humid-gem-4f2e8b4d0a-northeurope.webapp.fabricapps.net))
+and a four-page Power BI dashboard (in-progress).
 
 <!-- Replace the line below with your screenshot once captured -->
 <!-- ![RTI Bicycle Rentals Dashboard](docs/images/report-overview.png) -->
@@ -43,6 +45,35 @@ flowchart LR
     style G fill:#E6F1FB,stroke:#185FA5,color:#0C447C
     style H fill:#E6F1FB,stroke:#185FA5,color:#0C447C
 ```
+
+---
+
+## Live App — Bicycle Rentals Rebalancing Monitor
+
+A real-time operational tool built on Microsoft Fabric Rayfin, connecting
+directly to `sm_RTI_BicycleRentals` via DirectQuery on `LatestStationSnapshot()`.
+
+**Live URL:** https://humid-gem-4f2e8b4d0a-northeurope.webapp.fabricapps.net
+
+### Screenshots
+
+**Network Overview — splash screen**
+![Network Overview splash](docs/images/screenshot_0.png)
+
+**Network Overview — live snapshot loaded**
+120 London Santander Cycles stations with real-time availability,
+utilisation KPIs, and rebalancing action indicators.
+![Network Overview loaded](docs/images/screenshot_1.png)
+
+**Station Detail**
+Per-station drill-down showing bikes, empty docks, capacity,
+and snapshot timestamp.
+![Station Detail](docs/images/screenshot_2.png)
+
+**Rebalancing Write-back**
+Flag a station for rebalancing — writes an `AlertSubscription`
+record to the Rayfin database live.
+![Alert saved](docs/images/screenshot_3.png)
 
 ---
 
@@ -91,6 +122,7 @@ on `type` when listing workspace artifacts via MCP to avoid acting on the wrong 
 | `anomalies_BicycleRentals` | Anomaly Detector | Anomaly detection over the event stream |
 | `sm_RTI_BicycleRentals` | Semantic model | DirectQuery to KQL · 10 DAX measures · 4 display folders · Copilot descriptions · OAuth2 credentials bound |
 | `rpt_RTI_BicycleRentals` | Report | 4-page live dashboard · PBIR format · 0 validation errors · **not in workspace** — manifest.json 404 on all programmatic paths (Trial capacity); pending Service UI recreation |
+| `FabricApp_RTI_BicycleRentals` | Rayfin App | 3-screen operational rebalancing tool · Network Overview, Station Detail, Rebalancing Queue · AlertSubscription write-back · **[Live](https://humid-gem-4f2e8b4d0a-northeurope.webapp.fabricapps.net)** |
 
 ---
 
