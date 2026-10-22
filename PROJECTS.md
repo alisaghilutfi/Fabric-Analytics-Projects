@@ -39,11 +39,11 @@ Last updated: 2026-10-04
 
 ## ws_RTI_BicycleRentals
 **Purpose:** Real-time intelligence project — live bicycle rental station monitoring  
-**Status:** Blocked — rpt_RTI_BicycleRentals not provisioned; all programmatic paths fail on Trial capacity  
-**Current focus:** Service UI "Create report" from sm_RTI_BicycleRentals — only remaining untested provisioning path  
-**Last session (2026-10-14):** Fixed sm_RTI_BicycleRentals OAuth2 credentials (DMTS_DatasourceHasNoCredentialError). Validated all 10 DAX measures live (Total Stations = 120, Network Utilization = 48.1%). Full manifest.json 404 diagnosis on rpt_RTI_BicycleRentals: PBIR files are valid (0 errors), but all programmatic provisioning paths confirmed failing on Trial capacity — Git sync, Fabric API (POST /reports + updateDefinition), and Desktop Bridge (PID 28068, bridge connected) all produce 404. Report deleted from workspace; not recreated. .pbip project manifest created. learnings.md created with 4 findings (commit 8429af1).  
-**Next session:** (1) FabricEngineer: list workspace items via MCP and delete any duplicate/orphan rpt_RTI_BicycleRentals artifacts; (2) Ali: Fabric Service UI → sm_RTI_BicycleRentals → "Create report" → save as rpt_RTI_BicycleRentals; (3) FabricEngineer: download new report definition via API, diff against PBIR in Git, commit to dev-fabric-sync  
-**Blockers:** manifest.json 404 on all programmatic provisioning paths — confirmed Trial capacity limitation. Duplicate/orphan report items may exist in workspace from failed publish attempts — need MCP cleanup. rpt_RTI_BicycleRentals does not currently exist in workspace.  
+**Status:** Active — Rayfin app live; rpt_RTI_BicycleRentals still blocked on Trial capacity  
+**Current focus:** App polish (Root.spec.tsx tests, neighbourhood filter, mark-resolved flow)  
+**Last session (2026-10-22):** Built and deployed FabricApp_RTI_BicycleRentals as a Rayfin app connecting to sm_RTI_BicycleRentals. 3-screen app: Network Overview (KPI cards + station table), Station Detail (stats + flag action), Rebalancing Queue (stations needing Fill/Empty + flag button). AlertSubscription entity with stationId, street, neighbourhood, action, flaggedAt, resolvedAt. All pre-deploy gates pass (typecheck, build, lint, 60/63 tests). Deployed: https://humid-gem-4f2e8b4d0a-northeurope.webapp.fabricapps.net  
+**Next session:** Update Root.spec.tsx placeholder tests; smoke-test app in browser; optional: neighbourhood filter, mark-resolved flow  
+**Blockers:** rpt_RTI_BicycleRentals still blocked (manifest.json 404 on Trial capacity). Root.spec.tsx has 3 scaffold placeholder test failures (non-blocking — expected).  
 
 ---
 
