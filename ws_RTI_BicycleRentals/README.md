@@ -58,6 +58,7 @@ directly to `sm_RTI_BicycleRentals` via DirectQuery on `LatestStationSnapshot()`
 ### Screenshots
 
 **Network Overview — splash screen**
+Dark-mode landing screen with bicycle wheel motif and "Load Live Snapshot" CTA.
 ![Network Overview splash](docs/images/screenshot_0.png)
 
 **Network Overview — live snapshot loaded**
