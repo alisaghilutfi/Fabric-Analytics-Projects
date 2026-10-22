@@ -46,6 +46,35 @@ flowchart LR
 
 ---
 
+## Live App — Bicycle Rentals Rebalancing Monitor
+
+A real-time operational tool built on Microsoft Fabric Rayfin, connecting
+directly to `sm_RTI_BicycleRentals` via DirectQuery on `LatestStationSnapshot()`.
+
+**Live URL:** https://humid-gem-4f2e8b4d0a-northeurope.webapp.fabricapps.net
+
+### Screenshots
+
+**Network Overview — splash screen**
+![Network Overview splash](docs/images/screenshot_0.png)
+
+**Network Overview — live snapshot loaded**
+120 London Santander Cycles stations with real-time availability,
+utilisation KPIs, and rebalancing action indicators.
+![Network Overview loaded](docs/images/screenshot_1.png)
+
+**Station Detail**
+Per-station drill-down showing bikes, empty docks, capacity,
+and snapshot timestamp.
+![Station Detail](docs/images/screenshot_2.png)
+
+**Rebalancing Write-back**
+Flag a station for rebalancing — writes an `AlertSubscription`
+record to the Rayfin database live.
+![Alert saved](docs/images/screenshot_3.png)
+
+---
+
 ## Key Technical Decisions
 
 **KQL medallion via update policies and materialized views — not Lakehouse** — for
