@@ -57,6 +57,13 @@ interface StationRow {
 
 interface KpiRow { name: string; value: string | number | null; }
 
+const KPI_LABELS: Record<string, string> = {
+  'Avg Bikes Available': 'AVG BIKES',
+  '% Stations Low Stock': 'LOW STOCK %',
+  'Network Utilization %': 'UTILIZATION %',
+  'Latest Snapshot Time': 'LAST SNAPSHOT',
+};
+
 function fmt(value: string | number | null, name?: string): string {
   if (value === null || value === undefined) return '—';
   if (typeof value === 'number') {
@@ -254,7 +261,7 @@ export default function App() {
                 {kpis.map(k => (
                   <div key={k.name} className="bg-card border border-border rounded-xl p-400">
                     <div className="text-100 text-muted-foreground uppercase tracking-widest font-mono mb-100 truncate">
-                      {k.name}
+                      {KPI_LABELS[k.name] ?? k.name.toUpperCase()}
                     </div>
                     <div className="text-500 font-bold text-foreground" style={{ fontFamily: 'var(--font-numeric)' }}>
                       {fmt(k.value, k.name)}
