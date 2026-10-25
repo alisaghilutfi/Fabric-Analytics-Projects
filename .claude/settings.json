@@ -16,6 +16,17 @@
           }
         ]
       }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "mcp__plugin_powerbi-authoring_powerbi-modeling-mcp__.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -ExecutionPolicy Bypass -File C:/Users/alisa/DS-ML-DL/Fabric-Analytics-Projects/.claude/hooks/post-mcp-write.ps1"
+          }
+        ]
+      }
     ]
   }
 }
