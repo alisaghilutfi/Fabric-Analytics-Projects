@@ -58,15 +58,15 @@ table DateDimension
 			schemaName: dbo
 			expressionSource: DatabaseQuery
 
-		annotation ONT_WorkspaceId = 00000000-0000-0000-0000-000000000000
+		annotation ONT_WorkspaceId = 39caa3ab-a964-45c2-bd5b-7d46ad66c985
 
-		annotation ONT_ItemId = 4d845083-1833-b5a8-4230-3b18fda3c40e
+		annotation ONT_ItemId = fda3c40e-3b18-4230-b5a8-18334d845083
 
 		annotation ONT_ItemKind = Lakehouse
 
 		annotation ONT_ItemName = lh_USGS_Earthquake
 
-		annotation ONT_WorkspaceName = WORKSPACE_NAME_PLACEHOLDER
+		annotation ONT_WorkspaceName = ws_USGS_Earthquake
 
 		annotation ONT_SqlEndpoint = pnu4xsgra5quzjozxps22cm75a-vor4uolevhbelpk3pvdk2zwjqu.datawarehouse.fabric.microsoft.com
 
