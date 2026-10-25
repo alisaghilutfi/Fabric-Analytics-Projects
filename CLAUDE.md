@@ -1,6 +1,6 @@
 Portfolio-wide rules for all Fabric workspaces in this repo.
 Read automatically by Claude Code in every session.
-Workspace-specific context lives in ws_<name>/CLAUDE.md.
+Workspace-specific context lives in ws_<name>/CONTEXT.md.
 
 ---
 
