@@ -1,7 +1,5 @@
 ---
-name: pause-capacity
-description: Check, pause or resume the Fabric F2 capacity using the repo's capacity scripts. Use when the user asks to pause or resume capacity, or at session end.
-disable-model-invocation: true
+description: Check, pause or resume the Fabric F2 capacity using the repo's capacity scripts.
 ---
 1. Read scripts/README.md to learn the parameters of fabric-capacity-monitor.ps1 and fabric-capacity-toggle.ps1.
 2. Run fabric-capacity-monitor.ps1 and report the current capacity state.

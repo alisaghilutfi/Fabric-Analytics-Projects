@@ -1,7 +1,7 @@
 #!/bin/sh
 # Block commits that add placeholder Fabric IDs (Fabric artifacts only; docs and tooling excluded).
 hits=$(git diff --cached -U0 --diff-filter=ACM -- . ':(exclude).githooks/*' ':(exclude).claude/*' ':(exclude)*.md' \
-  | grep -E '^\+.*(00000000-0000-0000-0000-000000000000|_PLACEHOLDER)')
+  | grep -E '^\+.*("logicalId"[[:space:]]*:[[:space:]]*"00000000-0000-0000-0000-000000000000"|ONT_WorkspaceId[[:space:]]*=[[:space:]]*00000000-0000-0000-0000-000000000000|_PLACEHOLDER)')
 if [ -n "$hits" ]; then
   echo "Blocked: placeholder IDs in staged changes:"
   echo "$hits"
