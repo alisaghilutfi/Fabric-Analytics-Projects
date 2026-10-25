@@ -28,8 +28,8 @@ ProjectPlanner (Claude Desktop)     FabricEngineer (Claude Code)
 
 **ProjectPlanner** — architectural decisions, report design consultation,
 DAX review, content generation, and pre-session brief refresh. Runs in
-Claude Desktop (with filesystem, powerbi-modeling-mcp, fabric-mcp, and
-fabric-rti-mcp MCPs). Never executes.
+Claude Desktop (with filesystem, powerbi-modeling-mcp (read-only), and
+fabric-rti-mcp MCPs, plus the Fabric Core and Fabric IQ connectors). Never executes.
 
 **FabricEngineer** — execution, file edits, Git operations, MCP tool
 calls. Runs in Claude Code (VS Code). Never makes architectural decisions
@@ -179,7 +179,16 @@ git checkout dev-fabric-sync
 
 ## MCP & Skills Configuration
 
-### VS Code MCP Servers (mcp.json + extensions)
+### Claude Code — Power BI MCP routing (verified 2026-10-25)
+
+| Server | Tool prefix | Reads | Writes |
+|---|---|---|---|
+| `plugin:powerbi-authoring:powerbi-modeling-mcp` (local npx) | `mcp__plugin_powerbi-authoring_powerbi-modeling-mcp__` | ✅ | ✅ only write path |
+| `plugin:fabric-skills:powerbi-modeling-mcp` (remote HTTP) | `mcp__plugin_fabric-skills_powerbi-modeling-mcp__` | ✅ | ❌ "current context is read-only" |
+
+FabricEngineer defaults to the remote server for Fabric workspace models; the routing rule in `~/.claude/CLAUDE.md` sends all writes to the local server. Repo allow list needs only `mcp__plugin_powerbi-authoring_powerbi-modeling-mcp__*`.
+
+### VS Code MCP Servers (Copilot side)
 
 **Local `mcp.json` servers:**
 - `com.microsoft/azure` — Azure resources & AI Foundry (68 tools)
@@ -208,25 +217,11 @@ skills-for-fabric v0.3.19, two separate installs. Claude Code: `~/.claude/plugin
 
 ### Session Startup Checklist
 
-Every new session:
-```powershell
-# 1. Authenticate for KQL access
-az login --tenant c8cb697b-07d1-4c61-a5d9-bbe5ad099fe8 --use-device-code
-# Sign in as: alisaghi_fabric@alisaghi2015gmail.onmicrosoft.com
-
-# 2. (Optional) Check for stale processes
-Get-Process | Where-Object { $_.Path -like "*powerbi-authoring*" } | Format-List Id, Path
-
-# 3. Open Claude Code
-# MCP: List Servers should show all 5 servers in Stopped state (ready to connect)
-
-# 4. Check MCP registrations
-# Run: claude mcp list 2>$null | Select-String "powerbi|fabric-mcp"
-# Expected exactly two lines:
-#   plugin:powerbi-authoring:powerbi-modeling-mcp (npx, Connected)
-#   plugin:fabric-skills:powerbi-modeling-mcp (HTTP, Connected)
-# Any other powerbi-modeling-mcp or fabric-mcp line is a stale registration — remove it first.
-```
+1. VS Code: File → Open Folder → repo root. The Claude Code panel works in VS Code's open folder; `cd` in the terminal does not change it.
+2. F2 capacity must be running (`/pause-capacity` to check/resume). Paused capacity → remote server `404 Not Found`, local XMLA timeout.
+3. The SessionStart hook injects MCP, Azure and Git state automatically. Act on it:
+   - MCP WARNING → stale registration; remove it before working (`claude mcp get <name>` shows the scope).
+   - Azure NOT LOGGED IN → `az login --tenant c8cb697b-07d1-4c61-a5d9-bbe5ad099fe8 --use-device-code` as `alisaghi_fabric@alisaghi2015gmail.onmicrosoft.com`.
 
 ---
 
@@ -238,8 +233,7 @@ Get-Process | Where-Object { $_.Path -like "*powerbi-authoring*" } | Format-List
 # Register marketplace and install plugins
 claude plugin marketplace add microsoft/skills-for-fabric
 claude plugin install powerbi-authoring@fabric-collection
-claude plugin install fabric-authoring@fabric-collection
-claude plugin install fabric-consumption@fabric-collection
+claude plugin install fabric-skills@fabric-collection
 
 # Install Desktop Bridge CLI
 npm install -g @microsoft/powerbi-desktop-bridge-cli
@@ -383,7 +377,7 @@ Set as Canvas background (not Wallpaper), Stretch fit, 0% transparency.
 - Free-floating `//` comments cause `InvalidLineType` — only `///` descriptions attached to measures/columns are valid
 - `expressions.tmdl` for DirectLake: no comment lines of any kind, exact tab indentation required
 - Relationship syntax: dot notation (`fromColumn: fact.column`) not bracket notation
-- After any `powerbi-modeling-mcp` write session, run `database_operations ExportToTmdlFolder` before Git commits
+- After any `powerbi-modeling-mcp` write to a Git-connected workspace: commit in the workspace Source control panel, then `git pull` before editing TMDL (the drift hook reminds you). Use `database_operations ExportToTmdlFolder` only for models in workspaces that are not Git-connected.
 
 ### PBIR
 - Visual JSON `position` fields: `x`, `y`, `z`, `height`, `width`
@@ -400,10 +394,12 @@ Set as Canvas background (not Wallpaper), Stretch fit, 0% transparency.
 
 ## Session automation (2026-10-25)
 
-- SessionStart hook (`.claude/hooks/session-start.ps1`, registered in `.claude/settings.json`): injects MCP, Azure and Git state into every new Claude Code session.
+- SessionStart hook (`.claude/hooks/session-start.ps1`): injects MCP, Azure and Git state into every new Claude Code session.
+- PostToolUse drift hook (`.claude/hooks/post-mcp-write.ps1`): after write operations on the local powerbi-modeling-mcp (`tool_input.request.operation` not Get/List/Connect/…), reminds: commit in workspace Source control, then `git pull`.
+- Pre-commit scan (`.githooks/pre-commit`) blocks only zero-GUID logicalId, zero ONT_WorkspaceId, and _PLACEHOLDER; zero workspaceId fields are valid same-workspace references. One-time setup per clone: `git config core.hooksPath .githooks`
 - Project skill (`.claude/skills/`): /sync-status (read-only). Project commands (`.claude/commands/`): /pause-capacity, /new-workspace.
-- Pre-commit scan blocks only zero-GUID logicalId, zero ONT_WorkspaceId, and _PLACEHOLDER; zero workspaceId fields are valid same-workspace references.
 - Synced business plugins (sales, marketing, finance) disabled for this repo via enabledPlugins.
+- Tooling source of truth: private repo dev-environment (global CLAUDE.md, MCP Inventory, repo templates, setup/onboard-repo.ps1). Edit tooling there, then deploy.
 
 ---
 
@@ -422,12 +418,17 @@ Set as Canvas background (not Wallpaper), Stretch fit, 0% transparency.
 | `@pbir/cli` does not exist on npm | The correct package is `@microsoft/powerbi-desktop-bridge-cli` |
 | `list_workspace_artifacts` returns Eventhouse and KQL Database with identical `displayName` | Always filter on `type` before acting |
 | Writes declined 'when asked to confirm' | Stale v0.1.9 registration (requires confirmation by default) — check `claude mcp list` / `claude mcp get <name>` for scope, remove the stale entry |
-| Stale `powerbi-modeling-mcp` processes (from Downloads, npx cache, or old extensions) compete with current process | Inventory: `Get-Process \| Where-Object { $_.Path -like "*powerbi*" } \| Format-List Id, Path, StartTime`. Only one process should be running: the one from `~/.vscode/extensions/analysis-services.powerbi-modeling-mcp-*/server/`. Kill others by PID: `Stop-Process -Id <PID> -Force`. |
+| Multiple `powerbi-modeling-mcp` processes | Normal: npx process (Claude Code plugin) + VS Code extension processes (Desktop read-only, Copilot). Only a process from `Downloads` or a non-1.0.0 path is stale — kill it by PID and find its registration with `claude mcp list` |
 | Extension-registered MCP servers not appearing in "MCP: List Servers" | Extension must be installed via VS Code Marketplace or Copilot CLI, not manually. Verify `~/.vscode/extensions/analysis-services.powerbi-modeling-mcp-*/` exists. Do NOT add extension servers to `mcp.json` — they auto-register. |
 | `.mcp.json` in parent folder loads as project scope | Claude Code walks up directories — keep no `.mcp.json` in `C:\Users\alisa\` |
 | JSON config invalid after PowerShell edit | PS 5.1 `Set-Content -Encoding UTF8` writes a BOM — write with `[IO.File]::WriteAllText($p,$json,(New-Object System.Text.UTF8Encoding($false)))` |
 | `powerbi-modeling-mcp` reports no connection | Server starts unconnected — connect via XMLA to workspace/model first; Power BI Desktop not required |
 | Plugin MCP tool names | Format `mcp__plugin_<plugin>_<server>__` — use this prefix in permission wildcards |
+| Remote `plugin:fabric-skills` powerbi server rejects writes | Read-only by design ("current context is read-only") — write via `plugin:powerbi-authoring` |
+| MCP returns 404 / XMLA timeout | F2 capacity paused — resume it |
+| Fabric App item shows Git status "Unsupported" | Fabric Apps don't sync via workspace Git — the Rayfin project repo is the source of control |
+| Skill missing from the `/` menu | `disable-model-invocation: true` hides it in this Claude Code version — use `.claude/commands/` for user-invoked workflows |
+| Hook can't see the MCP operation | powerbi-modeling-mcp puts it at `tool_input.request.operation` (e.g. Get, Update, ConnectFabric) |
 
 ---
 
@@ -455,8 +456,7 @@ ws_<name>/
 ├── data/                            ← add only if source files exist locally
 ├── <Fabric artifact folders>/
 ├── rpt_<name>.pbip                  ← required for Desktop Bridge
-├── CLAUDE.md                        ← workspace-specific agent rules
-├── CONTEXT.md                       ← agent session handoff document
+├── CONTEXT.md                       ← agent session handoff + workspace reference context
 └── README.md                        ← human-facing documentation
 ```
 
@@ -485,4 +485,4 @@ empty folders — Git does not track them.
 > Every session that files its recap makes the next session faster
 > and more accurate.
 
-*Last updated: 2026-10-07 (write-gate root cause corrected, skills v0.3.19, MCP gotchas expanded).*
+*Last updated: 2026-10-25 (Claude Code MCP routing, session automation, startup checklist, drift rule, gotchas).*
