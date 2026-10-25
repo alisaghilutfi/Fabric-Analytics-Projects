@@ -398,6 +398,15 @@ Set as Canvas background (not Wallpaper), Stretch fit, 0% transparency.
 
 ---
 
+## Session automation (2026-10-25)
+
+- SessionStart hook (`.claude/hooks/session-start.ps1`, registered in `.claude/settings.json`): injects MCP, Azure and Git state into every new Claude Code session.
+- Pre-commit placeholder scan (`.githooks/pre-commit`): blocks commits adding zero-GUIDs or _PLACEHOLDER values in Fabric artifacts. One-time setup per clone: `git config core.hooksPath .githooks`
+- Project skills (`.claude/skills/`): /pause-capacity, /sync-status, /new-workspace.
+- Synced business plugins (sales, marketing, finance) disabled for this repo via enabledPlugins.
+
+---
+
 ## Known Fabric Gotchas
 
 | Gotcha | Resolution |
