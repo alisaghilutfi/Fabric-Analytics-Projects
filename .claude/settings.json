@@ -1,9 +1,4 @@
 {
-  "enabledPlugins": {
-    "sales@synced": false,
-    "marketing@synced": false,
-    "finance@synced": false
-  },
   "hooks": {
     "SessionStart": [
       {
@@ -28,5 +23,12 @@
         ]
       }
     ]
+  },
+  "enabledPlugins": {
+    "sales@synced": false,
+    "marketing@synced": false,
+    "finance@synced": false,
+    "dashboards@power-bi-agentic-development": true,
+    "goblin-mode@power-bi-agentic-development": true
   }
 }
