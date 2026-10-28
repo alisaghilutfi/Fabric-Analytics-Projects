@@ -1,4 +1,4 @@
-# Portfolio Workflow Reference
+# Fabric Analytics — Harness Reference
 
 This document captures the two-harness agentic workflow, session
 protocols, report design process, and hard-won lessons from building
