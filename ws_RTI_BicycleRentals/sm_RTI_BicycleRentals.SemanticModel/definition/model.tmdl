@@ -10,4 +10,5 @@ annotation PBI_ProTooling = ["MCP-PBIModeling","WebModelingEdit","DaxQueryView_D
 
 ref table 'Station Snapshot'
 ref table _Measures
+ref table 'Station History'
 
