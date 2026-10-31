@@ -93,6 +93,11 @@ live and running.
   **Credentials fixed 2026-10-14:** OAuth2 bound via Service → Data source
   credentials → AzureDataExplorer (root cause: DMTS_DatasourceHasNoCredentialError).
   Validated live: Total Stations = 120, Network Utilization % = 48.1%.
+  **Station History table added 2026-10-31:** DirectQuery KQL partition —
+  `TransformedData | where Timestamp > ago(2h) | summarize total_bikes = sum(No_Bikes) by bin(Timestamp, 15m)`.
+  Powers the sparkline chart in `FabricApp_RTI_BicycleRentals` via DAX
+  `EVALUATE 'Station History'`. **Do not remove or rename this table —
+  the Rayfin app depends on it.**
 - **rpt_RTI_BicycleRentals** (Report) — PBIR validated (0 errors). **BLOCKED:**
   Does not exist in workspace — all programmatic provisioning paths (Git sync,
   Fabric API, Desktop Bridge) produce `manifest.json 404` on Trial capacity.
