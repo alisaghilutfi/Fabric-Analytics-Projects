@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "nb_Governance_Bronze",
+    "description": "Bronze ingest -- Scanner API, Activity Events, Refresh History"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "605504c4-9581-4dac-9ee4-fdbee7f74435"
+  }
+}
