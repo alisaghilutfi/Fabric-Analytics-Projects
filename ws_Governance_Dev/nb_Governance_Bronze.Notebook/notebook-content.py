@@ -11,7 +11,11 @@
 # META       "default_lakehouse": "4478b3d6-2e64-43ee-b120-3caa722abf48",
 # META       "default_lakehouse_name": "lh_Governance",
 # META       "default_lakehouse_workspace_id": "7ea6403c-9364-4cd5-94c3-3ba6fcfce918",
-# META       "known_lakehouses": [{"id": "4478b3d6-2e64-43ee-b120-3caa722abf48"}]
+# META       "known_lakehouses": [
+# META         {
+# META           "id": "4478b3d6-2e64-43ee-b120-3caa722abf48"
+# META         }
+# META       ]
 # META     }
 # META   }
 # META }
