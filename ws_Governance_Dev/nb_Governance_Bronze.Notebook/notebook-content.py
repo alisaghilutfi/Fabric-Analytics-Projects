@@ -232,7 +232,7 @@ refresh_rows = []
 for ws_id, sm_id in semantic_models:
     try:
         resp = requests.get(
-            f"{PBI_BASE}/groups/{ws_id}/datasets/{sm_id}/refreshes?$top=30",
+            f"{ADMIN_BASE}/datasets/{sm_id}/refreshes?$top=30",
             headers=HEADERS
         )
         if resp.status_code == 200:
