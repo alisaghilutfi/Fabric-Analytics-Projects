@@ -149,6 +149,24 @@ display folders. Artisans leads overall (~$235M, 33.8%); Sintec is #2
 
 ---
 
+### ws_Governance_Dev — Fabric Governance & Asset Inventory
+
+**Type:** Data Engineering + Tenant Governance  
+**Stack:** Power BI Admin APIs (Scanner, Activity Events, Refresh History) · Medallion Lakehouse · PySpark · Service Principal auth · DirectLake semantic model · Rayfin Fabric App  
+**Status:** Active — Phase 1 complete, Bronze layer live
+
+A tenant-wide governance and asset inventory pipeline that scans every workspace on a
+daily schedule using the Power BI Admin Scanner API, Activity Events API, and Refresh
+History API. Metadata is collected into Bronze Delta tables, normalised into typed Silver
+tables, aggregated into a Gold star schema, and scored by a health rules engine covering
+workspace inventory, item ownership, sensitivity labelling, refresh reliability, and Git
+connection status. Findings are surfaced through a Rayfin Fabric App. Phase 1 complete:
+SP `sp-governance-scanner` authenticated via security group and admin API tenant settings,
+`lh_Governance` Lakehouse created, `nb_Governance_Bronze` live with 687 activity events
+and 28 workspace scan records from the first run.
+
+---
+
 ## Development Stack
 
 | Layer | Tool |

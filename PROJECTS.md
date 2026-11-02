@@ -98,6 +98,16 @@ categories on Geography columns, Prep data for AI, agent_CompetitorSales
 
 ---
 
+## ws_Governance_Dev
+**Purpose:** Fabric tenant governance and asset inventory — scans the full tenant on a schedule using the Scanner, Activity Events, and Refresh History APIs; applies a health rules engine; surfaces findings through a Rayfin app  
+**Status:** Active — Phase 1 complete, Bronze layer live  
+**Current focus:** Build `nb_Governance_Silver` (parse Bronze raw_json into typed Silver Delta tables)  
+**Last session (2026-11-02):** SP `sp-governance-scanner` registered; `sg-fabric-scanner` and tenant settings configured; `lh_Governance` created; SP smoke test passed (200, 28 workspaces); `nb_Governance_Bronze` built as Fabric item folder and run — `bronze_activity_events` 687 rows, `bronze_scan_workspaces` 28 rows, `bronze_refresh_history` 0 rows (DirectLake tenant, expected)  
+**Next session:** `nb_Governance_Silver` — parse raw_json from all three Bronze tables into typed Silver Delta tables  
+**Blockers:** None
+
+---
+
 ## Adding a New Project
 When a new workspace is created, add a new section above following
 this exact template:
