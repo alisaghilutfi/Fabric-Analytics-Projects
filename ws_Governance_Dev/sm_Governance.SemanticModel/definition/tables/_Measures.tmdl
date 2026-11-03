@@ -50,6 +50,19 @@ table _Measures
 		displayFolder: Activity
 		lineageTag: ec8b77d9-7218-4ce9-a271-3f8f9b488f92
 
+	/// Workspaces with only one distinct active user — High-severity governance risk proxy.
+	measure 'Single Admin Workspaces' =
+			/// Workspaces with only one distinct active user -- High-severity governance risk proxy. admin_count is derived from activity events in nb_Governance_Gold.
+			VAR _threshold = 1
+			RETURN
+			CALCULATE(
+			    COUNTROWS(gold_workspaces),
+			    gold_workspaces[admin_count] <= _threshold
+			)
+		formatString: #,0
+		displayFolder: Risk
+		lineageTag: 55b4f847-7970-45c0-b0ba-fac01d175aee
+
 	column Placeholder
 		isNameInferred
 		sourceColumn: [Placeholder]
