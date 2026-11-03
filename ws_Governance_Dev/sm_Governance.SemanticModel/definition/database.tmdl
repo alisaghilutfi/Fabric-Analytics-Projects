@@ -1,0 +1,7 @@
+/// Tenant governance asset inventory — DirectLake on lh_Governance Gold tables
+database sm_Governance
+	id: 2514647e-c2a4-4eee-984a-e26da08dccd0
+	compatibilityLevel: 1604
+	compatibilityMode: powerBI
+	language: 1033
+

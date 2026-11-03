@@ -1,0 +1,58 @@
+/// One row per rule evaluation. Each workspace/item combination is checked against all 5 governance rules. passed=false indicates a violation.
+table gold_health_rule_results
+	lineageTag: edb11f75-ff64-4274-84bd-c60abbbce206
+
+	column workspace_id
+		dataType: string
+		isHidden
+		lineageTag: 080e1a5a-f4ae-4ab5-a067-70bd753a3690
+		sourceColumn: workspace_id
+
+	column item_id
+		dataType: string
+		isHidden
+		lineageTag: 1dbcedb0-767e-4843-9a3e-c2eacd5188f1
+		sourceColumn: item_id
+
+	column item_name
+		dataType: string
+		lineageTag: 4b51ea21-4387-4645-b0f5-18aff8904f08
+		sourceColumn: item_name
+
+	column item_type
+		dataType: string
+		lineageTag: 66402dc0-5b3c-4ee6-a1f5-e8c0353f1ca5
+		sourceColumn: item_type
+
+	column rule_id
+		dataType: string
+		lineageTag: 376fdcef-ce12-46c4-9c19-bc6e66dd478d
+		sourceColumn: rule_id
+
+	column passed
+		dataType: boolean
+		lineageTag: 91dde9eb-3c01-47c8-a968-e10b7fbf9653
+		sourceColumn: passed
+
+	column detail
+		dataType: string
+		lineageTag: 2169eb9b-7030-46dd-9d03-be45411f4c9d
+		sourceColumn: detail
+
+	column severity
+		dataType: string
+		lineageTag: a03b7f12-1438-4cfe-907f-061b7c0f1340
+		sourceColumn: severity
+
+	column scanned_at
+		dataType: string
+		isHidden
+		lineageTag: deaa6a5a-eda1-43fd-b3e8-cfd83781d644
+		sourceColumn: scanned_at
+
+	partition gold_health_rule_results = entity
+		mode: directLake
+		source
+			entityName: gold_health_rule_results
+			expressionSource: 'DirectLake - lh_Governance'
+
