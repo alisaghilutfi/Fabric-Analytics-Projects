@@ -265,3 +265,33 @@ for t in ["silver_workspaces", "silver_items", "silver_activity_events"]:
 # META   "language": "python",
 # META   "language_group": "synapse_pyspark"
 # META }
+
+# CELL ********************
+
+from pyspark.sql import functions as F
+
+df = spark.table("silver_activity_events")
+
+null_counts = df.select([
+    F.sum(F.col(c).isNull().cast("int")).alias(c)
+    for c in df.columns
+])
+
+null_counts.show(vertical=True)
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
