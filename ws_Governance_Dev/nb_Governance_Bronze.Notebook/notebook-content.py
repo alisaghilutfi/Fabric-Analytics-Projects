@@ -126,6 +126,9 @@ else:
     modified_url = f"{ADMIN_BASE}/workspaces/modified"
 
 resp = requests.get(modified_url, headers=HEADERS)
+print(f"URL: {modified_url}")
+print(f"Response status: {resp.status_code}")
+print(f"Response body: {resp.json()}")
 resp.raise_for_status()
 workspace_ids = [w["id"] for w in resp.json()]
 print(f"Workspaces to scan: {len(workspace_ids)}")
