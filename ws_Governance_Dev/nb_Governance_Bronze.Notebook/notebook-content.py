@@ -117,18 +117,15 @@ except Exception:
     last_run = None
 
 if last_run:
-    # Normalise to API-compatible format: YYYY-MM-DDTHH:MM:SSZ (no microseconds, no offset)
+    # Normalise to API-compatible format: YYYY-MM-DDTHH:MM:SS.000Z
     from datetime import datetime, timezone
     ts = datetime.fromisoformat(str(last_run))
-    ts_clean = ts.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    ts_clean = ts.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.000Z")
     modified_url = f"{ADMIN_BASE}/workspaces/modified?modifiedSince={ts_clean}"
 else:
     modified_url = f"{ADMIN_BASE}/workspaces/modified"
 
 resp = requests.get(modified_url, headers=HEADERS)
-print(f"URL: {modified_url}")
-print(f"Response status: {resp.status_code}")
-print(f"Response body: {resp.json()}")
 resp.raise_for_status()
 workspace_ids = [w["id"] for w in resp.json()]
 print(f"Workspaces to scan: {len(workspace_ids)}")
