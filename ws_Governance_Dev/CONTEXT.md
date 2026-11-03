@@ -1,7 +1,7 @@
 # ws_Governance_Dev
 
 ## Status
-Phase 1 complete — Bronze layer live
+Phase 2 complete — full pipeline end-to-end (Bronze → Silver → Gold → Score)
 
 ## Architecture
 Scanner API + Activity Events API + Refresh History API
@@ -23,30 +23,35 @@ Scanner API + Activity Events API + Refresh History API
 |------|------|--------|
 | lh_Governance | Lakehouse | Complete — ID `4478b3d6-2e64-43ee-b120-3caa722abf48` |
 | nb_Governance_Bronze | Notebook | Complete — logicalId `605504c4-9581-4dac-9ee4-fdbee7f74435` |
-| nb_Governance_Silver | Notebook | Not yet created |
-| nb_Governance_Gold | Notebook | Not yet created |
-| nb_Governance_Score | Notebook | Not yet created |
+| nb_Governance_Silver | Notebook | Complete — logicalId `f645c71e-7e21-4c30-9359-6b69a0407279` |
+| nb_Governance_Gold | Notebook | Complete — logicalId `1f77ebc4-fd06-40ae-a179-c606d4c45757` |
+| nb_Governance_Score | Notebook | Complete — logicalId `84c8553a-ced6-4f21-afa4-46094baffe61` |
 | pl_Governance_Ingest | DataPipeline | Not yet created |
 | sm_Governance | SemanticModel | Not yet created |
 | FabricApp_Governance | Fabric App | Not yet created |
 
 ## Current Focus / Blockers
-- Silver notebook not yet built — next step is `nb_Governance_Silver` (parse `raw_json` from all three Bronze tables into typed Silver Delta tables)
+- `pl_Governance_Ingest` not yet created — orchestrates all four notebooks in sequence
+- `sm_Governance` not yet created — DirectLake semantic model on Gold tables
+- `FabricApp_Governance` not yet created — Rayfin app surfacing health scores
 
 ## Known Gotchas
 - `GET /groups/{wsId}/datasets/{id}/refreshes` requires workspace membership — use `/admin/datasets/{id}/refreshes` instead (covered by read-only admin APIs tenant setting)
 - DirectLake models return 0 refresh history records (no scheduled refresh by design) — Cell 6 kept for client tenants with import-mode models
 - Scanner `getInfo` returns 10 fields per dataset; `isRefreshable` not included at current scan depth (`datasetSchema=false`)
 
-## Last Session — 2026-11-02
-- SP `sp-governance-scanner` registered, `sg-fabric-scanner` created, all three admin API tenant settings enabled
-- `ws_Governance_Dev` created, Git-connected to `dev-fabric-sync` `/ws_Governance_Dev`
-- `lh_Governance` Lakehouse created via Fabric Core MCP (ID `4478b3d6-2e64-43ee-b120-3caa722abf48`)
-- SP smoke test passed — status 200, 28 workspaces returned; `nb_Governance_SmokeTest` created, run, then deleted (secret never committed)
-- `nb_Governance_Bronze` provisioned as Fabric item folder (`nb_Governance_Bronze.Notebook/` + `.platform` + `notebook-content.py`); logicalId `605504c4-9581-4dac-9ee4-fdbee7f74435`; `lh_Governance` wired as default lakehouse via `# META dependencies.lakehouse` block
-- Bronze layer first run complete:
-  - `bronze_activity_events`: 687 rows (yesterday's tenant activity events)
-  - `bronze_scan_workspaces`: 28 rows (full tenant scan, one row per workspace)
-  - `bronze_refresh_history`: 0 rows — all 33 semantic models are DirectLake; admin endpoint confirmed correct but returns empty for DirectLake tenant
-- Cell 6 endpoint corrected from `/groups/{ws}/datasets/{id}/refreshes` to `/admin/datasets/{id}/refreshes`
-- Next session starts at: build `nb_Governance_Silver`
+## Last Session — 2026-11-03
+- `nb_Governance_Silver` built and validated: 28 workspaces, 62 items, 687 activity events
+  - Fixed `WorkSpaceName` casing bug in activity events schema (field is `WorkspaceId` not `WorkSpaceId`)
+- `nb_Governance_Gold` built and validated: 28 workspaces, 62 items, 16 activity summaries
+- `nb_Governance_Score` built and validated — full health rules engine live:
+  - 28 scored workspaces, 149 rule results across 3 active rules
+  - NO_SENSITIVITY_LABEL: 62 violations (data unavailable at current scanner depth)
+  - SINGLE_ADMIN: 24 violations (proxy via distinct active users)
+  - NO_GIT_CONNECTION: 25 violations (data unavailable at current scanner depth)
+  - UNUSED_REPORT: 0 — needs 90 days of accumulated activity data
+  - REFRESH_FAILING: skipped — DirectLake tenant, no refresh history
+  - Score range: 0 (PersonalWorkspace/high violation count) to 100 (empty personal workspace)
+  - Active portfolio workspaces score 82-92
+- Full Bronze -> Silver -> Gold -> Score pipeline runs end-to-end
+- Next session starts at: build `pl_Governance_Ingest` to orchestrate all four notebooks, then `sm_Governance`

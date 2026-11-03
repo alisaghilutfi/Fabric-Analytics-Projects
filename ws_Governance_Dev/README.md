@@ -3,8 +3,9 @@
 A tenant-wide governance and asset inventory system built on Microsoft Fabric. Scans
 every workspace on a schedule using the Power BI Admin APIs (Scanner, Activity Events,
 Refresh History), applies a health rules engine over the collected metadata, and surfaces
-findings through a Rayfin app. Phase 1 complete: Bronze layer live with 687 activity
-events and 28 workspace scan records from the first run.
+findings through a Rayfin app. Phase 2 complete: full Bronze → Silver → Gold → Score
+pipeline runs end-to-end — 28 workspaces scored, 149 rule results, active portfolio
+workspaces scoring 82–92.
 
 ---
 
@@ -76,18 +77,43 @@ slower on large tenants).
 |------|------|-------------|
 | `lh_Governance` | Lakehouse | Single lakehouse for all Bronze/Silver/Gold layers. ID `4478b3d6-2e64-43ee-b120-3caa722abf48` |
 | `nb_Governance_Bronze` | Notebook | REST ingestion — Activity Events (paginated), Scanner API (trigger/poll/fetch, 100-workspace batches), Refresh History (admin endpoint). Writes three Bronze Delta tables. logicalId `605504c4-9581-4dac-9ee4-fdbee7f74435` |
+| `nb_Governance_Silver` | Notebook | Silver transform — parses raw_json from all three Bronze tables into typed Delta tables: `silver_workspaces`, `silver_items`, `silver_activity_events`. logicalId `f645c71e-7e21-4c30-9359-6b69a0407279` |
+| `nb_Governance_Gold` | Notebook | Gold schema load — enriches Silver with derived fields (admin_count, last_activity_date, workspace_name joins) and aggregates activity events into `gold_workspaces`, `gold_items`, `gold_activity_summary`. logicalId `1f77ebc4-fd06-40ae-a179-c606d4c45757` |
+| `nb_Governance_Score` | Notebook | Health rules engine — evaluates 5 governance rules, writes `gold_health_rule_results` and `gold_health_scores` (score 0–100 per workspace). logicalId `84c8553a-ced6-4f21-afa4-46094baffe61` |
+
+---
+
+## Health Rules
+
+| Rule ID | Severity | Description | Data Available |
+|---------|----------|-------------|----------------|
+| `NO_SENSITIVITY_LABEL` | High | Item has no sensitivity label | No — scanner depth `datasetSchema=false`; enable DAX/mashup expressions |
+| `SINGLE_ADMIN` | High | Workspace has only one distinct active user (proxy) | Yes — derived from activity events |
+| `REFRESH_FAILING` | High | Semantic model failed refresh 3+ times in 7 days | No — DirectLake tenant returns no refresh history |
+| `NO_GIT_CONNECTION` | Medium | Workspace not connected to Git | No — not returned by Scanner API at current depth |
+| `UNUSED_REPORT` | Medium | Report not viewed in 90 days | Partial — fires after 90 days of accumulated activity data |
+
+Score formula: `100 - (High violations × 5) - (Medium violations × 3) - (Low violations × 1)`, floored at 0.
 
 ---
 
 ## How to Explore
 
-**Bronze tables (first run — 2026-11-02)**
+**Tables after session 2 run (2026-11-03)**
 
 | Table | Rows | Notes |
 |-------|------|-------|
 | `bronze_activity_events` | 687 | Yesterday's tenant activity events, raw JSON |
 | `bronze_scan_workspaces` | 28 | One row per workspace from Scanner API, raw JSON |
 | `bronze_refresh_history` | 0 | All models are DirectLake — expected |
+| `silver_workspaces` | 28 | Typed workspace rows |
+| `silver_items` | 62 | SemanticModel + Report rows per workspace |
+| `silver_activity_events` | 687 | Parsed activity events with canonical field names |
+| `gold_workspaces` | 28 | Enriched with admin_count proxy |
+| `gold_items` | 62 | Enriched with last_activity_date and workspace_name |
+| `gold_activity_summary` | 16 | Aggregated view counts per object (90d / 30d) |
+| `gold_health_rule_results` | 149 | One row per rule violation |
+| `gold_health_scores` | 28 | One score per workspace (0–100) |
 
 **Run the Bronze notebook again (incremental)**
 
@@ -102,4 +128,4 @@ in the Fabric UI before running, never commit. Client ID and tenant ID are safe 
 
 ---
 
-*Last updated: 2026-11-02 — Phase 1 complete, Bronze layer live.*
+*Last updated: 2026-11-03 — Phase 2 complete, full pipeline end-to-end.*
