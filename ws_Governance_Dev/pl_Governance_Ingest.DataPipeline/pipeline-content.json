@@ -1,0 +1,103 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "name": "Bronze",
+        "type": "TridentNotebook",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "notebookId": "e16af676-4d06-49f2-bec2-b0d2bcaf8bb2",
+          "workspaceId": "7ea6403c-9364-4cd5-94c3-3ba6fcfce918",
+          "parameters": {
+            "CLIENT_SECRET": {
+              "value": "@pipeline().parameters.CLIENT_SECRET",
+              "type": "string"
+            }
+          }
+        }
+      },
+      {
+        "name": "Silver",
+        "type": "TridentNotebook",
+        "dependsOn": [
+          {
+            "activity": "Bronze",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "notebookId": "8c7c5bc4-07e8-4dd8-b8fe-9cc9838ebbf6",
+          "workspaceId": "7ea6403c-9364-4cd5-94c3-3ba6fcfce918"
+        }
+      },
+      {
+        "name": "Gold",
+        "type": "TridentNotebook",
+        "dependsOn": [
+          {
+            "activity": "Silver",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "notebookId": "4d9f87ca-b358-40e8-b636-865b982ee9c3",
+          "workspaceId": "7ea6403c-9364-4cd5-94c3-3ba6fcfce918"
+        }
+      },
+      {
+        "name": "Score",
+        "type": "TridentNotebook",
+        "dependsOn": [
+          {
+            "activity": "Gold",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "notebookId": "d187f17b-c5f1-4919-bd28-43f0e28ca117",
+          "workspaceId": "7ea6403c-9364-4cd5-94c3-3ba6fcfce918"
+        }
+      }
+    ],
+    "parameters": {
+      "CLIENT_SECRET": {
+        "type": "string",
+        "defaultValue": ""
+      }
+    }
+  }
+}
