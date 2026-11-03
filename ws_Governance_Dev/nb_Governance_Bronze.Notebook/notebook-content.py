@@ -30,7 +30,8 @@ from pyspark.sql.types import StringType, StructType, StructField
 
 TENANT_ID     = "c8cb697b-07d1-4c61-a5d9-bbe5ad099fe8"
 CLIENT_ID     = "4c046cb3-0862-4862-b228-5fee8381deca"
-CLIENT_SECRET = "<paste-secret-here>"  # governance-scanner-key-1 -- fill in Fabric UI only
+import os
+CLIENT_SECRET = os.environ.get("CLIENT_SECRET", "<paste-secret-here>")  # governance-scanner-key-1 -- pipeline injects at runtime; fill in Fabric UI for manual runs
 
 PBI_SCOPE  = "https://analysis.windows.net/powerbi/api/.default"
 PBI_BASE   = "https://api.powerbi.com/v1.0/myorg"
