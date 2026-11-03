@@ -27,11 +27,10 @@ Scanner API + Activity Events API + Refresh History API
 | nb_Governance_Gold | Notebook | Complete — logicalId `1f77ebc4-fd06-40ae-a179-c606d4c45757` |
 | nb_Governance_Score | Notebook | Complete — logicalId `84c8553a-ced6-4f21-afa4-46094baffe61` |
 | pl_Governance_Ingest | DataPipeline | Complete — logicalId `979d10b1-b1d1-8880-4737-a1fe5699952a` |
-| sm_Governance | SemanticModel | Not yet created |
+| sm_Governance | SemanticModel | Complete — ID `2514647e-c2a4-4eee-984a-e26da08dccd0` |
 | FabricApp_Governance | Fabric App | Not yet created |
 
 ## Current Focus / Blockers
-- `sm_Governance` not yet created — DirectLake semantic model on Gold tables
 - `FabricApp_Governance` not yet created — Rayfin app surfacing health scores
 
 ## Known Gotchas
@@ -43,7 +42,21 @@ Scanner API + Activity Events API + Refresh History API
 - `modifiedSince` API rejects all tested timestamp formats (ISO-8601 with/without milliseconds) — Cell 3 uses full scan; incremental deferred
 - `nb_Governance_Bronze` is permanently Uncommitted in Fabric Source Control — contains real secret; Git version has placeholder; intentional and permanent
 
-## Last Session — 2026-11-03
+## Last Session — 2026-11-03 (Session 4)
+- `sm_Governance` DirectLake semantic model built and deployed:
+  - 5 DirectLake tables on lh_Governance Gold layer (gold_workspaces, gold_items, gold_activity_summary, gold_health_rule_results, gold_health_scores)
+  - `_Measures` calculated table with 6 DAX measures: Total Workspaces, Avg Health Score, Critical Violations, Medium Violations, Workspaces Below 80, Unused Items 90d
+  - 5 relationships (4 active on workspace_id to gold_workspaces; 1 inactive item_id to gold_items)
+  - Display folders: KPIs, Health Rules, Activity
+  - Column visibility: raw FK/scanned_at columns hidden
+  - Table descriptions on all 6 tables
+  - Deployed via DeployToFabric (XMLA); framed via RefreshWithXMLA before DAX validation
+  - DAX validation passed: 56 workspaces, avg score 63.6, 294 critical violations, 30 below-80
+  - TMDL exported to `sm_Governance.SemanticModel/definition/` (10 files); committed `af9698e`
+  - Item ID: `2514647e-c2a4-4eee-984a-e26da08dccd0`
+- Next session starts at: build `FabricApp_Governance` Rayfin app
+
+## Session 3 — 2026-11-03
 - `pl_Governance_Ingest` created in Fabric UI (logicalId `979d10b1-b1d1-8880-4737-a1fe5699952a`):
   - 4 TridentNotebook activities: Bronze -> Silver -> Gold -> Score (linear chain, Success dependency)
   - `CLIENT_SECRET` pipeline parameter wired to Bronze activity Base parameters

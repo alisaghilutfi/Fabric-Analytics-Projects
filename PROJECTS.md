@@ -100,10 +100,10 @@ categories on Geography columns, Prep data for AI, agent_CompetitorSales
 
 ## ws_Governance_Dev
 **Purpose:** Fabric tenant governance and asset inventory — scans the full tenant on a schedule using the Scanner, Activity Events, and Refresh History APIs; applies a health rules engine; surfaces findings through a Rayfin app  
-**Status:** Active — Phase 3 complete, pipeline end-to-end validated  
-**Current focus:** Build `sm_Governance` DirectLake semantic model on Gold tables  
-**Last session (2026-11-03):** `pl_Governance_Ingest` created in Fabric UI, exported to Git via Fabric Core MCP; 4-notebook chain (Bronze -> Silver -> Gold -> Score) validated end-to-end in ~7.3s (warm); daily schedule 06:00 UTC set; `modifiedSince` incremental scan dropped (API format issues), full scan used  
-**Next session:** `sm_Governance` DirectLake semantic model; then `FabricApp_Governance`  
+**Status:** Active — Phase 4 complete, sm_Governance deployed and validated  
+**Current focus:** Build `FabricApp_Governance` Rayfin app surfacing health scores  
+**Last session (2026-11-03):** `sm_Governance` DirectLake semantic model built: 5 Gold tables (56 workspaces, 62 items, 16 activity summaries, 149 rule results, 28 health scores), `_Measures` table with 6 DAX measures, 5 relationships, column visibility, table descriptions. DAX validation: avg score 63.6, 294 critical violations, 30 workspaces below 80. Committed `af9698e`.  
+**Next session:** `FabricApp_Governance` Rayfin app  
 **Blockers:** None
 
 ---
