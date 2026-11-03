@@ -109,23 +109,10 @@ else:
 
 # CELL ********************
 
-# Cell 3 - get modified workspace IDs (incremental)
-try:
-    last_run_df = spark.sql("SELECT MAX(scanned_at) as last_run FROM bronze_scan_workspaces")
-    last_run = last_run_df.collect()[0]["last_run"]
-except Exception:
-    last_run = None
+# Cell 3 - get all workspace IDs (full scan -- incremental modifiedSince deferred)
+# modifiedSince API has strict format requirements; using full scan until resolved
 
-if last_run:
-    # Normalise to API-compatible format: YYYY-MM-DDTHH:MM:SS.000Z
-    from datetime import datetime, timezone
-    ts = datetime.fromisoformat(str(last_run))
-    ts_clean = ts.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.000Z")
-    modified_url = f"{ADMIN_BASE}/workspaces/modified?modifiedSince={ts_clean}"
-else:
-    modified_url = f"{ADMIN_BASE}/workspaces/modified"
-
-resp = requests.get(modified_url, headers=HEADERS)
+resp = requests.get(f"{ADMIN_BASE}/workspaces/modified", headers=HEADERS)
 resp.raise_for_status()
 workspace_ids = [w["id"] for w in resp.json()]
 print(f"Workspaces to scan: {len(workspace_ids)}")
