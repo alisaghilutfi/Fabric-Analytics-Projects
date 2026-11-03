@@ -117,7 +117,11 @@ except Exception:
     last_run = None
 
 if last_run:
-    modified_url = f"{ADMIN_BASE}/workspaces/modified?modifiedSince={last_run}"
+    # Normalise to API-compatible format: YYYY-MM-DDTHH:MM:SSZ (no microseconds, no offset)
+    from datetime import datetime, timezone
+    ts = datetime.fromisoformat(str(last_run))
+    ts_clean = ts.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    modified_url = f"{ADMIN_BASE}/workspaces/modified?modifiedSince={ts_clean}"
 else:
     modified_url = f"{ADMIN_BASE}/workspaces/modified"
 
