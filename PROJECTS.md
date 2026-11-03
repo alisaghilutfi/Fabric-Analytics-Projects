@@ -98,6 +98,16 @@ categories on Geography columns, Prep data for AI, agent_CompetitorSales
 
 ---
 
+## ws_Governance_Dev
+**Purpose:** Fabric tenant governance and asset inventory — scans the full tenant on a schedule using the Scanner, Activity Events, and Refresh History APIs; applies a health rules engine; surfaces findings through a Rayfin app  
+**Status:** Active — Phase 2 complete, full pipeline end-to-end  
+**Current focus:** Build `pl_Governance_Ingest` (orchestrate Bronze → Silver → Gold → Score notebooks), then `sm_Governance`  
+**Last session (2026-11-03):** `nb_Governance_Silver` built (28 ws, 62 items, 687 events); `nb_Governance_Gold` built (28 ws, 62 items, 16 activity summaries); `nb_Governance_Score` built — health rules engine live with 149 rule results across 28 workspaces (NO_SENSITIVITY_LABEL: 62, SINGLE_ADMIN: 24, NO_GIT_CONNECTION: 25); score range 0-100, active portfolio workspaces 82-92; full pipeline end-to-end validated  
+**Next session:** `pl_Governance_Ingest` DataPipeline to orchestrate all four notebooks; then `sm_Governance` DirectLake semantic model  
+**Blockers:** None
+
+---
+
 ## Adding a New Project
 When a new workspace is created, add a new section above following
 this exact template:

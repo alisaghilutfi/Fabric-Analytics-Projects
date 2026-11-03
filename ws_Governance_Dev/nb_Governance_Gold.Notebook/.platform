@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "nb_Governance_Gold",
+    "description": "Gold schema load -- workspaces, items, activity summary"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "1f77ebc4-fd06-40ae-a179-c606d4c45757"
+  }
+}
