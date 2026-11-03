@@ -1,7 +1,7 @@
 # ws_Governance_Dev
 
 ## Status
-Phase 2 complete — full pipeline end-to-end (Bronze → Silver → Gold → Score)
+Phase 3 complete — pipeline end-to-end validated (pl_Governance_Ingest live, daily schedule set)
 
 ## Architecture
 Scanner API + Activity Events API + Refresh History API
@@ -26,12 +26,11 @@ Scanner API + Activity Events API + Refresh History API
 | nb_Governance_Silver | Notebook | Complete — logicalId `f645c71e-7e21-4c30-9359-6b69a0407279` |
 | nb_Governance_Gold | Notebook | Complete — logicalId `1f77ebc4-fd06-40ae-a179-c606d4c45757` |
 | nb_Governance_Score | Notebook | Complete — logicalId `84c8553a-ced6-4f21-afa4-46094baffe61` |
-| pl_Governance_Ingest | DataPipeline | Not yet created |
+| pl_Governance_Ingest | DataPipeline | Complete — logicalId `979d10b1-b1d1-8880-4737-a1fe5699952a` |
 | sm_Governance | SemanticModel | Not yet created |
 | FabricApp_Governance | Fabric App | Not yet created |
 
 ## Current Focus / Blockers
-- `pl_Governance_Ingest` not yet created — orchestrates all four notebooks in sequence
 - `sm_Governance` not yet created — DirectLake semantic model on Gold tables
 - `FabricApp_Governance` not yet created — Rayfin app surfacing health scores
 
@@ -39,19 +38,20 @@ Scanner API + Activity Events API + Refresh History API
 - `GET /groups/{wsId}/datasets/{id}/refreshes` requires workspace membership — use `/admin/datasets/{id}/refreshes` instead (covered by read-only admin APIs tenant setting)
 - DirectLake models return 0 refresh history records (no scheduled refresh by design) — Cell 6 kept for client tenants with import-mode models
 - Scanner `getInfo` returns 10 fields per dataset; `isRefreshable` not included at current scan depth (`datasetSchema=false`)
+- Pipeline provisioning via Git fails — Fabric cannot resolve notebook logicalIds during Update all; always create DataPipelines in Fabric UI, then export to Git via Fabric Core MCP
+- `Git_GitProviderCommitRejectedByPolicy` on Source Control commit — caused by Fabric OAuth session degradation; workaround is Fabric Core MCP export + FabricEngineer git push
+- `modifiedSince` API rejects all tested timestamp formats (ISO-8601 with/without milliseconds) — Cell 3 uses full scan; incremental deferred
+- `nb_Governance_Bronze` is permanently Uncommitted in Fabric Source Control — contains real secret; Git version has placeholder; intentional and permanent
 
 ## Last Session — 2026-11-03
-- `nb_Governance_Silver` built and validated: 28 workspaces, 62 items, 687 activity events
-  - Fixed `WorkSpaceName` casing bug in activity events schema (field is `WorkspaceId` not `WorkSpaceId`)
-- `nb_Governance_Gold` built and validated: 28 workspaces, 62 items, 16 activity summaries
-- `nb_Governance_Score` built and validated — full health rules engine live:
-  - 28 scored workspaces, 149 rule results across 3 active rules
-  - NO_SENSITIVITY_LABEL: 62 violations (data unavailable at current scanner depth)
-  - SINGLE_ADMIN: 24 violations (proxy via distinct active users)
-  - NO_GIT_CONNECTION: 25 violations (data unavailable at current scanner depth)
-  - UNUSED_REPORT: 0 — needs 90 days of accumulated activity data
-  - REFRESH_FAILING: skipped — DirectLake tenant, no refresh history
-  - Score range: 0 (PersonalWorkspace/high violation count) to 100 (empty personal workspace)
-  - Active portfolio workspaces score 82-92
-- Full Bronze -> Silver -> Gold -> Score pipeline runs end-to-end
-- Next session starts at: build `pl_Governance_Ingest` to orchestrate all four notebooks, then `sm_Governance`
+- `pl_Governance_Ingest` created in Fabric UI (logicalId `979d10b1-b1d1-8880-4737-a1fe5699952a`):
+  - 4 TridentNotebook activities: Bronze -> Silver -> Gold -> Score (linear chain, Success dependency)
+  - `CLIENT_SECRET` pipeline parameter wired to Bronze activity Base parameters
+  - Daily schedule set: 06:00 UTC
+  - Exported to Git via Fabric Core MCP (secret redacted from `defaultValue` in committed JSON)
+- `Git_GitProviderCommitRejectedByPolicy` blocker hit on Fabric Source Control commit — OAuth session degradation; bypassed via Fabric Core MCP export + FabricEngineer git push
+- Git-authored pipeline provisioning confirmed broken — Fabric cannot resolve notebook logicalIds from `.platform` files during Update all; workaround documented in Known Gotchas
+- `modifiedSince` incremental scan dropped from Cell 3 — API rejects all tested timestamp formats; full scan (28 workspaces) used; deferred to phase 2
+- Pipeline run validated end-to-end: Bronze 1.20s + Silver 1.20s + Gold 2.51s + Score 2.37s = ~7.3s total (warm Spark sessions); expected ~3-5 min cold start on first daily run
+- `nb_Governance_Bronze` permanently Uncommitted in Fabric (contains real secret) — Git version has placeholder; intentional
+- Next session starts at: build `sm_Governance` DirectLake semantic model on Gold tables

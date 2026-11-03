@@ -3,9 +3,9 @@
 A tenant-wide governance and asset inventory system built on Microsoft Fabric. Scans
 every workspace on a schedule using the Power BI Admin APIs (Scanner, Activity Events,
 Refresh History), applies a health rules engine over the collected metadata, and surfaces
-findings through a Rayfin app. Phase 2 complete: full Bronze → Silver → Gold → Score
-pipeline runs end-to-end — 28 workspaces scored, 149 rule results, active portfolio
-workspaces scoring 82–92.
+findings through a Rayfin app. Phase 3 complete: `pl_Governance_Ingest` DataPipeline
+orchestrates the full Bronze → Silver → Gold → Score chain daily at 06:00 UTC, validated
+end-to-end in ~7s on warm Spark sessions.
 
 ---
 
@@ -63,6 +63,14 @@ from Delta tables and have no scheduled refresh — the refresh history endpoint
 an empty array. Cell 6 of `nb_Governance_Bronze` is kept for future use when the scanner
 covers client tenants with import-mode models.
 
+**Pipeline provisioning via Fabric UI only**
+Git-authored DataPipelines fail during Source Control Update all — Fabric cannot resolve
+notebook `logicalId` references in `pipeline-content.json` to live workspace item IDs.
+The workaround is: create the pipeline in the Fabric UI, then export the canonical
+definition to Git using `Fabric Core MCP → get_item_definition` and a FabricEngineer
+git push (bypassing the Fabric→Git commit entirely when the OAuth session is degraded).
+The `CLIENT_SECRET` `defaultValue` is always redacted to `""` before committing.
+
 **Scanner depth: `datasetSchema=false`**
 The current scan uses `datasourceDetails=true` but `datasetSchema=false` to keep scan
 time short across 28 workspaces. `isRefreshable` is not returned at this depth. If
@@ -80,6 +88,7 @@ slower on large tenants).
 | `nb_Governance_Silver` | Notebook | Silver transform — parses raw_json from all three Bronze tables into typed Delta tables: `silver_workspaces`, `silver_items`, `silver_activity_events`. logicalId `f645c71e-7e21-4c30-9359-6b69a0407279` |
 | `nb_Governance_Gold` | Notebook | Gold schema load — enriches Silver with derived fields (admin_count, last_activity_date, workspace_name joins) and aggregates activity events into `gold_workspaces`, `gold_items`, `gold_activity_summary`. logicalId `1f77ebc4-fd06-40ae-a179-c606d4c45757` |
 | `nb_Governance_Score` | Notebook | Health rules engine — evaluates 5 governance rules, writes `gold_health_rule_results` and `gold_health_scores` (score 0–100 per workspace). logicalId `84c8553a-ced6-4f21-afa4-46094baffe61` |
+| `pl_Governance_Ingest` | DataPipeline | Orchestrates Bronze → Silver → Gold → Score in sequence (Success dependency chain). `CLIENT_SECRET` injected as pipeline parameter. Daily schedule 06:00 UTC. logicalId `979d10b1-b1d1-8880-4737-a1fe5699952a` |
 
 ---
 
@@ -115,11 +124,12 @@ Score formula: `100 - (High violations × 5) - (Medium violations × 3) - (Low v
 | `gold_health_rule_results` | 149 | One row per rule violation |
 | `gold_health_scores` | 28 | One score per workspace (0–100) |
 
-**Run the Bronze notebook again (incremental)**
+**Run the pipeline**
 
-Cell 3 checks `MAX(scanned_at)` from `bronze_scan_workspaces` before calling
-`/workspaces/modified` — on subsequent runs it fetches only workspaces modified since
-the last scan, not the full tenant. Activity Events always fetches yesterday's window.
+`pl_Governance_Ingest` orchestrates all four notebooks. Set the `CLIENT_SECRET` parameter
+to the real secret value before running. Cell 3 of `nb_Governance_Bronze` always does a
+full scan (all workspaces) — `modifiedSince` incremental is deferred due to API format
+issues. Activity Events always fetches yesterday's window.
 
 **SP credentials**
 
@@ -128,4 +138,4 @@ in the Fabric UI before running, never commit. Client ID and tenant ID are safe 
 
 ---
 
-*Last updated: 2026-11-03 — Phase 2 complete, full pipeline end-to-end.*
+*Last updated: 2026-11-03 — Phase 3 complete, pipeline validated end-to-end.*
