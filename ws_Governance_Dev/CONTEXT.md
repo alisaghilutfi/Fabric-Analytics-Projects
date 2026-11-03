@@ -1,7 +1,7 @@
 # ws_Governance_Dev
 
 ## Status
-Phase 3 complete — pipeline end-to-end validated (pl_Governance_Ingest live, daily schedule set)
+Phase 4 complete — sm_Governance DirectLake semantic model synced and validated
 
 ## Architecture
 Scanner API + Activity Events API + Refresh History API
@@ -41,19 +41,19 @@ Scanner API + Activity Events API + Refresh History API
 - `Git_GitProviderCommitRejectedByPolicy` on Source Control commit — caused by Fabric OAuth session degradation; workaround is Fabric Core MCP export + FabricEngineer git push
 - `modifiedSince` API rejects all tested timestamp formats (ISO-8601 with/without milliseconds) — Cell 3 uses full scan; incremental deferred
 - `nb_Governance_Bronze` is permanently Uncommitted in Fabric Source Control — contains real secret; Git version has placeholder; intentional and permanent
+- `definition.pbism` for semantic models must contain only `{"version":"1.0"}` — no artifacts array; artifacts array is PBIP/report schema and causes `Workload_FailedToParseFile` on Source Control Update all
+- XMLA-created models get a live ObjectId with null LogicalId in Git — causes duplicate artifact conflict on Update all; fix is delete live artifact + recycle bin, then reprovision via Git Update all
+- After XMLA session + ExportToTmdlFolder, always do Source Control Update all (not Commit) to provision the Git-anchored version; the XMLA artifact and the Git-provisioned artifact are treated as separate items by Fabric
 
 ## Last Session — 2026-11-03 (Session 4)
-- `sm_Governance` DirectLake semantic model built and deployed:
-  - 5 DirectLake tables on lh_Governance Gold layer (gold_workspaces, gold_items, gold_activity_summary, gold_health_rule_results, gold_health_scores)
-  - `_Measures` calculated table with 6 DAX measures: Total Workspaces, Avg Health Score, Critical Violations, Medium Violations, Workspaces Below 80, Unused Items 90d
-  - 5 relationships (4 active on workspace_id to gold_workspaces; 1 inactive item_id to gold_items)
-  - Display folders: KPIs, Health Rules, Activity
-  - Column visibility: raw FK/scanned_at columns hidden
-  - Table descriptions on all 6 tables
-  - Deployed via DeployToFabric (XMLA); framed via RefreshWithXMLA before DAX validation
-  - DAX validation passed: 56 workspaces, avg score 63.6, 294 critical violations, 30 below-80
-  - TMDL exported to `sm_Governance.SemanticModel/definition/` (10 files); committed `af9698e`
-  - Item ID: `2514647e-c2a4-4eee-984a-e26da08dccd0`
+- `sm_Governance` DirectLake semantic model built via XMLA, exported to TMDL, and synced to Fabric after resolving three provisioning errors:
+  - (1) Duplicate artifact conflict (XMLA ObjectId vs null LogicalId) — fixed by deleting live artifact and reprovisioning via Git Update all
+  - (2) Missing `definition.pbism` — fixed with correct `{"version":"1.0"}` schema (no artifacts array)
+  - (3) Merge conflict on `dfcdf5f` measure swap — resolved via Accept incoming changes
+- `[Items Without Sensitivity Label]` replaced with `[Single Admin Workspaces]` — `sensitivity_label` column does not exist at current scanner depth (`datasetSchema=false`)
+- DAX validation passed: 56 workspaces · avg score 63.6 · 294 critical violations · 30 below 80 · 0 unused items · 50 single-admin workspaces
+- `gold_items` shows yellow warning in model view — expected, caused by inactive relationship `gold_health_rule_results[item_id] → gold_items[item_id]`; not blocking
+- Commits: `af9698e` (initial TMDL), `5b84593` (docs), `73bebe6` (definition.pbism attempt), `e26c7b2` (fix pbism schema), `b1e5de6` (correct pbism), `dfcdf5f` (Single Admin Workspaces measure)
 - Next session starts at: build `FabricApp_Governance` Rayfin app
 
 ## Session 3 — 2026-11-03

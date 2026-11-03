@@ -153,7 +153,7 @@ display folders. Artisans leads overall (~$235M, 33.8%); Sintec is #2
 
 **Type:** Data Engineering + Tenant Governance  
 **Stack:** Power BI Admin APIs (Scanner, Activity Events, Refresh History) · Medallion Lakehouse · PySpark · Service Principal auth · DirectLake semantic model · Rayfin Fabric App  
-**Status:** Active — Phase 3 complete, pipeline validated
+**Status:** Active — Phase 4 complete, sm_Governance live; FabricApp_Governance next
 
 A tenant-wide governance and asset inventory pipeline that scans every workspace on a
 daily schedule using the Power BI Admin Scanner API, Activity Events API, and Refresh

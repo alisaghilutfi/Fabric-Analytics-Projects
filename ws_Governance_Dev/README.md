@@ -3,9 +3,8 @@
 A tenant-wide governance and asset inventory system built on Microsoft Fabric. Scans
 every workspace on a schedule using the Power BI Admin APIs (Scanner, Activity Events,
 Refresh History), applies a health rules engine over the collected metadata, and surfaces
-findings through a Rayfin app. Phase 3 complete: `pl_Governance_Ingest` DataPipeline
-orchestrates the full Bronze → Silver → Gold → Score chain daily at 06:00 UTC, validated
-end-to-end in ~7s on warm Spark sessions.
+findings through a Rayfin app. Phase 4 complete: `sm_Governance` DirectLake semantic
+model is live and validated — 5 Gold tables, 7 DAX measures, 56 workspaces scored.
 
 ---
 
@@ -89,6 +88,23 @@ slower on large tenants).
 | `nb_Governance_Gold` | Notebook | Gold schema load — enriches Silver with derived fields (admin_count, last_activity_date, workspace_name joins) and aggregates activity events into `gold_workspaces`, `gold_items`, `gold_activity_summary`. logicalId `1f77ebc4-fd06-40ae-a179-c606d4c45757` |
 | `nb_Governance_Score` | Notebook | Health rules engine — evaluates 5 governance rules, writes `gold_health_rule_results` and `gold_health_scores` (score 0–100 per workspace). logicalId `84c8553a-ced6-4f21-afa4-46094baffe61` |
 | `pl_Governance_Ingest` | DataPipeline | Orchestrates Bronze → Silver → Gold → Score in sequence (Success dependency chain). `CLIENT_SECRET` injected as pipeline parameter. Daily schedule 06:00 UTC. logicalId `979d10b1-b1d1-8880-4737-a1fe5699952a` |
+| `sm_Governance` | SemanticModel | DirectLake semantic model on 5 Gold tables. 7 DAX measures: Total Workspaces, Avg Health Score, Critical Violations, Medium Violations, Workspaces Below 80, Unused Items 90d, Single Admin Workspaces. Item ID `0d12fbd0-4564-4d2d-b9a9-3f3e5fc647a8` |
+
+---
+
+## DAX Measures
+
+All measures live in the `_Measures` calculated table in `sm_Governance`.
+
+| Measure | Display Folder | Description |
+|---------|---------------|-------------|
+| `Total Workspaces` | KPIs | Distinct count of workspaces scanned |
+| `Avg Health Score` | KPIs | Average governance health score across all workspaces (0–100) |
+| `Workspaces Below 80` | KPIs | Count of workspaces with health score < 80 |
+| `Critical Violations` | Health Rules | Count of High-severity rule violations |
+| `Medium Violations` | Health Rules | Count of Medium-severity rule violations |
+| `Unused Items 90d` | Activity | Count of items with no recorded activity in 90 days |
+| `Single Admin Workspaces` | Risk | Count of workspaces with `admin_count` ≤ 1 — High-severity governance risk proxy |
 
 ---
 
@@ -138,4 +154,12 @@ in the Fabric UI before running, never commit. Client ID and tenant ID are safe 
 
 ---
 
-*Last updated: 2026-11-03 — Phase 3 complete, pipeline validated end-to-end.*
+## Known Gotchas
+
+- `definition.pbism` for semantic models must contain only `{"version":"1.0"}` — no `artifacts` array; the artifacts array is PBIP/report schema and causes `Workload_FailedToParseFile` on Source Control Update all
+- XMLA-provisioned models get a live ObjectId with null LogicalId in Git — causes duplicate artifact conflict on Update all; fix is delete the live artifact (and recycle bin), then reprovision via Git Update all
+- After an XMLA session + ExportToTmdlFolder, always do Source Control **Update all** (not Commit) to provision the Git-anchored version — the XMLA artifact and the Git-provisioned artifact are treated as separate items by Fabric
+
+---
+
+*Last updated: 2026-11-03 — Phase 4 complete, sm_Governance live and validated.*
