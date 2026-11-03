@@ -1,10 +1,3 @@
 {
-  "version": "1.0",
-  "artifacts": [
-    {
-      "semanticModel": {
-        "path": "definition"
-      }
-    }
-  ]
+  "version": "1.0"
 }
