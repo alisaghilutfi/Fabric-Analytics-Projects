@@ -72,6 +72,26 @@ gold_ws = (
     )
 )
 
+# Diagnostic: check if the duplicate originates in silver_workspaces
+df_check = spark.sql("""
+    SELECT workspace_id, name, type, state, COUNT(*) AS cnt
+    FROM silver_workspaces
+    WHERE workspace_id = '059eda4c-a6be-464c-8e7d-ab9500971197'
+    GROUP BY workspace_id, name, type, state
+""")
+print("=== silver_workspaces rows for 059eda4c ===")
+df_check.show(truncate=False)
+
+silver_ws_dupes = spark.sql("""
+    SELECT workspace_id, COUNT(*) AS cnt
+    FROM silver_workspaces
+    GROUP BY workspace_id
+    HAVING COUNT(*) > 1
+    ORDER BY cnt DESC
+""")
+print(f"=== silver_workspaces duplicate workspace_ids: {silver_ws_dupes.count()} ===")
+silver_ws_dupes.show(truncate=False)
+
 gold_ws = gold_ws.dropDuplicates(["workspace_id"])
 
 gold_ws.write.format("delta") \
