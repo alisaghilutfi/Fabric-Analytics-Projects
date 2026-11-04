@@ -72,6 +72,8 @@ gold_ws = (
     )
 )
 
+gold_ws = gold_ws.dropDuplicates(["workspace_id"])
+
 gold_ws.write.format("delta") \
     .mode("overwrite") \
     .option("overwriteSchema", "true") \
