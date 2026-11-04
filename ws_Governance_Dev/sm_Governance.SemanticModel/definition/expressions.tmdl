@@ -1,0 +1,7 @@
+expression 'DirectLake - lh_Governance' =
+		let
+		    Source = AzureStorage.DataLake("https://onelake.dfs.fabric.microsoft.com/7ea6403c-9364-4cd5-94c3-3ba6fcfce918/4478b3d6-2e64-43ee-b120-3caa722abf48")
+		in
+		    Source
+	lineageTag: 43ea01e2-f66e-425c-81fe-2bc4c3035421
+

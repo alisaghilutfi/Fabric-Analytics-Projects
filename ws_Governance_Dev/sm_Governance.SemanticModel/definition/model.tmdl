@@ -1,0 +1,17 @@
+model sm_Governance
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_ProTooling = ["MCP-PBIModeling"]
+
+ref table gold_workspaces
+ref table gold_items
+ref table gold_activity_summary
+ref table gold_health_rule_results
+ref table gold_health_scores
+ref table _Measures
+

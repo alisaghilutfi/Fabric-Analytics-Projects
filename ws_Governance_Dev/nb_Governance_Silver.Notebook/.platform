@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "nb_Governance_Silver",
+    "description": "Silver transform -- parse Bronze raw_json into typed Delta tables"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "f645c71e-7e21-4c30-9359-6b69a0407279"
+  }
+}

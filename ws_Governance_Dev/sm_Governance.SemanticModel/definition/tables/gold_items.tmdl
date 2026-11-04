@@ -1,0 +1,69 @@
+/// One row per item (SemanticModel or Report) per workspace. Contains item type, owner, creation date, and last activity date derived from activity events.
+table gold_items
+	lineageTag: 3247c97d-f556-4186-a71a-857c11de392e
+
+	column workspace_id
+		dataType: string
+		lineageTag: 6f3a9add-1231-43d0-8424-88c26e4e1962
+		sourceColumn: workspace_id
+
+	column workspace_name
+		dataType: string
+		lineageTag: d24e9e52-37f6-47b7-9f8f-d40b95a2f2c9
+		sourceColumn: workspace_name
+
+	column item_id
+		dataType: string
+		isKey
+		lineageTag: 3558ac82-e28e-45ff-a93b-7c80f206c874
+		sourceColumn: item_id
+
+	column item_type
+		dataType: string
+		lineageTag: 14bf6289-f1fe-46d5-bc9a-cdb8075fde0d
+		sourceColumn: item_type
+
+	column name
+		dataType: string
+		lineageTag: 70ab974e-3022-457a-98ae-13e44cb2dfa7
+		sourceColumn: name
+
+	column configured_by
+		dataType: string
+		lineageTag: 76c300ae-84d9-4ffe-bd72-7e05223e798d
+		sourceColumn: configured_by
+
+	column created_date
+		dataType: string
+		lineageTag: 85eaafa1-19bf-4f65-b379-1f0738ebd38b
+		sourceColumn: created_date
+
+	column target_storage_mode
+		dataType: string
+		isHidden
+		lineageTag: af20e436-6c9b-4b4c-8653-001f2c661c36
+		sourceColumn: target_storage_mode
+
+	column content_provider_type
+		dataType: string
+		isHidden
+		lineageTag: f5718850-c702-4a6b-ac0f-49d45fb5d404
+		sourceColumn: content_provider_type
+
+	column last_activity_date
+		dataType: string
+		lineageTag: 88b83035-69dd-4552-b9f0-1a69c9097665
+		sourceColumn: last_activity_date
+
+	column scanned_at
+		dataType: string
+		isHidden
+		lineageTag: 1cfd2940-93d4-4ff5-addf-13a3f54001aa
+		sourceColumn: scanned_at
+
+	partition gold_items = entity
+		mode: directLake
+		source
+			entityName: gold_items
+			expressionSource: 'DirectLake - lh_Governance'
+

@@ -1,0 +1,73 @@
+/// All DAX measures for sm_Governance
+table _Measures
+	lineageTag: 7c2aa1b4-627e-4b0d-b2bd-7fc8627d152d
+
+	/// Total number of workspaces scanned in this tenant.
+	measure 'Total Workspaces' =
+			VAR _result = DISTINCTCOUNT(gold_workspaces[workspace_id])
+			RETURN _result
+		formatString: #,0
+		displayFolder: KPIs
+		lineageTag: d6ed8f10-c562-4014-a9e5-8193f68dd6d6
+
+	/// Average governance health score across all workspaces (0-100).
+	measure 'Avg Health Score' =
+			VAR _result = AVERAGEX(gold_health_scores, gold_health_scores[score])
+			RETURN _result
+		formatString: #,0.0
+		displayFolder: KPIs
+		lineageTag: 590d55b5-dbcc-4e26-baec-fd2be76a7bf8
+
+	/// Total count of High-severity rule violations across all workspaces.
+	measure 'Critical Violations' =
+			VAR _result = CALCULATE(COUNTROWS(gold_health_rule_results), gold_health_rule_results[passed] = FALSE(), gold_health_rule_results[severity] = "High")
+			RETURN IF(ISBLANK(_result), 0, _result)
+		formatString: #,0
+		displayFolder: Health Rules
+		lineageTag: cb5809c8-889f-422e-a320-71fe0ac9e63c
+
+	/// Total count of Medium-severity rule violations across all workspaces.
+	measure 'Medium Violations' =
+			VAR _result = CALCULATE(COUNTROWS(gold_health_rule_results), gold_health_rule_results[passed] = FALSE(), gold_health_rule_results[severity] = "Medium")
+			RETURN IF(ISBLANK(_result), 0, _result)
+		formatString: #,0
+		displayFolder: Health Rules
+		lineageTag: 6a476ea8-cc99-4fa7-bb3e-d748739318e6
+
+	/// Number of workspaces with a health score below 80 (attention required).
+	measure 'Workspaces Below 80' =
+			VAR _result = CALCULATE(COUNTROWS(gold_health_scores), gold_health_scores[score] < 80)
+			RETURN IF(ISBLANK(_result), 0, _result)
+		formatString: #,0
+		displayFolder: KPIs
+		lineageTag: 1bde9bbc-f5e6-4281-b670-8d137f5a3880
+
+	/// Number of items with no recorded activity in the past 90 days.
+	measure 'Unused Items 90d' =
+			VAR _result = CALCULATE(COUNTROWS(gold_activity_summary), gold_activity_summary[is_unused_90d] = TRUE())
+			RETURN IF(ISBLANK(_result), 0, _result)
+		formatString: #,0
+		displayFolder: Activity
+		lineageTag: ec8b77d9-7218-4ce9-a271-3f8f9b488f92
+
+	/// Workspaces with only one distinct active user — High-severity governance risk proxy.
+	measure 'Single Admin Workspaces' =
+			/// Workspaces with only one distinct active user -- High-severity governance risk proxy. admin_count is derived from activity events in nb_Governance_Gold.
+			VAR _threshold = 1
+			RETURN
+			CALCULATE(
+			    COUNTROWS(gold_workspaces),
+			    gold_workspaces[admin_count] <= _threshold
+			)
+		formatString: #,0
+		displayFolder: Risk
+		lineageTag: 55b4f847-7970-45c0-b0ba-fac01d175aee
+
+	column Placeholder
+		isNameInferred
+		sourceColumn: [Placeholder]
+
+	partition _Measures = calculated
+		mode: import
+		source = ROW("Placeholder", BLANK())
+

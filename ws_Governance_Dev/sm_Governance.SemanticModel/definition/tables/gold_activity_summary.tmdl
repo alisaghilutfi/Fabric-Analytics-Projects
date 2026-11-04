@@ -1,0 +1,58 @@
+/// Aggregated view counts per object from the Activity Events API. 30d and 90d windows, with is_unused_90d flag.
+table gold_activity_summary
+	lineageTag: 8f355234-bedc-4e0e-bcbe-8c3e1c5f4e8c
+
+	column workspace_id
+		dataType: string
+		isHidden
+		lineageTag: 39792335-7e2c-4918-bcd8-605b51a59a41
+		sourceColumn: workspace_id
+
+	column workspace_name
+		dataType: string
+		isHidden
+		lineageTag: d882739e-dffc-4db3-b21a-ab34d2b328e6
+		sourceColumn: workspace_name
+
+	column object_id
+		dataType: string
+		isHidden
+		lineageTag: a3b1d4bf-5044-4419-a204-cad63ed617b2
+		sourceColumn: object_id
+
+	column object_type
+		dataType: string
+		lineageTag: d60797d6-7165-4b54-af1b-7af95afa4b1a
+		sourceColumn: object_type
+
+	column object_display_name
+		dataType: string
+		lineageTag: b2bcc431-99af-4e7d-a987-99b041b1032b
+		sourceColumn: object_display_name
+
+	column last_viewed_date
+		dataType: string
+		lineageTag: 9f4906e0-da5d-4201-83ea-af660f9c3064
+		sourceColumn: last_viewed_date
+
+	column view_count_30d
+		dataType: int64
+		lineageTag: 72ae19ef-6d6c-489c-a01c-1a34e7a54308
+		sourceColumn: view_count_30d
+
+	column view_count_90d
+		dataType: int64
+		lineageTag: ad0305da-2b37-4186-a8c0-ab8799d4ac1c
+		sourceColumn: view_count_90d
+
+	column is_unused_90d
+		dataType: boolean
+		lineageTag: 4fdc8044-1545-44e9-b421-fe6f6bb77b7b
+		sourceColumn: is_unused_90d
+
+	partition gold_activity_summary = entity
+		mode: directLake
+		source
+			entityName: gold_activity_summary
+			expressionSource: 'DirectLake - lh_Governance'
+

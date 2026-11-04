@@ -1,0 +1,64 @@
+/// One row per Fabric workspace. Contains workspace name, type, capacity assignment, Git connection status, and admin count proxy.
+table gold_workspaces
+	lineageTag: d5f63717-ab0d-423b-b5ab-ce4961624add
+
+	column workspace_id
+		dataType: string
+		isKey
+		lineageTag: 8eaee0da-a264-4cf7-a426-79cd86eb06ac
+		sourceColumn: workspace_id
+
+	column name
+		dataType: string
+		lineageTag: 0fe72aee-6a29-4b0c-a910-4106dea2fb1d
+		sourceColumn: name
+
+	column type
+		dataType: string
+		lineageTag: 405cfda1-5218-407e-a359-e3ef72c4a7b6
+		sourceColumn: type
+
+	column state
+		dataType: string
+		isHidden
+		lineageTag: 8c2d0182-6ce5-4a8d-9464-08e08eeb3800
+		sourceColumn: state
+
+	column is_on_dedicated_capacity
+		dataType: boolean
+		lineageTag: 1b282e46-d6a5-47be-a6ae-9011f7286388
+		sourceColumn: is_on_dedicated_capacity
+
+	column capacity_id
+		dataType: string
+		isHidden
+		lineageTag: d0f3025e-3e33-48be-af08-86acc5e60d15
+		sourceColumn: capacity_id
+
+	column description
+		dataType: string
+		lineageTag: 0cc84636-60c6-4980-9616-500d187e94c2
+		sourceColumn: description
+
+	column admin_count
+		dataType: int64
+		lineageTag: 146aee49-7712-4322-88c8-504c946afe0a
+		sourceColumn: admin_count
+
+	column git_connected
+		dataType: boolean
+		lineageTag: 75795def-eb5a-43ce-9483-ac08a57dc770
+		sourceColumn: git_connected
+
+	column scanned_at
+		dataType: string
+		isHidden
+		lineageTag: ac7b8fa3-9fe5-4cca-a5c5-970aa7710d43
+		sourceColumn: scanned_at
+
+	partition gold_workspaces = entity
+		mode: directLake
+		source
+			entityName: gold_workspaces
+			expressionSource: 'DirectLake - lh_Governance'
+

@@ -1,0 +1,52 @@
+/// One health score per workspace (0-100). Deducted by severity: High=5pts, Medium=3pts, Low=1pt per violation.
+table gold_health_scores
+	lineageTag: fc3becac-2c40-4433-8c93-d329a7558863
+
+	column workspace_id
+		dataType: string
+		isKey
+		lineageTag: d653cf7c-08d9-4287-8198-9d30f48b3cdd
+		sourceColumn: workspace_id
+
+	column name
+		dataType: string
+		lineageTag: 2441a7ea-2a8f-46cf-8dc2-5f5c99a0afed
+		sourceColumn: name
+
+	column score
+		dataType: int64
+		lineageTag: 667b9f91-9770-425d-b2db-cf1370f22677
+		sourceColumn: score
+
+	column critical_count
+		dataType: int64
+		lineageTag: ccc3de84-4f3b-4fb0-a809-0d0e48bf7f4d
+		sourceColumn: critical_count
+
+	column medium_count
+		dataType: int64
+		lineageTag: c663bcdf-57c1-488b-a3d2-06163db52f90
+		sourceColumn: medium_count
+
+	column low_count
+		dataType: int64
+		lineageTag: edc5057f-8c07-4952-8a95-344a16c9ebde
+		sourceColumn: low_count
+
+	column total_rules_checked
+		dataType: int64
+		lineageTag: 67dd127b-27a3-46fe-89f6-46b44c30f149
+		sourceColumn: total_rules_checked
+
+	column scanned_at
+		dataType: string
+		isHidden
+		lineageTag: 35a485e3-ab16-41b9-8ea8-5207107c7e8e
+		sourceColumn: scanned_at
+
+	partition gold_health_scores = entity
+		mode: directLake
+		source
+			entityName: gold_health_scores
+			expressionSource: 'DirectLake - lh_Governance'
+

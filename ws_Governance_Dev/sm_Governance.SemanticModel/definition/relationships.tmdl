@@ -1,0 +1,21 @@
+relationship gold_items_to_gold_workspaces
+	fromColumn: gold_items.workspace_id
+	toColumn: gold_workspaces.workspace_id
+
+relationship gold_activity_summary_to_gold_workspaces
+	fromColumn: gold_activity_summary.workspace_id
+	toColumn: gold_workspaces.workspace_id
+
+relationship gold_health_rule_results_to_gold_workspaces
+	fromColumn: gold_health_rule_results.workspace_id
+	toColumn: gold_workspaces.workspace_id
+
+relationship gold_health_scores_to_gold_workspaces
+	fromColumn: gold_health_scores.workspace_id
+	toColumn: gold_workspaces.workspace_id
+
+relationship gold_health_rule_results_to_gold_items
+	isActive: false
+	fromColumn: gold_health_rule_results.item_id
+	toColumn: gold_items.item_id
+
