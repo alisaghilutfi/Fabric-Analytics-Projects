@@ -68,7 +68,7 @@ silver_ws = (
         F.col("ws.description").alias("description"),
         F.col("scanned_at")
     )
-    .dropDuplicates(["workspace_id", "scanned_at"])
+    .dropDuplicates(["workspace_id"])
     .filter(F.col("workspace_id").isNotNull())
 )
 
@@ -169,7 +169,7 @@ reports = (
 
 silver_items = (
     datasets.union(reports)
-    .dropDuplicates(["item_id", "scanned_at"])
+    .dropDuplicates(["item_id"])
     .filter(F.col("item_id").isNotNull())
 )
 
