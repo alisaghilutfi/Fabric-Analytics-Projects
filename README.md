@@ -153,18 +153,17 @@ display folders. Artisans leads overall (~$235M, 33.8%); Sintec is #2
 
 **Type:** Data Engineering + Tenant Governance  
 **Stack:** Power BI Admin APIs (Scanner, Activity Events, Refresh History) · Medallion Lakehouse · PySpark · Service Principal auth · DirectLake semantic model · Rayfin Fabric App  
-**Status:** Active — Phase 4 complete, sm_Governance live; FabricApp_Governance next
+**Status:** Active — Phase 5 complete, FabricApp_Governance live
 
 A tenant-wide governance and asset inventory pipeline that scans every workspace on a
 daily schedule using the Power BI Admin Scanner API, Activity Events API, and Refresh
 History API. Metadata is collected into Bronze Delta tables, normalised into typed Silver
 tables, aggregated into a Gold star schema, and scored by a health rules engine covering
 workspace inventory, item ownership, sensitivity labelling, refresh reliability, and Git
-connection status. Findings are surfaced through a Rayfin Fabric App. Phase 3 complete:
-`pl_Governance_Ingest` DataPipeline orchestrates the full chain daily at 06:00 UTC —
-validated end-to-end with 28 workspaces scored across 149 rule results
-(NO_SENSITIVITY_LABEL, SINGLE_ADMIN, NO_GIT_CONNECTION), active portfolio workspaces
-scoring 82–92 out of 100.
+connection status. Findings are surfaced through a Rayfin Fabric App. Phase 5 complete:
+`FabricApp_Governance` live at https://hefty-pearl-60b5367c54-northeurope.webapp.fabricapps.net —
+3 screens (Tenant Health Overview, Workspace Detail, Violations Explorer), 28 workspaces
+scored, smoke test passed.
 
 ---
 

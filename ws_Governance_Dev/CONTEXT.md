@@ -1,7 +1,7 @@
 # ws_Governance_Dev
 
 ## Status
-Phase 4 complete — sm_Governance DirectLake semantic model synced and validated
+Phase 5 complete — FabricApp_Governance live
 
 ## Architecture
 Scanner API + Activity Events API + Refresh History API
@@ -28,10 +28,12 @@ Scanner API + Activity Events API + Refresh History API
 | nb_Governance_Score | Notebook | Complete — logicalId `84c8553a-ced6-4f21-afa4-46094baffe61` |
 | pl_Governance_Ingest | DataPipeline | Complete — logicalId `979d10b1-b1d1-8880-4737-a1fe5699952a` |
 | sm_Governance | SemanticModel | Complete — ID `2514647e-c2a4-4eee-984a-e26da08dccd0` |
-| FabricApp_Governance | Fabric App | Not yet created |
+| FabricApp_Governance | Fabric App | Complete — https://hefty-pearl-60b5367c54-northeurope.webapp.fabricapps.net (Backend ID `8c9b81da-3e15-4d38-a325-22a6c06ef526`) |
 
 ## Current Focus / Blockers
-- `FabricApp_Governance` not yet created — Rayfin app surfacing health scores
+- Investigate `git_connected` field — Scanner API not returning Git metadata at current scan depth
+- Items tab shows 0 items for all workspaces — `nb_Governance_Bronze` may not be calling item-level Scanner API endpoints
+- `NO_SENSITIVITY_LABEL` rule fires for every item (1,588 violations) driving all workspace scores to 0 — downgrade severity to Medium or suppress until scanner depth is increased
 
 ## Known Gotchas
 - `GET /groups/{wsId}/datasets/{id}/refreshes` requires workspace membership — use `/admin/datasets/{id}/refreshes` instead (covered by read-only admin APIs tenant setting)
@@ -45,16 +47,23 @@ Scanner API + Activity Events API + Refresh History API
 - XMLA-created models get a live ObjectId with null LogicalId in Git — causes duplicate artifact conflict on Update all; fix is delete live artifact + recycle bin, then reprovision via Git Update all
 - After XMLA session + ExportToTmdlFolder, always do Source Control Update all (not Commit) to provision the Git-anchored version; the XMLA artifact and the Git-provisioned artifact are treated as separate items by Fabric
 
-## Last Session — 2026-11-03 (Session 4)
-- `sm_Governance` DirectLake semantic model built via XMLA, exported to TMDL, and synced to Fabric after resolving three provisioning errors:
-  - (1) Duplicate artifact conflict (XMLA ObjectId vs null LogicalId) — fixed by deleting live artifact and reprovisioning via Git Update all
-  - (2) Missing `definition.pbism` — fixed with correct `{"version":"1.0"}` schema (no artifacts array)
-  - (3) Merge conflict on `dfcdf5f` measure swap — resolved via Accept incoming changes
-- `[Items Without Sensitivity Label]` replaced with `[Single Admin Workspaces]` — `sensitivity_label` column does not exist at current scanner depth (`datasetSchema=false`)
-- DAX validation passed: 56 workspaces · avg score 63.6 · 294 critical violations · 30 below 80 · 0 unused items · 50 single-admin workspaces
-- `gold_items` shows yellow warning in model view — expected, caused by inactive relationship `gold_health_rule_results[item_id] → gold_items[item_id]`; not blocking
-- Commits: `af9698e` (initial TMDL), `5b84593` (docs), `73bebe6` (definition.pbism attempt), `e26c7b2` (fix pbism schema), `b1e5de6` (correct pbism), `dfcdf5f` (Single Admin Workspaces measure)
-- Next session starts at: build `FabricApp_Governance` Rayfin app
+## Last Session — 2026-11-04 (Session 5)
+- `FabricApp_Governance` scaffolded, built, and deployed as a Rayfin app in Fabric-Apps-Projects:
+  - Live URL: https://hefty-pearl-60b5367c54-northeurope.webapp.fabricapps.net
+  - App backend ID: `8c9b81da-3e15-4d38-a325-22a6c06ef526`
+  - 3 screens: Tenant Health Overview, Workspace Detail, Violations Explorer
+  - Smoke test passed: 28 workspaces, bar chart, drill-down, violations explorer, severity filters all working
+- Duplicate `workspace_id` root cause fixed:
+  - `silver_workspaces` dedup key `["workspace_id", "scanned_at"]` allowed same workspace on multiple pagination pages (identical `scanned_at`); fixed to `["workspace_id"]`
+  - Same fix applied to `silver_items`: `["item_id", "scanned_at"]` → `["item_id"]`
+  - Diagnostic cell removed from `nb_Governance_Gold`; `dropDuplicates(["workspace_id"])` safety net retained
+  - Validation: `gold_workspaces` 28 rows / 28 distinct workspace_ids
+- Commits: `31fa92a` (diagnostic cell), `548a653` (Silver dedup fix)
+- Known issues for next session:
+  - (1) `git_connected` returns No Git for most workspaces — Scanner API not returning Git metadata at current scan depth
+  - (2) Items tab shows 0 items for all workspaces — `nb_Governance_Bronze` may not be calling item-level Scanner API endpoints
+  - (3) `NO_SENSITIVITY_LABEL` rule fires for every item (1,588 violations) driving workspace scores to 0 — severity should be downgraded to Medium or suppressed until scanner depth is increased
+- Next session starts at: investigate Scanner API depth for `git_connected` and items; downgrade `NO_SENSITIVITY_LABEL` to Medium severity
 
 ## Session 3 — 2026-11-03
 - `pl_Governance_Ingest` created in Fabric UI (logicalId `979d10b1-b1d1-8880-4737-a1fe5699952a`):

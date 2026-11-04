@@ -3,8 +3,9 @@
 A tenant-wide governance and asset inventory system built on Microsoft Fabric. Scans
 every workspace on a schedule using the Power BI Admin APIs (Scanner, Activity Events,
 Refresh History), applies a health rules engine over the collected metadata, and surfaces
-findings through a Rayfin app. Phase 4 complete: `sm_Governance` DirectLake semantic
-model is live and validated — 5 Gold tables, 7 DAX measures, 56 workspaces scored.
+findings through a Rayfin app. Phase 5 complete: `FabricApp_Governance` is live —
+3 screens (Tenant Health Overview, Workspace Detail, Violations Explorer) built on
+`sm_Governance` DirectLake semantic model (5 Gold tables, 7 DAX measures, 28 workspaces scored).
 
 ---
 
@@ -89,6 +90,7 @@ slower on large tenants).
 | `nb_Governance_Score` | Notebook | Health rules engine — evaluates 5 governance rules, writes `gold_health_rule_results` and `gold_health_scores` (score 0–100 per workspace). logicalId `84c8553a-ced6-4f21-afa4-46094baffe61` |
 | `pl_Governance_Ingest` | DataPipeline | Orchestrates Bronze → Silver → Gold → Score in sequence (Success dependency chain). `CLIENT_SECRET` injected as pipeline parameter. Daily schedule 06:00 UTC. logicalId `979d10b1-b1d1-8880-4737-a1fe5699952a` |
 | `sm_Governance` | SemanticModel | DirectLake semantic model on 5 Gold tables. 7 DAX measures: Total Workspaces, Avg Health Score, Critical Violations, Medium Violations, Workspaces Below 80, Unused Items 90d, Single Admin Workspaces. Item ID `0d12fbd0-4564-4d2d-b9a9-3f3e5fc647a8` |
+| `FabricApp_Governance` | Fabric App | Rayfin app surfacing governance health data. 3 screens: Tenant Health Overview, Workspace Detail, Violations Explorer. Live URL: https://hefty-pearl-60b5367c54-northeurope.webapp.fabricapps.net |
 
 ---
 
@@ -159,7 +161,8 @@ in the Fabric UI before running, never commit. Client ID and tenant ID are safe 
 - `definition.pbism` for semantic models must contain only `{"version":"1.0"}` — no `artifacts` array; the artifacts array is PBIP/report schema and causes `Workload_FailedToParseFile` on Source Control Update all
 - XMLA-provisioned models get a live ObjectId with null LogicalId in Git — causes duplicate artifact conflict on Update all; fix is delete the live artifact (and recycle bin), then reprovision via Git Update all
 - After an XMLA session + ExportToTmdlFolder, always do Source Control **Update all** (not Commit) to provision the Git-anchored version — the XMLA artifact and the Git-provisioned artifact are treated as separate items by Fabric
+- `scanned_at` must not be included in dedup keys for `silver_workspaces` or `silver_items` — Scanner API pagination returns the same item on multiple pages with identical `scanned_at` timestamps, causing downstream relationship violations in `sm_Governance`
 
 ---
 
-*Last updated: 2026-11-03 — Phase 4 complete, sm_Governance live and validated.*
+*Last updated: 2026-11-04 — Phase 5 complete, FabricApp_Governance live.*

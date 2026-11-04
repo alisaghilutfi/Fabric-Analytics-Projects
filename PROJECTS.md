@@ -100,11 +100,10 @@ categories on Geography columns, Prep data for AI, agent_CompetitorSales
 
 ## ws_Governance_Dev
 **Purpose:** Fabric tenant governance and asset inventory — scans the full tenant on a schedule using the Scanner, Activity Events, and Refresh History APIs; applies a health rules engine; surfaces findings through a Rayfin app  
-**Status:** Active — Phase 4 complete, sm_Governance synced and validated  
-**Current focus:** Build `FabricApp_Governance` Rayfin app  
-**Last session (2026-11-03):** `sm_Governance` built and synced — 5 DirectLake tables, 7 DAX measures, DAX validated (56 workspaces, avg 63.6, 294 critical violations, 50 single-admin); three provisioning errors resolved (duplicate artifact, missing definition.pbism, merge conflict); [Items Without Sensitivity Label] replaced with [Single Admin Workspaces]  
-**Next session:** `FabricApp_Governance` Rayfin app  
-**Blockers:** None  
+**Status:** Active — Phase 5 complete, FabricApp_Governance live  
+**Current focus:** Fix `git_connected` field, items population, `NO_SENSITIVITY_LABEL` severity  
+**Last session (2026-11-04):** `FabricApp_Governance` deployed (https://hefty-pearl-60b5367c54-northeurope.webapp.fabricapps.net); duplicate `workspace_id` root cause fixed (`scanned_at` in dedup key); app smoke test passed; 3 known data quality issues identified for next session  
+**Next session:** Investigate Scanner API depth for `git_connected` and items; downgrade `NO_SENSITIVITY_LABEL` to Medium severity  
 **Blockers:** None
 
 ---
