@@ -102,7 +102,7 @@ categories on Geography columns, Prep data for AI, agent_CompetitorSales
 **Purpose:** Fabric tenant governance and asset inventory — scans the full tenant on a schedule using the Scanner, Activity Events, and Refresh History APIs; applies a health rules engine; surfaces findings through a Rayfin app  
 **Status:** Active — Phase 5 complete, FabricApp_Governance live  
 **Current focus:** Fix `git_connected` field, items population, `NO_SENSITIVITY_LABEL` severity  
-**Last session (2026-11-04):** `FabricApp_Governance` deployed (https://hefty-pearl-60b5367c54-northeurope.webapp.fabricapps.net); duplicate `workspace_id` root cause fixed (`scanned_at` in dedup key); app smoke test passed; 3 known data quality issues identified for next session  
+**Last session (2026-11-05):** Instructions Layer refreshed for Phase 6; no data-side changes; UI enhancements shipped in Fabric-Apps-Projects  
 **Next session:** Investigate Scanner API depth for `git_connected` and items; downgrade `NO_SENSITIVITY_LABEL` to Medium severity  
 **Blockers:** None
 

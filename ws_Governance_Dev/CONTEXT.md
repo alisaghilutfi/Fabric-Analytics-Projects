@@ -59,23 +59,14 @@ in Bronze/Score notebooks
 - XMLA-created models get a live ObjectId with null LogicalId in Git — causes duplicate artifact conflict on Update all; fix is delete live artifact + recycle bin, then reprovision via Git Update all
 - After XMLA session + ExportToTmdlFolder, always do Source Control Update all (not Commit) to provision the Git-anchored version; the XMLA artifact and the Git-provisioned artifact are treated as separate items by Fabric
 
-## Last Session — 2026-11-04 (Session 5)
-- `FabricApp_Governance` scaffolded, built, and deployed as a Rayfin app in Fabric-Apps-Projects:
-  - Live URL: https://hefty-pearl-60b5367c54-northeurope.webapp.fabricapps.net
-  - App backend ID: `8c9b81da-3e15-4d38-a325-22a6c06ef526`
-  - 3 screens: Tenant Health Overview, Workspace Detail, Violations Explorer
-  - Smoke test passed: 28 workspaces, bar chart, drill-down, violations explorer, severity filters all working
-- Duplicate `workspace_id` root cause fixed:
-  - `silver_workspaces` dedup key `["workspace_id", "scanned_at"]` allowed same workspace on multiple pagination pages (identical `scanned_at`); fixed to `["workspace_id"]`
-  - Same fix applied to `silver_items`: `["item_id", "scanned_at"]` → `["item_id"]`
-  - Diagnostic cell removed from `nb_Governance_Gold`; `dropDuplicates(["workspace_id"])` safety net retained
-  - Validation: `gold_workspaces` 28 rows / 28 distinct workspace_ids
-- Commits: `31fa92a` (diagnostic cell), `548a653` (Silver dedup fix)
-- Known issues for next session:
-  - (1) `git_connected` returns No Git for most workspaces — Scanner API not returning Git metadata at current scan depth
-  - (2) Items tab shows 0 items for all workspaces — `nb_Governance_Bronze` may not be calling item-level Scanner API endpoints
-  - (3) `NO_SENSITIVITY_LABEL` rule fires for every item (1,588 violations) driving workspace scores to 0 — severity should be downgraded to Medium or suppressed until scanner depth is increased
-- Next session starts at: investigate Scanner API depth for `git_connected` and items; downgrade `NO_SENSITIVITY_LABEL` to Medium severity
+## Last Session — 2026-11-05 (Session 6)
+- Instructions Layer refreshed (`af4501c`) — Phase 6 focus documented, Current Focus / Next Session Starts At / Blockers updated
+- No data-side work executed this session — all execution work was in Fabric-Apps-Projects (UI enhancements to FabricApp_Governance)
+- Three Phase 6 data quality issues remain open and unchanged:
+  - (1) `NO_SENSITIVITY_LABEL` severity dominates all workspace scores (1,565 / 1,613 violations) — downgrade to Medium in `nb_Governance_Score` health rules dict
+  - (2) Items tab shows 0 items for all workspaces — audit `nb_Governance_Bronze` for item-level Scanner API endpoint calls (`/admin/workspaces/{id}/items` or `getInfo` with `getArtifactUsers=true&lineage=true`)
+  - (3) `git_connected` shows No Git for most workspaces — investigate `getInfo` parameters in `nb_Governance_Bronze`
+- Next session starts at: open `nb_Governance_Bronze`, fix items population first (highest user-visible impact), then `git_connected`; downgrade `NO_SENSITIVITY_LABEL` severity in `nb_Governance_Score` as quick win
 
 ## Session 3 — 2026-11-03
 - `pl_Governance_Ingest` created in Fabric UI (logicalId `979d10b1-b1d1-8880-4737-a1fe5699952a`):
