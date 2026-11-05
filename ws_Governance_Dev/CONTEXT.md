@@ -30,10 +30,22 @@ Scanner API + Activity Events API + Refresh History API
 | sm_Governance | SemanticModel | Complete — ID `2514647e-c2a4-4eee-984a-e26da08dccd0` |
 | FabricApp_Governance | Fabric App | Complete — https://hefty-pearl-60b5367c54-northeurope.webapp.fabricapps.net (Backend ID `8c9b81da-3e15-4d38-a325-22a6c06ef526`) |
 
-## Current Focus / Blockers
-- Investigate `git_connected` field — Scanner API not returning Git metadata at current scan depth
-- Items tab shows 0 items for all workspaces — `nb_Governance_Bronze` may not be calling item-level Scanner API endpoints
-- `NO_SENSITIVITY_LABEL` rule fires for every item (1,588 violations) driving all workspace scores to 0 — downgrade severity to Medium or suppress until scanner depth is increased
+## Current Focus
+Phase 6 — data quality fixes:
+1. `git_connected` — Scanner API not returning Git metadata at current scan depth; investigate `getInfo` parameters or fallback enrichment
+2. Items tab — `gold_items` shows 0 rows for all workspaces; audit `nb_Governance_Bronze` item-level endpoint calls
+3. `NO_SENSITIVITY_LABEL` rule — downgrade severity from Critical to Medium in `nb_Governance_Score`
+
+## Next Session Starts At
+Open `nb_Governance_Bronze`: check whether `/admin/workspaces/{id}/items` or
+`getInfo` with `getArtifactUsers=true&lineage=true` is being called; fix items
+population first (highest user-visible impact), then tackle `git_connected`.
+Downgrade `NO_SENSITIVITY_LABEL` severity in the health rules dict in
+`nb_Governance_Score` as a quick win while notebooks are open.
+
+## Blockers
+None — no infrastructure blockers; data quality issues are code-level fixes
+in Bronze/Score notebooks
 
 ## Known Gotchas
 - `GET /groups/{wsId}/datasets/{id}/refreshes` requires workspace membership — use `/admin/datasets/{id}/refreshes` instead (covered by read-only admin APIs tenant setting)
