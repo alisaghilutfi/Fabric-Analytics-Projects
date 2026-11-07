@@ -1,10 +1,24 @@
+## Project overview
+
 Portfolio-wide rules for all Fabric workspaces in this repo.
 Read automatically by Claude Code in every session.
 Workspace-specific context lives in ws_<name>/CONTEXT.md.
 
+Session protocols, git branch flow and MCP routing: see HARNESS.md.
+Portfolio status: see PROJECTS.md.
+
 ---
 
-## Naming conventions
+## Tech stack
+
+Microsoft Fabric (Lakehouse, PySpark notebooks, DataPipeline, Eventhouse/KQL for real-time workspaces), DirectLake semantic models authored as TMDL, PBIR reports, Windows 11 + PowerShell 5.1, Git integration on dev-fabric-sync.
+Tool versions: see HARNESS.md.
+
+---
+
+## Coding conventions
+
+### Naming conventions
 
 | Artifact type    | Prefix  | Example                    |
 |------------------|---------|----------------------------|
@@ -20,9 +34,9 @@ Workspace-specific context lives in ws_<name>/CONTEXT.md.
 
 ---
 
-## Fabric artifact format rules (CRITICAL)
+### Fabric artifact format rules (CRITICAL)
 
-### Notebook files
+#### Notebook files
 Every notebook needs TWO files:
 
 **`.platform`** (metadata):
@@ -71,10 +85,10 @@ Every notebook needs TWO files:
 # META }
 ```
 
-### Lakehouse files
+#### Lakehouse files
 Every lakehouse needs `.platform`, `lakehouse.metadata.json`, `shortcuts.metadata.json`, `alm.settings.json`.
 
-### TMDL relationship syntax (CRITICAL — do NOT use bracket notation)
+#### TMDL relationship syntax (CRITICAL — do NOT use bracket notation)
 ```
 relationship <name>
     fromColumn: fact_transactions.customer_id
@@ -82,14 +96,14 @@ relationship <name>
 ```
 NOT `fromColumn: fact_transactions[customer_id]` — that will break import.
 
-### PBIR report JSON
+#### PBIR report JSON
 The `config` field in report visuals is **escaped JSON string** (JSON inside JSON):
 ```json
 "config": "{\"version\":\"5.1.0\",\"singleVisual\":{\"visualType\":\"card\",...}}"
 ```
 Every quote inside config is backslash-escaped. Never write raw nested JSON here.
 
-### DirectLake partition syntax
+#### DirectLake partition syntax
 ```tmdl
 partition fact_transactions = entity
     mode: directLake
@@ -99,7 +113,7 @@ partition fact_transactions = entity
         expressionSource: 'DirectLake - lh_Finance_Silver'
 ```
 
-### Date relationship
+#### Date relationship
 `fact_transactions.transaction_date` is `dateTime`. `dim_date.Date` is `dateTime`.
 Relationship **must** include:
 ```tmdl
@@ -108,7 +122,7 @@ joinOnDateBehavior: DatePartOnly
 
 ---
 
-## DAX rules
+### DAX rules
 
 - ALL measures use `VAR / RETURN` pattern
 - Display folders: workspace-specific; minimum groupings `Volume`, `Amount`, `Time`, `Risk` (see HARNESS.md)
@@ -119,7 +133,7 @@ joinOnDateBehavior: DatePartOnly
 
 ---
 
-## Design: powerbi.tips Layout Trifecta
+### Design: powerbi.tips Layout Trifecta
 
 - **Scrim**: single background image (Python Pillow script (1280×720px — never PowerPoint, DPI mismatch)), not individual shapes
 - **Page layout**: 1280×720, left nav panel (200px), top header (56px), content zone
@@ -130,7 +144,7 @@ joinOnDateBehavior: DatePartOnly
 
 ---
 
-## Known Fabric gotchas
+### Known Fabric gotchas
 
 - `delta.columnMapping.mode=name` must be set AT WRITE TIME — retrofitting breaks DirectLake framing
 - `ALTER TABLE RENAME COLUMN` is unsupported in T-SQL analytics engine — renames via Spark SQL only
@@ -141,3 +155,28 @@ joinOnDateBehavior: DatePartOnly
   Apply as customTheme under RegisteredResources in report.json
   (not baseTheme under SharedResources). Update report.json to
   reference hashed filename after first Fabric sync.
+
+---
+
+## Common commands
+
+`/sync-status` -- read-only repo-vs-Fabric sync report: branch state, changed artifacts per workspace folder, placeholder-ID scan (project skill).
+`/new-workspace <name>` -- scaffold the repo side of a new workspace: folder, CONTEXT.md, PROJECTS.md row (project command).
+`/start` -- session-start report: MCP, Azure login, Git state, PROJECTS.md status (user-level command).
+`/pause-capacity` -- check, pause or resume the F2 capacity; asks for confirmation first (user-level command).
+`powerbi-report-author validate` -- validate PBIR edits.
+`powerbi-desktop status | reload | screenshot` -- Bridge CLI commands.
+Branch backfill after a PR merge: see HARNESS.md.
+
+---
+
+## Directories and files to avoid
+
+`_archive/` — not active workspace content.
+`.claude/scratchpads/` — session-only, not committed.
+`**/.pbi/` — gitignored; always excluded.
+`**/diagramLayout.json` — gitignored; always excluded.
+`**/localSettings.json` — gitignored; always excluded.
+`**/editorSettings.json` — gitignored; always excluded.
+Never regenerate `logicalId` values after first Fabric sync.
+Reset `database.tmdl` / `model.tmdl` after Desktop sessions (see HARNESS.md Phase 5).
