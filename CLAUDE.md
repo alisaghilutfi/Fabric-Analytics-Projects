@@ -111,7 +111,7 @@ joinOnDateBehavior: DatePartOnly
 ## DAX rules
 
 - ALL measures use `VAR / RETURN` pattern
-- Display folders: `KPIs`, `Amount`, `Transaction Volume`, `Time Intelligence`, `Fees & Tax`, `Fraud & Risk`
+- Display folders: workspace-specific; minimum groupings `Volume`, `Amount`, `Time`, `Risk` (see HARNESS.md)
 - All measures get `///` description for Copilot readiness
 - Raw columns hidden in report view; only measures and key dims exposed
 - No implicit measures anywhere
@@ -123,10 +123,10 @@ joinOnDateBehavior: DatePartOnly
 
 - **Scrim**: single background image (Python Pillow script (1280×720px — never PowerPoint, DPI mismatch)), not individual shapes
 - **Page layout**: 1280×720, left nav panel (200px), top header (56px), content zone
-- **Theme**: Power Designer export — applied as SharedResources base theme in `report.json`
+- **Theme**: Power Designer export — apply as customTheme under RegisteredResources in `report.json` (not baseTheme under SharedResources; the filename gains a hash on first Fabric sync — update the reference then). Some existing reports still reference baseTheme/SharedResources; migrate them one at a time with Desktop validate. Do not bulk-edit report.json.
 - **Colors**: max 4 intentional colors, consistent semantic meaning
 - **Typography**: DIN for callouts/KPIs, Segoe UI for labels
-- **4 pages**: Overview, Customers, Transactions, Trends
+- **Pages**: workspace-specific; see ws_<name>/CONTEXT.md. (Finance: Overview, Transactions, Trends.)
 
 ---
 
