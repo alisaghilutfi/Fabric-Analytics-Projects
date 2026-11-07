@@ -85,3 +85,5 @@ Flags:
 
 Verdict: OK | FLAGS FOUND
 ```
+
+Return the report in the format above; the caller relays it verbatim.

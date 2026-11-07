@@ -41,9 +41,9 @@ For each `.tmdl` file provided:
 | 2 | Every measure has a `///` description | A measure not preceded by a `///` line is missing its description | WARNING |
 | 3 | Division uses `DIVIDE()`, not `/` | Any `/` character inside a measure body. Report each as POSSIBLE -- the caller must confirm it is division and not a string literal, URL, or DAX comment | POSSIBLE |
 | 4 | No implicit measures | A column with an explicit `summarizeBy` value other than `none` may be used as an implicit measure -- report as POSSIBLE. If `summarizeBy` is absent entirely, report NOT CHECKED (cannot infer intent without schema context) | POSSIBLE / NOT CHECKED |
-| 5 | Display folder is set on every measure | A measure body without a `displayFolder` property | WARNING |
+| 5 | Display folder is set on every measure | A measure body without a `displayFolder` property is WARNING. The standard's groupings (Volume, Amount, Time, Risk) are themes -- workspace-specific folder names satisfy them (e.g. 'Transaction Volume', 'Time Intelligence', 'Fraud & Risk'). Flag only: a measure with no displayFolder (WARNING), or a model whose folders cover none of the four themes (POSSIBLE). Never recommend renaming existing folders. | WARNING / POSSIBLE |
 | 6 | Relationship syntax uses dot notation, not brackets | A `fromColumn:` or `toColumn:` line containing `[` | ERROR |
-| 7 | `joinOnDateBehavior: DatePartOnly` on dateTime joins | A relationship block linking a column named `date`, `Date`, or whose containing table implies a date dimension -- if `joinOnDateBehavior: DatePartOnly` is absent, report POSSIBLE (type may not be confirmable from this file alone) | POSSIBLE |
+| 7 | `joinOnDateBehavior: datePartOnly` on dateTime joins | A relationship block linking a column named `date`, `Date`, or whose containing table implies a date dimension -- if `joinOnDateBehavior:` (any casing: `datePartOnly`, `DatePartOnly`, etc.) is absent, report POSSIBLE. TMDL is case-insensitive; never report casing of this value as a finding. | POSSIBLE |
 | 8 | No free-floating `//` comments | Lines starting with `//` (not `///`) at object level (between objects or properties). Report as POSSIBLE -- a `//` inside a DAX expression body is valid; flag only those that appear at object level for the caller to judge | POSSIBLE |
 | 9 | No comments at all in a DirectLake `expressions.tmdl` | If the file is `expressions.tmdl`, any line starting with `//` | ERROR |
 | 10 | Raw columns hidden (`isHidden: true`) | A `column` definition without `isHidden: true`. Report as POSSIBLE -- key columns and intentionally visible dimensions may be exempt; the caller confirms | POSSIBLE |
@@ -62,5 +62,7 @@ Reviewing: <file path>
 Summary: <N> findings (<E> errors, <W> warnings, <P> possible), <NC> rules not checked
 Verdict: FINDINGS | NO FINDINGS IN CHECKED RULES (<NC> NOT CHECKED)
 ```
+
+Return the report exactly in the format above, including every NOT CHECKED line and the Verdict line. Use only the labels ERROR, WARNING, POSSIBLE, NOT CHECKED. The caller must relay the report verbatim.
 
 Report only; never fix anything.
