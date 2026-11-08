@@ -1,3 +1,7 @@
+# Fabric-Analytics-Projects — repo rules
+
+Global guardrails: ~/.claude/CLAUDE.md (source: private repo dev-environment).
+
 ## Project overview
 
 Portfolio-wide rules for all Fabric workspaces in this repo.
