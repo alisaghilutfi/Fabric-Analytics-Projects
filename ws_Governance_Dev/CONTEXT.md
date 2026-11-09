@@ -13,7 +13,7 @@ Scanner API + Activity Events API + Refresh History API
 - App: sp-governance-scanner
 - Client ID: 4c046cb3-0862-4862-b228-5fee8381deca
 - Tenant ID: c8cb697b-07d1-4c61-a5d9-bbe5ad099fe8
-- Secret name: governance-scanner-key-1
+- Secret name: governance-scanner-key-2
 - Security group: sg-fabric-scanner
 - Tenant settings: read-only admin APIs + detailed metadata + DAX/mashup (applied 2026-11-02)
 
@@ -59,14 +59,12 @@ in Bronze/Score notebooks
 - XMLA-created models get a live ObjectId with null LogicalId in Git — causes duplicate artifact conflict on Update all; fix is delete live artifact + recycle bin, then reprovision via Git Update all
 - After XMLA session + ExportToTmdlFolder, always do Source Control Update all (not Commit) to provision the Git-anchored version; the XMLA artifact and the Git-provisioned artifact are treated as separate items by Fabric
 
-## Last Session — 2026-11-05 (Session 6)
-- Instructions Layer refreshed (`af4501c`) — Phase 6 focus documented, Current Focus / Next Session Starts At / Blockers updated
-- No data-side work executed this session — all execution work was in Fabric-Apps-Projects (UI enhancements to FabricApp_Governance)
-- Three Phase 6 data quality issues remain open and unchanged:
-  - (1) `NO_SENSITIVITY_LABEL` severity dominates all workspace scores (1,565 / 1,613 violations) — downgrade to Medium in `nb_Governance_Score` health rules dict
-  - (2) Items tab shows 0 items for all workspaces — audit `nb_Governance_Bronze` for item-level Scanner API endpoint calls (`/admin/workspaces/{id}/items` or `getInfo` with `getArtifactUsers=true&lineage=true`)
-  - (3) `git_connected` shows No Git for most workspaces — investigate `getInfo` parameters in `nb_Governance_Bronze`
-- Next session starts at: open `nb_Governance_Bronze`, fix items population first (highest user-visible impact), then `git_connected`; downgrade `NO_SENSITIVITY_LABEL` severity in `nb_Governance_Score` as quick win
+## Last Session — 2026-11-09 (Session 7)
+- Credential rotation: governance-scanner-key-1 expired and replaced with governance-scanner-key-2 in Entra ID (app `4c046cb3-0862-4862-b228-5fee8381deca`)
+- New secret set in Fabric UI on pl_Governance_Ingest pipeline parameters — pipeline restored
+- `secureInput: true` applied to Bronze activity in `pl_Governance_Ingest.DataPipeline/pipeline-content.json` — CLIENT_SECRET now masked from run logs (commit `3420062`)
+- No Phase 6 data-side work executed — three open items unchanged (see Current Focus)
+- Next session starts at: open `nb_Governance_Bronze`, fix items population first, then `git_connected`; downgrade `NO_SENSITIVITY_LABEL` severity in `nb_Governance_Score`
 
 ## Session 3 — 2026-11-03
 - `pl_Governance_Ingest` created in Fabric UI (logicalId `979d10b1-b1d1-8880-4737-a1fe5699952a`):
