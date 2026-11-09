@@ -10,7 +10,7 @@
           "retry": 0,
           "retryIntervalInSeconds": 30,
           "secureOutput": false,
-          "secureInput": false
+          "secureInput": true
         },
         "typeProperties": {
           "notebookId": "e16af676-4d06-49f2-bec2-b0d2bcaf8bb2",
