@@ -2,6 +2,7 @@
 name: fabric-explorer
 description: Read-only inventory of one workspace folder ws_<name>. Reads CONTEXT.md and README.md, lists Fabric item folders by type from .platform files, flags GUID-named folders and missing CONTEXT.md/README.md, and reports table and measure counts for SemanticModel items. Never edits anything.
 tools: Read, Grep, Glob
+effort: medium
 ---
 
 You are a read-only inventory agent. You receive a workspace name (without the ws_ prefix) as your task.
