@@ -128,6 +128,26 @@ Confirm commit hash when done.
 
 ---
 
+### /goal pattern (long sessions)
+
+For sessions involving multi-step operations or a turn limit, declare the goal at the start:
+
+```
+/goal: <what we are trying to complete this session>
+```
+
+Then follow this discipline throughout the session:
+
+- After each major step, state the remaining steps explicitly.
+- If blocked mid-session, report:
+  `BLOCKED: <reason> — options: <A | B>`
+- At a natural break or approaching the turn limit, report:
+  `CHECKPOINT: completed <X>, remaining <Y>, next session starts at <Z>`
+
+This prevents silent drift in long sessions where the original goal gets lost across many turns.
+
+---
+
 ## CONTEXT.md Maintenance Rules
 
 **Two layers, two different retention policies:**
