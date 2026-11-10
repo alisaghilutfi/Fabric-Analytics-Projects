@@ -416,7 +416,7 @@ Set as Canvas background (not Wallpaper), Stretch fit, 0% transparency.
 
 - SessionStart hook (`.claude/hooks/session-start.ps1`): injects MCP, Azure and Git state into every new Claude Code session.
 - PostToolUse drift hook (`.claude/hooks/post-mcp-write.ps1`): after write operations on the local powerbi-modeling-mcp (`tool_input.request.operation` not Get/List/Connect/…), reminds: commit in workspace Source control, then `git pull`.
-- Pre-commit scan (`.githooks/pre-commit`) blocks only zero-GUID logicalId, zero ONT_WorkspaceId, and _PLACEHOLDER; zero workspaceId fields are valid same-workspace references. One-time setup per clone: `git config core.hooksPath .githooks`
+- Pre-commit scan (`.githooks/pre-commit`) blocks only zero-GUID logicalId, zero ONT_WorkspaceId, and _PLACEHOLDER; zero workspaceId fields are valid same-workspace references. One-time setup per clone: `git config core.hooksPath .githooks` Secret-scanning hook (Wave 3 / C3) deployed: `f720fa6`, `28ee2b1`. B3 (dev-environment repo): `9ffe10a`.
 - Project skill (`.claude/skills/`): /sync-status (read-only). Project command (`.claude/commands/`): /new-workspace. User-level command (`~/.claude/commands/`, deployed from dev-environment): /pause-capacity.
 - Synced business plugins (sales, marketing, finance) disabled for this repo via enabledPlugins.
 - Tooling source of truth: private repo dev-environment (global CLAUDE.md, MCP Inventory, repo templates, setup/onboard-repo.ps1). Edit tooling there, then deploy.
