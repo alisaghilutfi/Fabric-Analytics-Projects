@@ -8,4 +8,18 @@ if [ -n "$hits" ]; then
   echo "Replace with real workspace/item IDs (override: git commit --no-verify)."
   exit 1
 fi
+
+# Secret scanning -- block Azure SP secrets, connection strings, bearer tokens.
+SECRET_PAT='"client[Ss]ecret"[[:space:]]*:[[:space:]]*"[^"]{8,}"|AccountKey=[A-Za-z0-9+/]{20,}={0,2}|SharedAccessSignature=[^"&[:space:]]{20,}|[Bb]earer[[:space:]]+ey[A-Za-z0-9._-]{20,}|password[[:space:]]*=[[:space:]]*[A-Za-z0-9!@#$%^&*]{8,}'
+secrets=$(git diff --cached -U0 --diff-filter=ACM \
+  | grep -E '^\+' \
+  | grep -ivE '^\+\+\+' \
+  | grep -E "$SECRET_PAT")
+if [ -n "$secrets" ]; then
+  echo "Blocked: possible secrets in staged changes:"
+  echo "$secrets"
+  echo "Remove secrets before committing (override: git commit --no-verify)."
+  exit 1
+fi
+
 exit 0
