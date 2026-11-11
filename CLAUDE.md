@@ -35,6 +35,7 @@ Tool versions: see HARNESS.md.
 | Dashboard        | `dashboard_` | `dashboard_Finance_Analysis` |
 | ML Model         | `model_`     | `model_BankChurn`            |
 | Deployment Pipeline | `dp_`    | `dp_Finance_Analysis`        |
+| Data Agent          | `agent_` | `agent_USGS_GeographicImpact` |
 
 ---
 
@@ -166,6 +167,8 @@ joinOnDateBehavior: DatePartOnly
 
 `/sync-status` -- read-only repo-vs-Fabric sync report: branch state, changed artifacts per workspace folder, placeholder-ID scan (project skill).
 `/new-workspace <name>` -- scaffold the repo side of a new workspace: folder, CONTEXT.md, PROJECTS.md row (project command).
+`/session-start <name>` -- read-only session-start report for ws_<name>: status, blockers, next step (project command).
+`/end-session <name>` -- runs the session-recap-writer agent for ws_<name>: updates CONTEXT.md, PROJECTS.md and READMEs, then commits and pushes to dev-fabric-sync (project command).
 `/start` -- session-start report: MCP, Azure login, Git state, PROJECTS.md status (user-level command).
 `/pause-capacity` -- check, pause or resume the F2 capacity; asks for confirmation first (user-level command).
 `powerbi-report-author validate` -- validate PBIR edits.
