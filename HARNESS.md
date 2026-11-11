@@ -72,6 +72,8 @@ using the start-of-session prompt below.
 
 ### Start-of-session prompt (FabricEngineer)
 
+`/session-start <name>` runs this protocol as a read-only command; it also warns when the workspace changed after CONTEXT.md, and offers fabric-explorer.
+
 ```
 Read PROJECTS.md and ws_<name>/CONTEXT.md in full.
 
@@ -86,6 +88,8 @@ Do not begin any execution until I confirm the proposed step.
 ```
 
 ### End-of-session prompt (FabricEngineer)
+
+`/end-session <name>` runs this protocol via the session-recap-writer agent, which updates CONTEXT.md, PROJECTS.md, and READMEs, then commits and pushes.
 
 ```
 Session is complete. Update the project docs as follows:
@@ -305,8 +309,8 @@ actual page names. If `reportDir` is null, the wrong file type is open.
 The Power BI Desktop Bridge is connected and ready.
 reportDir: <path to rpt_<name>.Report>
 
-Use powerbi-report-design to produce a design brief first.
-Save it to ws_<name>/docs/design-brief-rpt_<name>.md.
+Run the design-brief-writer agent for ws_<name> / rpt_<name> to produce a design brief.
+After I confirm the brief, save it to ws_<name>/docs/design-brief-rpt_<name>.md.
 Wait for my approval before implementing.
 
 After approval, use powerbi-report-authoring to implement.
@@ -321,6 +325,8 @@ Do not ask about pixel positions.
 Make all layout decisions yourself.
 Do not commit until all pages are complete and verified.
 ```
+
+The agent is read-only and applies the Layout Trifecta and Lotusoftware theme; the powerbi-report-design plugin skill is the fallback when the agent is not suitable.
 
 ### Phase 5 — After Desktop session cleanup
 
@@ -412,12 +418,16 @@ Set as Canvas background (not Wallpaper), Stretch fit, 0% transparency.
 
 ---
 
-## Session automation (2026-10-25)
+## Session automation (2026-11-11)
 
 - SessionStart hook (`.claude/hooks/session-start.ps1`): injects MCP, Azure and Git state into every new Claude Code session.
 - PostToolUse drift hook (`.claude/hooks/post-mcp-write.ps1`): after write operations on the local powerbi-modeling-mcp (`tool_input.request.operation` not Get/List/Connect/…), reminds: commit in workspace Source control, then `git pull`.
-- Pre-commit scan (`.githooks/pre-commit`) blocks only zero-GUID logicalId, zero ONT_WorkspaceId, and _PLACEHOLDER; zero workspaceId fields are valid same-workspace references. One-time setup per clone: `git config core.hooksPath .githooks` Secret-scanning hook (Wave 3 / C3) deployed: `f720fa6`, `28ee2b1`. B3 (dev-environment repo): `9ffe10a`.
-- Project skill (`.claude/skills/`): /sync-status (read-only). Project command (`.claude/commands/`): /new-workspace. User-level command (`~/.claude/commands/`, deployed from dev-environment): /pause-capacity.
+- Pre-commit scan (`.githooks/pre-commit`) blocks only zero-GUID logicalId, zero ONT_WorkspaceId, and _PLACEHOLDER; zero workspaceId fields are valid same-workspace references. One-time setup per clone: `git config core.hooksPath .githooks`. Secret-scanning hook (Wave 3 / C3) deployed: `f720fa6`, `28ee2b1`. B3 (dev-environment repo): `9ffe10a`.
+- Project skill (`.claude/skills/`): /sync-status (read-only).
+- Project commands (`.claude/commands/`): /new-workspace, /session-start, /end-session.
+- User-level commands (`~/.claude/commands/`, deployed from dev-environment): /start, /pause-capacity.
+- Agents (`.claude/agents/`): design-brief-writer (produces a structured report design brief from CONTEXT.md and HARNESS.md standards; read-only until brief is confirmed); fabric-explorer (read-only inventory of one workspace folder — lists Fabric items by type, flags GUID-named folders, reports table and measure counts); pbir-reviewer (read-only review of PBIR JSON files — checks BOM, entity consistency, theme reference, and escaped config); session-recap-writer (end-of-session protocol enforcer — updates CONTEXT.md, PROJECTS.md, and READMEs, then commits and pushes); tmdl-reviewer (read-only review of TMDL and DAX files — checks VAR/RETURN, descriptions, DIVIDE(), display folders, and relationship syntax).
+- analyst-mindset is a global skill (`~/.claude/skills/`, source dev-environment `claude/skills/`); AI-readiness guidance comes from the fabric-skills plugin, not from a repo or global skill.
 - Synced business plugins (sales, marketing, finance) disabled for this repo via enabledPlugins.
 - Tooling source of truth: private repo dev-environment (global CLAUDE.md, MCP Inventory, repo templates, setup/onboard-repo.ps1). Edit tooling there, then deploy.
 
@@ -497,6 +507,7 @@ empty folders — Git does not track them.
 | Dashboard | `dashboard_` | `dashboard_Finance_Analysis` |
 | ML Model | `model_` | `model_BankChurn` |
 | Deployment Pipeline | `dp_` | `dp_Finance_Analysis` |
+| Data Agent | `agent_` | `agent_USGS_GeographicImpact` |
 
 ---
 
@@ -505,4 +516,4 @@ empty folders — Git does not track them.
 > Every session that files its recap makes the next session faster
 > and more accurate.
 
-*Last updated: 2026-10-25 (Claude Code MCP routing, session automation, startup checklist, drift rule, gotchas).*
+*Last updated: 2026-11-11 (session commands /session-start and /end-session, agents inventory, global analyst-mindset skill note).*
