@@ -430,6 +430,7 @@ Set as Canvas background (not Wallpaper), Stretch fit, 0% transparency.
 - analyst-mindset is a global skill (`~/.claude/skills/`, source dev-environment `claude/skills/`); AI-readiness guidance comes from the fabric-skills plugin, not from a repo or global skill.
 - Synced business plugins (sales, marketing, finance) disabled for this repo via enabledPlugins.
 - Tooling source of truth: private repo dev-environment (global CLAUDE.md, MCP Inventory, repo templates, setup/onboard-repo.ps1). Edit tooling there, then deploy.
+- Deny rules (`.claude/settings.json`, `permissions.deny`): blocks pushing to `origin main`, force-pushing to any branch (`--force` / `-f`), and reading `.env` / `.env.*` files anywhere in the repo. These rules govern Claude Code's built-in Bash and Read tools only — they do not block your own terminal or subprocesses you invoke directly. Source: `dev-environment/templates/fabric/settings.fragment.json`.
 
 ---
 
@@ -516,4 +517,4 @@ empty folders — Git does not track them.
 > Every session that files its recap makes the next session faster
 > and more accurate.
 
-*Last updated: 2026-11-11 (session commands /session-start and /end-session, agents inventory, global analyst-mindset skill note).*
+*Last updated: 2026-11-11 (session commands /session-start and /end-session, agents inventory, global analyst-mindset skill note, deny rules C1).*
