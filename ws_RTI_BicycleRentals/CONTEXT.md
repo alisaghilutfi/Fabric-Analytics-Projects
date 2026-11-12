@@ -67,6 +67,11 @@ live and running.
 - Destination 2: activator_BicycleRentals (direct stream)
 
 ### KQL Medallion (live, 187M rows)
+> **Hot cache:** Disabled (PT0S) as of 2026-11-12 to reduce Azure billing (~€80–90/month
+> saving). Data preserved in OneLake standard storage. **Restore to P7D before 2026-11-19
+> presentation**, then revert to PT0S after. Change via Fabric portal → Eventhouse → KQL
+> Database → Manage → Caching policy. Do not re-enable permanently without checking billing.
+
 | Layer  | Object                   | Detail                                                          |
 |--------|--------------------------|------------------------------------------------------------------|
 | Bronze | RawData                  | 187M rows, live ingestion                                       |
