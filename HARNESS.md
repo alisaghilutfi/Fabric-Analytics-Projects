@@ -237,7 +237,7 @@ skills-for-fabric v0.3.19, two separate installs. Claude Code: `~/.claude/plugin
 
 `C:\Users\alisa\.mcp.json` registered powerbi-modeling-mcp v0.1.9 (Downloads folder). Claude Code loads `.mcp.json` from parent directories as project scope. v0.1.9 requires write confirmation by default (v1.0.0 skips it), so every write was auto-declined. Fix: `~/.mcp.json` renamed to `.mcp.json.retired-2026-10-07`, v0.1.9 deleted. Writes use prefix `mcp__plugin_powerbi-authoring_powerbi-modeling-mcp__*`. Verified by reversible write test on `sm_USGS_Earthquake`. Commit `020ea88` was not the real fix.
 
-- Claude Desktop (ProjectPlanner) runs powerbi-modeling-mcp v1.0.0 with `--start --read-only --accept-eula`.
+- Claude Desktop (ProjectPlanner) runs powerbi-modeling-mcp via `npx -y @microsoft/powerbi-modeling-mcp@latest --start --accept-eula` (no `--read-only`; fixed 2026-11-14).
 
 ### Session Startup Checklist
 
@@ -449,8 +449,8 @@ Set as Canvas background (not Wallpaper), Stretch fit, 0% transparency.
 | `@pbir/cli` does not exist on npm | The correct package is `@microsoft/powerbi-desktop-bridge-cli` |
 | `list_workspace_artifacts` returns Eventhouse and KQL Database with identical `displayName` | Always filter on `type` before acting |
 | Writes declined 'when asked to confirm' | Stale v0.1.9 registration (requires confirmation by default) — check `claude mcp list` / `claude mcp get <name>` for scope, remove the stale entry |
-| Multiple `powerbi-modeling-mcp` processes | Normal: npx process (Claude Code plugin) + VS Code extension processes (Desktop read-only, Copilot). Only a process from `Downloads` or a non-1.0.0 path is stale — kill it by PID and find its registration with `claude mcp list` |
-| Extension-registered MCP servers not appearing in "MCP: List Servers" | Extension must be installed via VS Code Marketplace or Copilot CLI, not manually. Verify `~/.vscode/extensions/analysis-services.powerbi-modeling-mcp-*/` exists. Do NOT add extension servers to `mcp.json` — they auto-register. |
+| Multiple `powerbi-modeling-mcp` processes | Normal: npx process (Claude Code plugin) + npx process (Desktop). Only a process from `Downloads` or the old `.vscode/extensions/analysis-services.*` path is stale — kill it by PID and find its registration with `claude mcp list` |
+| Extension-registered MCP servers not appearing in "MCP: List Servers" | Extension must be installed via VS Code Marketplace or Copilot CLI, not manually. Do NOT add extension servers to `mcp.json` — they auto-register. |
 | `.mcp.json` in parent folder loads as project scope | Claude Code walks up directories — keep no `.mcp.json` in `C:\Users\alisa\` |
 | JSON config invalid after PowerShell edit | PS 5.1 `Set-Content -Encoding UTF8` writes a BOM — write with `[IO.File]::WriteAllText($p,$json,(New-Object System.Text.UTF8Encoding($false)))` |
 | `powerbi-modeling-mcp` reports no connection | Server starts unconnected — connect via XMLA to workspace/model first; Power BI Desktop not required |

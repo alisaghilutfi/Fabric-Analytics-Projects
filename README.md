@@ -174,7 +174,7 @@ scored, smoke test passed.
 | AI planning agent | Claude Desktop (ProjectPlanner) |
 | AI execution agent | Claude Code in VS Code (FabricEngineer) |
 | Fabric operations | Fabric Core MCP Server (remote connector) |
-| Power BI modeling | powerbi-modeling-mcp v1.0.0 (Claude Code plugin; Claude Desktop read-only) |
+| Power BI modeling | powerbi-modeling-mcp (Claude Code plugin; Claude Desktop npx auto-latest) |
 | Fabric skills | skills-for-fabric v0.3.19 (Claude Code plugin + Copilot CLI) |
 | Context management | PROJECTS.md + ws_\<name\>/CONTEXT.md |
 | Git strategy | dev-fabric-sync → test → main (PR-based promotion) |
