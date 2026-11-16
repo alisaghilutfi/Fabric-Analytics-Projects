@@ -108,6 +108,16 @@ categories on Geography columns, Prep data for AI, agent_CompetitorSales
 
 ---
 
+## ws_FabricLicenseAdvisor_Dev
+**Purpose:** Interactive Fabric App helping users navigate Microsoft Fabric licensing and pricing — decision wizard, cost estimator, SKU reference table, and F64 break-even calculator. Gallery submission target.
+**Status:** Active — Lakehouse scaffolded, pricing seed data pending
+**Current focus:** Load pricing seed data into lh_pricing Delta tables
+**Last session (2026-11-16):** Workspace created on F2 PAYG capacity (North Europe). Git integration wired to dev-fabric-sync / ws_FabricLicenseAdvisor_Dev/. Lakehouse lh_pricing created and committed. Rayfin app will live in Fabric-Apps-Projects under apps/FabricApp_FabricLicenseAdvisor/.
+**Next session:** Scaffold FabricApp_FabricLicenseAdvisor in Fabric-Apps-Projects; build 4 app screens
+**Blockers:** None
+
+---
+
 ## Adding a New Project
 When a new workspace is created, add a new section above following
 this exact template:

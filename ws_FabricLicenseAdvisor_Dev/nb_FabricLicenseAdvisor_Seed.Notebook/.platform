@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "nb_FabricLicenseAdvisor_Seed"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "ef3d09c2-06de-47f3-82a9-dae48485d690"
+  }
+}
