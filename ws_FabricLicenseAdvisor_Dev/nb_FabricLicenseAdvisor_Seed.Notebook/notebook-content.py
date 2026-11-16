@@ -8,9 +8,14 @@
 # META   },
 # META   "dependencies": {
 # META     "lakehouse": {
+# META       "default_lakehouse": "2bd063d8-a8f3-44a5-8e08-3bd9cd16c091",
 # META       "default_lakehouse_name": "lh_pricing",
-# META       "default_lakehouse_workspace_id": "",
-# META       "known_lakehouses": []
+# META       "default_lakehouse_workspace_id": "9629e4d5-9acb-499e-b936-1fd7a3b0241d",
+# META       "known_lakehouses": [
+# META         {
+# META           "id": "2bd063d8-a8f3-44a5-8e08-3bd9cd16c091"
+# META         }
+# META       ]
 # META     }
 # META   }
 # META }
@@ -81,7 +86,7 @@ sku_data = [
 ]
 
 df_sku = spark.createDataFrame(sku_data, schema=sku_schema)
-df_sku.write.format("delta").mode("overwrite").saveAsTable(f"{LAKEHOUSE}.pricing_sku")
+df_sku.write.format("delta").mode("overwrite").saveAsTable("pricing_sku")
 print(f"pricing_sku: {df_sku.count()} rows loaded")
 
 # METADATA ********************
@@ -113,7 +118,7 @@ ul_data = [
 ]
 
 df_ul = spark.createDataFrame(ul_data, schema=ul_schema)
-df_ul.write.format("delta").mode("overwrite").saveAsTable(f"{LAKEHOUSE}.pricing_user_licenses")
+df_ul.write.format("delta").mode("overwrite").saveAsTable("pricing_user_licenses")
 print(f"pricing_user_licenses: {df_ul.count()} rows loaded")
 
 # METADATA ********************
@@ -141,7 +146,7 @@ st_data = [
 ]
 
 df_st = spark.createDataFrame(st_data, schema=st_schema)
-df_st.write.format("delta").mode("overwrite").saveAsTable(f"{LAKEHOUSE}.pricing_storage")
+df_st.write.format("delta").mode("overwrite").saveAsTable("pricing_storage")
 print(f"pricing_storage: {df_st.count()} rows loaded")
 
 # METADATA ********************
@@ -153,10 +158,20 @@ print(f"pricing_storage: {df_st.count()} rows loaded")
 
 # CELL ********************
 
-print("All pricing tables loaded successfully.")
-print(f"  pricing_sku:            {spark.table(f'{LAKEHOUSE}.pricing_sku').count()} rows")
-print(f"  pricing_user_licenses:  {spark.table(f'{LAKEHOUSE}.pricing_user_licenses').count()} rows")
-print(f"  pricing_storage:        {spark.table(f'{LAKEHOUSE}.pricing_storage').count()} rows")
+print("✅ All pricing tables loaded successfully.")
+print(f"  pricing_sku:            {spark.table('pricing_sku').count()} rows")
+print(f"  pricing_user_licenses:  {spark.table('pricing_user_licenses').count()} rows")
+print(f"  pricing_storage:        {spark.table('pricing_storage').count()} rows")
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
 
 # METADATA ********************
 
