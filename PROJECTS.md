@@ -108,6 +108,16 @@ categories on Geography columns, Prep data for AI, agent_CompetitorSales
 
 ---
 
+## ws_FabricLicenseAdvisor_Dev
+**Purpose:** Interactive Fabric App helping users navigate Microsoft Fabric licensing and pricing — decision wizard, cost estimator, SKU reference table, and F64 break-even calculator. Gallery submission target.
+**Status:** Active -- app live
+**Current focus:** UI polish pass
+**Last session (2026-11-16):** Implemented all 4 app screens (SkuReference, CostEstimator, BreakEven, LicenseWizard). Fixed DAX SORT() anti-pattern (replaced with TOPN(999, ...)). App live at https://brief-fawn-30a395c0ef-northeurope.webapp.fabricapps.net. Rayfin item ID 17b217db-4e21-430a-a533-5aa99cc39a2d, backend workspace b23af3d8-bda7-4a5f-822f-ba900bd4fde5, semantic model item ID 19433fad-1ba4-4f6d-b7d1-5f8c77827ca9.
+**Next session:** UI polish pass; gallery submission consideration
+**Blockers:** None
+
+---
+
 ## Adding a New Project
 When a new workspace is created, add a new section above following
 this exact template:

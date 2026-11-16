@@ -1,0 +1,60 @@
+table pricing_storage
+	lineageTag: e724be1e-ff6b-4a84-bd86-058fd0fd5fa0
+	sourceLineageTag: [dbo].[pricing_storage]
+
+	column storage_type
+		dataType: string
+		lineageTag: a3942854-9cb4-4e62-8f3b-37161dd05b70
+		sourceLineageTag: storage_type
+		summarizeBy: none
+		sourceColumn: storage_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column price_per_gb_usd
+		dataType: double
+		lineageTag: b63c7be6-13f7-401a-a145-b2e6f069b7fc
+		sourceLineageTag: price_per_gb_usd
+		summarizeBy: sum
+		sourceColumn: price_per_gb_usd
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column free_tier_gb_per_cu
+		dataType: double
+		lineageTag: 52f34ccf-57e5-433b-aa44-96ebe0c1acbd
+		sourceLineageTag: free_tier_gb_per_cu
+		summarizeBy: sum
+		sourceColumn: free_tier_gb_per_cu
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column notes
+		dataType: string
+		lineageTag: 9dc7cb9d-0816-418e-b6fe-c8651774cd3c
+		sourceLineageTag: notes
+		summarizeBy: none
+		sourceColumn: notes
+
+		annotation SummarizationSetBy = Automatic
+
+	column load_date
+		dataType: string
+		lineageTag: 8914b253-dc79-4995-833b-bcd760fd2504
+		sourceLineageTag: load_date
+		summarizeBy: none
+		sourceColumn: load_date
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pricing_storage = entity
+		mode: directLake
+		source
+			entityName: pricing_storage
+			schemaName: dbo
+			expressionSource: 'DirectLake - lh_pricing'
+
