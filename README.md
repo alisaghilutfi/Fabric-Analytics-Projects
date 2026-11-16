@@ -149,6 +149,22 @@ display folders. Artisans leads overall (~$235M, 33.8%); Sintec is #2
 
 ---
 
+### ws_FabricLicenseAdvisor_Dev — Fabric License Advisor
+
+**Type:** Interactive Fabric App  
+**Stack:** Lakehouse (Delta tables) · DirectLake semantic model · Rayfin Fabric App (4 screens)  
+**Status:** 🟢 Live
+
+An interactive app that guides Fabric admins, consultants, and BI managers through
+Microsoft Fabric licensing decisions and outputs a recommended license path and monthly
+cost estimate. Four screens: License Wizard (decision tree), Cost Estimator (PAYG vs
+reserved), SKU Reference (full F2–F8192 table), and F64 Break-Even calculator.
+Pricing data loaded from RADACAD Nov 2026 + MS Learn (US list prices) into three Delta
+tables in `lh_pricing`. Semantic model (`sm_FabricLicenseAdvisor`) built on DirectLake —
+live at https://brief-fawn-30a395c0ef-northeurope.webapp.fabricapps.net
+
+---
+
 ### ws_Governance_Dev — Fabric Governance & Asset Inventory
 
 **Type:** Data Engineering + Tenant Governance  
@@ -200,4 +216,4 @@ specialising in Microsoft Fabric, Power BI, and agentic analytics systems.
 - GitHub: [alisaghilutfi](https://github.com/alisaghilutfi)
 - X: [@alis05111](https://x.com/alis05111)
 
-*Last updated: 2026-10-07 (skills v0.3.19, powerbi-modeling-mcp v1.0.0 stack entry).*
+*Last updated: 2026-11-16 (ws_FabricLicenseAdvisor_Dev live).*
