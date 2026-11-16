@@ -1,0 +1,90 @@
+table pricing_user_licenses
+	lineageTag: 57e88745-c991-47d6-a2fe-51389f945de1
+	sourceLineageTag: [dbo].[pricing_user_licenses]
+
+	column license_type
+		dataType: string
+		lineageTag: 7aa93711-8c20-4f01-a213-95d48bc95ceb
+		sourceLineageTag: license_type
+		summarizeBy: none
+		sourceColumn: license_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column price_per_user_usd
+		dataType: double
+		lineageTag: 740c9a7a-cf41-4f5b-a471-fbf7c0bc2a5e
+		sourceLineageTag: price_per_user_usd
+		summarizeBy: sum
+		sourceColumn: price_per_user_usd
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column can_create_content
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 4a90d1e7-492c-4805-8a37-763df6d1f874
+		sourceLineageTag: can_create_content
+		summarizeBy: none
+		sourceColumn: can_create_content
+
+		annotation SummarizationSetBy = Automatic
+
+	column can_share_pbi_content
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 226e12f9-b96c-4b72-98f8-9de1ab44fe6a
+		sourceLineageTag: can_share_pbi_content
+		summarizeBy: none
+		sourceColumn: can_share_pbi_content
+
+		annotation SummarizationSetBy = Automatic
+
+	column can_view_pbi_on_ppu_ws
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: f304d3b7-c207-4da4-a40c-a12c47961698
+		sourceLineageTag: can_view_pbi_on_ppu_ws
+		summarizeBy: none
+		sourceColumn: can_view_pbi_on_ppu_ws
+
+		annotation SummarizationSetBy = Automatic
+
+	column can_view_pbi_on_premium_ws
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: a04324f6-f31f-40b4-bfa3-725008fa548f
+		sourceLineageTag: can_view_pbi_on_premium_ws
+		summarizeBy: none
+		sourceColumn: can_view_pbi_on_premium_ws
+
+		annotation SummarizationSetBy = Automatic
+
+	column fabric_items_access
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: faf08244-0efb-4287-9037-876b9ebb1bbd
+		sourceLineageTag: fabric_items_access
+		summarizeBy: none
+		sourceColumn: fabric_items_access
+
+		annotation SummarizationSetBy = Automatic
+
+	column load_date
+		dataType: string
+		lineageTag: 3d077394-fbe9-45ea-91eb-940da18ba106
+		sourceLineageTag: load_date
+		summarizeBy: none
+		sourceColumn: load_date
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pricing_user_licenses = entity
+		mode: directLake
+		source
+			entityName: pricing_user_licenses
+			schemaName: dbo
+			expressionSource: 'DirectLake - lh_pricing'
+

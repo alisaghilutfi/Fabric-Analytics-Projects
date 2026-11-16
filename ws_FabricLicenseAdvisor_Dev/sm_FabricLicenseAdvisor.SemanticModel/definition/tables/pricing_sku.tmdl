@@ -1,0 +1,101 @@
+table pricing_sku
+	lineageTag: c47a8588-0ff8-486d-b6ac-a3db58629c31
+	sourceLineageTag: [dbo].[pricing_sku]
+
+	column sku
+		dataType: string
+		lineageTag: f207d85b-9b15-4fcf-bab2-eae447d747c4
+		sourceLineageTag: sku
+		summarizeBy: none
+		sourceColumn: sku
+
+		annotation SummarizationSetBy = Automatic
+
+	column cus
+		dataType: int64
+		formatString: 0
+		lineageTag: 07f318d5-6e8d-4431-ad54-90cade332270
+		sourceLineageTag: cus
+		summarizeBy: sum
+		sourceColumn: cus
+
+		annotation SummarizationSetBy = Automatic
+
+	column vcores
+		dataType: double
+		lineageTag: 2ae1b68e-d1cc-43d4-9a8b-f351c28760a0
+		sourceLineageTag: vcores
+		summarizeBy: sum
+		sourceColumn: vcores
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column payg_per_month_usd
+		dataType: double
+		lineageTag: 65a9f417-dbf1-408f-a572-2e6644dcd076
+		sourceLineageTag: payg_per_month_usd
+		summarizeBy: sum
+		sourceColumn: payg_per_month_usd
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column reserved_1yr_usd
+		dataType: double
+		lineageTag: 7a585eea-076a-437e-9a5a-803fda96a24b
+		sourceLineageTag: reserved_1yr_usd
+		summarizeBy: sum
+		sourceColumn: reserved_1yr_usd
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column free_viewer_allowed
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 3f697e90-9a0a-415d-98b1-67ec0b19e090
+		sourceLineageTag: free_viewer_allowed
+		summarizeBy: none
+		sourceColumn: free_viewer_allowed
+
+		annotation SummarizationSetBy = Automatic
+
+	column copilot_enabled
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: f6a8e30e-4558-442f-98cf-da51ae99e654
+		sourceLineageTag: copilot_enabled
+		summarizeBy: none
+		sourceColumn: copilot_enabled
+
+		annotation SummarizationSetBy = Automatic
+
+	column pbi_equivalent
+		dataType: string
+		lineageTag: 9c2488cc-b621-43fc-86e5-65b38413e8ea
+		sourceLineageTag: pbi_equivalent
+		summarizeBy: none
+		sourceColumn: pbi_equivalent
+
+		annotation SummarizationSetBy = Automatic
+
+	column load_date
+		dataType: string
+		lineageTag: afc83710-6379-4cf2-a274-93f753795990
+		sourceLineageTag: load_date
+		summarizeBy: none
+		sourceColumn: load_date
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pricing_sku = entity
+		mode: directLake
+		source
+			entityName: pricing_sku
+			schemaName: dbo
+			expressionSource: 'DirectLake - lh_pricing'
+
