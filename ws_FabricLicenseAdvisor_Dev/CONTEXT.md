@@ -10,7 +10,7 @@ Gallery submission target: Fabric Apps Gallery (community.fabric.microsoft.com).
 - **Repo split:** Workspace items -> Fabric-Analytics-Projects (this repo); Rayfin app -> Fabric-Apps-Projects/apps/FabricApp_FabricLicenseAdvisor/
 - **Capacity:** alisaghif2capacity (F2 PAYG, North Europe)
 - **Lakehouse:** lh_pricing (Delta tables only -- no shortcuts)
-- **Semantic model:** sm_FabricLicenseAdvisor (to be created after tables are loaded)
+- **Semantic model:** sm_FabricLicenseAdvisor (item ID: 19433fad-1ba4-4f6d-b7d1-5f8c77827ca9)
 
 ## Lakehouse tables
 
@@ -36,5 +36,18 @@ Last verified: 2026-11-16.
 
 ## Deployment
 - **Workspace ID:** 9629e4d5-9acb-499e-b936-1fd7a3b0241d
-- **Live URL:** (pending first deploy)
-- **Rayfin item ID:** (pending)
+- **Backend workspace ID:** b23af3d8-bda7-4a5f-822f-ba900bd4fde5
+- **Semantic model item ID:** 19433fad-1ba4-4f6d-b7d1-5f8c77827ca9
+- **Live URL:** https://brief-fawn-30a395c0ef-northeurope.webapp.fabricapps.net
+- **Rayfin item ID:** 17b217db-4e21-430a-a533-5aa99cc39a2d
+
+## Last Session
+
+**Date:** 2026-11-16
+
+**Completed:**
+- Implemented all 4 Rayfin app screens from scratch: SkuReference, CostEstimator, BreakEven, LicenseWizard.
+- Fixed DAX SORT() anti-pattern -- replaced with TOPN(999, ...).
+- App fully live at https://brief-fawn-30a395c0ef-northeurope.webapp.fabricapps.net.
+
+**Pick up next at:** UI polish pass; consider gallery submission to Fabric Apps Gallery.

@@ -110,10 +110,10 @@ categories on Geography columns, Prep data for AI, agent_CompetitorSales
 
 ## ws_FabricLicenseAdvisor_Dev
 **Purpose:** Interactive Fabric App helping users navigate Microsoft Fabric licensing and pricing — decision wizard, cost estimator, SKU reference table, and F64 break-even calculator. Gallery submission target.
-**Status:** Active — Lakehouse scaffolded, pricing seed data pending
-**Current focus:** Load pricing seed data into lh_pricing Delta tables
-**Last session (2026-11-16):** Workspace created on F2 PAYG capacity (North Europe). Git integration wired to dev-fabric-sync / ws_FabricLicenseAdvisor_Dev/. Lakehouse lh_pricing created and committed. Rayfin app will live in Fabric-Apps-Projects under apps/FabricApp_FabricLicenseAdvisor/.
-**Next session:** Scaffold FabricApp_FabricLicenseAdvisor in Fabric-Apps-Projects; build 4 app screens
+**Status:** Active -- app live
+**Current focus:** UI polish pass
+**Last session (2026-11-16):** Implemented all 4 app screens (SkuReference, CostEstimator, BreakEven, LicenseWizard). Fixed DAX SORT() anti-pattern (replaced with TOPN(999, ...)). App live at https://brief-fawn-30a395c0ef-northeurope.webapp.fabricapps.net. Rayfin item ID 17b217db-4e21-430a-a533-5aa99cc39a2d, backend workspace b23af3d8-bda7-4a5f-822f-ba900bd4fde5, semantic model item ID 19433fad-1ba4-4f6d-b7d1-5f8c77827ca9.
+**Next session:** UI polish pass; gallery submission consideration
 **Blockers:** None
 
 ---
